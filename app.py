@@ -28,7 +28,7 @@ st.markdown("""
         padding: 2rem;
         text-align: center;
         width: 85%;
-        margin: 2rem auto;
+        margin: 3rem auto 2rem auto;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         border: 1px solid rgba(255,233,75,0.1);
         position: relative;
@@ -36,6 +36,33 @@ st.markdown("""
         transform: none;
     }
     
+    .stTextInput > div {
+        width: 100% !important;
+    }
+
+    .stTextInput > div[data-baseweb="input"] {
+        width: 100% !important;
+        background: transparent !important;
+    }
+
+.stTextInput input {
+    color: #fff !important;
+    border: 1px solid #ffe94b !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: 7px !important;
+    width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+}
+
+.stTextInput input:focus {
+
+        border-color: #ffe94b !important;
+    }
+
+    .stTextInput input::placeholder {
+        color: rgba(255,233,75) !important;
+    }
     .profile-card h1 {
         color: #fff;
         font-size: 2rem;
@@ -160,7 +187,17 @@ st.markdown("""
         background: linear-gradient(90deg, rgba(255,233,75,0), rgba(255,233,75,0.3), rgba(255,233,75,0));
         margin: 2rem 0;
     }
-    
+            
+    /* Hide default Streamlit input label */
+    .stTextInput > label {
+        display: none !important;
+    }
+            
+    /* Input section margin adjustment */
+    .input-section {
+        margin: 2rem 0;
+    }
+            
     /* Input section styling */
     .input-section {
         margin-bottom: 1rem;
@@ -205,7 +242,7 @@ with left:
 
 # Right Column - Navigation and Content
 with right:
-    # Input section
+    # Input section with full width container
     st.markdown('<div class="input-section">', unsafe_allow_html=True)
     user_input = st.text_input(" ", placeholder="Anything you would like to ask about me?")
     st.markdown('</div>', unsafe_allow_html=True)
@@ -230,8 +267,6 @@ with right:
             st.session_state.page = 'resume'
     st.markdown('</div>', unsafe_allow_html=True)
 
-    
-    st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
     
     # Content based on selected page
     if st.session_state.page == 'about':

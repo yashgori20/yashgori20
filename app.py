@@ -28,7 +28,7 @@ st.markdown("""
         padding: 2rem;
         text-align: center;
         width: 85%;
-        margin: 3rem auto 2rem auto;
+        margin: 1rem auto 2rem auto;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         border: 1px solid rgba(255,233,75,0.1);
         position: relative;
@@ -243,9 +243,7 @@ with left:
 # Right Column - Navigation and Content
 with right:
     # Input section with full width container
-    st.markdown('<div class="input-section">', unsafe_allow_html=True)
-    user_input = st.text_input(" ", placeholder="Anything you would like to ask about me?")
-    st.markdown('</div>', unsafe_allow_html=True)
+
     
     # Navigation buttons in a row with spacing
     st.markdown('<div class="nav-buttons">', unsafe_allow_html=True)
@@ -266,7 +264,9 @@ with right:
         if st.button("Resume"):
             st.session_state.page = 'resume'
     st.markdown('</div>', unsafe_allow_html=True)
-
+    st.markdown('<div class="input-section">', unsafe_allow_html=True)
+    user_input = st.text_input(" ", placeholder="Anything you would like to ask about me?")
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Content based on selected page
     if st.session_state.page == 'about':

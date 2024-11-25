@@ -35,21 +35,17 @@ LinkedIn Profile Optimizer powered by Mixtral LLM and GROQ Cloud. Multi-agent sy
 94% accurate ML model for predicting customer churn, visualized through interactive Power BI dashboards.
 
 ## 📫 Let's Connect!
-<div align="left">
-  <a href="https://www.linkedin.com/in/YourLinkedIn" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-  </a>
-  <a href="https://huggingface.co/YourProfile" target="_blank">
-    <img src="https://img.shields.io/badge/🤗_Hugging_Face-FFE94B?style=for-the-badge" alt="Hugging Face"/>
-  </a>
-  <a href="https://kaggle.com/YourProfile" target="_blank">
-    <img src="https://img.shields.io/badge/Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white" alt="Kaggle"/>
-  </a>
-</div>
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black?style=flat-square&logo=Linkedin)](https://linkedin.com/in/yashnileshgori@gmail.com)
+[![Kaggle](https://img.shields.io/badge/-Kaggle-black?style=flat-square&logo=kaggle)](https://kaggle.com/yashgori20)
+[![HuggingFace](https://img.shields.io/badge/-🤗%20Hugging%20Face-black?style=flat-square)](https://huggingface.co/yashgori20)
+[![Twitter](https://img.shields.io/badge/-Twitter-black?style=flat-square&logo=twitter)](https://twitter.com/yashgori20)
+[![Instagram](https://img.shields.io/badge/-Instagram-black?style=flat-square&logo=instagram)](https://instagram.com/yashgori20)
+[![Email](https://img.shields.io/badge/-Email-black?style=flat-square&logo=gmail)](mailto:yashnileshgori@gmail.com)
+[![Website](https://img.shields.io/badge/-Website-black?style=flat-square&logo=google-chrome)](https://yashgori.com)
 
 ## 📊 GitHub Stats
 <div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=YourUsername&theme=dark&hide_border=true&ring=FFE94B&fire=FFE94B&currStreakLabel=FFE94B" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=yashnileshgori&theme=dark&hide_border=true&ring=FFE94B&fire=FFE94B&currStreakLabel=FFE94B" />
 </div>
 
 ```python

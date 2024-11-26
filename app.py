@@ -15,7 +15,7 @@ st.markdown("""
     [data-testid="stSidebar"] {
         display: none;
     }
-    
+
     /* Main container styling */
     .main {
         background-color: #1a1a1a;
@@ -221,7 +221,7 @@ left, right = st.columns([0.8, 2])
 with left:
     st.markdown("""
     <div class="profile-card">
-        <img src="https://avatars.githubusercontent.com/u/your_username" class="profile-image">
+        <img src="https://avatars.githubusercontent.com/yashgori20" class="profile-image">
         <h1>Yash Gori</h1>
         <p class="profile-title">Full Stack Developer</p>
         <p class="profile-title">AI/ML Engineer</p>

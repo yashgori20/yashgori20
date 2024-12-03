@@ -45,24 +45,24 @@ st.markdown("""
         background: transparent !important;
     }
 
-.stTextInput input {
-    color: #fff !important;
-    border: 1px solid #ffe94b !important;
-    padding: 0.6rem 1rem !important;
-    border-radius: 7px !important;
-    width: 100% !important;
-    height: auto !important;
-    box-sizing: border-box !important;
-}
+    .stTextInput input {
+        color: #fff !important;
+        border: 1px solid #ffe94b !important;
+        padding: 0.6rem 1rem !important;
+        border-radius: 7px !important;
+        width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
 
-.stTextInput input:focus {
-
+    .stTextInput input:focus {
         border-color: #ffe94b !important;
     }
 
     .stTextInput input::placeholder {
         color: rgba(255,233,75) !important;
     }
+    
     .profile-card h1 {
         color: #fff;
         font-size: 2rem;
@@ -74,13 +74,40 @@ st.markdown("""
         margin: 0.3rem 0;
     }
     
-    /* Updated navigation buttons with equal spacing */
+    /* Updated navigation buttons with mobile responsiveness */
     .nav-buttons {
         display: flex;
         justify-content: center;
         gap: 1rem;
         margin-bottom: 1rem;
         padding: 0 1rem;
+        position: relative;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .nav-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            padding: 1rem;
+            margin: 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,233,75,0.1);
+        }
+        
+        .nav-buttons .stButton button {
+            width: 100% !important;
+            padding: 0.4rem 0.6rem !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Add padding to main content to prevent overlap with bottom nav */
+        .main .block-container {
+            padding-bottom: 80px;
+        }
     }
     
     .profile-title {
@@ -201,6 +228,78 @@ st.markdown("""
     /* Input section styling */
     .input-section {
         margin-bottom: 1rem;
+        
+    }
+
+    /* Updated service cards with mobile responsiveness */
+    .service-card {
+        background-color: #2d2d2d;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255,233,75,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media screen and (max-width: 768px) {
+        /* Profile card adjustments */
+        .profile-card {
+            width: 95%;
+            padding: 1rem;
+            margin: 0.5rem auto;
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+        }
+        
+        /* Section headers */
+        .section-header {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        /* Service cards */
+        .service-card {
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.2rem;
+        }
+        
+        /* Columns adjustment */
+        [data-testid="stHorizontalBlock"] > div {
+            min-width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        /* Social icons */
+        .social-icons {
+            gap: 0.75rem;
+        }
+        
+        .social-icons a {
+            font-size: 1.25rem;
+        }
+        
+        /* Add padding to main content area */
+        .main .block-container {
+            padding: 1rem !important;
+        }
+    }
+
+    /* Additional tablet breakpoint */
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+        .profile-card {
+            width: 90%;
+        }
+        
+        .service-card {
+            padding: 1.25rem;
+        }
     }
 </style>
 """, unsafe_allow_html=True)

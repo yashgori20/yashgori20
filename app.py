@@ -301,6 +301,56 @@ st.markdown("""
             padding: 1.25rem;
         }
     }
+
+    /* Contact section styling */
+    .contact-link {
+        color: #fff !important;  /* Force white color */
+        text-decoration: none !important;  /* Remove underline */
+        font-size: 1.3rem;
+        transition: color 0.3s ease;
+        display: block;
+    }
+
+    .contact-link:hover {
+        color: #ffe94b !important;
+        text-decoration: none !important;
+    }
+
+    .contact-info {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .contact-info p {
+        margin: 1.5rem 0;
+        text-align: center;
+    }
+
+    .contact-info i {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+        color: #fff;
+        transition: color 0.3s ease;
+    }
+
+    .contact-link:hover i {
+        color: #ffe94b;
+    }
+
+    @media screen and (max-width: 768px) {
+        .contact-info {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .contact-info i {
+            font-size: 1.5rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -457,26 +507,68 @@ with right:
         st.markdown("""
         <div class="service-card">
             <h3>Get in Touch</h3>
-            <div class="social-icons">
-                <a href="mailto:yashnileshgori@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
-                <a href="tel:+917718081766" target="_blank" title="Phone"><i class="fas fa-phone"></i></a>
-                <a href="https://instagram.com/yashgori20" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://twitter.com/yashgori20" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://kaggle.com/yashgori20" target="_blank" title="Kaggle"><i class="fab fa-kaggle"></i></a>
-                <a href="https://huggingface.co/yashgori20" target="_blank" title="Hugging Face"><i class="fas fa-robot"></i></a>
+            <div class="contact-info">
+                <p>
+                    <a href="mailto:yashnileshgori@gmail.com" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </a>
+                </p>
+                <p>
+                    <a href="tel:+917718081766" class="contact-link">
+                        <i class="fas fa-phone"></i>
+                        Phone
+                    </a>
+                </p>
+                <p>
+                    <a href="https://linkedin.com/in/yashgori20" target="_blank" class="contact-link">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn
+                    </a>
+                </p>
+                <p>
+                    <a href="https://github.com/yashgori20" target="_blank" class="contact-link">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                </p>
+                <p>
+                    <a href="https://kaggle.com/yashgori20" target="_blank" class="contact-link">
+                        <i class="fab fa-kaggle"></i>
+                        Kaggle
+                    </a>
+                </p>
+                <p>
+                    <a href="https://instagram.com/yashgori20" target="_blank" class="contact-link">
+                        <i class="fab fa-instagram"></i>
+                        Instagram
+                    </a>
+                </p>
+                <p>
+                    <a href="https://twitter.com/yashgori20" target="_blank" class="contact-link">
+                        <i class="fab fa-twitter"></i>
+                        Twitter
+                    </a>
+                </p>
+                <p>
+                    <a href="https://huggingface.co/yashgori20" target="_blank" class="contact-link">
+                        <i class="fas fa-robot"></i>
+                        Hugging Face
+                    </a>
+                </p>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
     elif st.session_state.page == 'resume':
         st.markdown('<h2 class="section-header">Resume</h2>', unsafe_allow_html=True)
-        st.markdown("""
-        <div class="service-card">
-            <h3>Download My Resume</h3>
-            <p>You can download my resume by clicking the button below:</p>
-        </div>
+        
+        resume_url = "https://raw.githubusercontent.com/yashgori20/yashgori20/main/Yash%20Gori%20Resume.pdf"
+        st.markdown(f"""
+        <a href="{resume_url}" target="_blank" style="text-decoration: none;">
+            <div class="service-card" style="cursor: pointer;">
+                <h3>Download My Resume</h3>
+                <p>Click me to download my resume.</p>
+            </div>
+        </a>
         """, unsafe_allow_html=True)
-        # Replace 'Yash_Gori_Resume.pdf' with the path to your actual resume file
-        with open('Yash_Gori_Resume.pdf', 'rb') as f:
-            resume_data = f.read()
-        st.download_button(label='Download Resume', data=resume_data, file_name='Yash_Gori_Resume.pdf', mime='application/pdf')

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { 
@@ -165,7 +166,7 @@ const Index = () => {
       </div>
       
       <ScrollArea className="flex-1">
-        <div className="space-y-2 px-4">
+        <div className="space-y-1 px-4">
           <SidebarButton icon={User} label="About" view="about" />
           <SidebarButton icon={Briefcase} label="Experience" view="experience" />
           <SidebarButton icon={Code} label="Projects" view="projects" />
@@ -195,10 +196,12 @@ const Index = () => {
               </a>
             </div>
             <div className="space-y-3">
-              <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
-                <Download className="mr-2 h-4 w-4" />
-                Download Resume
-              </Button>
+              <a href="https://drive.google.com/file/d/1aWrJqUWgxKvDZ9zWgvZg6GYxUi96Px-N/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Resume
+                </Button>
+              </a>
               <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50" onClick={scrollToContact}>
                 <Mail className="mr-2 h-4 w-4" />
                 Get In Touch
@@ -253,6 +256,12 @@ const Index = () => {
               />
             </div>
           </div>
+
+          <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
+            <Button variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
+              Prefer a classic view?
+            </Button>
+          </div>
           
           <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
           <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
@@ -287,12 +296,6 @@ const Index = () => {
           <div className="grid grid-cols-2 gap-4 w-full max-w-lg mb-8">
             <SuggestionCard title="How to contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
             <SuggestionCard title="Your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
-          </div>
-
-          <div className="flex justify-center">
-            <Button variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
-              Prefer a classic view?
-            </Button>
           </div>
         </div>
       ) : (
@@ -426,18 +429,36 @@ const Index = () => {
       <div className="space-y-12">
         <div>
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Technical Skills</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {resumeData.skills.technical.map((skill, index) => (
               <div key={skill.name} className="group bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex flex-col items-center text-center">
+                  <div className="relative w-20 h-20 mb-4">
+                    <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeDasharray={`${skill.level}, 100`}
+                        className="text-primary"
+                      />
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeDasharray="100, 100"
+                        className="text-secondary/20"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Code className="h-6 w-6 text-primary" />
+                      </div>
+                    </div>
+                  </div>
                   <h3 className="font-semibold text-lg">{skill.name}</h3>
-                  <span className="text-sm font-bold text-primary">{skill.level}%</span>
-                </div>
-                <div className="w-full bg-secondary/30 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-primary to-primary/80 h-2 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
                 </div>
               </div>
             ))}
@@ -446,18 +467,36 @@ const Index = () => {
 
         <div>
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Soft Skills</h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {resumeData.skills.soft.map((skill, index) => (
               <div key={skill.name} className="group bg-gradient-to-br from-secondary/5 to-primary/5 p-6 rounded-xl border hover:border-secondary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex flex-col items-center text-center">
+                  <div className="relative w-20 h-20 mb-4">
+                    <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeDasharray={`${skill.level}, 100`}
+                        className="text-secondary"
+                      />
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeDasharray="100, 100"
+                        className="text-primary/20"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                        <BrainCircuit className="h-6 w-6 text-secondary" />
+                      </div>
+                    </div>
+                  </div>
                   <h3 className="font-semibold text-lg">{skill.name}</h3>
-                  <span className="text-sm font-bold text-secondary-foreground">{skill.level}%</span>
-                </div>
-                <div className="w-full bg-primary/20 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-secondary to-secondary/80 h-2 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
                 </div>
               </div>
             ))}
@@ -466,18 +505,36 @@ const Index = () => {
 
         <div>
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Tools & Technologies</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {resumeData.skills.tools.map((tool, index) => (
               <div key={tool.name} className="group bg-gradient-to-br from-muted/5 to-primary/5 p-6 rounded-xl border hover:border-muted-foreground/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex flex-col items-center text-center">
+                  <div className="relative w-20 h-20 mb-4">
+                    <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeDasharray={`${tool.level}, 100`}
+                        className="text-muted-foreground"
+                      />
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeDasharray="100, 100"
+                        className="text-muted/20"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center">
+                        <Users className="h-6 w-6 text-muted-foreground" />
+                      </div>
+                    </div>
+                  </div>
                   <h3 className="font-semibold text-lg">{tool.name}</h3>
-                  <span className="text-sm font-bold text-muted-foreground">{tool.level}%</span>
-                </div>
-                <div className="w-full bg-muted/20 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-muted-foreground to-muted-foreground/80 h-2 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${tool.level}%` }}
-                  ></div>
                 </div>
               </div>
             ))}

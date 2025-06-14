@@ -13,6 +13,12 @@ interface ProfileCardProps {
 const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) => {
   if (!isOpen) return null;
 
+  const handleSendMessage = () => {
+    const mailtoLink = `mailto:${resumeData.contact.email}`;
+    window.open(mailtoLink, '_blank');
+    onClose();
+  };
+
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
@@ -53,10 +59,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
         <Button 
           size="sm" 
           className="w-full"
-          onClick={() => {
-            window.location.href = `mailto:${resumeData.contact.email}`;
-            onClose();
-          }}
+          onClick={handleSendMessage}
         >
           Send Message
         </Button>

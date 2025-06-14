@@ -1,8 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { 
-  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap 
+  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap, Wrench 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -244,19 +243,6 @@ const Index = () => {
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
         <div className="flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
-          <div className="absolute top-8 right-8">
-            <div 
-              className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
-              onClick={handleProfileClick}
-            >
-              <img 
-                src={resumeData.profileImage} 
-                alt="Yash Gori" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-
           <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
             <Button variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
               Prefer a classic view?
@@ -530,7 +516,7 @@ const Index = () => {
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center">
-                        <Users className="h-6 w-6 text-muted-foreground" />
+                        <Wrench className="h-6 w-6 text-muted-foreground" />
                       </div>
                     </div>
                   </div>
@@ -767,7 +753,20 @@ const Index = () => {
           <SidebarContent />
       </div>
       
-      <main className="flex-1 flex flex-col h-full bg-background overflow-hidden">
+      <main className="flex-1 flex flex-col h-full bg-background overflow-hidden relative">
+          <div className="absolute top-8 right-8 z-10">
+            <div 
+              className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+              onClick={handleProfileClick}
+            >
+              <img 
+                src={resumeData.profileImage} 
+                alt="Yash Gori" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
           <ScrollArea className="flex-1">
             {renderView()}
           </ScrollArea>

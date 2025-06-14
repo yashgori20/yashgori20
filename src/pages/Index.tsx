@@ -1,8 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { 
-  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap 
+  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Wrench, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -381,11 +380,43 @@ const Index = () => {
 
           <div>
             <h3 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent border-b pb-3">Languages</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {resumeData.languages.map((language, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 bg-card rounded-lg border">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">{language}</span>
+            <div className="grid grid-cols-2 gap-8">
+              {[
+                { name: "English", level: "Fluent", percentage: 95 },
+                { name: "Hindi", level: "Native", percentage: 100 },
+                { name: "Gujarati", level: "Native", percentage: 100 },
+                { name: "Marathi", level: "Conversational", percentage: 75 }
+              ].map((language, index) => (
+                <div key={language.name} className="group bg-gradient-to-br from-secondary/5 to-primary/5 p-6 rounded-xl border hover:border-secondary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="relative w-20 h-20 mb-4">
+                      <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                        <path
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeDasharray={`${language.percentage}, 100`}
+                          className="text-secondary"
+                        />
+                        <path
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeDasharray="100, 100"
+                          className="text-primary/20"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
+                          <span className="text-xs font-bold text-secondary">{language.percentage}%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="font-semibold text-lg">{language.name}</h3>
+                    <p className="text-sm text-muted-foreground">{language.level}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -530,7 +561,7 @@ const Index = () => {
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center">
-                        <Users className="h-6 w-6 text-muted-foreground" />
+                        <Wrench className="h-6 w-6 text-muted-foreground" />
                       </div>
                     </div>
                   </div>
@@ -767,7 +798,21 @@ const Index = () => {
           <SidebarContent />
       </div>
       
-      <main className="flex-1 flex flex-col h-full bg-background overflow-hidden">
+      <main className="flex-1 flex flex-col h-full bg-background overflow-hidden relative">
+          {/* Profile picture visible on all pages */}
+          <div className="absolute top-8 right-8 z-10">
+            <div 
+              className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+              onClick={handleProfileClick}
+            >
+              <img 
+                src={resumeData.profileImage} 
+                alt="Yash Gori" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          
           <ScrollArea className="flex-1">
             {renderView()}
           </ScrollArea>

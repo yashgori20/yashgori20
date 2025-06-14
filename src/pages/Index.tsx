@@ -283,35 +283,95 @@ const Index = () => {
   )
 
   const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
-    <div className="p-4 md:p-8 h-full">
-        <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-primary">{title}</h2>
-            {children}
+    <div className="min-h-screen p-6 md:p-12">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            {title}
+          </h1>
+          <div className="w-24 h-1 bg-primary rounded-full"></div>
         </div>
+        {children}
+      </div>
     </div>
   );
 
-  const AboutView = () => <Section title="About Me"><p className="text-lg leading-relaxed">{resumeData.about}</p></Section>;
+  const AboutView = () => (
+    <Section title="About Me">
+      <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="space-y-6">
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            {resumeData.about}
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <div className="bg-card p-4 rounded-lg border">
+              <h3 className="font-semibold mb-2">Location</h3>
+              <p className="text-muted-foreground">Available Worldwide</p>
+            </div>
+            <div className="bg-card p-4 rounded-lg border">
+              <h3 className="font-semibold mb-2">Status</h3>
+              <p className="text-muted-foreground">Open to Opportunities</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border">
+            <img 
+              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" 
+              alt="Yash Gori" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
   
   const SkillsView = () => (
-    <Section title="Skills">
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Technical</h3>
-          <div className="flex flex-wrap gap-2">
-            {resumeData.skills.technical.map(skill => <div key={skill} className="bg-secondary px-3 py-1 rounded-md">{skill}</div>)}
+    <Section title="Skills & Expertise">
+      <div className="grid md:grid-cols-3 gap-8">
+        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+            <Code className="h-6 w-6 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold mb-4">Technical Skills</h3>
+          <div className="space-y-2">
+            {resumeData.skills.technical.map(skill => (
+              <div key={skill} className="flex items-center justify-between p-2 bg-secondary/50 rounded">
+                <span>{skill}</span>
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+              </div>
+            ))}
           </div>
         </div>
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Soft Skills</h3>
-          <div className="flex flex-wrap gap-2">
-            {resumeData.skills.soft.map(skill => <div key={skill} className="bg-secondary px-3 py-1 rounded-md">{skill}</div>)}
+        
+        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+            <Users className="h-6 w-6 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold mb-4">Soft Skills</h3>
+          <div className="space-y-2">
+            {resumeData.skills.soft.map(skill => (
+              <div key={skill} className="flex items-center justify-between p-2 bg-secondary/50 rounded">
+                <span>{skill}</span>
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+              </div>
+            ))}
           </div>
         </div>
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Tools</h3>
-          <div className="flex flex-wrap gap-2">
-            {resumeData.skills.tools.map(tool => <div key={tool} className="bg-secondary px-3 py-1 rounded-md">{tool}</div>)}
+        
+        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+            <BrainCircuit className="h-6 w-6 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold mb-4">Tools & Technologies</h3>
+          <div className="space-y-2">
+            {resumeData.skills.tools.map(tool => (
+              <div key={tool} className="flex items-center justify-between p-2 bg-secondary/50 rounded">
+                <span>{tool}</span>
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -320,47 +380,145 @@ const Index = () => {
   
   const ExperienceView = () => (
     <Section title="Work Experience">
-        <div className="space-y-8">
-            {resumeData.experience.map((exp: Experience) => (
-                <div key={exp.company}>
-                    <h3 className="text-xl font-bold">{exp.role}</h3>
-                    <p className="text-muted-foreground">{exp.company} | {exp.period}</p>
-                    <ul className="list-disc list-inside mt-2 space-y-1">
-                        {exp.points.map((point, i) => <li key={i}>{point}</li>)}
-                    </ul>
+      <div className="space-y-8">
+        {resumeData.experience.map((exp: Experience, index) => (
+          <div key={exp.company} className="relative">
+            <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full"></div>
+            <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold">{exp.role}</h3>
+                  <p className="text-primary font-medium">{exp.company}</p>
                 </div>
-            ))}
-        </div>
+                <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0">
+                  {exp.period}
+                </div>
+              </div>
+              <ul className="space-y-2">
+                {exp.points.map((point, i) => (
+                  <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
     </Section>
   );
 
   const ProjectsView = () => (
-    <Section title="Projects">
-        <div className="space-y-8">
-            {resumeData.projects.map((proj: Project) => (
-                <div key={proj.title}>
-                    <h3 className="text-xl font-bold">{proj.title}</h3>
-                    <p className="mt-1">{proj.description}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                        {proj.technologies.map(tech => <div key={tech} className="bg-secondary text-sm px-2 py-1 rounded">{tech}</div>)}
-                    </div>
-                </div>
-            ))}
-        </div>
+    <Section title="Featured Projects">
+      <div className="grid md:grid-cols-2 gap-8">
+        {resumeData.projects.map((proj: Project, index) => (
+          <div key={proj.title} className="bg-card rounded-lg border overflow-hidden hover:border-primary/50 transition-colors group">
+            <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+              <Code className="h-16 w-16 text-primary/50 group-hover:text-primary transition-colors" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-bold mb-3">{proj.title}</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">{proj.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {proj.technologies.map(tech => (
+                  <span key={tech} className="px-3 py-1 bg-secondary text-xs font-medium rounded-full border">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </Section>
   );
 
   const ContactView = () => (
-    <Section title="Contact">
-        <div className="space-y-4">
-            <p className="flex items-center gap-3"><Mail className="h-5 w-5 text-primary"/> {resumeData.contact.email}</p>
-            <p className="flex items-center gap-3"><Phone className="h-5 w-5 text-primary"/> {resumeData.contact.phone}</p>
-            <div className="flex items-center gap-4 pt-4">
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors"><Linkedin/> LinkedIn</a>
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors"><Github/> GitHub</a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors"><HuggingFaceLogo/> Hugging Face</a>
+    <Section title="Get In Touch">
+      <div className="grid md:grid-cols-2 gap-12">
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
+            <p className="text-muted-foreground leading-relaxed mb-8">
+              I'm always interested in hearing about new opportunities and interesting projects. 
+              Feel free to reach out if you'd like to discuss potential collaborations or just say hello!
+            </p>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                <Mail className="h-6 w-6 text-primary"/>
+              </div>
+              <div>
+                <p className="font-medium">Email</p>
+                <p className="text-muted-foreground">{resumeData.contact.email}</p>
+              </div>
             </div>
+            
+            <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors">
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                <Phone className="h-6 w-6 text-primary"/>
+              </div>
+              <div>
+                <p className="font-medium">Phone</p>
+                <p className="text-muted-foreground">{resumeData.contact.phone}</p>
+              </div>
+            </div>
+          </div>
         </div>
+        
+        <div className="space-y-6">
+          <h3 className="text-2xl font-semibold">Follow Me</h3>
+          <div className="grid gap-4">
+            <a 
+              href={resumeData.contact.links.linkedin} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
+            >
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                <Linkedin className="h-6 w-6 text-primary"/>
+              </div>
+              <div>
+                <p className="font-medium">LinkedIn</p>
+                <p className="text-muted-foreground">Professional Network</p>
+              </div>
+            </a>
+            
+            <a 
+              href={resumeData.contact.links.github} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
+            >
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                <Github className="h-6 w-6 text-primary"/>
+              </div>
+              <div>
+                <p className="font-medium">GitHub</p>
+                <p className="text-muted-foreground">Code Repository</p>
+              </div>
+            </a>
+            
+            <a 
+              href={resumeData.contact.links.huggingface} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
+            >
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                <HuggingFaceLogo />
+              </div>
+              <div>
+                <p className="font-medium">Hugging Face</p>
+                <p className="text-muted-foreground">AI/ML Projects</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </Section>
   );
 

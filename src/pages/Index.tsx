@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { 
-  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap, Wrench 
+  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap, Wrench, Globe 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -139,12 +139,15 @@ const Index = () => {
             </div>
           </div>
         )}
-        <div className="flex items-center w-full">
+        <div className="flex flex-col items-center w-full space-y-2">
+          <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+            {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
           <Button 
             variant="ghost"
             className={cn(
               "justify-start transition-all", 
-              isSidebarCollapsed ? 'w-10 h-10 p-0' : 'flex-1 mr-2'
+              isSidebarCollapsed ? 'w-10 h-10 p-0' : 'w-full'
             )}
             onClick={() => { 
               if (activeView === 'chat') {
@@ -157,9 +160,6 @@ const Index = () => {
           >
             <Sparkles className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} /> 
             {!isSidebarCollapsed && (activeView === 'chat' ? 'Home' : 'Back to Home')}
-          </Button>
-          <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
-            {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
         </div>
       </div>
@@ -260,6 +260,7 @@ const Index = () => {
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Ask me anything about Yash Gori..."
                 className="pr-12 h-12 text-center"
+                autoFocus={false}
               />
               <Button 
                 size="icon" 
@@ -397,7 +398,7 @@ const Index = () => {
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                          <Code className="h-6 w-6 text-primary" />
+                          <Globe className="h-6 w-6 text-primary" />
                         </div>
                       </div>
                     </div>
@@ -811,6 +812,7 @@ const Index = () => {
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask me anything about Yash Gori..."
                   className="pr-12 h-12"
+                  autoFocus={false}
                 />
                 <Button size="icon" variant="ghost" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
                   <CornerDownLeft className="h-5 w-5 font-bold" />

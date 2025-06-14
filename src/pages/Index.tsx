@@ -1,19 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CornerDownLeft, Github, Linkedin, Mail, Menu, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { CornerDownLeft, Github, Linkedin, Mail, Menu, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { resumeData, Project, Experience } from '@/data/resume';
+import { resumeData, Project, Experience, Education } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
-
-type Message = {
-  role: 'user' | 'assistant';
-  content: string;
-};
-
-type View = 'chat' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
+import ContactForm from '@/components/ContactForm';
 
 const HuggingFaceLogo = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-foreground">
@@ -89,6 +83,13 @@ const Index = () => {
     setMessages(newMessages);
     askApi.mutate(suggestion);
     setInput('');
+  };
+
+  const handleContactFormSubmit = (formData: { name: string; email: string; subject: string; message: string }) => {
+    const mailtoLink = `mailto:${resumeData.contact.email}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    )}`;
+    window.location.href = mailtoLink;
   };
 
   const SidebarContent = () => (
@@ -203,7 +204,9 @@ const Index = () => {
             </div>
           </div>
           
-          <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
+          <h1 className="text-4xl font-bold mb-1">{resumeData.name}</h1>
+          <p className="text-lg text-muted-foreground mb-4">{resumeData.title}</p>
+          <h2 className="text-3xl font-bold mb-2">{getGreeting()}</h2>
           <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
           
           <div className="w-full max-w-2xl mb-8">
@@ -298,24 +301,49 @@ const Index = () => {
 
   const AboutView = () => (
     <Section title="About Me">
-      <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="grid md:grid-cols-2 gap-12 items-start">
         <div className="space-y-6">
           <p className="text-lg leading-relaxed text-muted-foreground">
             {resumeData.about}
           </p>
-          <div className="flex flex-wrap gap-4">
-            <div className="bg-card p-4 rounded-lg border">
-              <h3 className="font-semibold mb-2">Location</h3>
-              <p className="text-muted-foreground">Available Worldwide</p>
+          
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <GraduationCap className="h-5 w-5 text-primary" />
+                Education
+              </h3>
+              <div className="space-y-4">
+                {resumeData.education.map((edu: Education, index) => (
+                  <div key={index} className="bg-card p-4 rounded-lg border hover:border-primary/50 transition-colors">
+                    <h4 className="font-semibold text-primary">{edu.institution}</h4>
+                    <p className="text-sm text-muted-foreground">{edu.degree}</p>
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-xs bg-secondary px-2 py-1 rounded">{edu.period}</span>
+                      <span className="text-sm font-medium">{edu.details}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="bg-card p-4 rounded-lg border">
+          </div>
+          
+          <div className="flex flex-wrap gap-4">
+            <div className="bg-card p-4 rounded-lg border hover:border-primary/50 transition-colors hover:scale-105 duration-200">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                Location
+              </h3>
+              <p className="text-muted-foreground">{resumeData.contact.location}</p>
+            </div>
+            <div className="bg-card p-4 rounded-lg border hover:border-primary/50 transition-colors hover:scale-105 duration-200">
               <h3 className="font-semibold mb-2">Status</h3>
               <p className="text-muted-foreground">Open to Opportunities</p>
             </div>
           </div>
         </div>
         <div className="flex justify-center">
-          <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border">
+          <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border hover:scale-105 transition-transform duration-300">
             <img 
               src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" 
               alt="Yash Gori" 
@@ -379,148 +407,280 @@ const Index = () => {
   );
   
   const ExperienceView = () => (
-    <Section title="Work Experience">
-      <div className="space-y-8">
-        {resumeData.experience.map((exp: Experience, index) => (
-          <div key={exp.company} className="relative">
-            <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full"></div>
-            <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold">{exp.role}</h3>
-                  <p className="text-primary font-medium">{exp.company}</p>
-                </div>
-                <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0">
-                  {exp.period}
+    <Section title="Work Experience & Volunteering">
+      <div className="space-y-12">
+        <div>
+          <h2 className="text-2xl font-semibold mb-8 text-primary">Professional Experience</h2>
+          <div className="space-y-8">
+            {resumeData.experience.map((exp: Experience, index) => (
+              <div key={exp.company} className="relative group">
+                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full group-hover:w-2 transition-all duration-300"></div>
+                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold">{exp.role}</h3>
+                      <p className="text-primary font-medium">{exp.company}</p>
+                      <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                        <MapPin className="h-3 w-3" />
+                        {exp.location}
+                      </p>
+                    </div>
+                    <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0">
+                      {exp.period}
+                    </div>
+                  </div>
+                  <ul className="space-y-2">
+                    {exp.points.map((point, i) => (
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <ul className="space-y-2">
-                {exp.points.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-semibold mb-8 text-primary">Volunteering</h2>
+          <div className="space-y-8">
+            {resumeData.volunteering.map((vol, index) => (
+              <div key={vol.organization} className="relative group">
+                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-secondary to-secondary/20 rounded-full group-hover:w-2 transition-all duration-300"></div>
+                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold">{vol.role}</h3>
+                      <p className="text-primary font-medium">{vol.organization}</p>
+                      <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                        <MapPin className="h-3 w-3" />
+                        {vol.location}
+                      </p>
+                    </div>
+                    <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0">
+                      {vol.period}
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground">{vol.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </Section>
   );
 
   const ProjectsView = () => (
     <Section title="Featured Projects">
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
         {resumeData.projects.map((proj: Project, index) => (
-          <div key={proj.title} className="bg-card rounded-lg border overflow-hidden hover:border-primary/50 transition-colors group">
-            <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-              <Code className="h-16 w-16 text-primary/50 group-hover:text-primary transition-colors" />
+          <div key={proj.title} className="bg-card rounded-lg border overflow-hidden hover:border-primary/50 transition-all duration-300 group hover:scale-105 hover:shadow-xl">
+            <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-300">
+              <Code className="h-16 w-16 text-primary/50 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-3">{proj.title}</h3>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">{proj.title}</h3>
               <p className="text-muted-foreground mb-4 leading-relaxed">{proj.description}</p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {proj.technologies.map(tech => (
-                  <span key={tech} className="px-3 py-1 bg-secondary text-xs font-medium rounded-full border">
+                  <span key={tech} className="px-3 py-1 bg-secondary text-xs font-medium rounded-full border hover:border-primary/50 transition-colors duration-200">
                     {tech}
                   </span>
                 ))}
+              </div>
+              <div className="flex gap-3">
+                {proj.githubUrl && (
+                  <Button variant="outline" size="sm" asChild className="flex-1 hover:scale-105 transition-transform duration-200">
+                    <a href={proj.githubUrl} target="_blank" rel="noopener noreferrer">
+                      <Github className="h-4 w-4 mr-2" />
+                      View Code
+                    </a>
+                  </Button>
+                )}
+                {proj.liveUrl && (
+                  <Button size="sm" asChild className="flex-1 hover:scale-105 transition-transform duration-200">
+                    <a href={proj.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Live Demo
+                    </a>
+                  </Button>
+                )}
               </div>
             </div>
           </div>
         ))}
       </div>
-    </Section>
-  );
-
-  const ContactView = () => (
-    <Section title="Get In Touch">
-      <div className="grid md:grid-cols-2 gap-12">
-        <div className="space-y-8">
-          <div>
-            <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              I'm always interested in hearing about new opportunities and interesting projects. 
-              Feel free to reach out if you'd like to discuss potential collaborations or just say hello!
-            </p>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-                <Mail className="h-6 w-6 text-primary"/>
-              </div>
-              <div>
-                <p className="font-medium">Email</p>
-                <p className="text-muted-foreground">{resumeData.contact.email}</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-                <Phone className="h-6 w-6 text-primary"/>
-              </div>
-              <div>
-                <p className="font-medium">Phone</p>
-                <p className="text-muted-foreground">{resumeData.contact.phone}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="space-y-6">
-          <h3 className="text-2xl font-semibold">Follow Me</h3>
-          <div className="grid gap-4">
-            <a 
-              href={resumeData.contact.links.linkedin} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <Linkedin className="h-6 w-6 text-primary"/>
-              </div>
-              <div>
-                <p className="font-medium">LinkedIn</p>
-                <p className="text-muted-foreground">Professional Network</p>
-              </div>
-            </a>
-            
-            <a 
-              href={resumeData.contact.links.github} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <Github className="h-6 w-6 text-primary"/>
-              </div>
-              <div>
-                <p className="font-medium">GitHub</p>
-                <p className="text-muted-foreground">Code Repository</p>
-              </div>
-            </a>
-            
-            <a 
-              href={resumeData.contact.links.huggingface} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <HuggingFaceLogo />
-              </div>
-              <div>
-                <p className="font-medium">Hugging Face</p>
-                <p className="text-muted-foreground">AI/ML Projects</p>
-              </div>
-            </a>
-          </div>
-        </div>
+      
+      <div className="text-center">
+        <Button 
+          variant="outline" 
+          size="lg" 
+          asChild 
+          className="group hover:scale-105 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+        >
+          <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+            <Github className="h-5 w-5 group-hover:animate-bounce" />
+            View All Projects on GitHub
+          </a>
+        </Button>
       </div>
     </Section>
   );
+
+  const ContactView = () => {
+    const [isFormLoading, setIsFormLoading] = useState(false);
+
+    const handleFormSubmit = async (formData: any) => {
+      setIsFormLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate loading
+      handleContactFormSubmit(formData);
+      setIsFormLoading(false);
+    };
+
+    return (
+      <Section title="Get In Touch">
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                I'm always interested in hearing about new opportunities and interesting projects. 
+                Feel free to reach out if you'd like to discuss potential collaborations or just say hello!
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              <a 
+                href={`mailto:${resumeData.contact.email}`}
+                className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 group"
+              >
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                  <Mail className="h-6 w-6 text-primary"/>
+                </div>
+                <div>
+                  <p className="font-medium">Email</p>
+                  <p className="text-muted-foreground">{resumeData.contact.email}</p>
+                </div>
+              </a>
+              
+              <a 
+                href={`tel:${resumeData.contact.phone}`}
+                className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 group"
+              >
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                  <Phone className="h-6 w-6 text-primary"/>
+                </div>
+                <div>
+                  <p className="font-medium">Phone</p>
+                  <p className="text-muted-foreground">{resumeData.contact.phone}</p>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 group">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                  <MapPin className="h-6 w-6 text-primary"/>
+                </div>
+                <div>
+                  <p className="font-medium">Location</p>
+                  <p className="text-muted-foreground">{resumeData.contact.location}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+              <ContactForm onSubmit={handleFormSubmit} isLoading={isFormLoading} />
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Follow Me</h3>
+              <div className="grid gap-4">
+                <a 
+                  href={resumeData.contact.links.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 group hover:scale-105"
+                >
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Linkedin className="h-5 w-5 text-primary group-hover:animate-bounce"/>
+                  </div>
+                  <div>
+                    <p className="font-medium">LinkedIn</p>
+                    <p className="text-muted-foreground text-sm">Professional Network</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href={resumeData.contact.links.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 group hover:scale-105"
+                >
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Github className="h-5 w-5 text-primary group-hover:animate-bounce"/>
+                  </div>
+                  <div>
+                    <p className="font-medium">GitHub</p>
+                    <p className="text-muted-foreground text-sm">Code Repository</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href={resumeData.contact.links.huggingface} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 group hover:scale-105"
+                >
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <HuggingFaceLogo />
+                  </div>
+                  <div>
+                    <p className="font-medium">Hugging Face</p>
+                    <p className="text-muted-foreground text-sm">AI/ML Projects</p>
+                  </div>
+                </a>
+
+                <a 
+                  href={resumeData.contact.links.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 group hover:scale-105"
+                >
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Instagram className="h-5 w-5 text-primary group-hover:animate-bounce"/>
+                  </div>
+                  <div>
+                    <p className="font-medium">Instagram</p>
+                    <p className="text-muted-foreground text-sm">@yashgori20</p>
+                  </div>
+                </a>
+
+                <a 
+                  href={resumeData.contact.links.twitter} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-all duration-300 group hover:scale-105"
+                >
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Twitter className="h-5 w-5 text-primary group-hover:animate-bounce"/>
+                  </div>
+                  <div>
+                    <p className="font-medium">Twitter</p>
+                    <p className="text-muted-foreground text-sm">@yashgori20</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+    );
+  };
 
   return (
     <div className="flex h-screen w-screen bg-background text-foreground">

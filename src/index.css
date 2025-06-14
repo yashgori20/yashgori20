@@ -34,6 +34,14 @@
     --ring: 220 14.3% 95.9%;
 
     --radius: 0.5rem;
+
+    /* Sidebar Colors */
+    --sidebar-background: 220 8% 12%; /* Dark Slate Blue */
+    --sidebar-foreground: 220 20% 95%; /* Light Slate Grey */
+    --sidebar-accent: 220 10% 22%; /* Deeper Slate for Hover/Active */
+    --sidebar-accent-foreground: 220 20% 98%; /* White for Active Text */
+    --sidebar-border: 220 8% 18%;
+    --sidebar-ring: 220 14.3% 95.9%;
   }
 }
 

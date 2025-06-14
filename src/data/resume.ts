@@ -1,4 +1,4 @@
-import { ProjectType, ExperienceType, SkillType } from "@/types";
+import { ProjectType, ExperienceType, SkillType } from "../types";
 
 export const resumeData = {
   name: "Yash Gori",

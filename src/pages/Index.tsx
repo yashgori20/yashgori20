@@ -1,8 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { 
-  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap, Wrench 
+  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap, Wrench, Globe 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,95 +27,23 @@ const HuggingFaceLogo = ({ className }: { className?: string }) => (
   />
 );
 
-const Index = () => {
-  const [activeView, setActiveView] = useState<View>('chat');
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [profileCardOpen, setProfileCardOpen] = useState(false);
-  const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+// Helper Components moved outside of Index to prevent re-renders causing focus loss
+const SidebarButton = ({ icon: Icon, label, view, activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }: { icon: React.ElementType, label: string, view: View, activeView: View, setActiveView: (view: View) => void, isSidebarCollapsed: boolean, setSidebarOpen: (open: boolean) => void }) => (
+    <Button 
+      variant={activeView === view ? "secondary" : "ghost"} 
+      className={cn(
+        "w-full transition-all duration-200",
+        isSidebarCollapsed ? "justify-center px-2" : "justify-start"
+      )}
+      onClick={() => { setActiveView(view); setSidebarOpen(false); }}
+      title={isSidebarCollapsed ? label : undefined}
+    >
+      <Icon className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} />
+      {!isSidebarCollapsed && label}
+    </Button>
+);
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning!";
-    if (hour < 18) return "Good afternoon!";
-    return "Good evening!";
-  };
-
-  const askApi = useMutation({
-    mutationFn: async (userInput: string): Promise<string> => {
-      try {
-        const response = await fetch('https://yashgori20-yashgori.hf.space/ask', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ "question": userInput }),
-        });
-        if (!response.ok) {
-            throw new Error(`API error: ${response.statusText}`);
-        }
-        const data = await response.json();
-        return data.answer || "I'm not sure how to answer that. Try asking about Yash's skills or projects.";
-      } catch (error) {
-        console.error("API call failed:", error);
-        return "Sorry, something went wrong while connecting to my brain. Please try again later.";
-      }
-    },
-    onSuccess: (data) => {
-      setMessages((prev) => [...prev, { role: 'assistant', content: data }]);
-    },
-  });
-
-  useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTo({
-        top: scrollAreaRef.current.scrollHeight,
-        behavior: 'smooth',
-      });
-    }
-  }, [messages]);
-
-  const handleSend = () => {
-    if (input.trim()) {
-      setActiveView('chat');
-      const newMessages: Message[] = [...messages, { role: 'user', content: input }];
-      setMessages(newMessages);
-      askApi.mutate(input);
-      setInput('');
-    }
-  };
-  
-  const handleSuggestionClick = (suggestion: string) => {
-    setInput(suggestion);
-    setActiveView('chat');
-    const newMessages: Message[] = [...messages, { role: 'user', content: suggestion }];
-    setMessages(newMessages);
-    askApi.mutate(suggestion);
-    setInput('');
-  };
-
-  const scrollToContact = () => {
-    setActiveView('contact');
-    // Small delay to ensure the view has switched before focusing
-    setTimeout(() => {
-      const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
-      if (messageInput) {
-        messageInput.focus();
-      }
-    }, 100);
-  };
-
-  const handleProfileClick = (event: React.MouseEvent) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setProfileCardPosition({
-      x: rect.left,
-      y: rect.bottom
-    });
-    setProfileCardOpen(!profileCardOpen);
-  };
-
-  const SidebarContent = () => (
+const SidebarContent = ({ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }: { isSidebarCollapsed: boolean, setIsSidebarCollapsed: (value: boolean | ((prev: boolean) => boolean)) => void, activeView: View, setActiveView: (view: View) => void, setSidebarOpen: (open: boolean) => void, setMessages: (messages: Message[]) => void, scrollToContact: () => void }) => (
     <div className={cn(
       "flex flex-col h-full bg-card text-foreground transition-all duration-300",
       isSidebarCollapsed ? "w-16" : "w-72"
@@ -140,26 +67,25 @@ const Index = () => {
             </div>
           </div>
         )}
-        <div className="flex items-center w-full">
-          <Button 
-            variant="ghost"
-            className={cn(
-              "justify-start transition-all", 
-              isSidebarCollapsed ? 'w-10 h-10 p-0' : 'flex-1 mr-2'
-            )}
-            onClick={() => { 
-              if (activeView === 'chat') {
-                setMessages([]);
-              } else {
-                setActiveView('chat');
-              }
-              setSidebarOpen(false); 
-            }}
-          >
-            <Sparkles className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} /> 
-            {!isSidebarCollapsed && (activeView === 'chat' ? 'Home' : 'Back to Home')}
-          </Button>
-          <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+        <div className={cn("flex items-center w-full", isSidebarCollapsed && "justify-center")}>
+          {!isSidebarCollapsed && (
+            <Button 
+              variant="ghost"
+              className="justify-start transition-all flex-1 mr-2"
+              onClick={() => { 
+                if (activeView === 'chat') {
+                  setMessages([]);
+                } else {
+                  setActiveView('chat');
+                }
+                setSidebarOpen(false); 
+              }}
+            >
+              <Sparkles className="h-4 w-4 mr-2" /> 
+              {activeView === 'chat' ? 'Home' : 'Back to Home'}
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(prev => !prev)}>
             {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
         </div>
@@ -167,11 +93,11 @@ const Index = () => {
       
       <ScrollArea className="flex-1">
         <div className="space-y-1 px-4">
-          <SidebarButton icon={User} label="About" view="about" />
-          <SidebarButton icon={Briefcase} label="Experience" view="experience" />
-          <SidebarButton icon={Code} label="Projects" view="projects" />
-          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" />
-          <SidebarButton icon={Mail} label="Contact" view="contact" />
+          <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={Mail} label="Contact" view="contact" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
         </div>
       </ScrollArea>
       
@@ -213,40 +139,62 @@ const Index = () => {
     </div>
   );
 
-  const SidebarButton = ({ icon: Icon, label, view }: { icon: React.ElementType, label: string, view: View }) => (
-    <Button 
-      variant={activeView === view ? "secondary" : "ghost"} 
-      className={cn(
-        "w-full transition-all duration-200",
-        isSidebarCollapsed ? "justify-center px-2" : "justify-start"
-      )}
-      onClick={() => { setActiveView(view); setSidebarOpen(false); }}
-      title={isSidebarCollapsed ? label : undefined}
-    >
-      <Icon className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} />
-      {!isSidebarCollapsed && label}
-    </Button>
-  );
+const ChatInputBar = ({ input, setInput, handleSend, isPending, className, inputClassName }: { input: string, setInput: (value: string) => void, handleSend: () => void, isPending: boolean, className?: string, inputClassName?: string }) => (
+    <div className={cn("relative", className)}>
+        <Input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+          placeholder="Ask me anything about Yash Gori..."
+          className={cn("pr-12 h-12", inputClassName)}
+          autoFocus
+        />
+        <Button size="icon" variant="ghost" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={isPending}>
+          <CornerDownLeft className="h-5 w-5 font-bold" />
+        </Button>
+    </div>
+);
 
-  const renderView = () => {
-    switch (activeView) {
-      case 'chat': return <ChatInterface />;
-      case 'about': return <AboutView />;
-      case 'experience': return <ExperienceView />;
-      case 'projects': return <ProjectsView />;
-      case 'skills': return <SkillsView />;
-      case 'contact': return <ContactView />;
-      default: return <ChatInterface />;
-    }
-  };
+const SuggestionCard = ({ title, onClick }: { title: string; onClick: () => void }) => (
+    <button onClick={onClick} className="bg-card p-4 rounded-lg hover:bg-secondary transition-colors text-left flex items-center border">
+        <p className="flex-1 text-sm">{title}</p>
+        <CornerDownLeft className="h-4 w-4 text-muted-foreground ml-2" />
+    </button>
+);
 
-  const ChatInterface = () => (
+const ChatMessage = ({ message }: { message: Message }) => {
+    const isUser = message.role === 'user';
+    return (
+      <div className={cn("flex items-start gap-4", isUser ? "justify-end" : "justify-start")}>
+        {!isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center"><Bot className="w-5 h-5 text-primary-foreground" /></div>}
+        <div className={cn("max-w-xl p-4 rounded-lg whitespace-pre-wrap", isUser ? "bg-primary text-primary-foreground" : "bg-secondary")}>
+          {message.content}
+        </div>
+        {isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><User className="w-5 h-5 text-secondary-foreground" /></div>}
+      </div>
+    );
+};
+  
+const LoadingMessage = () => (
+      <div className="flex items-start gap-4 justify-start">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center"><Bot className="w-5 h-5 text-primary-foreground animate-pulse" /></div>
+        <div className="max-w-xl p-4 rounded-lg bg-secondary flex items-center">
+            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.15s] mx-1"></div>
+            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+        </div>
+      </div>
+  )
+
+const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }: { messages: Message[], input: string, setInput: (value: string) => void, handleSend: () => void, handleSuggestionClick: (suggestion: string) => void, askApi: UseMutationResult<string, Error, string, unknown>, getGreeting: () => string, scrollAreaRef: React.RefObject<HTMLDivElement> }) => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
         <div className="flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
           <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
-            <Button variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
-              Prefer a classic view?
+            <Button asChild variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
+              <a href="https://yash-ai-hub-portfolio.lovable.app/" target="_blank" rel="noopener noreferrer">
+                Prefer a classic view?
+              </a>
             </Button>
           </div>
           
@@ -254,24 +202,13 @@ const Index = () => {
           <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
           
           <div className="w-full max-w-2xl mb-8">
-            <div className="relative">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Ask me anything about Yash Gori..."
-                className="pr-12 h-12 text-center"
+             <ChatInputBar
+                input={input}
+                setInput={setInput}
+                handleSend={handleSend}
+                isPending={askApi.isPending}
+                inputClassName="text-center"
               />
-              <Button 
-                size="icon" 
-                variant="ghost"
-                className="absolute right-2 top-1/2 -translate-y-1/2" 
-                onClick={handleSend} 
-                disabled={askApi.isPending}
-              >
-                <CornerDownLeft className="h-5 w-5 font-bold" />
-              </Button>
-            </div>
           </div>
           
           <div className="grid grid-cols-3 gap-4 w-full max-w-2xl mb-4">
@@ -297,39 +234,8 @@ const Index = () => {
       )}
     </div>
   );
-  
-  const SuggestionCard = ({ title, onClick }: { title: string; onClick: () => void }) => (
-    <button onClick={onClick} className="bg-card p-4 rounded-lg hover:bg-secondary transition-colors text-left flex items-center border">
-        <p className="flex-1 text-sm">{title}</p>
-        <CornerDownLeft className="h-4 w-4 text-muted-foreground ml-2" />
-    </button>
-  );
 
-  const ChatMessage = ({ message }: { message: Message }) => {
-    const isUser = message.role === 'user';
-    return (
-      <div className={cn("flex items-start gap-4", isUser ? "justify-end" : "justify-start")}>
-        {!isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center"><Bot className="w-5 h-5 text-primary-foreground" /></div>}
-        <div className={cn("max-w-xl p-4 rounded-lg whitespace-pre-wrap", isUser ? "bg-primary text-primary-foreground" : "bg-secondary")}>
-          {message.content}
-        </div>
-        {isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><User className="w-5 h-5 text-secondary-foreground" /></div>}
-      </div>
-    );
-  };
-  
-  const LoadingMessage = () => (
-      <div className="flex items-start gap-4 justify-start">
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center"><Bot className="w-5 h-5 text-primary-foreground animate-pulse" /></div>
-        <div className="max-w-xl p-4 rounded-lg bg-secondary flex items-center">
-            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.15s] mx-1"></div>
-            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-        </div>
-      </div>
-  )
-
-  const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
+const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
     <div className="min-h-screen p-6 md:p-12">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
@@ -343,7 +249,7 @@ const Index = () => {
     </div>
   );
 
-  const AboutView = () => (
+const AboutView = () => (
     <Section title="About Me">
       <div className="grid lg:grid-cols-5 gap-12 items-start">
         <div className="lg:col-span-3 space-y-12">
@@ -398,7 +304,7 @@ const Index = () => {
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                          <Code className="h-6 w-6 text-primary" />
+                          <Globe className="h-6 w-6 text-primary" />
                         </div>
                       </div>
                     </div>
@@ -442,7 +348,7 @@ const Index = () => {
     </Section>
   );
   
-  const SkillsView = () => (
+const SkillsView = () => (
     <Section title="Skills & Expertise">
       <div className="space-y-12">
         <div>
@@ -562,7 +468,7 @@ const Index = () => {
     </Section>
   );
   
-  const ExperienceView = () => (
+const ExperienceView = () => (
     <Section title="Work Experience">
       <div className="space-y-16">
         <div>
@@ -634,7 +540,7 @@ const Index = () => {
     </Section>
   );
 
-  const ProjectsView = () => (
+const ProjectsView = () => (
     <Section title="Featured Projects">
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
@@ -683,7 +589,7 @@ const Index = () => {
     </Section>
   );
 
-  const ContactView = () => (
+const ContactView = () => (
     <Section title="Get In Touch">
       <div className="grid lg:grid-cols-2 gap-12">
         <div className="space-y-8">
@@ -757,6 +663,223 @@ const Index = () => {
     </Section>
   );
 
+const Index = () => {
+  const [activeView, setActiveView] = useState<View>('chat');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [profileCardOpen, setProfileCardOpen] = useState(false);
+  const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning!";
+    if (hour < 18) return "Good afternoon!";
+    return "Good evening!";
+  };
+
+  const askApi = useMutation({
+    mutationFn: async (userInput: string): Promise<string> => {
+      try {
+        const response = await fetch('https://yashgori20-yashgori.hf.space/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ "question": userInput }),
+        });
+        if (!response.ok) {
+            throw new Error(`API error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data.answer || "I'm not sure how to answer that. Try asking about Yash's skills or projects.";
+      } catch (error) {
+        console.error("API call failed:", error);
+        return "Sorry, something went wrong while connecting to my brain. Please try again later.";
+      }
+    },
+    onSuccess: (data) => {
+      setMessages((prev) => [...prev, { role: 'assistant', content: data }]);
+    },
+  });
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [messages]);
+
+  const handleSend = () => {
+    if (input.trim()) {
+      setActiveView('chat');
+      const newMessages: Message[] = [...messages, { role: 'user', content: input }];
+      setMessages(newMessages);
+      askApi.mutate(input);
+      setInput('');
+    }
+  };
+  
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+    setActiveView('chat');
+    const newMessages: Message[] = [...messages, { role: 'user', content: suggestion }];
+    setMessages(newMessages);
+    askApi.mutate(suggestion);
+    setInput('');
+  };
+
+  const scrollToContact = () => {
+    setActiveView('contact');
+    // Small delay to ensure the view has switched before focusing
+    setTimeout(() => {
+      const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
+      if (messageInput) {
+        messageInput.focus();
+      }
+    }, 100);
+  };
+
+  const handleProfileClick = (event: React.MouseEvent) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setProfileCardPosition({
+      x: rect.left,
+      y: rect.bottom
+    });
+    setProfileCardOpen(!profileCardOpen);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (activeView !== 'chat') return;
+        
+        const target = e.target as HTMLElement;
+        const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+
+        if (!isTypingInInput && e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const chatInput = document.querySelector('input[placeholder="Ask me anything about Yash Gori..."]') as HTMLInputElement;
+            if (chatInput) {
+                chatInput.focus();
+            }
+        }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+    };
+}, [activeView]);
+
+  const SidebarContent = ({ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }: { isSidebarCollapsed: boolean, setIsSidebarCollapsed: (value: boolean | ((prev: boolean) => boolean)) => void, activeView: View, setActiveView: (view: View) => void, setSidebarOpen: (open: boolean) => void, setMessages: (messages: Message[]) => void, scrollToContact: () => void }) => (
+    <div className={cn(
+      "flex flex-col h-full bg-card text-foreground transition-all duration-300",
+      isSidebarCollapsed ? "w-16" : "w-72"
+    )}>
+      <div className={cn("p-4 flex flex-col", isSidebarCollapsed ? 'items-center' : '')}>
+        {!isSidebarCollapsed && (
+          <div className="mb-4 text-center">
+            <div className="flex items-center gap-3 mb-2">
+              <img 
+                src={resumeData.profileImage} 
+                alt="Yash Gori" 
+                className="w-10 h-10 rounded-full border-2 border-primary/20"
+              />
+              <div className="flex flex-col items-start">
+                <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  {resumeData.name}
+                </h2>
+                <div className="w-full h-px bg-border my-1"></div>
+                <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className={cn("flex items-center w-full", isSidebarCollapsed && "justify-center")}>
+          {!isSidebarCollapsed && (
+            <Button 
+              variant="ghost"
+              className="justify-start transition-all flex-1 mr-2"
+              onClick={() => { 
+                if (activeView === 'chat') {
+                  setMessages([]);
+                } else {
+                  setActiveView('chat');
+                }
+                setSidebarOpen(false); 
+              }}
+            >
+              <Sparkles className="h-4 w-4 mr-2" /> 
+              {activeView === 'chat' ? 'Home' : 'Back to Home'}
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(prev => !prev)}>
+            {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
+        </div>
+      </div>
+      
+      <ScrollArea className="flex-1">
+        <div className="space-y-1 px-4">
+          <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+          <SidebarButton icon={Mail} label="Contact" view="contact" {...{ activeView, setActiveView, isSidebarCollapsed, setSidebarOpen }}/>
+        </div>
+      </ScrollArea>
+      
+      <div className="mt-auto p-4 border-t border-border">
+        {!isSidebarCollapsed && (
+          <>
+            <div className="flex justify-center space-x-4 mb-4">
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <Github className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <Linkedin className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <HuggingFaceLogo className="h-6 w-6 hover:text-primary transition-colors" />
+              </a>
+              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <Instagram className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <Twitter className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+            </div>
+            <div className="space-y-3">
+              <a href="https://drive.google.com/file/d/1aWrJqUWgxKvDZ9zWgvZg6GYxUi96Px-N/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Resume
+                </Button>
+              </a>
+              <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50" onClick={scrollToContact}>
+                <Mail className="mr-2 h-4 w-4" />
+                Get In Touch
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+
+  const renderView = () => {
+    switch (activeView) {
+      case 'chat': return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }} />;
+      case 'about': return <AboutView />;
+      case 'experience': return <ExperienceView />;
+      case 'projects': return <ProjectsView />;
+      case 'skills': return <SkillsView />;
+      case 'contact': return <ContactView />;
+      default: return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }} />;
+    }
+  };
+
   return (
     <div className="flex h-screen w-screen bg-background text-foreground">
       <ProfileCard 
@@ -773,7 +896,7 @@ const Index = () => {
                   </Button>
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-72 border-none">
-                  <div className="w-72"><SidebarContent /></div>
+                  <div className="w-72"><SidebarContent {...{ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} /></div>
               </SheetContent>
           </Sheet>
       </div>
@@ -782,7 +905,7 @@ const Index = () => {
         "hidden md:block h-full transition-all duration-300",
         isSidebarCollapsed ? "w-16" : "w-72"
       )}>
-          <SidebarContent />
+          <SidebarContent {...{ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} />
       </div>
       
       <main className="flex-1 flex flex-col h-full bg-background overflow-hidden relative">
@@ -805,18 +928,12 @@ const Index = () => {
         {activeView === 'chat' && messages.length > 0 && (
           <div className="p-4 border-t border-border bg-background">
             <div className="max-w-4xl mx-auto">
-              <div className="relative">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask me anything about Yash Gori..."
-                  className="pr-12 h-12"
-                />
-                <Button size="icon" variant="ghost" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
-                  <CornerDownLeft className="h-5 w-5 font-bold" />
-                </Button>
-              </div>
+              <ChatInputBar
+                input={input}
+                setInput={setInput}
+                handleSend={handleSend}
+                isPending={askApi.isPending}
+              />
               <p className="text-xs text-center text-muted-foreground mt-2">
                   YashGori-GPT can make mistakes. Consider checking important information.
               </p>

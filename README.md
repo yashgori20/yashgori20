@@ -1,73 +1,56 @@
-# Welcome to your Lovable project
+# 👋 Hi there, I'm Yash Gori! 
+#### [Visit my portfolio](https://yashgori.streamlit.app/)
 
-## Project info
+<div align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=4000&pause=1000&color=FFE94B&center=true&vCenter=true&random=false&width=435&lines=AI%2FML+Engineer;Full+Stack+Developer;Problem+Solver" alt="Typing SVG" />
+</div>
 
-**URL**: https://lovable.dev/projects/86341cfb-8c7f-4671-8545-7726e4866ffa
+## 🚀 About Me
+I'm a BTech IT student at KJ Somaiya College of Engineering, passionate about building AI-powered solutions that make a difference. When I'm not coding, you'll find me exploring new tech, solving problems, or sharing knowledge with the community.
 
-## How can I edit this code?
+### 🎯 Current Focus
+- 🔭 Working on DocuTalk - an AI-Enhanced Document Understanding System
+- 🌱 Learning advanced NLP techniques and Large Language Models
+- 👯 Looking to collaborate on AI/ML projects
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/86341cfb-8c7f-4671-8545-7726e4866ffa) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## 🛠️ Tech Stack
+```python
+my_stack = {
+    'AI/ML': ['LangChain', 'FAISS', 'Hugging Face Models', 'Gemini', 'GROQ'],
+    'Languages': ['Python', 'SQL'],
+    'Web Dev': ['Flask', 'Streamlit', 'Flutter'],
+    'Data': ['PostgreSQL', 'Firebase', 'Numpy', 'Pandas'],
+    'Tools': ['Git', 'PowerBI', 'Looker', 'Figma']
+}
 ```
 
-**Edit a file directly in GitHub**
+## 🎨 Featured Projects
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 🤖 DocuTalk
+AI-powered document interaction system using Flutter, Flask, and Gemini LLM. Leverages FAISS for semantic search and LangChain for contextual understanding.
 
-**Use GitHub Codespaces**
+### 💼 Inhance
+LinkedIn Profile Optimizer powered by Mixtral LLM and GROQ Cloud. Multi-agent system providing personalized profile enhancement suggestions.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 📊 Customer Churn Predictor
+94% accurate ML model for predicting customer churn, visualized through interactive Power BI dashboards.
 
-## What technologies are used for this project?
+## 📫 Let's Connect!
+[<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/linkedin.svg" width="30"/>](https://linkedin.com/in/yashgori20)
+[<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/kaggle.svg" width="30"/>](https://kaggle.com/yashgori20)
+[<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/huggingface.svg" width="30"/>](https://huggingface.co/yashgori20)
+[<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/twitter.svg" width="30"/>](https://twitter.com/yashgori20)
+[<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/instagram.svg" width="30"/>](https://instagram.com/yashgori20)
+[<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/gmail.svg" width="30"/>](mailto:yashnileshgori@gmail.com)
 
-This project is built with:
+## 📊 GitHub Stats
+<div align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=yashnileshgori&theme=dark&hide_border=true&ring=FFE94B&fire=FFE94B&currStreakLabel=FFE94B" />
+</div>
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/86341cfb-8c7f-4671-8545-7726e4866ffa) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```python
+while True:
+    code()
+    learn()
+    grow()
+```

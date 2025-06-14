@@ -19,14 +19,12 @@ type Message = {
 type View = 'chat' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
 
 const HuggingFaceLogo = ({ className }: { className?: string }) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn("text-foreground", className)}>
-        <path d="M2.52999 13.2C2.52999 12.59 2.88999 12.04 3.42999 11.73L8.15999 9.35C8.39999 9.23 8.52999 8.97 8.52999 8.7V4.28C8.52999 3.55 9.11999 2.96 9.84999 2.96H10.16C10.89 2.96 11.48 3.55 11.48 4.28V8.7C11.48 8.97 11.61 9.23 11.85 9.35L16.58 11.73C17.12 12.04 17.48 12.59 17.48 13.2V13.68C17.48 14.02 17.37 14.34 17.16 14.6L15.3 17.47C15.01 17.92 14.48 18.2 13.92 18.2H12.08C11.52 18.2 10.99 17.92 10.7 17.47L8.84001 14.6C8.63001 14.34 8.52001 14.02 8.52001 13.68V13.2H2.52999Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 18.2102V21.0002" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M15.3008 17.4702L17.1008 20.3202" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M10.7012 17.4702L8.90117 20.3202" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M20.97 12.52C21.27 12.52 21.52 12.77 21.52 13.07V13.43C21.52 14.01 21.24 14.54 20.78 14.88L18.84 16.2C18.59 16.37 18.49 16.69 18.57 16.99L19.26 19.48C19.41 20.01 19.06 20.55 18.5 20.72L18.15 20.83C17.59 21 17.02 20.62 16.85 20.08L16.16 17.59C16.08 17.29 15.82 17.09 15.53 17.05L13.1 16.71C12.56 16.64 12.14 16.14 12.21 15.6L12.55 13.17C12.62 12.63 13.12 12.21 13.66 12.28L16.09 12.62C16.38 12.66 16.63 12.45 16.73 12.18L18.67 10.86C18.91 10.7 19.22 10.82 19.33 11.08L20.39 12.3C20.57 12.44 20.77 12.52 20.97 12.52Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-)
+  <img 
+    src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo-pirate.svg" 
+    alt="Hugging Face" 
+    className={cn("w-6 h-6", className)}
+  />
+);
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -102,26 +100,38 @@ const Index = () => {
       <div className={cn("p-4 flex flex-col", isSidebarCollapsed ? 'items-center' : '')}>
         {!isSidebarCollapsed && (
           <div className="mb-4 text-center">
-            <h2 className="text-xl font-bold">{resumeData.name}</h2>
+            <div className="flex items-center gap-3 mb-2 justify-center">
+              <img 
+                src={resumeData.profileImage} 
+                alt="Yash Gori" 
+                className="w-10 h-10 rounded-full border-2 border-primary/20"
+              />
+              <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                {resumeData.name}
+              </h2>
+            </div>
             <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
           </div>
         )}
         <div className="flex items-center w-full">
-           <Button 
-              variant="outline" 
-              className={cn("justify-start transition-all", isSidebarCollapsed ? 'w-10 h-10 p-0' : 'flex-1 mr-2')}
-              onClick={() => { 
-                if (activeView === 'chat') {
-                  setMessages([]);
-                } else {
-                  setActiveView('chat');
-                }
-                setSidebarOpen(false); 
-              }}
-            >
-              <Sparkles className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} /> 
-              {!isSidebarCollapsed && (activeView === 'chat' ? 'Home' : 'Back to Home')}
-            </Button>
+          <Button 
+            variant="outline" 
+            className={cn(
+              "justify-start transition-all bg-primary/5 border-primary/20 text-primary hover:bg-primary/10", 
+              isSidebarCollapsed ? 'w-10 h-10 p-0' : 'flex-1 mr-2'
+            )}
+            onClick={() => { 
+              if (activeView === 'chat') {
+                setMessages([]);
+              } else {
+                setActiveView('chat');
+              }
+              setSidebarOpen(false); 
+            }}
+          >
+            <Sparkles className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} /> 
+            {!isSidebarCollapsed && (activeView === 'chat' ? 'Home' : 'Back to Home')}
+          </Button>
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
             {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
@@ -159,12 +169,12 @@ const Index = () => {
               </a>
             </div>
             <div className="space-y-2">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
                 <Download className="mr-2 h-4 w-4" />
                 Download Resume
               </Button>
               <a href={`mailto:${resumeData.contact.email}`}>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
                   <Mail className="mr-2 h-4 w-4" />
                   Get In Touch
                 </Button>
@@ -210,7 +220,7 @@ const Index = () => {
           <div className="absolute top-8 right-8">
             <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" 
+                src={resumeData.profileImage} 
                 alt="Yash Gori" 
                 className="w-full h-full object-cover"
               />
@@ -323,15 +333,30 @@ const Index = () => {
                 <MapPin className="h-5 w-5 text-primary" />
                 <p className="text-muted-foreground">{resumeData.contact.location}</p>
               </div>
-              <div className="bg-card p-4 rounded-lg border">
-                <h3 className="font-semibold">Status</h3>
-                <p className="text-muted-foreground">Open to Opportunities</p>
-              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent border-b pb-3">What I Bring to the Table</h3>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              {resumeData.whatIBring}
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent border-b pb-3">Languages</h3>
+            <div className="grid grid-cols-2 gap-4">
+              {resumeData.languages.map((language, index) => (
+                <div key={index} className="flex items-center gap-3 p-3 bg-card rounded-lg border">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-muted-foreground">{language}</span>
+                </div>
+              ))}
             </div>
           </div>
           
           <div>
-            <h3 className="text-2xl font-semibold mb-6 border-b pb-3">Education</h3>
+            <h3 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent border-b pb-3">Education</h3>
             <div className="space-y-6">
               {resumeData.education.map((edu, index) => (
                 <div key={index} className="flex items-start gap-4">
@@ -353,7 +378,7 @@ const Index = () => {
         <div className="lg:col-span-2 flex justify-center">
           <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border">
             <img 
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" 
+              src={resumeData.profileImage} 
               alt="Yash Gori" 
               className="w-full h-full object-cover"
             />
@@ -365,47 +390,62 @@ const Index = () => {
   
   const SkillsView = () => (
     <Section title="Skills & Expertise">
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
-            <Code className="h-6 w-6 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Technical Skills</h3>
-          <div className="space-y-2">
-            {resumeData.skills.technical.map(skill => (
-              <div key={skill} className="flex items-center justify-between p-2 bg-secondary/50 rounded">
-                <span>{skill}</span>
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+      <div className="space-y-12">
+        <div>
+          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Technical Skills</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {resumeData.skills.technical.map((skill, index) => (
+              <div key={skill.name} className="group bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-lg">{skill.name}</h3>
+                  <span className="text-sm font-bold text-primary">{skill.level}%</span>
+                </div>
+                <div className="w-full bg-secondary/30 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-primary to-primary/80 h-2 rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${skill.level}%` }}
+                  ></div>
+                </div>
               </div>
             ))}
           </div>
         </div>
-        
-        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
-            <Users className="h-6 w-6 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Soft Skills</h3>
-          <div className="space-y-2">
-            {resumeData.skills.soft.map(skill => (
-              <div key={skill} className="flex items-center justify-between p-2 bg-secondary/50 rounded">
-                <span>{skill}</span>
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+
+        <div>
+          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Soft Skills</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {resumeData.skills.soft.map((skill, index) => (
+              <div key={skill.name} className="group bg-gradient-to-br from-secondary/5 to-primary/5 p-6 rounded-xl border hover:border-secondary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-lg">{skill.name}</h3>
+                  <span className="text-sm font-bold text-secondary-foreground">{skill.level}%</span>
+                </div>
+                <div className="w-full bg-primary/20 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-secondary to-secondary/80 h-2 rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${skill.level}%` }}
+                  ></div>
+                </div>
               </div>
             ))}
           </div>
         </div>
-        
-        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
-            <BrainCircuit className="h-6 w-6 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold mb-4">Tools & Technologies</h3>
-          <div className="space-y-2">
-            {resumeData.skills.tools.map(tool => (
-              <div key={tool} className="flex items-center justify-between p-2 bg-secondary/50 rounded">
-                <span>{tool}</span>
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+
+        <div>
+          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Tools & Technologies</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {resumeData.skills.tools.map((tool, index) => (
+              <div key={tool.name} className="group bg-gradient-to-br from-muted/5 to-primary/5 p-6 rounded-xl border hover:border-muted-foreground/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-lg">{tool.name}</h3>
+                  <span className="text-sm font-bold text-muted-foreground">{tool.level}%</span>
+                </div>
+                <div className="w-full bg-muted/20 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-muted-foreground to-muted-foreground/80 h-2 rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${tool.level}%` }}
+                  ></div>
+                </div>
               </div>
             ))}
           </div>
@@ -418,7 +458,7 @@ const Index = () => {
     <Section title="Work Experience">
       <div className="space-y-16">
         <div>
-          <h2 className="text-3xl font-bold mb-8">Career Path</h2>
+          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Career Path</h2>
           <div className="space-y-8">
             {resumeData.experience.map((exp: Experience, index) => (
               <div key={exp.company} className="relative group">
@@ -436,6 +476,20 @@ const Index = () => {
                       {exp.period}
                     </div>
                   </div>
+                  
+                  {exp.technologies && (
+                    <div className="mb-4">
+                      <h4 className="text-sm font-semibold mb-2 text-primary">Technologies Used:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {exp.technologies.map((tech, i) => (
+                          <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full border">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
                   <ul className="space-y-2">
                     {exp.points.map((point, i) => (
                       <li key={i} className="flex items-start gap-3 text-muted-foreground">
@@ -451,7 +505,7 @@ const Index = () => {
         </div>
 
         <div>
-            <h2 className="text-3xl font-bold mb-8">Volunteering</h2>
+            <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Volunteering</h2>
             <div className="relative group">
                 <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
                 <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">

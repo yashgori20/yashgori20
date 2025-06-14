@@ -13,6 +13,7 @@ export interface Experience {
   period: string;
   points: string[];
   location: string;
+  technologies?: string[];
 }
 
 export const resumeData = {
@@ -29,7 +30,10 @@ export const resumeData = {
       twitter: "https://twitter.com/yashgori20",
     },
   },
+  profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
   about: "An AI Developer with a passion for building intelligent systems and creative solutions. Proficient in Python, LangChain, and various machine learning frameworks, with experience in developing RAG-based applications, multi-agent systems, and data-driven prediction models. A detail-oriented, adaptable, and creative problem solver.",
+  whatIBring: "I transform complex problems into elegant AI solutions. Whether it's building conversational interfaces that understand context, creating prediction models that drive decisions, or designing systems that learn and adapt - I bring creativity, technical expertise, and a passion for innovation to every project.",
+  languages: ["English (Fluent)", "Hindi (Native)", "Gujarati (Native)", "Marathi (Conversational)"],
   education: [
     {
       institution: "KJ SOMAIYA COLLEGE OF ENGINEERING",
@@ -45,9 +49,30 @@ export const resumeData = {
     },
   ],
   skills: {
-    technical: ["Python", "LangChain", "PostgreSQL", "Prompt Engineering", "Streamlit", "Firebase", "Natural Language Processing", "Flask"],
-    soft: ["Detail Oriented", "Adaptability", "Critical Thinking", "Creative problem solving"],
-    tools: ["Canva", "Figma", "Git", "Github", "PowerBI", "Looker"],
+    technical: [
+      { name: "Python", level: 90 },
+      { name: "LangChain", level: 85 },
+      { name: "PostgreSQL", level: 80 },
+      { name: "Prompt Engineering", level: 90 },
+      { name: "Streamlit", level: 85 },
+      { name: "Firebase", level: 75 },
+      { name: "Natural Language Processing", level: 80 },
+      { name: "Flask", level: 80 }
+    ],
+    soft: [
+      { name: "Detail Oriented", level: 95 },
+      { name: "Adaptability", level: 90 },
+      { name: "Critical Thinking", level: 85 },
+      { name: "Creative problem solving", level: 90 }
+    ],
+    tools: [
+      { name: "Canva", level: 80 },
+      { name: "Figma", level: 75 },
+      { name: "Git", level: 85 },
+      { name: "Github", level: 85 },
+      { name: "PowerBI", level: 80 },
+      { name: "Looker", level: 70 }
+    ],
   },
   projects: [
     {
@@ -88,6 +113,7 @@ export const resumeData = {
       company: "Webotix IT Consultancy",
       period: "December 2024 – Ongoing",
       location: "Mumbai, Maharashtra (Remote)",
+      technologies: ["Flask", "Azure", "RAG", "Flutter Web", "AI Documentation"],
       points: [
         "Developed RAG-based AI template generator using Flask + Azure + RAG with dynamic prompt pipelines for intelligent document generation and compliance prediction.",
         "Collaborated on frontend integration with Flutter web.",
@@ -99,6 +125,7 @@ export const resumeData = {
       company: "N.K. Engineering",
       period: "May 2024 – July 2024",
       location: "Mumbai, Maharashtra",
+      technologies: ["Data Analysis", "Market Research", "Financial Modeling"],
       points: [
         "Led data-driven strategies to identify growth opportunities and secure financial support. Successfully attracted new investors, resulting in a significant increase in funding and 12% expansion in market share.",
       ],
@@ -108,6 +135,7 @@ export const resumeData = {
       company: "MetaRizz",
       period: "Sept 2023 – Oct 2023",
       location: "Mumbai, Maharashtra",
+      technologies: ["React", "UI/UX Design", "Healthcare App Development"],
       points: [
         "Led the front-end development and UI/UX design for Medinobel, a healthcare app, ensuring a seamless user experience.",
       ],
@@ -117,6 +145,7 @@ export const resumeData = {
       company: "Watermelon Gang",
       period: "Aug 2022 - Feb 2023",
       location: "Mumbai, Maharashtra",
+      technologies: ["Content Creation", "Social Media Marketing", "Client Management"],
       points: [
         "Created and curated engaging content, increasing follower engagement and boosting brand visibility for a leading banking app and a global cryptocurrency platform across multiple platforms.",
         "Onboarded 5 new clients and ensured high-quality content delivery.",

@@ -1,8 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { 
-  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap 
+  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap, Wrench 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -439,17 +438,17 @@ const Index = () => {
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray={`${skill.level}, 100`}
-                        className="text-primary"
+                        strokeWidth="3"
+                        strokeDasharray="100, 100"
+                        className="text-secondary/20"
                       />
                       <path
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray="100, 100"
-                        className="text-secondary/20"
+                        strokeWidth="3"
+                        strokeDasharray={`${skill.level}, 100`}
+                        className="text-primary"
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -477,17 +476,17 @@ const Index = () => {
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray={`${skill.level}, 100`}
-                        className="text-secondary"
+                        strokeWidth="3"
+                        strokeDasharray="100, 100"
+                        className="text-primary/20"
                       />
                       <path
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray="100, 100"
-                        className="text-primary/20"
+                        strokeWidth="3"
+                        strokeDasharray={`${skill.level}, 100`}
+                        className="text-secondary"
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -515,22 +514,22 @@ const Index = () => {
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray={`${tool.level}, 100`}
-                        className="text-muted-foreground"
+                        strokeWidth="3"
+                        strokeDasharray="100, 100"
+                        className="text-muted/20"
                       />
                       <path
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray="100, 100"
-                        className="text-muted/20"
+                        strokeWidth="3"
+                        strokeDasharray={`${tool.level}, 100`}
+                        className="text-muted-foreground"
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center">
-                        <Users className="h-6 w-6 text-muted-foreground" />
+                        <Wrench className="h-6 w-6 text-muted-foreground" />
                       </div>
                     </div>
                   </div>
@@ -549,46 +548,66 @@ const Index = () => {
       <div className="space-y-16">
         <div>
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Career Path</h2>
-          <div className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {resumeData.experience.map((exp: Experience, index) => (
-              <div key={exp.company} className="relative group">
-                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
-                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold">{exp.role}</h3>
-                      <p className="text-primary font-medium">{exp.company}</p>
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
-                        <MapPin className="h-4 w-4" /> {exp.location}
-                      </p>
-                    </div>
-                    <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0 whitespace-nowrap">
-                      {exp.period}
-                    </div>
-                  </div>
-                  
-                  {exp.technologies && (
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold mb-2 text-primary">Technologies Used:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {exp.technologies.map((tech, i) => (
-                          <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full border">
-                            {tech}
-                          </span>
-                        ))}
+              <div key={exp.company} className="group bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="flex flex-col items-center text-center mb-4">
+                  <div className="relative w-16 h-16 mb-4">
+                    <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeDasharray="100, 100"
+                        className="text-secondary/20"
+                      />
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeDasharray="85, 100"
+                        className="text-primary"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Briefcase className="h-5 w-5 text-primary" />
                       </div>
                     </div>
-                  )}
-                  
-                  <ul className="space-y-2">
-                    {exp.points.map((point, i) => (
-                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  </div>
+                  <h3 className="text-lg font-bold">{exp.role}</h3>
+                  <p className="text-primary font-medium">{exp.company}</p>
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <MapPin className="h-3 w-3" /> {exp.location}
+                  </p>
+                  <div className="bg-secondary px-3 py-1 rounded-full text-xs font-medium mt-2">
+                    {exp.period}
+                  </div>
                 </div>
+                
+                {exp.technologies && (
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold mb-2 text-primary">Technologies:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {exp.technologies.map((tech, i) => (
+                        <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full border">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <ul className="space-y-2 text-sm">
+                  {exp.points.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -596,20 +615,40 @@ const Index = () => {
 
         <div>
             <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Volunteering</h2>
-            <div className="relative group">
-                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
-                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                        <div>
-                            <h3 className="text-xl font-bold">{resumeData.volunteering.role}</h3>
-                            <p className="text-primary font-medium">{resumeData.volunteering.organization}</p>
-                        </div>
-                        <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0 whitespace-nowrap">
-                            {resumeData.volunteering.period}
+            <div className="group bg-gradient-to-br from-secondary/5 to-primary/5 p-6 rounded-xl border hover:border-secondary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg max-w-md mx-auto">
+                <div className="flex flex-col items-center text-center mb-4">
+                    <div className="relative w-16 h-16 mb-4">
+                        <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                            <path
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                                strokeDasharray="100, 100"
+                                className="text-primary/20"
+                            />
+                            <path
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                                strokeDasharray="90, 100"
+                                className="text-secondary"
+                            />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center">
+                                <Users className="h-5 w-5 text-secondary" />
+                            </div>
                         </div>
                     </div>
-                    <p className="text-muted-foreground">{resumeData.volunteering.description}</p>
+                    <h3 className="text-lg font-bold">{resumeData.volunteering.role}</h3>
+                    <p className="text-secondary font-medium">{resumeData.volunteering.organization}</p>
+                    <div className="bg-primary px-3 py-1 rounded-full text-xs font-medium mt-2 text-primary-foreground">
+                        {resumeData.volunteering.period}
+                    </div>
                 </div>
+                <p className="text-muted-foreground text-sm text-center">{resumeData.volunteering.description}</p>
             </div>
         </div>
       </div>

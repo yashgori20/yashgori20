@@ -10,6 +10,7 @@ import { resumeData, Project, Experience } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import ContactForm from '@/components/ContactForm';
+import ProfileCard from '@/components/ProfileCard';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -32,6 +33,8 @@ const Index = () => {
   const [input, setInput] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [profileCardOpen, setProfileCardOpen] = useState(false);
+  const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const getGreeting = () => {
@@ -92,6 +95,26 @@ const Index = () => {
     setInput('');
   };
 
+  const scrollToContact = () => {
+    setActiveView('contact');
+    // Small delay to ensure the view has switched before focusing
+    setTimeout(() => {
+      const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
+      if (messageInput) {
+        messageInput.focus();
+      }
+    }, 100);
+  };
+
+  const handleProfileClick = (event: React.MouseEvent) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setProfileCardPosition({
+      x: rect.left,
+      y: rect.bottom
+    });
+    setProfileCardOpen(!profileCardOpen);
+  };
+
   const SidebarContent = () => (
     <div className={cn(
       "flex flex-col h-full bg-card text-foreground transition-all duration-300",
@@ -100,24 +123,27 @@ const Index = () => {
       <div className={cn("p-4 flex flex-col", isSidebarCollapsed ? 'items-center' : '')}>
         {!isSidebarCollapsed && (
           <div className="mb-4 text-center">
-            <div className="flex items-center gap-3 mb-2 justify-center">
+            <div className="flex items-center gap-3 mb-2">
               <img 
                 src={resumeData.profileImage} 
                 alt="Yash Gori" 
                 className="w-10 h-10 rounded-full border-2 border-primary/20"
               />
-              <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                {resumeData.name}
-              </h2>
+              <div className="flex flex-col items-start">
+                <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  {resumeData.name}
+                </h2>
+                <div className="w-full h-px bg-border my-1"></div>
+                <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
           </div>
         )}
         <div className="flex items-center w-full">
           <Button 
-            variant="outline" 
+            variant="ghost"
             className={cn(
-              "justify-start transition-all bg-primary/5 border-primary/20 text-primary hover:bg-primary/10", 
+              "justify-start transition-all", 
               isSidebarCollapsed ? 'w-10 h-10 p-0' : 'flex-1 mr-2'
             )}
             onClick={() => { 
@@ -168,17 +194,15 @@ const Index = () => {
                 <Twitter className="h-6 w-6 hover:text-primary transition-colors"/>
               </a>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
                 <Download className="mr-2 h-4 w-4" />
                 Download Resume
               </Button>
-              <a href={`mailto:${resumeData.contact.email}`}>
-                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Get In Touch
-                </Button>
-              </a>
+              <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50" onClick={scrollToContact}>
+                <Mail className="mr-2 h-4 w-4" />
+                Get In Touch
+              </Button>
             </div>
           </>
         )}
@@ -218,7 +242,10 @@ const Index = () => {
       {messages.length === 0 ? (
         <div className="flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
           <div className="absolute top-8 right-8">
-            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+            <div 
+              className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+              onClick={handleProfileClick}
+            >
               <img 
                 src={resumeData.profileImage} 
                 alt="Yash Gori" 
@@ -257,9 +284,15 @@ const Index = () => {
             <SuggestionCard title="Summarize experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
           </div>
           
-          <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+          <div className="grid grid-cols-2 gap-4 w-full max-w-lg mb-8">
             <SuggestionCard title="How to contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
             <SuggestionCard title="Your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+          </div>
+
+          <div className="flex justify-center">
+            <Button variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
+              Prefer a classic view?
+            </Button>
           </div>
         </div>
       ) : (
@@ -651,6 +684,12 @@ const Index = () => {
 
   return (
     <div className="flex h-screen w-screen bg-background text-foreground">
+      <ProfileCard 
+        isOpen={profileCardOpen} 
+        onClose={() => setProfileCardOpen(false)} 
+        position={profileCardPosition} 
+      />
+      
       <div className="md:hidden">
           <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>

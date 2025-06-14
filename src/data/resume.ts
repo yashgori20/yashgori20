@@ -1,4 +1,3 @@
-
 export interface Project {
   title: string;
   description: string;
@@ -17,7 +16,7 @@ export interface Experience {
 }
 
 export const resumeData = {
-  name: "YASH GORI",
+  name: "Yash Gori",
   contact: {
     email: "yashnileshgori@gmail.com",
     phone: "7718081766",

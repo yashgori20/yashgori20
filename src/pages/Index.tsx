@@ -1,12 +1,320 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState, useRef, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { CornerDownLeft, Github, Linkedin, Mail, Menu, Newspaper, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { resumeData, Project, Experience } from '@/data/resume';
+import { cn } from '@/lib/utils';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+type Message = {
+  role: 'user' | 'assistant';
+  content: string;
+};
+
+type View = 'chat' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
+
+const HuggingFaceLogo = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-foreground">
+        <path d="M2.52999 13.2C2.52999 12.59 2.88999 12.04 3.42999 11.73L8.15999 9.35C8.39999 9.23 8.52999 8.97 8.52999 8.7V4.28C8.52999 3.55 9.11999 2.96 9.84999 2.96H10.16C10.89 2.96 11.48 3.55 11.48 4.28V8.7C11.48 8.97 11.61 9.23 11.85 9.35L16.58 11.73C17.12 12.04 17.48 12.59 17.48 13.2V13.68C17.48 14.02 17.37 14.34 17.16 14.6L15.3 17.47C15.01 17.92 14.48 18.2 13.92 18.2H12.08C11.52 18.2 10.99 17.92 10.7 17.47L8.84001 14.6C8.63001 14.34 8.52001 14.02 8.52001 13.68V13.2H2.52999Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 18.2102V21.0002" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M15.3008 17.4702L17.1008 20.3202" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10.7012 17.4702L8.90117 20.3202" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M20.97 12.52C21.27 12.52 21.52 12.77 21.52 13.07V13.43C21.52 14.01 21.24 14.54 20.78 14.88L18.84 16.2C18.59 16.37 18.49 16.69 18.57 16.99L19.26 19.48C19.41 20.01 19.06 20.55 18.5 20.72L18.15 20.83C17.59 21 17.02 20.62 16.85 20.08L16.16 17.59C16.08 17.29 15.82 17.09 15.53 17.05L13.1 16.71C12.56 16.64 12.14 16.14 12.21 15.6L12.55 13.17C12.62 12.63 13.12 12.21 13.66 12.28L16.09 12.62C16.38 12.66 16.63 12.45 16.73 12.18L18.67 10.86C18.91 10.7 19.22 10.82 19.33 11.08L20.39 12.3C20.57 12.44 20.77 12.52 20.97 12.52Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+)
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+  const [activeView, setActiveView] = useState<View>('chat');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const askApi = useMutation({
+    mutationFn: async (userInput: string): Promise<string> => {
+      try {
+        const response = await fetch('https://yashgori20-yashgori.hf.space/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ "question": userInput }),
+        });
+        if (!response.ok) {
+            throw new Error(`API error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        // Assuming the API returns a structure like { "answer": "..." }
+        return data.answer || "I'm not sure how to answer that. Try asking about Yash's skills or projects.";
+      } catch (error) {
+        console.error("API call failed:", error);
+        return "Sorry, something went wrong while connecting to my brain. Please try again later.";
+      }
+    },
+    onSuccess: (data) => {
+      setMessages((prev) => [...prev, { role: 'assistant', content: data }]);
+    },
+  });
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [messages]);
+
+  const handleSend = () => {
+    if (input.trim()) {
+      setActiveView('chat');
+      const newMessages: Message[] = [...messages, { role: 'user', content: input }];
+      setMessages(newMessages);
+      askApi.mutate(input);
+      setInput('');
+    }
+  };
+  
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+    setActiveView('chat');
+    const newMessages: Message[] = [...messages, { role: 'user', content: suggestion }];
+    setMessages(newMessages);
+    askApi.mutate(suggestion);
+    setInput('');
+  };
+
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-card text-foreground p-4">
+      <Button variant="outline" className="w-full justify-start mb-4" onClick={() => { setActiveView('chat'); setSidebarOpen(false); }}>
+        <Sparkles className="mr-2 h-4 w-4" /> New Chat
+      </Button>
+      <ScrollArea className="flex-grow">
+        <div className="space-y-2">
+            <h3 className="px-4 text-sm font-semibold text-muted-foreground">Ask Me About</h3>
+            <SidebarButton icon={User} label="About" view="about" />
+            <SidebarButton icon={Briefcase} label="Experience" view="experience" />
+            <SidebarButton icon={Code} label="Projects" view="projects" />
+            <SidebarButton icon={BrainCircuit} label="Skills" view="skills" />
+            <SidebarButton icon={Mail} label="Contact" view="contact" />
+        </div>
+      </ScrollArea>
+      <div className="mt-auto pt-4 border-t border-border">
+          <div className="flex justify-center space-x-4 mb-4">
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 hover:text-primary transition-colors"/></a>
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin className="h-6 w-6 hover:text-primary transition-colors"/></a>
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer"><HuggingFaceLogo /></a>
+          </div>
+        <Button variant="secondary" className="w-full">
+            <Newspaper className="mr-2 h-4 w-4" />
+            Unlock Classic View
+        </Button>
       </div>
+    </div>
+  );
+
+  const SidebarButton = ({ icon: Icon, label, view }: { icon: React.ElementType, label: string, view: View }) => (
+    <Button variant={activeView === view ? "secondary" : "ghost"} className="w-full justify-start" onClick={() => { setActiveView(view); setSidebarOpen(false); }}>
+      <Icon className="mr-2 h-4 w-4" /> {label}
+    </Button>
+  );
+
+  const renderView = () => {
+    switch (activeView) {
+      case 'chat': return <ChatInterface />;
+      case 'about': return <AboutView />;
+      case 'experience': return <ExperienceView />;
+      case 'projects': return <ProjectsView />;
+      case 'skills': return <SkillsView />;
+      case 'contact': return <ContactView />;
+      default: return <ChatInterface />;
+    }
+  };
+
+  const ChatInterface = () => (
+    <div className="flex-1 flex flex-col h-full">
+      {messages.length === 0 ? (
+        <div className="flex-1 flex flex-col justify-center items-center text-center p-8">
+            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                <BrainCircuit className="w-8 h-8 text-primary"/>
+            </div>
+            <h1 className="text-4xl font-bold mb-2">YashGori-GPT</h1>
+            <p className="text-muted-foreground mb-8">I am an AI clone of Yash, ready to answer your questions.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
+                <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
+                <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
+                <SuggestionCard title="Tell me about DocuTalk" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
+                <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
+            </div>
+        </div>
+      ) : (
+        <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+          <div className="max-w-4xl mx-auto space-y-6">
+            {messages.map((msg, idx) => (
+              <ChatMessage key={idx} message={msg} />
+            ))}
+            {askApi.isPending && <LoadingMessage />}
+          </div>
+        </ScrollArea>
+      )}
+    </div>
+  );
+  
+  const SuggestionCard = ({ title, onClick }: { title: string; onClick: () => void }) => (
+    <button onClick={onClick} className="bg-card p-4 rounded-lg hover:bg-secondary transition-colors text-left flex items-center">
+        <p className="flex-1 text-sm">{title}</p>
+        <CornerDownLeft className="h-4 w-4 text-muted-foreground ml-2" />
+    </button>
+  );
+
+  const ChatMessage = ({ message }: { message: Message }) => {
+    const isUser = message.role === 'user';
+    return (
+      <div className={cn("flex items-start gap-4", isUser ? "justify-end" : "justify-start")}>
+        {!isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center"><Bot className="w-5 h-5 text-primary-foreground" /></div>}
+        <div className={cn("max-w-xl p-4 rounded-lg whitespace-pre-wrap", isUser ? "bg-primary text-primary-foreground" : "bg-secondary")}>
+          {message.content}
+        </div>
+        {isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><User className="w-5 h-5 text-secondary-foreground" /></div>}
+      </div>
+    );
+  };
+  
+  const LoadingMessage = () => (
+      <div className="flex items-start gap-4 justify-start">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center"><Bot className="w-5 h-5 text-primary-foreground animate-pulse" /></div>
+        <div className="max-w-xl p-4 rounded-lg bg-secondary flex items-center">
+            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.15s] mx-1"></div>
+            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+        </div>
+      </div>
+  )
+
+  const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
+    <div className="p-4 md:p-8 h-full">
+        <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-primary">{title}</h2>
+            {children}
+        </div>
+    </div>
+  );
+
+  const AboutView = () => <Section title="About Me"><p className="text-lg leading-relaxed">{resumeData.about}</p></Section>;
+  
+  const SkillsView = () => (
+    <Section title="Skills">
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Technical</h3>
+          <div className="flex flex-wrap gap-2">
+            {resumeData.skills.technical.map(skill => <div key={skill} className="bg-secondary px-3 py-1 rounded-md">{skill}</div>)}
+          </div>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Soft Skills</h3>
+          <div className="flex flex-wrap gap-2">
+            {resumeData.skills.soft.map(skill => <div key={skill} className="bg-secondary px-3 py-1 rounded-md">{skill}</div>)}
+          </div>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Tools</h3>
+          <div className="flex flex-wrap gap-2">
+            {resumeData.skills.tools.map(tool => <div key={tool} className="bg-secondary px-3 py-1 rounded-md">{tool}</div>)}
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+  
+  const ExperienceView = () => (
+    <Section title="Work Experience">
+        <div className="space-y-8">
+            {resumeData.experience.map((exp: Experience) => (
+                <div key={exp.company}>
+                    <h3 className="text-xl font-bold">{exp.role}</h3>
+                    <p className="text-muted-foreground">{exp.company} | {exp.period}</p>
+                    <ul className="list-disc list-inside mt-2 space-y-1">
+                        {exp.points.map((point, i) => <li key={i}>{point}</li>)}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    </Section>
+  );
+
+  const ProjectsView = () => (
+    <Section title="Projects">
+        <div className="space-y-8">
+            {resumeData.projects.map((proj: Project) => (
+                <div key={proj.title}>
+                    <h3 className="text-xl font-bold">{proj.title}</h3>
+                    <p className="mt-1">{proj.description}</p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {proj.technologies.map(tech => <div key={tech} className="bg-secondary text-sm px-2 py-1 rounded">{tech}</div>)}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </Section>
+  );
+
+  const ContactView = () => (
+    <Section title="Contact">
+        <div className="space-y-4">
+            <p className="flex items-center gap-3"><Mail className="h-5 w-5 text-primary"/> {resumeData.contact.email}</p>
+            <p className="flex items-center gap-3"><Phone className="h-5 w-5 text-primary"/> {resumeData.contact.phone}</p>
+            <div className="flex items-center gap-4 pt-4">
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors"><Linkedin/> LinkedIn</a>
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors"><Github/> GitHub</a>
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors"><HuggingFaceLogo/> Hugging Face</a>
+            </div>
+        </div>
+    </Section>
+  );
+
+  return (
+    <div className="flex h-screen w-screen bg-background text-foreground">
+      <div className="md:hidden">
+          <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>
+              <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="absolute top-4 left-4 z-10">
+                      <Menu className="h-6 w-6" />
+                  </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="p-0 w-72 border-none">
+                  <SidebarContent />
+              </SheetContent>
+          </Sheet>
+      </div>
+      <div className="hidden md:block w-72 h-full">
+          <SidebarContent />
+      </div>
+      <main className="flex-1 flex flex-col h-full bg-background overflow-hidden">
+          <ScrollArea className="flex-1">
+            {renderView()}
+          </ScrollArea>
+        <div className="p-4 border-t border-border bg-background">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                placeholder="Ask me anything about my profile..."
+                className="pr-12 h-12"
+              />
+              <Button size="icon" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
+                <Send className="h-5 w-5" />
+              </Button>
+            </div>
+            <p className="text-xs text-center text-muted-foreground mt-2">
+                YashGori-GPT can make mistakes. Consider checking important information.
+            </p>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

@@ -1,7 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CornerDownLeft, Github, Linkedin, Mail, Menu, Newspaper, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users } from 'lucide-react';
+import { CornerDownLeft, Github, Linkedin, Mail, Menu, Newspaper, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -31,7 +30,15 @@ const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning!";
+    if (hour < 18) return "Good afternoon!";
+    return "Good evening!";
+  };
 
   const askApi = useMutation({
     mutationFn: async (userInput: string): Promise<string> => {
@@ -45,7 +52,6 @@ const Index = () => {
             throw new Error(`API error: ${response.statusText}`);
         }
         const data = await response.json();
-        // Assuming the API returns a structure like { "answer": "..." }
         return data.answer || "I'm not sure how to answer that. Try asking about Yash's skills or projects.";
       } catch (error) {
         console.error("API call failed:", error);
@@ -86,37 +92,70 @@ const Index = () => {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-card text-foreground p-4">
-      <Button variant="outline" className="w-full justify-start mb-4" onClick={() => { setActiveView('chat'); setSidebarOpen(false); }}>
-        <Sparkles className="mr-2 h-4 w-4" /> New Chat
-      </Button>
-      <ScrollArea className="flex-grow">
-        <div className="space-y-2">
-            <h3 className="px-4 text-sm font-semibold text-muted-foreground">Ask Me About</h3>
-            <SidebarButton icon={User} label="About" view="about" />
-            <SidebarButton icon={Briefcase} label="Experience" view="experience" />
-            <SidebarButton icon={Code} label="Projects" view="projects" />
-            <SidebarButton icon={BrainCircuit} label="Skills" view="skills" />
-            <SidebarButton icon={Mail} label="Contact" view="contact" />
+    <div className={cn(
+      "flex flex-col h-full bg-card text-foreground transition-all duration-300",
+      isSidebarCollapsed ? "w-16" : "w-72"
+    )}>
+      <div className="p-4">
+        <div className="flex items-center justify-between">
+          {!isSidebarCollapsed && (
+            <Button variant="outline" className="flex-1 justify-start mr-2" onClick={() => { setActiveView('chat'); setMessages([]); setSidebarOpen(false); }}>
+              <Sparkles className="mr-2 h-4 w-4" /> New Chat
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+            {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
+        </div>
+      </div>
+      
+      <ScrollArea className="flex-1">
+        <div className="space-y-2 px-4">
+          {!isSidebarCollapsed && <h3 className="px-2 text-sm font-semibold text-muted-foreground">Ask Me About</h3>}
+          <SidebarButton icon={User} label="About" view="about" />
+          <SidebarButton icon={Briefcase} label="Experience" view="experience" />
+          <SidebarButton icon={Code} label="Projects" view="projects" />
+          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" />
+          <SidebarButton icon={Mail} label="Contact" view="contact" />
         </div>
       </ScrollArea>
-      <div className="mt-auto pt-4 border-t border-border">
-          <div className="flex justify-center space-x-4 mb-4">
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 hover:text-primary transition-colors"/></a>
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin className="h-6 w-6 hover:text-primary transition-colors"/></a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer"><HuggingFaceLogo /></a>
-          </div>
-        <Button variant="secondary" className="w-full">
-            <Newspaper className="mr-2 h-4 w-4" />
-            Unlock Classic View
-        </Button>
+      
+      <div className="mt-auto p-4 border-t border-border">
+        {!isSidebarCollapsed && (
+          <>
+            <div className="flex justify-center space-x-4 mb-4">
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+                <Github className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
+                <Linkedin className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer">
+                <HuggingFaceLogo />
+              </a>
+            </div>
+            <Button variant="secondary" className="w-full">
+              <Newspaper className="mr-2 h-4 w-4" />
+              Unlock Classic View
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
 
   const SidebarButton = ({ icon: Icon, label, view }: { icon: React.ElementType, label: string, view: View }) => (
-    <Button variant={activeView === view ? "secondary" : "ghost"} className="w-full justify-start" onClick={() => { setActiveView(view); setSidebarOpen(false); }}>
-      <Icon className="mr-2 h-4 w-4" /> {label}
+    <Button 
+      variant={activeView === view ? "secondary" : "ghost"} 
+      className={cn(
+        "w-full transition-all duration-200",
+        isSidebarCollapsed ? "justify-center px-2" : "justify-start"
+      )}
+      onClick={() => { setActiveView(view); setSidebarOpen(false); }}
+      title={isSidebarCollapsed ? label : undefined}
+    >
+      <Icon className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} />
+      {!isSidebarCollapsed && label}
     </Button>
   );
 
@@ -135,18 +174,50 @@ const Index = () => {
   const ChatInterface = () => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
-        <div className="flex-1 flex flex-col justify-center items-center text-center p-8">
-            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                <BrainCircuit className="w-8 h-8 text-primary"/>
+        <div className="flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
+          <div className="absolute top-8 right-8">
+            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" 
+                alt="Yash Gori" 
+                className="w-full h-full object-cover"
+              />
             </div>
-            <h1 className="text-4xl font-bold mb-2">YashGori-GPT</h1>
-            <p className="text-muted-foreground mb-8">I am an AI clone of Yash, ready to answer your questions.</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
-                <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
-                <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
-                <SuggestionCard title="Tell me about DocuTalk" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
-                <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
+          </div>
+          
+          <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
+          <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
+          
+          <div className="w-full max-w-2xl mb-8">
+            <div className="relative">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                placeholder="Ask me anything about Yash Gori..."
+                className="pr-12 h-12 text-center"
+              />
+              <Button 
+                size="icon" 
+                className="absolute right-2 top-1/2 -translate-y-1/2" 
+                onClick={handleSend} 
+                disabled={askApi.isPending}
+              >
+                <Send className="h-5 w-5" />
+              </Button>
             </div>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-4 w-full max-w-2xl mb-4">
+            <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
+            <SuggestionCard title="Tell me about DocuTalk" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
+            <SuggestionCard title="Summarize experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+            <SuggestionCard title="How to contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
+            <SuggestionCard title="Your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+          </div>
         </div>
       ) : (
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
@@ -162,7 +233,7 @@ const Index = () => {
   );
   
   const SuggestionCard = ({ title, onClick }: { title: string; onClick: () => void }) => (
-    <button onClick={onClick} className="bg-card p-4 rounded-lg hover:bg-secondary transition-colors text-left flex items-center">
+    <button onClick={onClick} className="bg-card p-4 rounded-lg hover:bg-secondary transition-colors text-left flex items-center border">
         <p className="flex-1 text-sm">{title}</p>
         <CornerDownLeft className="h-4 w-4 text-muted-foreground ml-2" />
     </button>
@@ -284,36 +355,43 @@ const Index = () => {
                   </Button>
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-72 border-none">
-                  <SidebarContent />
+                  <div className="w-72"><SidebarContent /></div>
               </SheetContent>
           </Sheet>
       </div>
-      <div className="hidden md:block w-72 h-full">
+      
+      <div className={cn(
+        "hidden md:block h-full transition-all duration-300",
+        isSidebarCollapsed ? "w-16" : "w-72"
+      )}>
           <SidebarContent />
       </div>
+      
       <main className="flex-1 flex flex-col h-full bg-background overflow-hidden">
           <ScrollArea className="flex-1">
             {renderView()}
           </ScrollArea>
-        <div className="p-4 border-t border-border bg-background">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Ask me anything about my profile..."
-                className="pr-12 h-12"
-              />
-              <Button size="icon" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
-                <Send className="h-5 w-5" />
-              </Button>
+        {activeView === 'chat' && messages.length > 0 && (
+          <div className="p-4 border-t border-border bg-background">
+            <div className="max-w-4xl mx-auto">
+              <div className="relative">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Ask me anything about Yash Gori..."
+                  className="pr-12 h-12"
+                />
+                <Button size="icon" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
+                  <Send className="h-5 w-5" />
+                </Button>
+              </div>
+              <p className="text-xs text-center text-muted-foreground mt-2">
+                  YashGori-GPT can make mistakes. Consider checking important information.
+              </p>
             </div>
-            <p className="text-xs text-center text-muted-foreground mt-2">
-                YashGori-GPT can make mistakes. Consider checking important information.
-            </p>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { CornerDownLeft, Github, Linkedin, Mail, Menu, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download } from 'lucide-react';
@@ -113,7 +112,7 @@ const Index = () => {
               }}
             >
               <Sparkles className="mr-2 h-4 w-4" /> 
-              {activeView === 'chat' ? 'New Chat' : 'Back to Chat'}
+              {activeView === 'chat' ? 'Home' : 'Back to Home'}
             </Button>
           )}
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
@@ -218,11 +217,12 @@ const Index = () => {
               />
               <Button 
                 size="icon" 
+                variant="ghost"
                 className="absolute right-2 top-1/2 -translate-y-1/2" 
                 onClick={handleSend} 
                 disabled={askApi.isPending}
               >
-                <Send className="h-5 w-5" />
+                <CornerDownLeft className="h-5 w-5 font-bold" />
               </Button>
             </div>
           </div>

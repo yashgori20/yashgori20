@@ -156,7 +156,7 @@ const ChatInputBar = ({ input, setInput, handleSend, isPending, className, input
 );
 
 const SuggestionCard = ({ title, onClick }: { title: string; onClick: () => void }) => (
-    <button onClick={onClick} className="bg-card p-4 rounded-lg hover:bg-secondary transition-colors text-left flex items-center border">
+    <button onClick={onClick} className="bg-gradient-to-br from-primary/5 to-secondary/5 p-4 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg text-left flex items-center">
         <p className="flex-1 text-sm">{title}</p>
         <CornerDownLeft className="h-4 w-4 text-muted-foreground ml-2" />
     </button>
@@ -258,7 +258,7 @@ const AboutView = () => (
               {resumeData.about}
             </p>
             <div className="flex flex-wrap gap-4">
-               <div className="bg-card p-4 rounded-lg border flex items-center gap-3">
+               <div className="bg-gradient-to-br from-primary/5 to-secondary/5 p-4 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-3">
                 <MapPin className="h-5 w-5 text-primary" />
                 <p className="text-muted-foreground">{resumeData.contact.location}</p>
               </div>
@@ -544,7 +544,7 @@ const ProjectsView = () => (
     <Section title="Featured Projects">
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
-          <div key={proj.title} className="bg-card rounded-lg border overflow-hidden hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg group flex flex-col">
+          <div key={proj.title} className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border overflow-hidden hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg group flex flex-col">
             <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
               <Code className="h-16 w-16 text-primary/50 group-hover:text-primary transition-colors" />
             </div>
@@ -603,7 +603,7 @@ const ContactView = () => (
           
           <div className="space-y-4">
             <a href={`mailto:${resumeData.contact.email}`} className="block group">
-              <div className="flex items-center gap-4 p-4 bg-card rounded-lg border group-hover:border-primary/50 transition-colors group-hover:scale-105 transform duration-300">
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
                   <Mail className="h-6 w-6 text-primary"/>
                 </div>
@@ -615,7 +615,7 @@ const ContactView = () => (
             </a>
             
             <a href={`tel:${resumeData.contact.phone}`} className="block group">
-              <div className="flex items-center gap-4 p-4 bg-card rounded-lg border group-hover:border-primary/50 transition-colors group-hover:scale-105 transform duration-300">
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
                   <Phone className="h-6 w-6 text-primary"/>
                 </div>
@@ -626,7 +626,7 @@ const ContactView = () => (
               </div>
             </a>
 
-             <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors hover:scale-105 transform duration-300">
+             <div className="flex items-center gap-4 p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
                     <MapPin className="h-6 w-6 text-primary"/>
                 </div>

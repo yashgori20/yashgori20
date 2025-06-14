@@ -1,6 +1,7 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CornerDownLeft, Github, Linkedin, Mail, Menu, Newspaper, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CornerDownLeft, Github, Linkedin, Mail, Menu, Newspaper, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -109,6 +110,14 @@ const Index = () => {
         </div>
       </div>
       
+      {activeView !== 'chat' && !isSidebarCollapsed && (
+        <div className="px-4 pb-4">
+          <Button variant="secondary" className="w-full" onClick={() => { setActiveView('chat'); setSidebarOpen(false); }}>
+            <Sparkles className="mr-2 h-4 w-4" /> Back to Chat
+          </Button>
+        </div>
+      )}
+      
       <ScrollArea className="flex-1">
         <div className="space-y-2 px-4">
           {!isSidebarCollapsed && <h3 className="px-2 text-sm font-semibold text-muted-foreground">Ask Me About</h3>}
@@ -134,10 +143,20 @@ const Index = () => {
                 <HuggingFaceLogo />
               </a>
             </div>
-            <Button variant="secondary" className="w-full">
-              <Newspaper className="mr-2 h-4 w-4" />
-              Unlock Classic View
-            </Button>
+            <div className="space-y-2">
+              <Button variant="secondary" className="w-full">
+                <Newspaper className="mr-2 h-4 w-4" />
+                Unlock Classic View
+              </Button>
+              <Button variant="outline" className="w-full">
+                <Download className="mr-2 h-4 w-4" />
+                Download Resume
+              </Button>
+              <Button variant="outline" className="w-full">
+                <Mail className="mr-2 h-4 w-4" />
+                Get In Touch
+              </Button>
+            </div>
           </>
         )}
       </div>

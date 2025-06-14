@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CornerDownLeft, Github, Linkedin, Mail, Menu, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { 
+  CornerDownLeft, Github, Linkedin, Mail, Menu, User, Bot, Briefcase, Code, Sparkles, Phone, BrainCircuit, Users, ChevronLeft, ChevronRight, Download, MapPin, Instagram, Twitter, ExternalLink, GraduationCap 
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { resumeData, Project, Experience } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import ContactForm from '@/components/ContactForm';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -15,8 +18,8 @@ type Message = {
 
 type View = 'chat' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
 
-const HuggingFaceLogo = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-foreground">
+const HuggingFaceLogo = ({ className }: { className?: string }) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn("text-foreground", className)}>
         <path d="M2.52999 13.2C2.52999 12.59 2.88999 12.04 3.42999 11.73L8.15999 9.35C8.39999 9.23 8.52999 8.97 8.52999 8.7V4.28C8.52999 3.55 9.11999 2.96 9.84999 2.96H10.16C10.89 2.96 11.48 3.55 11.48 4.28V8.7C11.48 8.97 11.61 9.23 11.85 9.35L16.58 11.73C17.12 12.04 17.48 12.59 17.48 13.2V13.68C17.48 14.02 17.37 14.34 17.16 14.6L15.3 17.47C15.01 17.92 14.48 18.2 13.92 18.2H12.08C11.52 18.2 10.99 17.92 10.7 17.47L8.84001 14.6C8.63001 14.34 8.52001 14.02 8.52001 13.68V13.2H2.52999Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M12 18.2102V21.0002" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M15.3008 17.4702L17.1008 20.3202" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -96,12 +99,17 @@ const Index = () => {
       "flex flex-col h-full bg-card text-foreground transition-all duration-300",
       isSidebarCollapsed ? "w-16" : "w-72"
     )}>
-      <div className="p-4">
-        <div className="flex items-center justify-between">
-          {!isSidebarCollapsed && (
-            <Button 
+      <div className={cn("p-4 flex flex-col", isSidebarCollapsed ? 'items-center' : '')}>
+        {!isSidebarCollapsed && (
+          <div className="mb-4 text-center">
+            <h2 className="text-xl font-bold">{resumeData.name}</h2>
+            <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
+          </div>
+        )}
+        <div className="flex items-center w-full">
+           <Button 
               variant="outline" 
-              className="flex-1 justify-start mr-2" 
+              className={cn("justify-start transition-all", isSidebarCollapsed ? 'w-10 h-10 p-0' : 'flex-1 mr-2')}
               onClick={() => { 
                 if (activeView === 'chat') {
                   setMessages([]);
@@ -111,10 +119,9 @@ const Index = () => {
                 setSidebarOpen(false); 
               }}
             >
-              <Sparkles className="mr-2 h-4 w-4" /> 
-              {activeView === 'chat' ? 'Home' : 'Back to Home'}
+              <Sparkles className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} /> 
+              {!isSidebarCollapsed && (activeView === 'chat' ? 'Home' : 'Back to Home')}
             </Button>
-          )}
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
             {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
@@ -123,7 +130,6 @@ const Index = () => {
       
       <ScrollArea className="flex-1">
         <div className="space-y-2 px-4">
-          {!isSidebarCollapsed && <h3 className="px-2 text-sm font-semibold text-muted-foreground">Ask Me About</h3>}
           <SidebarButton icon={User} label="About" view="about" />
           <SidebarButton icon={Briefcase} label="Experience" view="experience" />
           <SidebarButton icon={Code} label="Projects" view="projects" />
@@ -136,14 +142,20 @@ const Index = () => {
         {!isSidebarCollapsed && (
           <>
             <div className="flex justify-center space-x-4 mb-4">
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
                 <Github className="h-6 w-6 hover:text-primary transition-colors"/>
               </a>
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
                 <Linkedin className="h-6 w-6 hover:text-primary transition-colors"/>
               </a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer">
-                <HuggingFaceLogo />
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <HuggingFaceLogo className="h-6 w-6 hover:text-primary transition-colors" />
+              </a>
+              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <Instagram className="h-6 w-6 hover:text-primary transition-colors"/>
+              </a>
+              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                <Twitter className="h-6 w-6 hover:text-primary transition-colors"/>
               </a>
             </div>
             <div className="space-y-2">
@@ -151,10 +163,12 @@ const Index = () => {
                 <Download className="mr-2 h-4 w-4" />
                 Download Resume
               </Button>
-              <Button variant="outline" className="w-full">
-                <Mail className="mr-2 h-4 w-4" />
-                Get In Touch
-              </Button>
+              <a href={`mailto:${resumeData.contact.email}`}>
+                <Button variant="outline" className="w-full">
+                  <Mail className="mr-2 h-4 w-4" />
+                  Get In Touch
+                </Button>
+              </a>
             </div>
           </>
         )}
@@ -298,23 +312,45 @@ const Index = () => {
 
   const AboutView = () => (
     <Section title="About Me">
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6">
-          <p className="text-lg leading-relaxed text-muted-foreground">
-            {resumeData.about}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <div className="bg-card p-4 rounded-lg border">
-              <h3 className="font-semibold mb-2">Location</h3>
-              <p className="text-muted-foreground">Available Worldwide</p>
-            </div>
-            <div className="bg-card p-4 rounded-lg border">
-              <h3 className="font-semibold mb-2">Status</h3>
-              <p className="text-muted-foreground">Open to Opportunities</p>
+      <div className="grid lg:grid-cols-5 gap-12 items-start">
+        <div className="lg:col-span-3 space-y-12">
+          <div className="space-y-6">
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              {resumeData.about}
+            </p>
+            <div className="flex flex-wrap gap-4">
+               <div className="bg-card p-4 rounded-lg border flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-primary" />
+                <p className="text-muted-foreground">{resumeData.contact.location}</p>
+              </div>
+              <div className="bg-card p-4 rounded-lg border">
+                <h3 className="font-semibold">Status</h3>
+                <p className="text-muted-foreground">Open to Opportunities</p>
+              </div>
             </div>
           </div>
+          
+          <div>
+            <h3 className="text-2xl font-semibold mb-6 border-b pb-3">Education</h3>
+            <div className="space-y-6">
+              {resumeData.education.map((edu, index) => (
+                <div key={index} className="flex items-start gap-4">
+                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1 border">
+                      <GraduationCap className="h-6 w-6 text-primary" />
+                   </div>
+                   <div>
+                      <h4 className="font-semibold text-lg">{edu.institution}</h4>
+                      <p className="text-sm text-primary font-medium">{edu.degree}</p>
+                      <p className="text-sm text-muted-foreground">{edu.period}</p>
+                      <p className="text-sm text-muted-foreground">{edu.details}</p>
+                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
-        <div className="flex justify-center">
+        <div className="lg:col-span-2 flex justify-center">
           <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border">
             <img 
               src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" 
@@ -330,7 +366,7 @@ const Index = () => {
   const SkillsView = () => (
     <Section title="Skills & Expertise">
       <div className="grid md:grid-cols-3 gap-8">
-        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
           <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
             <Code className="h-6 w-6 text-primary" />
           </div>
@@ -345,7 +381,7 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
           <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
             <Users className="h-6 w-6 text-primary" />
           </div>
@@ -360,7 +396,7 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
+        <div className="bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
           <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
             <BrainCircuit className="h-6 w-6 text-primary" />
           </div>
@@ -380,31 +416,58 @@ const Index = () => {
   
   const ExperienceView = () => (
     <Section title="Work Experience">
-      <div className="space-y-8">
-        {resumeData.experience.map((exp: Experience, index) => (
-          <div key={exp.company} className="relative">
-            <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full"></div>
-            <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold">{exp.role}</h3>
-                  <p className="text-primary font-medium">{exp.company}</p>
-                </div>
-                <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0">
-                  {exp.period}
+      <div className="space-y-16">
+        <div>
+          <h2 className="text-3xl font-bold mb-8">Career Path</h2>
+          <div className="space-y-8">
+            {resumeData.experience.map((exp: Experience, index) => (
+              <div key={exp.company} className="relative group">
+                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
+                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold">{exp.role}</h3>
+                      <p className="text-primary font-medium">{exp.company}</p>
+                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                        <MapPin className="h-4 w-4" /> {exp.location}
+                      </p>
+                    </div>
+                    <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0 whitespace-nowrap">
+                      {exp.period}
+                    </div>
+                  </div>
+                  <ul className="space-y-2">
+                    {exp.points.map((point, i) => (
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <ul className="space-y-2">
-                {exp.points.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div>
+            <h2 className="text-3xl font-bold mb-8">Volunteering</h2>
+            <div className="relative group">
+                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
+                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                        <div>
+                            <h3 className="text-xl font-bold">{resumeData.volunteering.role}</h3>
+                            <p className="text-primary font-medium">{resumeData.volunteering.organization}</p>
+                        </div>
+                        <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0 whitespace-nowrap">
+                            {resumeData.volunteering.period}
+                        </div>
+                    </div>
+                    <p className="text-muted-foreground">{resumeData.volunteering.description}</p>
+                </div>
+            </div>
+        </div>
       </div>
     </Section>
   );
@@ -413,33 +476,57 @@ const Index = () => {
     <Section title="Featured Projects">
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
-          <div key={proj.title} className="bg-card rounded-lg border overflow-hidden hover:border-primary/50 transition-colors group">
+          <div key={proj.title} className="bg-card rounded-lg border overflow-hidden hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-lg group flex flex-col">
             <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
               <Code className="h-16 w-16 text-primary/50 group-hover:text-primary transition-colors" />
             </div>
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-1">
               <h3 className="text-xl font-bold mb-3">{proj.title}</h3>
-              <p className="text-muted-foreground mb-4 leading-relaxed">{proj.description}</p>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
                 {proj.technologies.map(tech => (
                   <span key={tech} className="px-3 py-1 bg-secondary text-xs font-medium rounded-full border">
                     {tech}
                   </span>
                 ))}
               </div>
+              <div className="mt-auto pt-4 border-t border-border/50 flex items-center gap-4">
+                {proj.codeUrl && (
+                   <a href={proj.codeUrl} target="_blank" rel="noopener noreferrer" className="w-full">
+                      <Button variant="outline" className="w-full">
+                         <Code className="mr-2 h-4 w-4" /> View Code
+                      </Button>
+                   </a>
+                )}
+                {proj.liveUrl && (
+                    <a href={proj.liveUrl} target="_blank" rel="noopener noreferrer" className="w-full">
+                      <Button variant="default" className="w-full">
+                         <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                      </Button>
+                    </a>
+                )}
+              </div>
             </div>
           </div>
         ))}
+      </div>
+       <div className="text-center mt-12">
+        <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+          <Button size="lg" className="group">
+            View All Projects on GitHub
+            <Github className="ml-2 h-5 w-5 transition-transform group-hover:animate-bounce" />
+          </Button>
+        </a>
       </div>
     </Section>
   );
 
   const ContactView = () => (
     <Section title="Get In Touch">
-      <div className="grid md:grid-cols-2 gap-12">
+      <div className="grid lg:grid-cols-2 gap-12">
         <div className="space-y-8">
           <div>
-            <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
+            <h3 className="text-2xl font-semibold mb-4">Let's Connect</h3>
             <p className="text-muted-foreground leading-relaxed mb-8">
               I'm always interested in hearing about new opportunities and interesting projects. 
               Feel free to reach out if you'd like to discuss potential collaborations or just say hello!
@@ -447,77 +534,63 @@ const Index = () => {
           </div>
           
           <div className="space-y-4">
-            <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-                <Mail className="h-6 w-6 text-primary"/>
+            <a href={`mailto:${resumeData.contact.email}`} className="block group">
+              <div className="flex items-center gap-4 p-4 bg-card rounded-lg border group-hover:border-primary/50 transition-colors group-hover:scale-105 transform duration-300">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                  <Mail className="h-6 w-6 text-primary"/>
+                </div>
+                <div>
+                  <p className="font-medium">Email</p>
+                  <p className="text-muted-foreground">{resumeData.contact.email}</p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium">Email</p>
-                <p className="text-muted-foreground">{resumeData.contact.email}</p>
-              </div>
-            </div>
+            </a>
             
-            <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors">
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-                <Phone className="h-6 w-6 text-primary"/>
+            <a href={`tel:${resumeData.contact.phone}`} className="block group">
+              <div className="flex items-center gap-4 p-4 bg-card rounded-lg border group-hover:border-primary/50 transition-colors group-hover:scale-105 transform duration-300">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                  <Phone className="h-6 w-6 text-primary"/>
+                </div>
+                <div>
+                  <p className="font-medium">Phone</p>
+                  <p className="text-muted-foreground">{resumeData.contact.phone}</p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium">Phone</p>
-                <p className="text-muted-foreground">{resumeData.contact.phone}</p>
-              </div>
+            </a>
+
+             <div className="flex items-center gap-4 p-4 bg-card rounded-lg border hover:border-primary/50 transition-colors hover:scale-105 transform duration-300">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <MapPin className="h-6 w-6 text-primary"/>
+                </div>
+                <div>
+                    <p className="font-medium">Location</p>
+                    <p className="text-muted-foreground">{resumeData.contact.location}</p>
+                </div>
+            </div>
+          </div>
+           <div className="space-y-6 pt-6">
+            <h3 className="text-2xl font-semibold">Follow Me</h3>
+            <div className="flex items-center gap-6">
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+                <Linkedin className="h-7 w-7"/>
+              </a>
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+                <Github className="h-7 w-7"/>
+              </a>
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+                 <HuggingFaceLogo className="h-7 w-7" />
+              </a>
+               <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+                <Instagram className="h-7 w-7"/>
+              </a>
+               <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+                <Twitter className="h-7 w-7"/>
+              </a>
             </div>
           </div>
         </div>
         
-        <div className="space-y-6">
-          <h3 className="text-2xl font-semibold">Follow Me</h3>
-          <div className="grid gap-4">
-            <a 
-              href={resumeData.contact.links.linkedin} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <Linkedin className="h-6 w-6 text-primary"/>
-              </div>
-              <div>
-                <p className="font-medium">LinkedIn</p>
-                <p className="text-muted-foreground">Professional Network</p>
-              </div>
-            </a>
-            
-            <a 
-              href={resumeData.contact.links.github} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <Github className="h-6 w-6 text-primary"/>
-              </div>
-              <div>
-                <p className="font-medium">GitHub</p>
-                <p className="text-muted-foreground">Code Repository</p>
-              </div>
-            </a>
-            
-            <a 
-              href={resumeData.contact.links.huggingface} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-4 p-6 bg-card rounded-lg border hover:border-primary/50 transition-colors group"
-            >
-              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <HuggingFaceLogo />
-              </div>
-              <div>
-                <p className="font-medium">Hugging Face</p>
-                <p className="text-muted-foreground">AI/ML Projects</p>
-              </div>
-            </a>
-          </div>
-        </div>
+        <ContactForm />
       </div>
     </Section>
   );

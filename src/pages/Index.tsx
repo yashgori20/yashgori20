@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CornerDownLeft, Github, Linkedin, Mail, Menu, Newspaper, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { CornerDownLeft, Github, Linkedin, Mail, Menu, Send, User, Bot, Briefcase, Code, Sparkles, Phone, FileText, BrainCircuit, Users, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -100,8 +100,20 @@ const Index = () => {
       <div className="p-4">
         <div className="flex items-center justify-between">
           {!isSidebarCollapsed && (
-            <Button variant="outline" className="flex-1 justify-start mr-2" onClick={() => { setActiveView('chat'); setMessages([]); setSidebarOpen(false); }}>
-              <Sparkles className="mr-2 h-4 w-4" /> New Chat
+            <Button 
+              variant="outline" 
+              className="flex-1 justify-start mr-2" 
+              onClick={() => { 
+                if (activeView === 'chat') {
+                  setMessages([]);
+                } else {
+                  setActiveView('chat');
+                }
+                setSidebarOpen(false); 
+              }}
+            >
+              <Sparkles className="mr-2 h-4 w-4" /> 
+              {activeView === 'chat' ? 'New Chat' : 'Back to Chat'}
             </Button>
           )}
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
@@ -109,14 +121,6 @@ const Index = () => {
           </Button>
         </div>
       </div>
-      
-      {activeView !== 'chat' && !isSidebarCollapsed && (
-        <div className="px-4 pb-4">
-          <Button variant="secondary" className="w-full" onClick={() => { setActiveView('chat'); setSidebarOpen(false); }}>
-            <Sparkles className="mr-2 h-4 w-4" /> Back to Chat
-          </Button>
-        </div>
-      )}
       
       <ScrollArea className="flex-1">
         <div className="space-y-2 px-4">
@@ -144,10 +148,6 @@ const Index = () => {
               </a>
             </div>
             <div className="space-y-2">
-              <Button variant="secondary" className="w-full">
-                <Newspaper className="mr-2 h-4 w-4" />
-                Unlock Classic View
-              </Button>
               <Button variant="outline" className="w-full">
                 <Download className="mr-2 h-4 w-4" />
                 Download Resume
@@ -401,8 +401,8 @@ const Index = () => {
                   placeholder="Ask me anything about Yash Gori..."
                   className="pr-12 h-12"
                 />
-                <Button size="icon" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
-                  <Send className="h-5 w-5" />
+                <Button size="icon" variant="ghost" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={askApi.isPending}>
+                  <CornerDownLeft className="h-5 w-5 font-bold" />
                 </Button>
               </div>
               <p className="text-xs text-center text-muted-foreground mt-2">

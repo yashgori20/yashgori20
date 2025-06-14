@@ -477,7 +477,7 @@ const ExperienceView = () => (
             {resumeData.experience.map((exp: Experience, index) => (
               <div key={exp.company} className="relative group">
                 <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
-                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                <div className="ml-8 bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                     <div>
                       <h3 className="text-xl font-bold">{exp.role}</h3>
@@ -522,7 +522,7 @@ const ExperienceView = () => (
             <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Volunteering</h2>
             <div className="relative group">
                 <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
-                <div className="ml-8 bg-card p-6 rounded-lg border hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                <div className="ml-8 bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                         <div>
                             <h3 className="text-xl font-bold">{resumeData.volunteering.role}</h3>

@@ -80,4 +80,11 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
   }
+  {
+  "scripts": {
+    "build": "next build",
+    "export": "next export",
+    "deploy": "npm run build && touch out/.nojekyll && git add out/ && git commit -m 'Deploy' && git subtree push --prefix out origin gh-pages"
+  }
+}
 }

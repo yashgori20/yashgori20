@@ -217,7 +217,7 @@ const Index = () => {
       
       <main className={cn(
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
-        !isSidebarCollapsed && !isMobile ? "ml-64" : "ml-[45px]"
+        !isSidebarCollapsed && !isMobile ? "ml-[17rem]" : "ml-[calc(45px+1rem)]"
       )}>
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
             <div 
@@ -239,10 +239,9 @@ const Index = () => {
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag={isMobile && pageIndex > 0 ? "y" : false}
+                drag={false}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={0.2}
-                onDragEnd={handleDragEnd}
                 animate={{ y: -pageIndex * windowHeight }}
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                 onAnimationComplete={onAnimationComplete}

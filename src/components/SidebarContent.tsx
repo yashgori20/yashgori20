@@ -20,7 +20,7 @@ type SidebarContentProps = {
 
 const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
-      "fixed inset-y-0 left-0 flex flex-col bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300 z-20",
+      "fixed top-4 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg",
       isCollapsed ? "w-[45px]" : "w-64"
     )}>
       <div className={cn("p-4 pt-6 flex flex-col", isCollapsed ? "px-0" : "px-4")}>
@@ -79,7 +79,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
         </div>
       </div>
       
-      <ScrollArea className="flex-1">
+      <ScrollArea>
         <div className={cn("space-y-1", isCollapsed ? "px-0" : "px-4")}>
           <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isCollapsed }}/>
           <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isCollapsed }}/>
@@ -89,7 +89,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
         </div>
       </ScrollArea>
       
-      <div className="mt-auto p-4 border-t border-border">
+      <div className="p-4 border-t border-white/20">
           {!isCollapsed && (
             <>
               <div className="flex justify-center space-x-4 mb-4">

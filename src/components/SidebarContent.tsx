@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -21,17 +22,17 @@ type SidebarContentProps = {
 const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
       "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300",
-      isCollapsed ? "w-20" : "w-72"
+      isCollapsed ? "w-20" : "w-64 md:w-72"
     )}>
       <div className={cn("p-4 flex flex-col")}>
-        <div className="mb-4 text-center">
-          <div className={cn("flex items-center gap-3 mb-2 h-10", isCollapsed ? "justify-center" : "")}>
-            <img 
-              src={resumeData.profileImage} 
-              alt="Yash Gori" 
-              className="w-10 h-10 rounded-full border-2 border-primary/20"
-            />
-            {!isCollapsed && (
+        {!isCollapsed && (
+          <div className="mb-4 text-center">
+            <div className={cn("flex items-center gap-3 mb-2 h-10")}>
+              <img 
+                src={resumeData.profileImage} 
+                alt="Yash Gori" 
+                className="w-10 h-10 rounded-full border-2 border-primary/20"
+              />
               <div className="flex flex-col items-start">
                 <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                   {resumeData.name}
@@ -39,9 +40,9 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
                 <div className="w-full h-px bg-border my-1"></div>
                 <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
         <div className={cn("flex items-center w-full")}>
            <Button 
               variant={activeView === 'chat' ? "secondary" : "ghost"}
@@ -115,7 +116,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
         onClick={toggleCollapse} 
         variant="ghost" 
         size="icon" 
-        className="absolute top-5 right-4 z-50 h-6 w-6 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
+        className="absolute top-5 right-4 z-50 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
       >
         <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
       </Button>

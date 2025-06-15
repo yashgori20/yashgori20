@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { User, Briefcase, Code, BrainCircuit, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -34,7 +35,7 @@ const PillNavigation = ({ setActiveView }: PillNavigationProps) => {
     ];
 
     return (
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
+        <div className="flex flex-wrap justify-center gap-3 mb-8 max-w-[370px] mx-auto sm:max-w-none">
             {pills.map((pill) => (
                 <PillButton
                     key={pill.view}

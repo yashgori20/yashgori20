@@ -166,7 +166,7 @@ const Index = () => {
           <SidebarContent {...{ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} />
       </div>
       
-      <main className="flex-1 flex flex-col bg-background relative overflow-hidden">
+      <main className="flex-1 flex flex-col bg-background relative">
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"

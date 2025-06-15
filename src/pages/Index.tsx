@@ -16,6 +16,8 @@ import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
+import EdgeNavigation from '@/components/EdgeNavigation';
+import DesktopNavigation from '@/components/DesktopNavigation';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -174,9 +176,8 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
-      <div className="hidden md:block">
-        <SidebarContent {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} />
-      </div>
+      <EdgeNavigation activeView={activeView} setActiveView={setActiveView} />
+      <DesktopNavigation activeView={activeView} setActiveView={setActiveView} />
 
       <div className="md:hidden">
           <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>

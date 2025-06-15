@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -37,6 +38,7 @@ const Index = () => {
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { playPop } = useSound();
   const isMobile = useIsMobile();
   const { height: windowHeight } = useWindowSize();
@@ -82,6 +84,10 @@ const Index = () => {
       });
     }
   }, [messages]);
+
+  useEffect(() => {
+    viewContainerRefs.current = viewContainerRefs.current.slice(0, views.length);
+  }, []);
 
   const changePage = useCallback((newIndex: number) => {
     if (isAnimating.current || !windowHeight) return;
@@ -151,39 +157,46 @@ const Index = () => {
     const swipeThreshold = windowHeight / 4;
     const velocityThreshold = 300;
 
-    if (Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold) {
-      if (offset.y < 0) {
-        changePage(pageIndex + 1);
-      } else {
-        changePage(pageIndex - 1);
-      }
+    const isSignificantSwipe = Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold;
+
+    if (!isSignificantSwipe) {
+      return;
+    }
+
+    // drag is only enabled for pageIndex > 0
+    const viewContainer = viewContainerRefs.current[pageIndex];
+    if (!viewContainer) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = viewContainer;
+    const isAtTop = scrollTop <= 1;
+    const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
+    
+    // Swipe up (finger moves up) to next page
+    if (offset.y < 0 && isAtBottom) {
+      changePage(pageIndex + 1);
+    } 
+    // Swipe down (finger moves down) to previous page
+    else if (offset.y > 0 && isAtTop) {
+      changePage(pageIndex - 1);
     }
   };
   
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (isAnimating.current) return;
 
-    const viewContainer = (e.currentTarget.firstChild as HTMLElement)?.children[pageIndex] as HTMLElement;
+    const viewContainer = viewContainerRefs.current[pageIndex];
     if (!viewContainer) return;
 
-    if (pageIndex > 0) {
-      // For content pages, check scroll position
-      const { scrollTop, scrollHeight, clientHeight } = viewContainer;
-      const isAtTop = scrollTop < 1;
-      const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
-      const scrollThreshold = 10;
+    // This handler is only attached for pageIndex > 0
+    const { scrollTop, scrollHeight, clientHeight } = viewContainer;
+    const isAtTop = scrollTop <= 1;
+    const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
+    const scrollThreshold = 10;
 
-      if (e.deltaY > scrollThreshold && isAtBottom) {
-        changePage(pageIndex + 1);
-      } else if (e.deltaY < -scrollThreshold && isAtTop) {
-        changePage(pageIndex - 1);
-      }
-    } else {
-      // For the initial chat screen, use a simple threshold
-      const scrollDownThreshold = 100;
-      if (e.deltaY > scrollDownThreshold) {
-        changePage(pageIndex + 1);
-      }
+    if (e.deltaY > scrollThreshold && isAtBottom) {
+      changePage(pageIndex + 1);
+    } else if (e.deltaY < -scrollThreshold && isAtTop) {
+      changePage(pageIndex - 1);
     }
   };
   
@@ -227,7 +240,7 @@ const Index = () => {
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag={pageIndex > 0 ? "y" : false}
+                drag={isMobile && pageIndex > 0 ? "y" : false}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={0}
                 onDragEnd={handleDragEnd}
@@ -235,10 +248,15 @@ const Index = () => {
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                 onAnimationComplete={onAnimationComplete}
               >
-                {views.map((viewName) => {
+                {views.map((viewName, i) => {
                   const PageComponent = PageComponents[viewName];
                   return (
-                    <div key={viewName} className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" style={{ height: windowHeight }}>
+                    <div 
+                      key={viewName} 
+                      ref={el => (viewContainerRefs.current[i] = el)}
+                      className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" 
+                      style={{ height: windowHeight }}
+                    >
                       {viewName === 'chat' ? (
                         <ChatInterface {...chatInterfaceProps} />
                       ) : (

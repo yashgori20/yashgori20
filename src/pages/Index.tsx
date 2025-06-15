@@ -200,42 +200,40 @@ const Index = () => {
   };
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const { offset, velocity } = info;
+    // Only handle drag on mobile and only for non-chat views
+    if (!isMobile || pageIndex === 0) return;
     
+    const { offset, velocity } = info;
     const swipeThreshold = windowHeight / 4;
-    const velocityThreshold = 300;
+    const velocityThreshold = 500;
 
     const isSignificantSwipe = Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold;
 
-    if (!isSignificantSwipe) {
-      return;
-    }
+    if (!isSignificantSwipe) return;
 
-    // drag is only enabled for pageIndex > 0
     const viewContainer = viewContainerRefs.current[pageIndex];
     if (!viewContainer) return;
 
     const { scrollTop, scrollHeight, clientHeight } = viewContainer;
-    const isAtTop = scrollTop <= 1;
-    const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
+    const isAtTop = scrollTop <= 5;
+    const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 5;
     
-    // Swipe up (finger moves up) to next page
+    // Swipe up to go to next page
     if (offset.y < 0 && isAtBottom) {
       changePage(pageIndex + 1);
     } 
-    // Swipe down (finger moves down) to previous page
+    // Swipe down to go to previous page
     else if (offset.y > 0 && isAtTop) {
       changePage(pageIndex - 1);
     }
   };
   
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (isAnimating.current) return;
+    if (isAnimating.current || pageIndex === 0) return;
 
     const viewContainer = viewContainerRefs.current[pageIndex];
     if (!viewContainer) return;
 
-    // This handler is only attached for pageIndex > 0
     const { scrollTop, scrollHeight, clientHeight } = viewContainer;
     const isAtTop = scrollTop <= 1;
     const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
@@ -295,11 +293,18 @@ const Index = () => {
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag={false}
+                drag={isMobile && pageIndex > 0 ? "y" : false}
                 dragConstraints={{ top: 0, bottom: 0 }}
-                dragElastic={0.2}
+                dragElastic={0.1}
+                dragMomentum={false}
+                onDragEnd={handleDragEnd}
                 animate={{ y: -pageIndex * windowHeight }}
-                transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+                transition={{ 
+                  type: 'spring', 
+                  stiffness: 400, 
+                  damping: 40,
+                  mass: 1
+                }}
                 onAnimationComplete={onAnimationComplete}
               >
                 {views.map((viewName, i) => {

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { User, Briefcase, Code, BrainCircuit, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,7 @@ const PillButton = ({ icon: Icon, label, onClick, className }: PillButtonProps) 
     <Button
         variant="outline"
         className={cn(
-            "rounded-full border-primary/20 bg-secondary/30 hover:bg-secondary/50 h-auto py-2 px-4 flex items-center gap-2",
+            "rounded-full border-primary/20 bg-secondary/30 hover:bg-secondary/50 h-auto py-2 px-4 flex items-center gap-2 w-full justify-center",
             className
         )}
         onClick={onClick}
@@ -40,13 +39,14 @@ const PillNavigation = ({ setActiveView }: PillNavigationProps) => {
     ];
 
     return (
-        <div className="flex flex-wrap justify-center gap-2 mb-8 max-w-sm mx-auto">
-            {pills.map((pill) => (
+        <div className="grid grid-cols-6 gap-2 mb-8 max-w-xs sm:max-w-sm mx-auto">
+            {pills.map((pill, index) => (
                 <PillButton
                     key={pill.view}
                     icon={pill.icon}
                     label={pill.label}
                     onClick={() => setActiveView(pill.view)}
+                    className={cn(index < 3 ? "col-span-2" : "col-span-3")}
                 />
             ))}
         </div>

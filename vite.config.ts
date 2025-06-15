@@ -19,6 +19,4 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // GitHub Pages deployment configuration
-  base: mode === 'production' ? '/yashgori20/' : '/',
 }));

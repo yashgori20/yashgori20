@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -70,6 +71,14 @@ const Index = () => {
   } = useChatApi();
 
   const setActiveView = (view: View) => {
+    const targetViewIndex = views.indexOf(view);
+    if (targetViewIndex !== -1) {
+      const viewContainer = viewContainerRefs.current[targetViewIndex];
+      if (viewContainer) {
+        viewContainer.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    }
+
     _setActiveView(view);
     if (isMobile) {
       closeMobileSidebar();

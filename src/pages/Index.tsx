@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -147,7 +148,13 @@ const Index = () => {
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const { offset, velocity } = info;
-    const swipeThreshold = windowHeight / 4;
+    
+    let swipeThreshold = windowHeight / 4;
+    // Increase threshold for swipe from home to about
+    if (pageIndex === 0 && offset.y < 0) {
+        swipeThreshold = windowHeight / 2.5; 
+    }
+
     const velocityThreshold = 300;
 
     if (Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold) {
@@ -161,9 +168,13 @@ const Index = () => {
   
   const handleWheel = (e: React.WheelEvent) => {
     if (isAnimating.current) return;
-    if (e.deltaY > 50) {
+
+    const scrollDownThreshold = pageIndex === 0 ? 100 : 50;
+    const scrollUpThreshold = -50;
+
+    if (e.deltaY > scrollDownThreshold) {
       changePage(pageIndex + 1);
-    } else if (e.deltaY < -50) {
+    } else if (e.deltaY < scrollUpThreshold) {
       changePage(pageIndex - 1);
     }
   };
@@ -203,14 +214,14 @@ const Index = () => {
 
           <div
             className="flex-1 overflow-hidden"
-            onWheel={pageIndex > 0 ? handleWheel : undefined}
+            onWheel={(pageIndex > 0 || messages.length === 0) ? handleWheel : undefined}
           >
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
                 drag="y"
                 dragConstraints={{ top: 0, bottom: 0 }}
-                dragElastic={0.2}
+                dragElastic={pageIndex === 0 ? 0.2 : 0}
                 onDragEnd={handleDragEnd}
                 animate={{ y: -pageIndex * windowHeight }}
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}

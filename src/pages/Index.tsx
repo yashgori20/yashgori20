@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -188,8 +187,8 @@ const Index = () => {
       />
       
       <main className={cn(
-        "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
-        isSidebarCollapsed ? "ml-[45px]" : "ml-64"
+        "flex flex-col bg-background relative h-full",
+        "ml-[45px]"
       )}>
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
             <div 

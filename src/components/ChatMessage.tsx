@@ -14,7 +14,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
     return (
       <div className={cn("flex items-start gap-4", isUser ? "justify-end" : "justify-start")}>
         {!isUser && (
-          <Avatar className="w-8 h-8">
+          <Avatar className="w-8 h-8 rounded-none animate-gentle-pulse">
             <AvatarImage src="/images/triquetra-logo.png" alt="AI Assistant" />
             <AvatarFallback>
               <Bot className="w-5 h-5" />
@@ -30,3 +30,4 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 };
 
 export default ChatMessage;
+

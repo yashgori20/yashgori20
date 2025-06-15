@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -13,6 +14,7 @@ import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -24,6 +26,7 @@ const Index = () => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const { playPop } = useSound();
+  const isMobile = useIsMobile();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -187,8 +190,8 @@ const Index = () => {
       />
       
       <main className={cn(
-        "flex flex-col bg-background relative h-full",
-        "ml-[45px]"
+        "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
+        !isSidebarCollapsed && !isMobile ? "ml-64" : "ml-[45px]"
       )}>
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
             <div 

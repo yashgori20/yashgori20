@@ -24,7 +24,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300",
       isCollapsed ? "w-10" : "w-64 md:w-72"
     )}>
-      <div className={cn("p-4 pt-16 flex flex-col")}>
+      <div className={cn("p-4 pt-16 flex flex-col", isCollapsed ? "px-2" : "px-4")}>
         {!isCollapsed && (
           <div className="mb-4 text-center">
             <div className={cn("flex items-center gap-3 mb-2 h-10")}>
@@ -46,6 +46,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
         <div className={cn("flex items-center w-full")}>
            <Button 
               variant={activeView === 'chat' ? "secondary" : "ghost"}
+              size={isCollapsed ? "icon" : "default"}
               className={cn(
                 "w-full transition-all duration-200 justify-start",
                 isCollapsed && "justify-center"
@@ -67,7 +68,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       </div>
       
       <ScrollArea className="flex-1">
-        <div className="space-y-1 px-4">
+        <div className={cn("space-y-1", isCollapsed ? "px-2" : "px-4")}>
           <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
           <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
           <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>

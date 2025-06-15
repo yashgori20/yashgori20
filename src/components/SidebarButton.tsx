@@ -17,6 +17,7 @@ type SidebarButtonProps = {
 const SidebarButton = ({ icon: Icon, label, view, activeView, setActiveView, setSidebarOpen, isCollapsed }: SidebarButtonProps) => (
     <Button 
       variant={activeView === view ? "secondary" : "ghost"} 
+      size={isCollapsed ? "icon" : "default"}
       className={cn(
         "w-full transition-all duration-200 justify-start",
         isCollapsed && "justify-center"

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -295,9 +296,10 @@ const Index = () => {
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag={false}
+                drag={isMobile && pageIndex > 0 ? 'y' : false}
+                onDragEnd={handleDragEnd}
                 dragConstraints={{ top: 0, bottom: 0 }}
-                dragElastic={0.2}
+                dragElastic={0}
                 animate={{ y: -pageIndex * windowHeight }}
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                 onAnimationComplete={onAnimationComplete}

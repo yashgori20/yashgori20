@@ -29,7 +29,7 @@ export const resumeData = {
       twitter: "https://twitter.com/yashgori20",
     },
   },
-  profileImage: "/images/triquetra-logo.png",
+  profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
   about: "An AI Developer with a passion for building intelligent systems and creative solutions. Proficient in Python, LangChain, and various machine learning frameworks, with experience in developing RAG-based applications, multi-agent systems, and data-driven prediction models. A detail-oriented, adaptable, and creative problem solver.",
   whatIBring: "I transform complex problems into elegant AI solutions. Whether it's building conversational interfaces that understand context, creating prediction models that drive decisions, or designing systems that learn and adapt - I bring creativity, technical expertise, and a passion for innovation to every project.",
   languages: ["English (Fluent)", "Hindi (Native)", "Gujarati (Native)", "Marathi (Conversational)"],

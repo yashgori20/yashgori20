@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -34,6 +35,7 @@ const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -42,6 +44,39 @@ const Index = () => {
   const isMobile = useIsMobile();
   const { height: windowHeight } = useWindowSize();
   const isAnimating = useRef(false);
+  const scrollTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setSidebarVisible(true);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      return;
+    }
+
+    const handleScroll = () => {
+      setSidebarVisible(true);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        setSidebarVisible(false);
+      }, 1500); // Hide after 1.5s of inactivity
+    };
+
+    const containers = viewContainerRefs.current.filter(Boolean);
+    containers.forEach(container => container?.addEventListener('scroll', handleScroll));
+
+    // Initially hide the sidebar on mobile after a short delay
+    const initialTimeout = window.setTimeout(() => setSidebarVisible(false), 2000);
+
+    return () => {
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      clearTimeout(initialTimeout);
+      containers.forEach(container => container?.removeEventListener('scroll', handleScroll));
+    };
+  }, [isMobile, pageIndex]);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -200,6 +235,7 @@ const Index = () => {
   };
   
   const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView };
+  const finalIsCollapsed = isMobile || isSidebarCollapsed;
 
   return (
     <div className="h-svh w-screen bg-background text-foreground overflow-hidden">
@@ -209,15 +245,21 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
-      <SidebarContent 
-        {...{ activeView, setActiveView, setMessages, scrollToContact }} 
-        isCollapsed={isSidebarCollapsed} 
-        toggleCollapse={toggleSidebarCollapse} 
-      />
+      <div className={cn(
+        "transition-opacity duration-300",
+        isMobile && !isSidebarVisible ? "opacity-0 pointer-events-none" : "opacity-100"
+      )}>
+        <SidebarContent 
+          {...{ activeView, setActiveView, setMessages, scrollToContact }} 
+          isCollapsed={finalIsCollapsed}
+          isMobile={isMobile}
+          toggleCollapse={toggleSidebarCollapse} 
+        />
+      </div>
       
       <main className={cn(
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
-        !isSidebarCollapsed && !isMobile ? "ml-[17rem]" : "ml-[calc(45px+1rem)]"
+        isMobile ? "ml-0" : (finalIsCollapsed ? "ml-[calc(45px+1rem)]" : "ml-[17rem]")
       )}>
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
             <div 

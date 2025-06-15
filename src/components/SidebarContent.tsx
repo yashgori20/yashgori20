@@ -15,48 +15,54 @@ type SidebarContentProps = {
     setMessages: (messages: Message[]) => void;
     scrollToContact: () => void;
     isCollapsed: boolean;
+    isMobile: boolean;
     toggleCollapse: () => void;
 };
 
-const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
+const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
       "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg",
       isCollapsed ? "w-[45px]" : "w-64"
     )}>
-      <div className={cn("p-4 pt-6 flex flex-col gap-4", isCollapsed ? "px-0" : "px-4")}>
-        {/* Collapse Toggle Button */}
-        <div className={cn(
-          "flex w-full",
-          !isCollapsed ? "justify-end" : "justify-center"
-        )}>
-          <Button 
-            onClick={toggleCollapse} 
-            variant="ghost" 
-            size="icon" 
-            className={cn("h-9", !isCollapsed ? "w-7" : "w-full", isCollapsed && "rounded-none")}
-          >
-            <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
-          </Button>
-        </div>
-        {!isCollapsed && (
-          <div className="text-center">
-            <div className={cn("flex items-center gap-3 mb-2 h-10")}>
-              <img 
-                src={resumeData.profileImage} 
-                alt="Yash Gori" 
-                className="w-10 h-10 rounded-full border-2 border-primary/20"
-              />
-              <div className="flex flex-col items-start">
-                <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                  {resumeData.name}
-                </h2>
-                <div className="w-full h-px bg-border my-1"></div>
-                <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
+      {!isMobile && (
+        <div className={cn("p-4 pt-6 flex flex-col gap-4", isCollapsed ? "px-0" : "px-4")}>
+          {/* Collapse Toggle Button */}
+          <div className={cn(
+            "flex w-full",
+            !isCollapsed ? "justify-end" : "justify-center"
+          )}>
+            <Button 
+              onClick={toggleCollapse} 
+              variant="ghost" 
+              size="icon" 
+              className={cn("h-9", !isCollapsed ? "w-7" : "w-full", isCollapsed && "rounded-none")}
+            >
+              <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
+            </Button>
+          </div>
+          {!isCollapsed && (
+            <div className="text-center">
+              <div className={cn("flex items-center gap-3 mb-2 h-10")}>
+                <img 
+                  src={resumeData.profileImage} 
+                  alt="Yash Gori" 
+                  className="w-10 h-10 rounded-full border-2 border-primary/20"
+                />
+                <div className="flex flex-col items-start">
+                  <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                    {resumeData.name}
+                  </h2>
+                  <div className="w-full h-px bg-border my-1"></div>
+                  <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <div className={cn("flex items-center w-full")}>
+          )}
+        </div>
+      )}
+      
+      <ScrollArea className="flex-grow">
+        <div className={cn("space-y-2 py-2", isCollapsed ? "px-0" : "px-4", isMobile && "pt-4 pb-4")}>
            <Button 
               variant={activeView === 'chat' ? "secondary" : "ghost"}
               size={isCollapsed ? "icon" : "default"}
@@ -76,11 +82,6 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
               <Sparkles className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
               {!isCollapsed && <span>Home</span>}
             </Button>
-        </div>
-      </div>
-      
-      <ScrollArea>
-        <div className={cn("space-y-2 py-2", isCollapsed ? "px-0" : "px-4")}>
           <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isCollapsed }}/>
           <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isCollapsed }}/>
           <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, isCollapsed }}/>
@@ -89,8 +90,8 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
         </div>
       </ScrollArea>
       
-      <div className="p-4 border-t border-white/20">
-          {!isCollapsed && (
+      {!isCollapsed && (
+        <div className="p-4 border-t border-white/20">
             <div className="flex flex-col gap-4">
               <div className="flex justify-center space-x-4">
                 <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
@@ -122,8 +123,8 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                 </Button>
               </div>
             </div>
-          )}
-      </div>
+        </div>
+      )}
     </div>
   );
 

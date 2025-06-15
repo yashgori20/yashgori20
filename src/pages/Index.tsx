@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -15,8 +14,10 @@ import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { motion, PanInfo } from 'framer-motion';
+import { motion, PanInfo, AnimatePresence } from 'framer-motion';
 import { useWindowSize } from '@/hooks/use-window-size';
+import { Button } from '@/components/ui/button';
+import { Sparkles } from 'lucide-react';
 
 const views: View[] = ['chat', 'about', 'experience', 'projects', 'skills', 'contact'];
 
@@ -38,6 +39,7 @@ const Index = () => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
+  const [showPortfolioPrompt, setShowPortfolioPrompt] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { playPop } = useSound();
@@ -45,6 +47,7 @@ const Index = () => {
   const { height: windowHeight } = useWindowSize();
   const isAnimating = useRef(false);
   const scrollTimeoutRef = useRef<number | null>(null);
+  const promptTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!isMobile) {
@@ -188,6 +191,16 @@ const Index = () => {
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const { offset, velocity } = info;
     
+    if (pageIndex === 0) {
+      // For chat view, show prompt on upward swipe. A small swipe is enough.
+      if (offset.y < -50) {
+        setShowPortfolioPrompt(true);
+        if (promptTimeoutRef.current) clearTimeout(promptTimeoutRef.current);
+        promptTimeoutRef.current = window.setTimeout(() => setShowPortfolioPrompt(false), 4000);
+      }
+      return;
+    }
+    
     const swipeThreshold = windowHeight / 4;
     const velocityThreshold = 300;
 
@@ -217,6 +230,16 @@ const Index = () => {
   
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (isAnimating.current) return;
+
+    if (pageIndex === 0) {
+      // For chat view, show prompt on scroll down
+      if (e.deltaY > 10) {
+        setShowPortfolioPrompt(true);
+        if (promptTimeoutRef.current) clearTimeout(promptTimeoutRef.current);
+        promptTimeoutRef.current = window.setTimeout(() => setShowPortfolioPrompt(false), 4000);
+      }
+      return;
+    }
 
     const viewContainer = viewContainerRefs.current[pageIndex];
     if (!viewContainer) return;
@@ -275,18 +298,19 @@ const Index = () => {
           </div>
 
           <div
-            className="flex-1 overflow-hidden"
-            onWheel={pageIndex > 0 ? handleWheel : undefined}
+            className="flex-1 overflow-hidden relative"
+            onWheel={handleWheel}
           >
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag={false}
+                drag="y"
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={0.2}
                 animate={{ y: -pageIndex * windowHeight }}
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                 onAnimationComplete={onAnimationComplete}
+                onDragEnd={handleDragEnd}
               >
                 {views.map((viewName, i) => {
                   const PageComponent = PageComponents[viewName];
@@ -307,6 +331,29 @@ const Index = () => {
                 })}
               </motion.div>
             )}
+             <AnimatePresence>
+              {showPortfolioPrompt && (
+                <motion.div
+                  className="absolute bottom-24 md:bottom-12 left-1/2 -translate-x-1/2 z-30"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Button
+                    variant="secondary"
+                    className="shadow-lg"
+                    onClick={() => {
+                      changePage(1);
+                      setShowPortfolioPrompt(false);
+                    }}
+                  >
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Click to switch to portfolio mode
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
         {activeView === 'chat' && messages.length > 0 && (

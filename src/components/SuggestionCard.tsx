@@ -7,8 +7,11 @@ type SuggestionCardProps = {
 };
 
 const SuggestionCard = ({ title, onClick }: SuggestionCardProps) => (
-    <button onClick={onClick} className="py-4 w-full text-left flex items-center hover:bg-accent transition-colors duration-200 border-b border-border/40 last:border-b-0">
-        <p className="flex-1 text-sm text-muted-foreground">{title}</p>
+    <button 
+        onClick={onClick} 
+        className="group py-4 w-full text-center relative transition-colors duration-200 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-gradient-to-r after:from-transparent after:via-border/40 after:to-transparent last:after:hidden hover:bg-[radial-gradient(ellipse_at_center,hsl(var(--accent))_20%,transparent_70%)]"
+    >
+        <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{title}</p>
     </button>
 );
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
@@ -181,7 +182,7 @@ const Index = () => {
           </div>
 
           <div className={cn(
-            "flex-1 flex flex-col pt-16 md:pt-20",
+            "flex-1 flex flex-col pt-16 md:pt-20 pb-24",
             activeView === 'chat' ? 'overflow-hidden' : 'overflow-y-auto'
           )}>
             {renderView()}

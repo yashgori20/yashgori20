@@ -19,7 +19,7 @@ type SidebarContentProps = {
 
 const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }: SidebarContentProps) => (
     <div className={cn(
-      "flex flex-col h-full bg-card text-foreground transition-all duration-300 w-72"
+      "flex flex-col h-full bg-background/30 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300 w-72"
     )}>
       <div className={cn("p-4 flex flex-col")}>
         <div className="mb-4 text-center">

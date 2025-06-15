@@ -140,7 +140,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-background text-foreground">
+    <div className="flex h-svh w-screen bg-background text-foreground">
       <ProfileCard 
         isOpen={profileCardOpen} 
         onClose={() => setProfileCardOpen(false)} 
@@ -167,7 +167,7 @@ const Index = () => {
           <SidebarContent {...{ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} />
       </div>
       
-      <main className="flex-1 flex flex-col h-full bg-background overflow-y-auto relative">
+      <main className="flex-1 flex flex-col bg-background relative overflow-hidden">
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
@@ -181,21 +181,21 @@ const Index = () => {
             </div>
           </div>
 
-          {renderView()}
+          <div className="flex-1 flex flex-col overflow-hidden pt-16 md:pt-20">
+            {renderView()}
+          </div>
 
         {activeView === 'chat' && messages.length > 0 && (
           <div className="p-4 border-t border-border bg-background">
-            <div className="max-w-4xl mx-auto">
-              <ChatInputBar
-                input={input}
-                setInput={setInput}
-                handleSend={handleSend}
-                isPending={askApi.isPending}
-              />
-              <p className="text-xs text-center text-muted-foreground mt-2">
-                  YashGori-GPT can make mistakes. Consider checking important information.
-              </p>
-            </div>
+            <ChatInputBar
+              input={input}
+              setInput={setInput}
+              handleSend={handleSend}
+              isPending={askApi.isPending}
+            />
+            <p className="text-xs text-center text-muted-foreground mt-2">
+                YashGori-GPT can make mistakes. Consider checking important information.
+            </p>
           </div>
         )}
       </main>

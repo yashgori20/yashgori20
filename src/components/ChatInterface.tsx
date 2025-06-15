@@ -55,11 +55,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   className="w-full max-w-2xl mx-auto"
                 >
                   <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
-                      <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
+                      <SuggestionCard title="What are my key skills?" onClick={() => handleSuggestionClick("What are my key skills?")} />
                       <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
                       <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
-                      <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
-                      <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+                      <SuggestionCard title="How can I contact me?" onClick={() => handleSuggestionClick("How can I contact me?")} />
+                      <SuggestionCard title="What are my latest projects?" onClick={() => handleSuggestionClick("What are my latest projects?")} />
                   </div>
                 </motion.div>
             </AnimatePresence>

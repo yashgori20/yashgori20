@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
@@ -18,13 +17,13 @@ import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
 import EdgeNavigation from '@/components/EdgeNavigation';
+import DesktopNavigation from '@/components/DesktopNavigation';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -178,6 +177,7 @@ const Index = () => {
       />
       
       <EdgeNavigation activeView={activeView} setActiveView={setActiveView} />
+      <DesktopNavigation activeView={activeView} setActiveView={setActiveView} />
 
       <div className="md:hidden">
           <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>
@@ -187,16 +187,9 @@ const Index = () => {
                   </Button>
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-72 border-none">
-                  <div className="w-72 h-full"><SidebarContent {...{ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} /></div>
+                  <div className="w-72 h-full"><SidebarContent {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} /></div>
               </SheetContent>
           </Sheet>
-      </div>
-      
-      <div className={cn(
-        "hidden md:block h-full transition-all duration-300",
-        isSidebarCollapsed ? "w-16" : "w-72"
-      )}>
-          <SidebarContent {...{ isSidebarCollapsed, setIsSidebarCollapsed, activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} />
       </div>
       
       <main className="flex-1 flex flex-col bg-background relative">

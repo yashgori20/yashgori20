@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export const useSidebarState = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const toggleSidebarCollapse = () => {
     setSidebarCollapsed(isCollapsed => !isCollapsed);
@@ -10,7 +11,8 @@ export const useSidebarState = () => {
 
   return {
     isSidebarCollapsed,
-    isSidebarVisible: true,
     toggleSidebarCollapse,
+    isMobileSidebarOpen,
+    setMobileSidebarOpen,
   };
 };

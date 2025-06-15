@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import ProfileCard from '@/components/ProfileCard';
-import { View } from '@/types';
+import { View, Message } from '@/types';
 import SidebarContent from '@/components/SidebarContent';
 import ChatInputBar from '@/components/ChatInputBar';
 import PageContainer from '@/components/PageContainer';
@@ -11,6 +11,9 @@ import { useMobileGestures } from '@/hooks/useMobileGestures';
 import { useProfileCard } from '@/hooks/useProfileCard';
 import { useSidebarState } from '@/hooks/useSidebarState';
 import { useChatApi } from '@/hooks/useChatApi';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Index = () => {
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -47,8 +50,9 @@ const Index = () => {
 
   const {
     isSidebarCollapsed,
-    isSidebarVisible,
-    toggleSidebarCollapse
+    toggleSidebarCollapse,
+    isMobileSidebarOpen,
+    setMobileSidebarOpen,
   } = useSidebarState();
 
   const {
@@ -65,6 +69,17 @@ const Index = () => {
     triggerScrollHint
   } = useChatApi();
 
+  const handleMobileNavigation = () => {
+    if (isMobile) {
+      setMobileSidebarOpen(false);
+    }
+  };
+
+  const wrappedSetActiveView = (view: View) => {
+    setActiveView(view);
+    handleMobileNavigation();
+  };
+
   const scrollToContact = () => {
     setActiveView('contact');
     setTimeout(() => {
@@ -73,7 +88,7 @@ const Index = () => {
     }, 400);
   };
 
-  const finalIsCollapsed = isMobile || isSidebarCollapsed;
+  const finalIsCollapsed = isSidebarCollapsed;
 
   const chatInterfaceProps = { 
     messages, 
@@ -84,7 +99,7 @@ const Index = () => {
     askApi, 
     getGreeting, 
     scrollAreaRef, 
-    setActiveView, 
+    setActiveView: isMobile ? wrappedSetActiveView : setActiveView, 
     glowIntensity, 
     triggerScrollHint, 
     setMessages 
@@ -98,17 +113,36 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
-      <div className={cn(
-        "transition-opacity duration-300",
-        isMobile && !isSidebarVisible ? "opacity-0 pointer-events-none" : "opacity-100"
-      )}>
+      {isMobile ? (
+        <Sheet open={isMobileSidebarOpen} onOpenChange={setMobileSidebarOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="absolute top-4 left-4 z-30">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-[250px] bg-white/10 backdrop-blur-xl border-r-0 text-foreground">
+            <SidebarContent 
+              activeView={activeView}
+              setActiveView={wrappedSetActiveView}
+              setMessages={setMessages}
+              scrollToContact={() => {
+                scrollToContact();
+                handleMobileNavigation();
+              }}
+              isCollapsed={false}
+              isMobile={true}
+              toggleCollapse={() => {}}
+            />
+          </SheetContent>
+        </Sheet>
+      ) : (
         <SidebarContent 
           {...{ activeView, setActiveView, setMessages, scrollToContact }} 
           isCollapsed={finalIsCollapsed}
           isMobile={isMobile}
           toggleCollapse={toggleSidebarCollapse} 
         />
-      </div>
+      )}
       
       <main className={cn(
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",

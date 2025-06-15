@@ -120,7 +120,7 @@ const Index = () => {
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0 w-[250px] bg-white/10 backdrop-blur-xl border-r-0 text-foreground">
+          <SheetContent side="left" className="p-0 w-[250px] bg-secondary text-foreground">
             <SidebarContent 
               activeView={activeView}
               setActiveView={wrappedSetActiveView}

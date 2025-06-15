@@ -21,7 +21,7 @@ type SidebarContentProps = {
 
 const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
-      "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg",
+      "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-secondary text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg border border-border",
       isCollapsed ? "w-[45px]" : "w-64"
     )}>
       {!isMobile && (
@@ -64,11 +64,12 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
       <ScrollArea className="flex-grow">
         <div className={cn("space-y-2 py-2", isCollapsed ? "px-0" : "px-4", isMobile && "pt-4 pb-4")}>
            <Button 
-              variant={activeView === 'chat' ? "secondary" : "ghost"}
+              variant="ghost"
               size={isCollapsed ? "icon" : "default"}
               className={cn(
                 "w-full transition-all duration-200 justify-start",
-                isCollapsed && "justify-center rounded-none"
+                isCollapsed && "justify-center rounded-none",
+                activeView === 'chat' && "bg-card"
               )}
               onClick={() => { 
                 if (activeView === 'chat') {
@@ -91,7 +92,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
       </ScrollArea>
       
       {!isCollapsed && (
-        <div className="p-4 border-t border-white/20">
+        <div className="p-4 border-t border-border">
             <div className="flex flex-col gap-4">
               <div className="flex justify-center space-x-4">
                 <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
@@ -112,12 +113,12 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
               </div>
               <div className="space-y-3">
                 <a href="/Yash-Gori-Resume.pdf" download="Yash-Gori-Resume.pdf">
-                  <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
+                  <Button variant="secondary" className="w-full bg-input text-secondary-foreground hover:bg-input/90 border-0">
                     <Download className="mr-2 h-4 w-4" />
                     Download Resume
                   </Button>
                 </a>
-                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50" onClick={scrollToContact}>
+                <Button variant="secondary" className="w-full bg-input text-secondary-foreground hover:bg-input/90 border-0" onClick={scrollToContact}>
                   <Mail className="mr-2 h-4 w-4" />
                   Get In Touch
                 </Button>

@@ -29,42 +29,40 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
       {messages.length === 0 ? (
         <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
           
-          <div className="transform -translate-y-8">
-            <div className="w-full mb-6">
-              <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
-              <p className="text-muted-foreground mb-6 text-sm">Welcome to Yash Gori's Portfolio</p>
-              
-              <PillNavigation setActiveView={setActiveView} />
-            </div>
+          <div className="w-full mb-8">
+            <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
+            <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
+            
+            <PillNavigation setActiveView={setActiveView} />
+          </div>
 
-            <div>
-              <div className="w-full max-w-2xl mx-auto mb-4">
-                 <ChatInputBar
-                    input={input}
-                    setInput={setInput}
-                    handleSend={handleSend}
-                    isPending={askApi.isPending}
-                    inputClassName="text-center"
-                  />
-              </div>
-              <AnimatePresence>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-full max-w-2xl mx-auto mt-12"
-                  >
-                    <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
-                        <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
-                        <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
-                        <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
-                        <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
-                        <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
-                    </div>
-                  </motion.div>
-              </AnimatePresence>
+          <div>
+            <div className="w-full max-w-2xl mx-auto mb-4">
+               <ChatInputBar
+                  input={input}
+                  setInput={setInput}
+                  handleSend={handleSend}
+                  isPending={askApi.isPending}
+                  inputClassName="text-center"
+                />
             </div>
+            <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full max-w-2xl mx-auto"
+                >
+                  <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                      <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
+                      <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
+                      <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
+                      <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
+                      <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+                  </div>
+                </motion.div>
+            </AnimatePresence>
           </div>
             <div 
               className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50"

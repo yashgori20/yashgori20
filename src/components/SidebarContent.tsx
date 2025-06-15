@@ -22,9 +22,9 @@ type SidebarContentProps = {
 const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
       "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300",
-      isCollapsed ? "w-20" : "w-64 md:w-72"
+      isCollapsed ? "w-16" : "w-64 md:w-72"
     )}>
-      <div className={cn("p-4 flex flex-col")}>
+      <div className={cn("p-4 pt-16 flex flex-col")}>
         {!isCollapsed && (
           <div className="mb-4 text-center">
             <div className={cn("flex items-center gap-3 mb-2 h-10")}>
@@ -77,25 +77,25 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       </ScrollArea>
       
       <div className="mt-auto p-4 border-t border-border">
-          <>
-            <div className={cn("flex justify-center space-x-4 mb-4", isCollapsed && "flex-col space-y-4 space-x-0")}>
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                <Github className="h-6 w-6 hover:text-primary transition-colors"/>
-              </a>
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                <Linkedin className="h-6 w-6 hover:text-primary transition-colors"/>
-              </a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                <HuggingFaceLogo className="h-6 w-6 hover:text-primary transition-colors" />
-              </a>
-              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                <Instagram className="h-6 w-6 hover:text-primary transition-colors"/>
-              </a>
-              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                <Twitter className="h-6 w-6 hover:text-primary transition-colors"/>
-              </a>
-            </div>
-            {!isCollapsed && (
+          {!isCollapsed && (
+            <>
+              <div className="flex justify-center space-x-4 mb-4">
+                <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <Github className="h-6 w-6 hover:text-primary transition-colors"/>
+                </a>
+                <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <Linkedin className="h-6 w-6 hover:text-primary transition-colors"/>
+                </a>
+                <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <HuggingFaceLogo className="h-6 w-6 hover:text-primary transition-colors" />
+                </a>
+                <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <Instagram className="h-6 w-6 hover:text-primary transition-colors"/>
+                </a>
+                <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <Twitter className="h-6 w-6 hover:text-primary transition-colors"/>
+                </a>
+              </div>
               <div className="space-y-3">
                 <a href="/Yash-Gori-Resume.pdf" download="Yash-Gori-Resume.pdf">
                   <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
@@ -108,15 +108,15 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
                   Get In Touch
                 </Button>
               </div>
-            )}
-          </>
+            </>
+          )}
       </div>
        {/* Desktop Collapse Toggle Button */}
        <Button 
         onClick={toggleCollapse} 
         variant="ghost" 
         size="icon" 
-        className="absolute top-5 right-4 z-50 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
+        className="absolute top-5 right-2 z-50 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
       >
         <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
       </Button>

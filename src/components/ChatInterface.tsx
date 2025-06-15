@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { ArrowDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type ChatInterfaceProps = {
     messages: Message[],
@@ -49,16 +49,26 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   isPending={askApi.isPending}
                   inputClassName="text-center"
                 />
-              <div className="overflow-hidden px-4">
-                  <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
-                  <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
-                  <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
-                  <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
-                  <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
-              </div>
             </div>
           </div>
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 flex flex-col items-center">
+            <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full mb-4"
+                >
+                  <div className="max-h-[15vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                      <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
+                      <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
+                      <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
+                      <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
+                      <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+                  </div>
+                </motion.div>
+            </AnimatePresence>
             <ArrowDown className="h-6 w-6 mx-auto text-muted-foreground animate-bounce" />
           </div>
         </div>

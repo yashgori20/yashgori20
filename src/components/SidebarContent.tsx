@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -25,9 +24,9 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       isCollapsed ? "w-[45px]" : "w-64 md:w-72"
     )}>
       <div className={cn("p-4 pt-6 flex flex-col", isCollapsed ? "px-0" : "px-4")}>
-        {/* Desktop Collapse Toggle Button */}
+        {/* Collapse Toggle Button */}
         <div className={cn(
-          "hidden md:flex w-full mb-4",
+          "flex w-full mb-4",
           !isCollapsed ? "justify-end" : "justify-center"
         )}>
           <Button 
@@ -128,7 +127,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       </div>
        {/* Mobile Close Button */}
        <Button 
-        onClick={toggleCollapse} 
+        onClick={() => setSidebarOpen(false)} 
         variant="ghost" 
         size="icon" 
         className="absolute top-5 right-4 z-20 h-6 w-6 md:hidden"

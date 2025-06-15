@@ -1,7 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -16,6 +16,7 @@ import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
+import WelcomeOverlay from '@/components/WelcomeOverlay';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -25,9 +26,22 @@ const Index = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
+  const [showWelcome, setShowWelcome] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const { playPop } = useSound();
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisitedPortfolio');
+    if (!hasVisited) {
+      setShowWelcome(true);
+    }
+  }, []);
+
+  const handleCloseWelcome = () => {
+    setShowWelcome(false);
+    localStorage.setItem('hasVisitedPortfolio', 'true');
+  };
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -178,6 +192,9 @@ const Index = () => {
 
   return (
     <div className="flex h-svh w-screen bg-background text-foreground">
+      <AnimatePresence>
+        {showWelcome && <WelcomeOverlay onClose={handleCloseWelcome} />}
+      </AnimatePresence>
       <ProfileCard 
         isOpen={profileCardOpen} 
         onClose={() => setProfileCardOpen(false)} 
@@ -199,7 +216,7 @@ const Index = () => {
           <div 
             className={cn(
               "fixed inset-0 bg-black/60 z-30 transition-opacity duration-300",
-              isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+              isSidebarOpen && !isSidebarCollapsed ? "opacity-100" : "opacity-0 pointer-events-none"
             )}
             onClick={() => setSidebarOpen(false)}
           />
@@ -210,8 +227,8 @@ const Index = () => {
             )}>
               <SidebarContent 
                   {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} 
-                  isCollapsed={false}
-                  toggleCollapse={() => setSidebarOpen(false)}
+                  isCollapsed={isSidebarCollapsed}
+                  toggleCollapse={toggleSidebarCollapse}
               />
           </div>
       </div>

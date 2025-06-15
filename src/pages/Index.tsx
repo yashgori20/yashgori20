@@ -26,18 +26,6 @@ const Index = () => {
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // This effect will disable scrolling on the page for all views except 'chat'.
-    if (activeView !== 'chat') {
-      document.documentElement.classList.add('overflow-hidden');
-    } else {
-      document.documentElement.classList.remove('overflow-hidden');
-    }
-    return () => {
-      document.documentElement.classList.remove('overflow-hidden');
-    };
-  }, [activeView]);
-
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) return "Good Morning!";
@@ -192,7 +180,10 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col overflow-hidden pt-16 md:pt-20">
+          <div className={cn(
+            "flex-1 flex flex-col pt-16 md:pt-20",
+            activeView === 'chat' ? 'overflow-hidden' : 'overflow-y-auto'
+          )}>
             {renderView()}
           </div>
 

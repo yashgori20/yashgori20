@@ -148,12 +148,7 @@ const Index = () => {
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const { offset, velocity } = info;
     
-    let swipeThreshold = windowHeight / 4;
-    // Increase threshold for swipe from home to about
-    if (pageIndex === 0 && offset.y < 0) {
-        swipeThreshold = windowHeight / 2.5; 
-    }
-
+    const swipeThreshold = windowHeight / 4;
     const velocityThreshold = 300;
 
     if (Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold) {
@@ -227,14 +222,14 @@ const Index = () => {
 
           <div
             className="flex-1 overflow-hidden"
-            onWheel={(pageIndex > 0 || messages.length === 0) ? handleWheel : undefined}
+            onWheel={pageIndex > 0 ? handleWheel : undefined}
           >
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag="y"
+                drag={pageIndex > 0 ? "y" : false}
                 dragConstraints={{ top: 0, bottom: 0 }}
-                dragElastic={pageIndex === 0 ? 0.2 : 0}
+                dragElastic={0}
                 onDragEnd={handleDragEnd}
                 animate={{ y: -pageIndex * windowHeight }}
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}

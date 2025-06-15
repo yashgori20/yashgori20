@@ -37,7 +37,7 @@ const Index = () => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
-  const [glowIntensity, setGlowIntensity] = useState(0);
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { playPop } = useSound();
@@ -45,7 +45,7 @@ const Index = () => {
   const { height: windowHeight } = useWindowSize();
   const isAnimating = useRef(false);
   const scrollTimeoutRef = useRef<number | null>(null);
-  const glowTimeoutRef = useRef<number | null>(null);
+  const hintTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!isMobile) {
@@ -87,17 +87,14 @@ const Index = () => {
     return "Good Night!";
   };
 
-  const triggerScrollHint = useCallback((deltaY: number) => {
-    if (glowTimeoutRef.current) {
-      clearTimeout(glowTimeoutRef.current);
+  const triggerScrollHint = useCallback(() => {
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current);
     }
-    // Increase intensity based on scroll delta, capping at 1
-    setGlowIntensity(prev => Math.min(1, prev + Math.abs(deltaY) * 0.0015));
-
-    // Set a timeout to fade the glow away if the user stops scrolling
-    glowTimeoutRef.current = window.setTimeout(() => {
-      setGlowIntensity(0);
-    }, 1500);
+    setShowScrollHint(true);
+    hintTimeoutRef.current = window.setTimeout(() => {
+      setShowScrollHint(false);
+    }, 2000); // Glow for 2 seconds
   }, []);
 
   const askApi = useMutation({
@@ -248,7 +245,7 @@ const Index = () => {
     }
   };
   
-  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint };
+  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, showScrollHint, triggerScrollHint };
   const finalIsCollapsed = isMobile || isSidebarCollapsed;
 
   return (

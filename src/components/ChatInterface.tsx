@@ -23,21 +23,15 @@ type ChatInterfaceProps = {
     getGreeting: () => string,
     scrollAreaRef: React.RefObject<HTMLDivElement>,
     setActiveView: (view: View) => void,
-    glowIntensity: number;
-    triggerScrollHint: (deltaY: number) => void;
+    showScrollHint: boolean;
+    triggerScrollHint: () => void;
 };
 
-const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint }: ChatInterfaceProps) => {
+const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, showScrollHint, triggerScrollHint }: ChatInterfaceProps) => {
   const handleScrollAttempt = (e: React.WheelEvent<HTMLDivElement>) => {
     if (Math.abs(e.deltaY) > 0) {
-      triggerScrollHint(e.deltaY);
+      triggerScrollHint();
     }
-  };
-
-  const glowStyle = {
-    opacity: glowIntensity > 0 ? 0.7 + glowIntensity * 0.3 : undefined,
-    textShadow: `0 0 ${glowIntensity * 8}px rgba(255,255,255,0.8)`,
-    filter: `drop-shadow(0 0 ${glowIntensity * 4}px rgba(255,255,255,0.7))`
   };
 
   return (
@@ -86,12 +80,12 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             <button
               onClick={() => setActiveView('about')}
               className={cn(
-                "absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-all duration-300"
+                "absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity",
+                showScrollHint && "button-glow"
               )}
-              style={glowStyle}
             >
-              <p className="text-xs">Click here to switch to Portfolio mode</p>
-              <ChevronsDown className={cn("w-4 h-4", glowIntensity === 0 && "animate-bounce")} />
+              <p className="text-xs">Switch to Portfolio mode</p>
+              <ChevronsDown className={cn("w-4 h-4", !showScrollHint && "animate-bounce")} />
             </button>
         </div>
       ) : (

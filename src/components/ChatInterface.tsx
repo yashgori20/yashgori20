@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 
 type ChatInterfaceProps = {
     messages: Message[],
@@ -26,21 +26,16 @@ type ChatInterfaceProps = {
 const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }: ChatInterfaceProps) => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
-        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
-          <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
-            <Button asChild variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
-              <a href="https://yash-ai-hub-portfolio.lovable.app/" target="_blank" rel="noopener noreferrer">
-                Prefer a classic view?
-              </a>
-            </Button>
-          </div>
+        <div className="relative flex-1 flex flex-col justify-around items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
           
           <div className="w-full">
             <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
             <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
             
             <PillNavigation setActiveView={setActiveView} />
+          </div>
 
+          <div>
             <div className="w-full max-w-2xl mx-auto mt-8 mb-4">
                <ChatInputBar
                   input={input}
@@ -68,6 +63,12 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                 </motion.div>
             </AnimatePresence>
           </div>
+            <div 
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50"
+            >
+              <p className="text-xs">Swipe to explore</p>
+              <ArrowDown className="w-4 h-4 animate-bounce" />
+            </div>
         </div>
       ) : (
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>

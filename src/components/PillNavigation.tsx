@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { User, Briefcase, Code, BrainCircuit, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -40,32 +39,16 @@ const PillNavigation = ({ setActiveView }: PillNavigationProps) => {
     ];
 
     return (
-        <div>
-            {/* Mobile view: 3x2 grid */}
-            <div className="sm:hidden grid grid-cols-6 gap-2 mb-8 max-w-xs mx-auto">
-                {pills.map((pill, index) => (
-                    <PillButton
-                        key={pill.view}
-                        icon={pill.icon}
-                        label={pill.label}
-                        onClick={() => setActiveView(pill.view)}
-                        className={cn(index < 3 ? "col-span-2" : "col-span-3")}
-                    />
-                ))}
-            </div>
-
-            {/* Desktop view: flex-wrap */}
-            <div className="hidden sm:flex flex-wrap justify-center gap-3 mb-8">
-                 {pills.map((pill) => (
-                    <PillButton
-                        key={pill.view}
-                        icon={pill.icon}
-                        label={pill.label}
-                        onClick={() => setActiveView(pill.view)}
-                        className="w-auto"
-                    />
-                ))}
-            </div>
+        <div className="grid grid-cols-6 gap-2 mb-8 max-w-xs sm:max-w-sm mx-auto">
+            {pills.map((pill, index) => (
+                <PillButton
+                    key={pill.view}
+                    icon={pill.icon}
+                    label={pill.label}
+                    onClick={() => setActiveView(pill.view)}
+                    className={cn(index < 3 ? "col-span-2" : "col-span-3")}
+                />
+            ))}
         </div>
     );
 };

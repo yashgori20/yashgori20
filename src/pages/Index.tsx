@@ -1,5 +1,4 @@
-
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -15,18 +14,33 @@ import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { motion, PanInfo } from 'framer-motion';
+import { useWindowSize } from '@/hooks/use-window-size';
+
+const views: View[] = ['chat', 'about', 'experience', 'projects', 'skills', 'contact'];
+
+const PageComponents: Record<View, React.ComponentType<any>> = {
+  chat: ChatInterface,
+  about: AboutView,
+  experience: ExperienceView,
+  projects: ProjectsView,
+  skills: SkillsView,
+  contact: ContactView,
+};
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
+  const [pageIndex, setPageIndex] = useState(0);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const mainContainerRef = useRef<HTMLDivElement>(null);
   const { playPop } = useSound();
   const isMobile = useIsMobile();
+  const { height: windowHeight } = useWindowSize();
+  const isAnimating = useRef(false);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -69,11 +83,23 @@ const Index = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (activeView !== 'chat' && mainContainerRef.current) {
-      mainContainerRef.current.scrollTop = 0;
+  const changePage = useCallback((newIndex: number) => {
+    if (isAnimating.current || !windowHeight) return;
+    const clampedIndex = Math.max(0, Math.min(newIndex, views.length - 1));
+    if (clampedIndex !== pageIndex) {
+      isAnimating.current = true;
+      setPageIndex(clampedIndex);
+      setActiveView(views[clampedIndex]);
     }
-  }, [activeView]);
+  }, [pageIndex, windowHeight]);
+
+  useEffect(() => {
+    const newIndex = views.indexOf(activeView);
+    if (newIndex !== -1 && newIndex !== pageIndex) {
+      isAnimating.current = true;
+      setPageIndex(newIndex);
+    }
+  }, [activeView, pageIndex]);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -96,13 +122,10 @@ const Index = () => {
 
   const scrollToContact = () => {
     setActiveView('contact');
-    // Small delay to ensure the view has switched before focusing
     setTimeout(() => {
       const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
-      if (messageInput) {
-        messageInput.focus();
-      }
-    }, 100);
+      if (messageInput) messageInput.focus();
+    }, 400); // Increased delay for animation
   };
 
   const handleProfileClick = (event: React.MouseEvent) => {
@@ -117,66 +140,38 @@ const Index = () => {
   const toggleSidebarCollapse = () => {
     setSidebarCollapsed(isCollapsed => !isCollapsed);
   };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-        if (activeView !== 'chat') return;
-        
-        const target = e.target as HTMLElement;
-        const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
-
-        if (!isTypingInInput && e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
-            const chatInput = document.querySelector('input[placeholder="Ask me anything about Yash Gori..."]') as HTMLInputElement;
-            if (chatInput) {
-                chatInput.focus();
-            }
-        }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-    };
-}, [activeView]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeView === 'chat') return;
-
-      const target = e.target as HTMLElement;
-      const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
-
-      if (isTypingInInput) return;
-
-      if (e.key === 'ArrowDown' || e.key === ' ') {
-        e.preventDefault();
-        mainContainerRef.current?.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        mainContainerRef.current?.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [activeView]);
-
-  const renderView = () => {
-    switch (activeView) {
-      case 'chat': return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }} />;
-      case 'about': return <AboutView />;
-      case 'experience': return <ExperienceView />;
-      case 'projects': return <ProjectsView />;
-      case 'skills': return <SkillsView />;
-      case 'contact': return <ContactView />;
-      default: return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }} />;
-    }
+  
+  const onAnimationComplete = () => {
+    isAnimating.current = false;
   };
 
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const { offset, velocity } = info;
+    const swipeThreshold = windowHeight / 4;
+    const velocityThreshold = 300;
+
+    if (Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold) {
+      if (offset.y < 0) {
+        changePage(pageIndex + 1);
+      } else {
+        changePage(pageIndex - 1);
+      }
+    }
+  };
+  
+  const handleWheel = (e: React.WheelEvent) => {
+    if (isAnimating.current) return;
+    if (e.deltaY > 50) {
+      changePage(pageIndex + 1);
+    } else if (e.deltaY < -50) {
+      changePage(pageIndex - 1);
+    }
+  };
+  
+  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView };
+
   return (
-    <div className="h-svh w-screen bg-background text-foreground">
+    <div className="h-svh w-screen bg-background text-foreground overflow-hidden">
       <ProfileCard 
         isOpen={profileCardOpen} 
         onClose={() => setProfileCardOpen(false)} 
@@ -193,7 +188,7 @@ const Index = () => {
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
         !isSidebarCollapsed && !isMobile ? "ml-64" : "ml-[45px]"
       )}>
-          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
+          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
               onClick={handleProfileClick}
@@ -207,15 +202,34 @@ const Index = () => {
           </div>
 
           <div
-            ref={mainContainerRef}
-            className={cn(
-              "flex-1 flex flex-col",
-              activeView === 'chat'
-                ? 'overflow-hidden'
-                : 'overflow-y-auto scroll-snap-type-y-mandatory'
-            )}
+            className="flex-1 overflow-hidden"
+            onWheel={pageIndex > 0 ? handleWheel : undefined}
           >
-            {renderView()}
+            {windowHeight > 0 && (
+              <motion.div
+                className="h-full w-full"
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={0.2}
+                onDragEnd={handleDragEnd}
+                animate={{ y: -pageIndex * windowHeight }}
+                transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+                onAnimationComplete={onAnimationComplete}
+              >
+                {views.map((viewName) => {
+                  const PageComponent = PageComponents[viewName];
+                  return (
+                    <div key={viewName} className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" style={{ height: windowHeight }}>
+                      {viewName === 'chat' ? (
+                        <ChatInterface {...chatInterfaceProps} />
+                      ) : (
+                        <PageComponent />
+                      )}
+                    </div>
+                  );
+                })}
+              </motion.div>
+            )}
           </div>
 
         {activeView === 'chat' && messages.length > 0 && (

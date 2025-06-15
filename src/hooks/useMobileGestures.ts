@@ -46,10 +46,9 @@ export const useMobileGestures = ({
     const { scrollTop, scrollHeight, clientHeight } = viewContainer;
     const isAtTop = scrollTop <= 10;
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
-    const contentFitsInView = scrollHeight <= clientHeight + 5; // Add tolerance
     
     // Swipe up to go to next page (only if at bottom or content fits in view)
-    if (offset.y < 0 && (isAtBottom || contentFitsInView)) {
+    if (offset.y < 0 && (isAtBottom || scrollHeight <= clientHeight)) {
       changePage(pageIndex + 1);
     } 
     // Swipe down to go to previous page (only if at top)
@@ -92,4 +91,3 @@ export const useMobileGestures = ({
     isMobile
   };
 };
-

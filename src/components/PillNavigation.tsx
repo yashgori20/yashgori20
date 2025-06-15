@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { User, Briefcase, Code, BrainCircuit, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,7 @@ type PillButtonProps = {
 const PillButton = ({ icon: Icon, label, onClick }: PillButtonProps) => (
     <Button
         variant="outline"
-        className="rounded-full border-primary/20 bg-secondary/30 hover:bg-secondary/50 h-auto py-2 px-4 flex items-center gap-2 animate-gentle-pulse"
+        className="rounded-full border-primary/20 bg-secondary/30 hover:bg-secondary/50 h-auto py-2 px-4 flex items-center gap-2"
         onClick={onClick}
     >
         <Icon className="h-4 w-4" />

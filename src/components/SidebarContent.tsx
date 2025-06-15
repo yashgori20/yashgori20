@@ -131,3 +131,5 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       </Button>
     </div>
   );
+
+export default SidebarContent;

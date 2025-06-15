@@ -34,25 +34,27 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             </Button>
           </div>
           
-          <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
-          <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
-          
-          <PillNavigation setActiveView={setActiveView} />
+          <div className="relative top-8">
+            <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
+            <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
+            
+            <PillNavigation setActiveView={setActiveView} />
 
-          <div className="w-full max-w-2xl mb-8">
-             <ChatInputBar
-                input={input}
-                setInput={setInput}
-                handleSend={handleSend}
-                isPending={askApi.isPending}
-                inputClassName="text-center"
-              />
-            <div className="overflow-hidden px-4">
-                <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
-                <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
-                <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
-                <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
-                <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+            <div className="w-full max-w-2xl mt-8 mb-8">
+               <ChatInputBar
+                  input={input}
+                  setInput={setInput}
+                  handleSend={handleSend}
+                  isPending={askApi.isPending}
+                  inputClassName="text-center"
+                />
+              <div className="overflow-hidden px-4">
+                  <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
+                  <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
+                  <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
+                  <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
+                  <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
+              </div>
             </div>
           </div>
         </div>

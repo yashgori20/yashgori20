@@ -230,7 +230,7 @@ const Index = () => {
           <div
             ref={mainContainerRef}
             className={cn(
-              "flex-1 flex flex-col",
+              "flex-1",
               activeView === 'chat'
                 ? 'overflow-hidden'
                 : 'overflow-y-auto'

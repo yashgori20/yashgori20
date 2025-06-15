@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -17,7 +16,8 @@ import { useSound } from '@/hooks/useSound';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion, PanInfo } from 'framer-motion';
 import { useWindowSize } from '@/hooks/use-window-size';
-import { ChevronsDown, ChevronsUp } from 'lucide-react';
+import { ChevronsDown, ChevronsUp, ChevronLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const views: View[] = ['chat', 'about', 'experience', 'projects', 'skills', 'contact'];
 
@@ -277,6 +277,20 @@ const Index = () => {
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
         isMobile ? "ml-0" : (finalIsCollapsed ? "ml-[calc(45px+1rem)]" : "ml-[17rem]")
       )}>
+          {activeView === 'chat' && messages.length > 0 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-6 left-4 z-20 md:top-8 hover:bg-primary/10"
+              onClick={() => {
+                setMessages([]);
+                setActiveView('chat');
+              }}
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </Button>
+          )}
+
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"

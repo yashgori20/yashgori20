@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import ProfileCard from '@/components/ProfileCard';
@@ -22,6 +21,7 @@ const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -108,6 +108,10 @@ const Index = () => {
     setProfileCardOpen(!profileCardOpen);
   };
 
+  const toggleSidebarCollapse = () => {
+    setSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
         if (activeView !== 'chat') return;
@@ -156,13 +160,13 @@ const Index = () => {
 
   const renderView = () => {
     switch (activeView) {
-      case 'chat': return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }} />;
+      case 'chat': return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }} />;
       case 'about': return <AboutView />;
       case 'experience': return <ExperienceView />;
       case 'projects': return <ProjectsView />;
       case 'skills': return <SkillsView />;
       case 'contact': return <ContactView />;
-      default: return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }} />;
+      default: return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }} />;
     }
   };
 
@@ -174,21 +178,36 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
+      {/* Desktop Sidebar */}
       <div className="hidden md:block">
-        <SidebarContent {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} />
+        <SidebarContent 
+          {...{ activeView, setActiveView, setSidebarOpen: setSidebarOpen, setMessages, scrollToContact }} 
+          isCollapsed={isSidebarCollapsed} 
+          toggleCollapse={toggleSidebarCollapse} 
+        />
       </div>
 
-      <div className="md:hidden">
-          <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>
-              <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="absolute top-4 left-4 z-10">
-                      <Menu className="h-6 w-6" />
-                  </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-72 border-none">
-                  <div className="w-72 h-full"><SidebarContent {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} /></div>
-              </SheetContent>
-          </Sheet>
+      {/* Mobile Sidebar (Drawer) */}
+       <div className="md:hidden">
+          {/* Overlay */}
+          <div 
+            className={cn(
+              "fixed inset-0 bg-black/60 z-30 transition-opacity duration-300",
+              isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            )}
+            onClick={() => setSidebarOpen(false)}
+          />
+          {/* Sidebar Content */}
+          <div className={cn(
+              "fixed top-0 left-0 h-full z-40 transition-transform duration-300",
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            )}>
+              <SidebarContent 
+                  {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} 
+                  isCollapsed={false}
+                  toggleCollapse={() => setSidebarOpen(false)}
+              />
+          </div>
       </div>
       
       <main className="flex-1 flex flex-col bg-background relative">
@@ -204,6 +223,9 @@ const Index = () => {
               />
             </div>
           </div>
+          <Button variant="ghost" size="icon" className="absolute top-4 left-4 z-10 md:hidden" onClick={() => setSidebarOpen(!isSidebarOpen)}>
+            <Menu className="h-6 w-6" />
+          </Button>
 
           <div
             ref={mainContainerRef}
@@ -211,7 +233,7 @@ const Index = () => {
               "flex-1 flex flex-col",
               activeView === 'chat'
                 ? 'overflow-hidden'
-                : 'overflow-y-auto snap-y snap-mandatory'
+                : 'overflow-y-auto'
             )}
           >
             {renderView()}

@@ -1,12 +1,14 @@
+
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { UseMutationResult } from '@tanstack/react-query';
-import { Message } from '@/types';
+import { Message, View } from '@/types';
 import ChatInputBar from './ChatInputBar';
 import SuggestionCard from './SuggestionCard';
 import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
+import PillNavigation from './PillNavigation';
 
 type ChatInterfaceProps = {
     messages: Message[],
@@ -16,10 +18,11 @@ type ChatInterfaceProps = {
     handleSuggestionClick: (suggestion: string) => void,
     askApi: UseMutationResult<string, Error, string, unknown>,
     getGreeting: () => string,
-    scrollAreaRef: React.RefObject<HTMLDivElement>
+    scrollAreaRef: React.RefObject<HTMLDivElement>,
+    setActiveView: (view: View) => void,
 };
 
-const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }: ChatInterfaceProps) => (
+const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }: ChatInterfaceProps) => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
         <div className="flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
@@ -34,6 +37,8 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
           <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
           
+          <PillNavigation setActiveView={setActiveView} />
+
           <div className="w-full max-w-2xl mb-8">
              <ChatInputBar
                 input={input}

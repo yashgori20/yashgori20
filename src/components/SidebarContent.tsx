@@ -24,7 +24,21 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300",
       isCollapsed ? "w-10" : "w-64 md:w-72"
     )}>
-      <div className={cn("p-4 pt-16 flex flex-col", isCollapsed ? "px-2" : "px-4")}>
+      <div className={cn("p-4 pt-6 flex flex-col", isCollapsed ? "px-0" : "px-4")}>
+        {/* Desktop Collapse Toggle Button */}
+        <div className={cn(
+          "hidden md:flex w-full mb-4",
+          !isCollapsed ? "justify-end" : "justify-center"
+        )}>
+          <Button 
+            onClick={toggleCollapse} 
+            variant="ghost" 
+            size="icon" 
+            className={cn(!isCollapsed ? "w-auto" : "w-full")}
+          >
+            <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
+          </Button>
+        </div>
         {!isCollapsed && (
           <div className="mb-4 text-center">
             <div className={cn("flex items-center gap-3 mb-2 h-10")}>
@@ -68,7 +82,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       </div>
       
       <ScrollArea className="flex-1">
-        <div className={cn("space-y-1", isCollapsed ? "px-2" : "px-4")}>
+        <div className={cn("space-y-1", isCollapsed ? "px-0" : "px-4")}>
           <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
           <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
           <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
@@ -112,15 +126,6 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
             </>
           )}
       </div>
-       {/* Desktop Collapse Toggle Button */}
-       <Button 
-        onClick={toggleCollapse} 
-        variant="ghost" 
-        size="icon" 
-        className="absolute top-5 right-2 z-50 hidden md:flex"
-      >
-        <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
-      </Button>
        {/* Mobile Close Button */}
        <Button 
         onClick={toggleCollapse} 

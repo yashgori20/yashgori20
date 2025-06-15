@@ -10,11 +10,10 @@ type SidebarButtonProps = {
     view: View,
     activeView: View,
     setActiveView: (view: View) => void,
-    setSidebarOpen: (open: boolean) => void
     isCollapsed?: boolean;
 };
 
-const SidebarButton = ({ icon: Icon, label, view, activeView, setActiveView, setSidebarOpen, isCollapsed }: SidebarButtonProps) => (
+const SidebarButton = ({ icon: Icon, label, view, activeView, setActiveView, isCollapsed }: SidebarButtonProps) => (
     <Button 
       variant={activeView === view ? "secondary" : "ghost"} 
       size={isCollapsed ? "icon" : "default"}
@@ -22,7 +21,7 @@ const SidebarButton = ({ icon: Icon, label, view, activeView, setActiveView, set
         "w-full transition-all duration-200 justify-start",
         isCollapsed && "justify-center rounded-none"
       )}
-      onClick={() => { setActiveView(view); setSidebarOpen(false); }}
+      onClick={() => { setActiveView(view); }}
       title={label}
     >
       <Icon className={cn("h-4 w-4", !isCollapsed && "mr-2")} />

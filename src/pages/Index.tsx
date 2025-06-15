@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Menu } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { resumeData } from '@/data/resume';
@@ -22,7 +22,6 @@ const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
@@ -37,6 +36,16 @@ const Index = () => {
       setShowWelcome(true);
     }
   }, []);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (showWelcome) {
+      timer = setTimeout(() => {
+        handleCloseWelcome();
+      }, 7000);
+    }
+    return () => clearTimeout(timer);
+  }, [showWelcome]);
 
   const handleCloseWelcome = () => {
     setShowWelcome(false);
@@ -201,37 +210,11 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
-      {/* Desktop Sidebar */}
-      <div className="hidden md:block">
-        <SidebarContent 
-          {...{ activeView, setActiveView, setSidebarOpen: setSidebarOpen, setMessages, scrollToContact }} 
-          isCollapsed={isSidebarCollapsed} 
-          toggleCollapse={toggleSidebarCollapse} 
-        />
-      </div>
-
-      {/* Mobile Sidebar (Drawer) */}
-       <div className="md:hidden">
-          {/* Overlay */}
-          <div 
-            className={cn(
-              "fixed inset-0 bg-black/60 z-30 transition-opacity duration-300",
-              isSidebarOpen && !isSidebarCollapsed ? "opacity-100" : "opacity-0 pointer-events-none"
-            )}
-            onClick={() => setSidebarOpen(false)}
-          />
-          {/* Sidebar Content */}
-          <div className={cn(
-              "fixed top-0 left-0 h-full z-40 transition-transform duration-300",
-              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            )}>
-              <SidebarContent 
-                  {...{ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact }} 
-                  isCollapsed={isSidebarCollapsed}
-                  toggleCollapse={toggleSidebarCollapse}
-              />
-          </div>
-      </div>
+      <SidebarContent 
+        {...{ activeView, setActiveView, setMessages, scrollToContact }} 
+        isCollapsed={isSidebarCollapsed} 
+        toggleCollapse={toggleSidebarCollapse} 
+      />
       
       <main className="flex-1 flex flex-col bg-background relative">
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
@@ -246,9 +229,6 @@ const Index = () => {
               />
             </div>
           </div>
-          <Button variant="ghost" size="icon" className="absolute top-4 left-4 z-10 md:hidden" onClick={() => setSidebarOpen(!isSidebarOpen)}>
-            <Menu className="h-6 w-6" />
-          </Button>
 
           <div
             ref={mainContainerRef}
@@ -276,6 +256,17 @@ const Index = () => {
           </div>
         )}
       </main>
+      {!showWelcome && (
+        <Button
+            variant="ghost"
+            size="icon"
+            className="fixed bottom-4 right-4 z-20 h-10 w-10 rounded-full bg-primary/20 hover:bg-primary/30 text-primary-foreground backdrop-blur-sm"
+            onClick={() => setShowWelcome(true)}
+            title="Show welcome guide"
+        >
+            <HelpCircle className="h-6 w-6" />
+        </Button>
+      )}
     </div>
   );
 };

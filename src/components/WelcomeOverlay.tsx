@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowDown, ArrowLeft, X } from 'lucide-react';
 
 type WelcomeOverlayProps = {
   onClose: () => void;
@@ -28,16 +28,6 @@ const WelcomeOverlay = ({ onClose }: WelcomeOverlayProps) => {
         </motion.div>
 
         <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0, transition: { delay: 0.4 } }}
-            className="absolute top-8 right-16 md:top-12 md:right-28 text-right max-w-[200px] p-4 bg-background/80 backdrop-blur-sm rounded-lg border border-border pointer-events-none"
-        >
-            <ArrowUpRight className="h-6 w-6 text-primary mb-2 ml-auto" />
-             <p className="text-sm font-semibold">Find me online!</p>
-            <p className="text-xs text-muted-foreground">Click my picture for social links.</p>
-        </motion.div>
-
-        <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0, transition: { delay: 0.6 } }}
             className="absolute bottom-1/3 left-1/2 -translate-x-1/2 text-center max-w-sm p-4 bg-background/80 backdrop-blur-sm rounded-lg border border-border pointer-events-none"
@@ -52,7 +42,10 @@ const WelcomeOverlay = ({ onClose }: WelcomeOverlayProps) => {
             animate={{ opacity: 1, scale: 1, transition: { delay: 0.8, type: 'spring' } }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
         >
-            <div className="p-8 bg-background/50 backdrop-blur-md rounded-xl border border-border" onClick={onClose}>
+            <div className="relative p-8 bg-background/50 backdrop-blur-md rounded-xl border border-border" onClick={onClose}>
+                <button onClick={onClose} className="absolute top-2 right-2 p-1 text-muted-foreground hover:text-foreground cursor-pointer z-10">
+                    <X className="h-5 w-5" />
+                </button>
                 <h2 className="text-2xl md:text-4xl font-bold mb-2">Welcome to my Portfolio! 🚀</h2>
                 <p className="text-muted-foreground">Click anywhere to start the interview.</p>
             </div>

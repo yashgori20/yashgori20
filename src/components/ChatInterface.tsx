@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,6 @@ import SuggestionCard from './SuggestionCard';
 import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
-import { ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type ChatInterfaceProps = {
@@ -26,7 +26,7 @@ type ChatInterfaceProps = {
 const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }: ChatInterfaceProps) => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
-        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
+        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
           <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
             <Button asChild variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
               <a href="https://yash-ai-hub-portfolio.lovable.app/" target="_blank" rel="noopener noreferrer">
@@ -35,13 +35,13 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             </Button>
           </div>
           
-          <div className="relative top-20">
+          <div className="w-full">
             <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
             <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
             
             <PillNavigation setActiveView={setActiveView} />
 
-            <div className="w-full max-w-2xl mt-8 mb-8">
+            <div className="w-full max-w-2xl mx-auto mt-8 mb-4">
                <ChatInputBar
                   input={input}
                   setInput={setInput}
@@ -50,17 +50,15 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   inputClassName="text-center"
                 />
             </div>
-          </div>
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 flex flex-col items-center">
             <AnimatePresence>
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="w-full mb-4"
+                  className="w-full max-w-2xl mx-auto"
                 >
-                  <div className="max-h-[15vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                  <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
                       <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
                       <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
                       <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
@@ -69,7 +67,6 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   </div>
                 </motion.div>
             </AnimatePresence>
-            <ArrowDown className="h-6 w-6 mx-auto text-muted-foreground animate-bounce" />
           </div>
         </div>
       ) : (

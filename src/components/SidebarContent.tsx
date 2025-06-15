@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -11,17 +12,16 @@ import { View, Message } from '@/types';
 type SidebarContentProps = {
     activeView: View;
     setActiveView: (view: View) => void;
-    setSidebarOpen: (open: boolean) => void;
     setMessages: (messages: Message[]) => void;
     scrollToContact: () => void;
     isCollapsed: boolean;
     toggleCollapse: () => void;
 };
 
-const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
+const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
-      "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300",
-      isCollapsed ? "w-[45px]" : "w-64 md:w-72"
+      "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300 z-20",
+      isCollapsed ? "w-[45px]" : "w-64"
     )}>
       <div className={cn("p-4 pt-6 flex flex-col", isCollapsed ? "px-0" : "px-4")}>
         {/* Collapse Toggle Button */}
@@ -70,7 +70,6 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
                 } else {
                   setActiveView('chat');
                 }
-                setSidebarOpen(false); 
               }}
               title="Home"
             >
@@ -82,11 +81,11 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
       
       <ScrollArea className="flex-1">
         <div className={cn("space-y-1", isCollapsed ? "px-0" : "px-4")}>
-          <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
-          <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
-          <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
-          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
-          <SidebarButton icon={Mail} label="Contact" view="contact" {...{ activeView, setActiveView, setSidebarOpen, isCollapsed }}/>
+          <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isCollapsed }}/>
+          <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isCollapsed }}/>
+          <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, isCollapsed }}/>
+          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" {...{ activeView, setActiveView, isCollapsed }}/>
+          <SidebarButton icon={Mail} label="Contact" view="contact" {...{ activeView, setActiveView, isCollapsed }}/>
         </div>
       </ScrollArea>
       
@@ -125,15 +124,6 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
             </>
           )}
       </div>
-       {/* Mobile Close Button */}
-       <Button 
-        onClick={() => setSidebarOpen(false)} 
-        variant="ghost" 
-        size="icon" 
-        className="absolute top-5 right-4 z-20 h-6 w-6 md:hidden"
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </Button>
     </div>
   );
 

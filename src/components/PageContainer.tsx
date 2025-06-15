@@ -72,7 +72,7 @@ const PageContainer = ({
                 key={viewName} 
                 ref={el => (viewContainerRefs.current[i] = el)}
                 className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" 
-                style={{ height: windowHeight }}
+                style={{ height: windowHeight, touchAction: 'pan-y' }}
               >
                 {viewName === 'chat' ? (
                   <ChatInterface {...chatInterfaceProps} />

@@ -20,13 +20,13 @@ type SidebarContentProps = {
 
 const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
-      "fixed top-4 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg",
+      "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg",
       isCollapsed ? "w-[45px]" : "w-64"
     )}>
-      <div className={cn("p-4 pt-6 flex flex-col", isCollapsed ? "px-0" : "px-4")}>
+      <div className={cn("p-4 pt-6 flex flex-col gap-4", isCollapsed ? "px-0" : "px-4")}>
         {/* Collapse Toggle Button */}
         <div className={cn(
-          "flex w-full mb-4",
+          "flex w-full",
           !isCollapsed ? "justify-end" : "justify-center"
         )}>
           <Button 
@@ -39,7 +39,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
           </Button>
         </div>
         {!isCollapsed && (
-          <div className="mb-4 text-center">
+          <div className="text-center">
             <div className={cn("flex items-center gap-3 mb-2 h-10")}>
               <img 
                 src={resumeData.profileImage} 
@@ -80,7 +80,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
       </div>
       
       <ScrollArea>
-        <div className={cn("space-y-1", isCollapsed ? "px-0" : "px-4")}>
+        <div className={cn("space-y-2 py-2", isCollapsed ? "px-0" : "px-4")}>
           <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isCollapsed }}/>
           <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isCollapsed }}/>
           <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, isCollapsed }}/>
@@ -91,8 +91,8 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
       
       <div className="p-4 border-t border-white/20">
           {!isCollapsed && (
-            <>
-              <div className="flex justify-center space-x-4 mb-4">
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-center space-x-4">
                 <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
                   <Github className="h-6 w-6 hover:text-primary transition-colors"/>
                 </a>
@@ -121,7 +121,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                   Get In Touch
                 </Button>
               </div>
-            </>
+            </div>
           )}
       </div>
     </div>

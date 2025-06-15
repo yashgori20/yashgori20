@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -38,6 +37,7 @@ const Index = () => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
+  const [showScrollPrompt, setShowScrollPrompt] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { playPop } = useSound();
@@ -45,6 +45,7 @@ const Index = () => {
   const { height: windowHeight } = useWindowSize();
   const isAnimating = useRef(false);
   const scrollTimeoutRef = useRef<number | null>(null);
+  const scrollPromptTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!isMobile) {
@@ -77,6 +78,30 @@ const Index = () => {
       containers.forEach(container => container?.removeEventListener('scroll', handleScroll));
     };
   }, [isMobile, pageIndex]);
+
+  const handleScrollAttempt = useCallback(() => {
+    // Only show prompt on the main chat view when not already changing pages
+    if (pageIndex === 0 && !isAnimating.current) {
+      setShowScrollPrompt(true);
+      // Clear any existing timeout to reset the timer
+      if (scrollPromptTimeoutRef.current) {
+        clearTimeout(scrollPromptTimeoutRef.current);
+      }
+      // Set a new timeout to hide the prompt
+      scrollPromptTimeoutRef.current = window.setTimeout(() => {
+        setShowScrollPrompt(false);
+      }, 2500); // Prompt visible for 2.5 seconds
+    }
+  }, [pageIndex]);
+
+  useEffect(() => {
+    // Cleanup timeout on component unmount
+    return () => {
+      if (scrollPromptTimeoutRef.current) {
+        clearTimeout(scrollPromptTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -215,6 +240,16 @@ const Index = () => {
     }
   };
   
+  const handleMainWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (pageIndex > 0) {
+      // Use existing logic for portfolio pages
+      handleWheel(e);
+    } else if (Math.abs(e.deltaY) > 1) {
+      // On chat page, any scroll attempt shows the prompt
+      handleScrollAttempt();
+    }
+  };
+
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (isAnimating.current) return;
 
@@ -276,7 +311,7 @@ const Index = () => {
 
           <div
             className="flex-1 overflow-hidden"
-            onWheel={pageIndex > 0 ? handleWheel : undefined}
+            onWheel={handleMainWheel}
           >
             {windowHeight > 0 && (
               <motion.div
@@ -298,7 +333,9 @@ const Index = () => {
                       style={{ height: windowHeight }}
                     >
                       {viewName === 'chat' ? (
-                        <ChatInterface {...chatInterfaceProps} />
+                        <div onTouchStart={isMobile ? handleScrollAttempt : undefined}>
+                          <ChatInterface {...chatInterfaceProps} />
+                        </div>
                       ) : (
                         <PageComponent />
                       )}
@@ -308,6 +345,17 @@ const Index = () => {
               </motion.div>
             )}
           </div>
+
+        {showScrollPrompt && (
+          <div 
+            className="absolute bottom-24 md:bottom-32 left-1/2 -translate-x-1/2 z-30 flex items-center justify-center animate-fade-in pointer-events-auto"
+            onClick={() => changePage(1)}
+          >
+            <div className="bg-background/50 backdrop-blur-sm py-2 px-4 rounded-full text-center text-sm md:text-base text-primary font-semibold cursor-pointer animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] shadow-[0_0_15px_rgba(255,255,255,0.7)] hover:shadow-[0_0_25px_rgba(255,255,255,0.9)] transition-shadow">
+              Click here to switch to portfolio mode
+            </div>
+          </div>
+        )}
 
         {activeView === 'chat' && messages.length > 0 && (
           <div className="p-4 border-t border-border bg-background">

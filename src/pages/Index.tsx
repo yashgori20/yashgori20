@@ -295,7 +295,8 @@ const Index = () => {
             {windowHeight > 0 && (
               <motion.div
                 className="h-full w-full"
-                drag={false}
+                drag={isMobile && pageIndex > 0 ? 'y' : false}
+                onDragEnd={handleDragEnd}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={0.2}
                 animate={{ y: -pageIndex * windowHeight }}

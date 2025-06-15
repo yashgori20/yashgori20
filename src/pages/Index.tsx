@@ -1,8 +1,6 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { HelpCircle } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import ProfileCard from '@/components/ProfileCard';
@@ -16,7 +14,6 @@ import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
 import { useSound } from '@/hooks/useSound';
-import WelcomeOverlay from '@/components/WelcomeOverlay';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -25,32 +22,9 @@ const Index = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
-  const [showWelcome, setShowWelcome] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const { playPop } = useSound();
-
-  useEffect(() => {
-    const hasVisited = localStorage.getItem('hasVisitedPortfolio');
-    if (!hasVisited) {
-      setShowWelcome(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    if (showWelcome) {
-      timer = setTimeout(() => {
-        handleCloseWelcome();
-      }, 7000);
-    }
-    return () => clearTimeout(timer);
-  }, [showWelcome]);
-
-  const handleCloseWelcome = () => {
-    setShowWelcome(false);
-    localStorage.setItem('hasVisitedPortfolio', 'true');
-  };
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -200,10 +174,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-svh w-screen bg-background text-foreground">
-      <AnimatePresence>
-        {showWelcome && <WelcomeOverlay onClose={handleCloseWelcome} />}
-      </AnimatePresence>
+    <div className="h-svh w-screen bg-background text-foreground">
       <ProfileCard 
         isOpen={profileCardOpen} 
         onClose={() => setProfileCardOpen(false)} 
@@ -216,7 +187,10 @@ const Index = () => {
         toggleCollapse={toggleSidebarCollapse} 
       />
       
-      <main className="flex-1 flex flex-col bg-background relative">
+      <main className={cn(
+        "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
+        isSidebarCollapsed ? "ml-[45px]" : "ml-64"
+      )}>
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
@@ -233,7 +207,7 @@ const Index = () => {
           <div
             ref={mainContainerRef}
             className={cn(
-              "flex-1",
+              "flex-1 flex flex-col",
               activeView === 'chat'
                 ? 'overflow-hidden'
                 : 'overflow-y-auto scroll-snap-type-y-mandatory'
@@ -256,17 +230,6 @@ const Index = () => {
           </div>
         )}
       </main>
-      {!showWelcome && (
-        <Button
-            variant="ghost"
-            size="icon"
-            className="fixed bottom-4 right-4 z-20 h-10 w-10 rounded-full bg-primary/20 hover:bg-primary/30 text-primary-foreground backdrop-blur-sm"
-            onClick={() => setShowWelcome(true)}
-            title="Show welcome guide"
-        >
-            <HelpCircle className="h-6 w-6" />
-        </Button>
-      )}
     </div>
   );
 };

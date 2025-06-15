@@ -20,7 +20,7 @@ type SidebarContentProps = {
 
 const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
-      "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300 z-20",
+      "fixed inset-y-0 left-0 flex flex-col bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300 z-20",
       isCollapsed ? "w-[45px]" : "w-64"
     )}>
       <div className={cn("p-4 pt-6 flex flex-col", isCollapsed ? "px-0" : "px-4")}>

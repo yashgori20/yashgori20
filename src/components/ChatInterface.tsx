@@ -53,7 +53,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="w-full max-w-2xl mx-auto mt-4"
+                    className="w-full max-w-2xl mx-auto mt-12"
                   >
                     <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
                         <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />

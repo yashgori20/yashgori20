@@ -53,7 +53,6 @@ const PageContainer = ({
         <motion.div
           className="h-full w-full"
           drag={isMobile ? "y" : false}
-          dragConstraints={isMobile ? { top: 0, bottom: 0 } : false}
           dragElastic={0}
           dragMomentum={false}
           onDragEnd={handleDragEnd}

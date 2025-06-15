@@ -174,7 +174,7 @@ const Index = () => {
   };
 
   return (
-    <div className="h-svh w-screen bg-background text-foreground">
+    <div className="dark h-svh w-screen bg-background text-foreground">
       <ProfileCard 
         isOpen={profileCardOpen} 
         onClose={() => setProfileCardOpen(false)} 

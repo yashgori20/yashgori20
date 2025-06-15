@@ -17,12 +17,14 @@ type SidebarContentProps = {
     isCollapsed: boolean;
     isMobile: boolean;
     toggleCollapse: () => void;
+    isMobileSidebarOpen?: boolean;
 };
 
-const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse }: SidebarContentProps) => (
+const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse, isMobileSidebarOpen }: SidebarContentProps) => (
     <div className={cn(
-      "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-20 rounded-2xl shadow-lg",
-      isCollapsed ? "w-[45px]" : "w-64"
+      "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-30 rounded-2xl shadow-lg",
+      isCollapsed ? "w-[45px]" : "w-64",
+      isMobile && (isMobileSidebarOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-[calc(100%+2rem)] pointer-events-none")
     )}>
       {!isMobile && (
         <div className={cn("p-4 pt-6 flex flex-col gap-4", isCollapsed ? "px-0" : "px-4")}>

@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -11,13 +12,15 @@ import { useMobileGestures } from '@/hooks/useMobileGestures';
 import { useProfileCard } from '@/hooks/useProfileCard';
 import { useSidebarState } from '@/hooks/useSidebarState';
 import { useChatApi } from '@/hooks/useChatApi';
+import { Button } from '@/components/ui/button';
+import { Menu } from 'lucide-react';
 
 const Index = () => {
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const {
     activeView,
-    setActiveView,
+    setActiveView: _setActiveView,
     pageIndex,
     changePage,
     onAnimationComplete,
@@ -47,8 +50,10 @@ const Index = () => {
 
   const {
     isSidebarCollapsed,
-    isSidebarVisible,
-    toggleSidebarCollapse
+    isMobileSidebarOpen,
+    toggleSidebarCollapse,
+    toggleMobileSidebar,
+    closeMobileSidebar,
   } = useSidebarState();
 
   const {
@@ -64,6 +69,13 @@ const Index = () => {
     glowIntensity,
     triggerScrollHint
   } = useChatApi();
+
+  const setActiveView = (view: View) => {
+    _setActiveView(view);
+    if (isMobile) {
+      closeMobileSidebar();
+    }
+  };
 
   const scrollToContact = () => {
     setActiveView('contact');
@@ -98,23 +110,34 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
-      <div className={cn(
-        "transition-opacity duration-300",
-        isMobile && !isSidebarVisible ? "opacity-0 pointer-events-none" : "opacity-100"
-      )}>
-        <SidebarContent 
-          {...{ activeView, setActiveView, setMessages, scrollToContact }} 
-          isCollapsed={finalIsCollapsed}
-          isMobile={isMobile}
-          toggleCollapse={toggleSidebarCollapse} 
+      {isMobile && isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-20"
+          onClick={toggleMobileSidebar}
         />
-      </div>
+      )}
+
+      <SidebarContent 
+        {...{ activeView, setMessages, scrollToContact }}
+        setActiveView={setActiveView} 
+        isCollapsed={finalIsCollapsed}
+        isMobile={isMobile}
+        toggleCollapse={toggleSidebarCollapse} 
+        isMobileSidebarOpen={isMobileSidebarOpen}
+      />
       
       <main className={cn(
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
         isMobile ? "ml-0" : (finalIsCollapsed ? "ml-[calc(45px+1rem)]" : "ml-[17rem]")
       )}>
-          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
+          {isMobile && (
+            <div className="absolute top-4 left-4 z-10">
+              <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
+                <Menu className="h-6 w-6" />
+              </Button>
+            </div>
+          )}
+          <div className="absolute top-4 right-4 md:top-8 md:right-8">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
               onClick={handleProfileClick}

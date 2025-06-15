@@ -20,7 +20,7 @@ const ChatInputBar = ({ input, setInput, handleSend, isPending, className, input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder="Ask me anything about Yash Gori..."
+          placeholder="What do you want to know about me?"
           className={cn("pr-12 h-12", inputClassName)}
           autoFocus
         />

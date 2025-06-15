@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
@@ -26,6 +25,18 @@ const Index = () => {
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // This effect will disable scrolling on the page for all views except 'chat'.
+    if (activeView !== 'chat') {
+      document.documentElement.classList.add('overflow-hidden');
+    } else {
+      document.documentElement.classList.remove('overflow-hidden');
+    }
+    return () => {
+      document.documentElement.classList.remove('overflow-hidden');
+    };
+  }, [activeView]);
 
   const getGreeting = () => {
     const hour = new Date().getHours();

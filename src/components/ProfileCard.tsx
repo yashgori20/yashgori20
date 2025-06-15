@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { resumeData } from '@/data/resume';
 
@@ -16,6 +15,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
   const handleSendMessage = () => {
     const mailtoLink = `mailto:${resumeData.contact.email}`;
     window.open(mailtoLink, '_blank');
+    onClose();
+  };
+
+  const handleDownloadResume = () => {
+    // This will trigger the download of a file located in the public directory.
+    // Please add a 'Yash-Gori-Resume.pdf' file to the `public` folder for this to work.
+    const link = document.createElement('a');
+    link.href = '/Yash-Gori-Resume.pdf';
+    link.setAttribute('download', 'Yash-Gori-Resume.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     onClose();
   };
 
@@ -56,13 +67,25 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
           </div>
         </div>
         
-        <Button 
-          size="sm" 
-          className="w-full"
-          onClick={handleSendMessage}
-        >
-          Send Message
-        </Button>
+        <div className="flex flex-col space-y-2">
+          <Button 
+            size="sm" 
+            className="w-full"
+            onClick={handleSendMessage}
+          >
+            <Mail className="mr-2 h-4 w-4" />
+            Send Message
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="w-full"
+            onClick={handleDownloadResume}
+          >
+            <Download className="mr-2 h-4 w-4" />
+            Download Resume
+          </Button>
+        </div>
       </div>
     </>
   );

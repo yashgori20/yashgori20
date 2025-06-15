@@ -35,8 +35,8 @@ export const resumeData = {
   languages: ["English (Fluent)", "Hindi (Native)", "Gujarati (Native)", "Marathi (Conversational)"],
   education: [
     {
-      institution: "K.J. SOMAIYA COLLEGE OF ENGINEERING",
-      degree: "B.Tech in Information Technology",
+      institution: "KJ SOMAIYA COLLEGE OF ENGINEERING",
+      degree: "BTech in Information Technology",
       period: "2021 – 2025",
       details: "CGPA – 8.12/10",
     },

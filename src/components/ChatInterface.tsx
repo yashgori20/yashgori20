@@ -27,7 +27,7 @@ type ChatInterfaceProps = {
 const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }: ChatInterfaceProps) => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
-        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
+        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full pb-20">
           
           <div className="w-full mb-8">
             <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
@@ -54,7 +54,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   transition={{ duration: 0.3 }}
                   className="w-full max-w-2xl mx-auto"
                 >
-                  <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                  <div 
+                    className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                    onWheel={e => e.stopPropagation()}
+                    onPointerDown={e => e.stopPropagation()}
+                  >
                       <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
                       <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
                       <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />

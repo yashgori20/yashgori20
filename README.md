@@ -1,4 +1,5 @@
-# 👋 Hi there, I'm Yash Gori! 
+
+# 👋 Hi there, I'm Yash Nilesh Gori! 
 #### [Visit my portfolio](https://yashgori.streamlit.app/)
 
 <div align="center">

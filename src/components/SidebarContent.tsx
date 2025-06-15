@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -30,7 +29,7 @@ const SidebarContent = ({ isSidebarCollapsed, setIsSidebarCollapsed, activeView,
             <div className="flex items-center gap-3 mb-2">
               <img 
                 src={resumeData.profileImage} 
-                alt="Yash Gori" 
+                alt={resumeData.name} 
                 className="w-10 h-10 rounded-full border-2 border-primary/20"
               />
               <div className="flex flex-col items-start">

@@ -1,5 +1,5 @@
 # 👋 Hi there, I'm Yash Gori! 
-#### [Visit my portfolio](https://yashgori.streamlit.app/)
+#### [Visit my portfolio](https://yashgori20.vercel.app/)
 
 <div align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=4000&pause=1000&color=FFE94B&center=true&vCenter=true&random=false&width=435&lines=AI%2FML+Engineer;Full+Stack+Developer;Problem+Solver" alt="Typing SVG" />

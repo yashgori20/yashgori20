@@ -20,7 +20,7 @@ const SidebarButton = ({ icon: Icon, label, view, activeView, setActiveView, set
       size={isCollapsed ? "icon" : "default"}
       className={cn(
         "w-full transition-all duration-200 justify-start",
-        isCollapsed && "justify-center"
+        isCollapsed && "justify-center rounded-none"
       )}
       onClick={() => { setActiveView(view); setSidebarOpen(false); }}
       title={label}

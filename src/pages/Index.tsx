@@ -16,10 +16,6 @@ import ProjectsView from '@/components/views/ProjectsView';
 import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
-import { toast } from 'sonner';
-import { useFirstVisit } from '@/hooks/useFirstVisit';
-import { useSound } from '@/hooks/useSound';
-import EdgeNavigation from '@/components/EdgeNavigation';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -30,8 +26,6 @@ const Index = () => {
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const isFirstVisit = useFirstVisit();
-  const { playPop } = useSound();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -61,7 +55,6 @@ const Index = () => {
     },
     onSuccess: (data) => {
       setMessages((prev) => [...prev, { role: 'assistant', content: data }]);
-      playPop();
     },
   });
 
@@ -73,53 +66,6 @@ const Index = () => {
       });
     }
   }, [messages]);
-
-  useEffect(() => {
-    if (isFirstVisit) {
-        const toastId = 'welcome-toast';
-        toast.custom((t) => (
-            <div className="w-full max-w-sm p-4 bg-card border border-border rounded-lg shadow-lg flex flex-col gap-3">
-                <p className="font-semibold text-foreground">Hi, I'm Yash Gori, a Gen-AI Engineer.</p>
-                <div className="flex gap-2">
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        onClick={() => {
-                            setActiveView('about');
-                            toast.dismiss(t);
-                        }}
-                    >
-                        About Me
-                    </Button>
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        onClick={() => {
-                            setActiveView('projects');
-                            toast.dismiss(t);
-                        }}
-                    >
-                        Projects
-                    </Button>
-                </div>
-            </div>
-        ), {
-            duration: 5000,
-            id: toastId,
-        });
-
-        const dismissToast = () => toast.dismiss(toastId);
-        
-        const chatInput = document.querySelector('input[placeholder="Ask me anything about Yash Gori..."]');
-        if(chatInput) {
-            chatInput.addEventListener('focus', dismissToast);
-        }
-        
-        return () => {
-            if(chatInput) chatInput.removeEventListener('focus', dismissToast);
-        };
-    }
-  }, [isFirstVisit, setActiveView]);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -195,7 +141,6 @@ const Index = () => {
 
   return (
     <div className="flex h-svh w-screen bg-background text-foreground">
-      <EdgeNavigation activeView={activeView} setActiveView={setActiveView} />
       <ProfileCard 
         isOpen={profileCardOpen} 
         onClose={() => setProfileCardOpen(false)} 
@@ -237,13 +182,13 @@ const Index = () => {
           </div>
 
           <div className={cn(
-            "flex-1 flex flex-col pt-16 md:pt-20",
+            "flex-1 flex flex-col pt-16 md:pt-20 pb-24",
             activeView === 'chat' ? 'overflow-hidden' : 'overflow-y-auto'
           )}>
             {renderView()}
           </div>
 
-        {activeView === 'chat' && (
+        {activeView === 'chat' && messages.length > 0 && (
           <div className="p-4 border-t border-border bg-background">
             <ChatInputBar
               input={input}

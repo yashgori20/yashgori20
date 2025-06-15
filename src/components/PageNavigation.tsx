@@ -11,8 +11,6 @@ type PageNavigationProps = {
   setActiveView: (view: View) => void;
 };
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
 const PageNavigation = ({ activeView, setActiveView }: PageNavigationProps) => {
   const currentIndex = contentViews.indexOf(activeView);
 
@@ -38,16 +36,14 @@ const PageNavigation = ({ activeView, setActiveView }: PageNavigationProps) => {
   return (
     <div className="mt-16 pt-8 border-t border-border flex justify-between items-center w-full">
       {showPrevious ? (
-        <Button variant="outline" onClick={handlePrevious} className="group">
-          <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          Previous: {capitalize(contentViews[currentIndex - 1])}
+        <Button variant="outline" size="icon" onClick={handlePrevious} aria-label="Previous page">
+          <ArrowLeft className="h-4 w-4" />
         </Button>
       ) : <div />}
       
       {showNext ? (
-        <Button variant="outline" onClick={handleNext} className="group">
-          Next: {capitalize(contentViews[currentIndex + 1])}
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        <Button variant="outline" size="icon" onClick={handleNext} aria-label="Next page">
+          <ArrowRight className="h-4 w-4" />
         </Button>
       ) : <div />}
     </div>

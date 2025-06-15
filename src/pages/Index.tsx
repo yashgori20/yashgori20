@@ -16,6 +16,8 @@ import ProjectsView from '@/components/views/ProjectsView';
 import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
+import { useSound } from '@/hooks/useSound';
+import EdgeNavigation from '@/components/EdgeNavigation';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -26,6 +28,8 @@ const Index = () => {
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const { playPop } = useSound();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -55,6 +59,7 @@ const Index = () => {
     },
     onSuccess: (data) => {
       setMessages((prev) => [...prev, { role: 'assistant', content: data }]);
+      playPop();
     },
   });
 
@@ -127,6 +132,31 @@ const Index = () => {
     };
 }, [activeView]);
 
+  useEffect(() => {
+    const container = mainContainerRef.current;
+    if (!container || activeView === 'chat') return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+
+      if (isTypingInInput) return;
+
+      if (e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        container.scrollBy({ top: container.clientHeight, behavior: 'smooth' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        container.scrollBy({ top: -container.clientHeight, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeView]);
+
   const renderView = () => {
     switch (activeView) {
       case 'chat': return <ChatInterface {...{ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef }} />;
@@ -147,6 +177,8 @@ const Index = () => {
         position={profileCardPosition} 
       />
       
+      <EdgeNavigation activeView={activeView} setActiveView={setActiveView} />
+
       <div className="md:hidden">
           <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
@@ -181,10 +213,15 @@ const Index = () => {
             </div>
           </div>
 
-          <div className={cn(
-            "flex-1 flex flex-col pt-16 md:pt-20 pb-24",
-            activeView === 'chat' ? 'overflow-hidden' : 'overflow-y-auto'
-          )}>
+          <div
+            ref={mainContainerRef}
+            className={cn(
+              "flex-1 flex flex-col",
+              activeView === 'chat'
+                ? 'overflow-hidden'
+                : 'overflow-y-auto snap-y snap-mandatory'
+            )}
+          >
             {renderView()}
           </div>
 

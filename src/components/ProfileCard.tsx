@@ -20,10 +20,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
 
   const handleDownloadResume = () => {
     // This will trigger the download of a file located in the public directory.
-    // Make sure 'Yash Gori Resume.pdf' is in the `public` folder for this to work.
+    // Please add a 'Yash-Gori-Resume.pdf' file to the `public` folder for this to work.
     const link = document.createElement('a');
-    link.href = '/Yash Gori Resume.pdf';
-    link.setAttribute('download', 'Yash Gori Resume.pdf');
+    link.href = '/Yash-Gori-Resume.pdf';
+    link.setAttribute('download', 'Yash-Gori-Resume.pdf');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -16,8 +17,7 @@ import { useSound } from '@/hooks/useSound';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion, PanInfo } from 'framer-motion';
 import { useWindowSize } from '@/hooks/use-window-size';
-import { ChevronsDown, ChevronsUp, ChevronLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ChevronsDown, ChevronsUp } from 'lucide-react';
 
 const views: View[] = ['chat', 'about', 'experience', 'projects', 'skills', 'contact'];
 
@@ -277,20 +277,6 @@ const Index = () => {
         "flex flex-col bg-background relative h-full transition-[margin-left] duration-300",
         isMobile ? "ml-0" : (finalIsCollapsed ? "ml-[calc(45px+1rem)]" : "ml-[17rem]")
       )}>
-          {activeView === 'chat' && messages.length > 0 && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-6 left-4 z-20 md:top-8 hover:bg-primary/10"
-              onClick={() => {
-                setMessages([]);
-                setActiveView('chat');
-              }}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </Button>
-          )}
-
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
@@ -330,29 +316,26 @@ const Index = () => {
                       {viewName === 'chat' ? (
                         <ChatInterface {...chatInterfaceProps} />
                       ) : (
-                        <>
-                          <PageComponent />
-                          {isMobile && i < views.length - 1 && (
-                            <div className="flex justify-center items-center py-8">
-                              <button
-                                onClick={() => changePage(i + 1)}
-                                className="flex flex-col items-center justify-center h-16 w-16 gap-1 rounded-full bg-background/80 text-foreground shadow-lg backdrop-blur-sm border border-border"
-                              >
-                                <span className="text-xs font-medium">Next</span>
-                                <ChevronsDown className="h-4 w-4 animate-bounce" />
-                              </button>
-                            </div>
-                          )}
-                        </>
+                        <PageComponent />
                       )}
 
                       {isMobile && i > 0 && (
                         <button
                           onClick={() => changePage(i - 1)}
-                          className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 rounded-full bg-background/80 px-4 py-2 text-foreground shadow-lg backdrop-blur-sm border border-border"
+                          className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity z-10"
                         >
-                          <ChevronsUp className="h-5 w-5 animate-bounce" />
-                          <span className="text-xs font-medium">Previous</span>
+                          <ChevronsUp className="w-4 h-4 animate-bounce" />
+                          <p className="text-xs">Previous</p>
+                        </button>
+                      )}
+
+                      {isMobile && viewName !== 'chat' && i < views.length - 1 && (
+                        <button
+                          onClick={() => changePage(i + 1)}
+                          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity z-10"
+                        >
+                          <p className="text-xs">Next</p>
+                          <ChevronsDown className="w-4 h-4 animate-bounce" />
                         </button>
                       )}
                     </div>

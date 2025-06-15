@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -46,7 +45,7 @@ const SidebarContent = ({ isSidebarCollapsed, setIsSidebarCollapsed, activeView,
         <div className={cn("flex items-center w-full", isSidebarCollapsed && "justify-center")}>
           {!isSidebarCollapsed && (
             <Button 
-              variant="ghost"
+              variant={activeView === 'chat' ? "secondary" : "ghost"}
               className="justify-start transition-all flex-1 mr-2"
               onClick={() => { 
                 if (activeView === 'chat') {
@@ -58,7 +57,7 @@ const SidebarContent = ({ isSidebarCollapsed, setIsSidebarCollapsed, activeView,
               }}
             >
               <Sparkles className="h-4 w-4 mr-2" /> 
-              {activeView === 'chat' ? 'Home' : 'Back to Home'}
+              Home
             </Button>
           )}
           <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(prev => !prev)}>

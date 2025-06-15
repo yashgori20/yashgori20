@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -247,7 +248,7 @@ const Index = () => {
                     <ChatInterface {...chatInterfaceProps} />
                 </div>
                 
-                <div key="content" ref={contentRef} className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" style={{ height: windowHeight }}>
+                <div key="content" ref={contentRef} className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar isolate" style={{ height: windowHeight }}>
                   {views.slice(1).map((viewName) => {
                     const PageComponent = PageComponents[viewName];
                     return (

@@ -29,10 +29,10 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
       {messages.length === 0 ? (
         <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
           
-          <div className="transform -translate-y-12">
-            <div className="w-full mb-8">
+          <div className="transform -translate-y-8">
+            <div className="w-full mb-6">
               <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
-              <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
+              <p className="text-muted-foreground mb-6 text-sm">Welcome to Yash Gori's Portfolio</p>
               
               <PillNavigation setActiveView={setActiveView} />
             </div>
@@ -53,7 +53,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="w-full max-w-2xl mx-auto"
+                    className="w-full max-w-2xl mx-auto mt-4"
                   >
                     <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
                         <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -38,6 +37,7 @@ const Index = () => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { playPop } = useSound();
@@ -45,6 +45,7 @@ const Index = () => {
   const { height: windowHeight } = useWindowSize();
   const isAnimating = useRef(false);
   const scrollTimeoutRef = useRef<number | null>(null);
+  const hintTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!isMobile) {
@@ -85,6 +86,16 @@ const Index = () => {
     if (hour >= 18 && hour < 22) return "Good Evening!";
     return "Good Night!";
   };
+
+  const triggerScrollHint = useCallback(() => {
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current);
+    }
+    setShowScrollHint(true);
+    hintTimeoutRef.current = window.setTimeout(() => {
+      setShowScrollHint(false);
+    }, 2000); // Glow for 2 seconds
+  }, []);
 
   const askApi = useMutation({
     mutationFn: async (userInput: string): Promise<string> => {
@@ -234,7 +245,7 @@ const Index = () => {
     }
   };
   
-  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView };
+  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, showScrollHint, triggerScrollHint };
   const finalIsCollapsed = isMobile || isSidebarCollapsed;
 
   return (

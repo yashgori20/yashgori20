@@ -11,6 +11,7 @@ import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronsDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type ChatInterfaceProps = {
     messages: Message[],
@@ -22,12 +23,24 @@ type ChatInterfaceProps = {
     getGreeting: () => string,
     scrollAreaRef: React.RefObject<HTMLDivElement>,
     setActiveView: (view: View) => void,
+    showScrollHint: boolean;
+    triggerScrollHint: () => void;
 };
 
-const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }: ChatInterfaceProps) => (
+const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, showScrollHint, triggerScrollHint }: ChatInterfaceProps) => {
+  const handleScrollAttempt = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (Math.abs(e.deltaY) > 0) {
+      triggerScrollHint();
+    }
+  };
+
+  return (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
-        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
+        <div 
+          className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full"
+          onWheel={handleScrollAttempt}
+        >
           
           <div className="w-full mb-4">
             <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
@@ -66,10 +79,13 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           </div>
             <button
               onClick={() => setActiveView('about')}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity"
+              className={cn(
+                "absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity",
+                showScrollHint && "button-glow"
+              )}
             >
               <p className="text-xs">Switch to Portfolio mode</p>
-              <ChevronsDown className="w-4 h-4 animate-bounce" />
+              <ChevronsDown className={cn("w-4 h-4", !showScrollHint && "animate-bounce")} />
             </button>
         </div>
       ) : (
@@ -84,5 +100,6 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
       )}
     </div>
   );
+}
 
-  export default ChatInterface;
+export default ChatInterface;

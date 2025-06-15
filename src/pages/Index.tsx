@@ -336,20 +336,20 @@ const Index = () => {
                       {isMobile && i > 0 && (
                         <button
                           onClick={() => changePage(i - 1)}
-                          className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity z-10"
+                          className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 rounded-full bg-background/80 px-4 py-2 text-foreground shadow-lg backdrop-blur-sm border border-border"
                         >
-                          <ChevronsUp className="w-4 h-4 animate-bounce" />
-                          <p className="text-xs">Previous</p>
+                          <ChevronsUp className="h-5 w-5 animate-bounce" />
+                          <span className="text-xs font-medium">Previous</span>
                         </button>
                       )}
 
                       {isMobile && viewName !== 'chat' && i < views.length - 1 && (
                         <button
                           onClick={() => changePage(i + 1)}
-                          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity z-10"
+                          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 rounded-full bg-background/80 px-4 py-2 text-foreground shadow-lg backdrop-blur-sm border border-border"
                         >
-                          <p className="text-xs">Next</p>
-                          <ChevronsDown className="w-4 h-4 animate-bounce" />
+                          <span className="text-xs font-medium">Next</span>
+                          <ChevronsDown className="h-5 w-5 animate-bounce" />
                         </button>
                       )}
                     </div>

@@ -1,6 +1,5 @@
-
 import React, { useEffect } from 'react';
-import { motion, PanInfo } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { View } from '@/types';
 import ChatInterface from '@/components/ChatInterface';
 import AboutView from '@/components/views/AboutView';
@@ -24,9 +23,7 @@ type PageContainerProps = {
   windowHeight: number;
   onAnimationComplete: () => void;
   handleWheel?: (e: React.WheelEvent<HTMLDivElement>) => void;
-  handleDragStart?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
-  handleDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
-  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: any) => void;
   isMobile: boolean;
   chatInterfaceProps: any;
   viewContainerRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
@@ -38,8 +35,6 @@ const PageContainer = ({
   windowHeight,
   onAnimationComplete,
   handleWheel,
-  handleDragStart,
-  handleDrag,
   handleDragEnd,
   isMobile,
   chatInterfaceProps,
@@ -60,8 +55,6 @@ const PageContainer = ({
           drag={isMobile ? "y" : false}
           dragElastic={0}
           dragMomentum={false}
-          onDragStart={handleDragStart}
-          onDrag={handleDrag}
           onDragEnd={handleDragEnd}
           animate={{ y: -pageIndex * windowHeight }}
           transition={{ 

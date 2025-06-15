@@ -50,7 +50,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
       {messages.length === 0 ? (
         <div 
           className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full"
-          // onWheel={handleScrollAttempt}
+          onWheel={handleScrollAttempt}
         >
           
           <div className="w-full mb-4">

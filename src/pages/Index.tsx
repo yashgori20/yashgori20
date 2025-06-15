@@ -30,8 +30,6 @@ const Index = () => {
   } = usePageNavigation();
 
   const {
-    handleDragStart,
-    handleDrag,
     handleDragEnd,
     handleWheel,
     isMobile
@@ -158,8 +156,6 @@ const Index = () => {
             windowHeight={windowHeight}
             onAnimationComplete={onAnimationComplete}
             handleWheel={handleWheel}
-            handleDragStart={handleDragStart}
-            handleDrag={handleDrag}
             handleDragEnd={handleDragEnd}
             isMobile={isMobile}
             chatInterfaceProps={chatInterfaceProps}

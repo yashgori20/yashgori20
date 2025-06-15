@@ -19,31 +19,13 @@ export const useMobileGestures = ({
   isAnimating
 }: UseMobileGesturesProps) => {
   const isMobile = useIsMobile();
-  const dragStartScrollTop = useRef<number>(0);
-
-  const handleDragStart = () => {
-    const viewContainer = viewContainerRefs.current[pageIndex];
-    if (viewContainer) {
-      dragStartScrollTop.current = viewContainer.scrollTop;
-    }
-  };
-
-  const handleDrag = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (pageIndex === 0) return; // Chat view has its own scrolling
-
-    const viewContainer = viewContainerRefs.current[pageIndex];
-    if (viewContainer && viewContainer.scrollHeight > viewContainer.clientHeight) {
-      // This makes the drag gesture control the inner content's scroll position.
-      viewContainer.scrollTop = dragStartScrollTop.current - info.offset.y;
-    }
-  };
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (!isMobile || isAnimating.current) return;
     
     const { offset, velocity } = info;
-    const swipeThreshold = windowHeight / 5;
-    const velocityThreshold = 250;
+    const swipeThreshold = windowHeight / 6; // Reduced threshold for easier swiping
+    const velocityThreshold = 300; // Reduced velocity threshold
 
     const isSignificantSwipe = Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold;
 
@@ -104,8 +86,6 @@ export const useMobileGestures = ({
   };
 
   return {
-    handleDragStart,
-    handleDrag,
     handleDragEnd,
     handleWheel,
     isMobile

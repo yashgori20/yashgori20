@@ -34,7 +34,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             </Button>
           </div>
           
-          <div className="relative top-8">
+          <div className="relative top-20">
             <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
             <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
             

@@ -69,6 +69,12 @@ const Index = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (activeView !== 'chat' && mainContainerRef.current) {
+      mainContainerRef.current.scrollTop = 0;
+    }
+  }, [activeView]);
+
   const handleSend = () => {
     if (input.trim()) {
       setActiveView('chat');
@@ -134,9 +140,6 @@ const Index = () => {
 }, [activeView]);
 
   useEffect(() => {
-    const container = mainContainerRef.current;
-    if (!container || activeView === 'chat') return;
-
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
@@ -145,10 +148,10 @@ const Index = () => {
 
       if (e.key === 'ArrowDown' || e.key === ' ') {
         e.preventDefault();
-        container.scrollBy({ top: container.clientHeight, behavior: 'smooth' });
+        mainContainerRef.current.scrollBy({ top: mainContainerRef.current.clientHeight, behavior: 'smooth' });
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        container.scrollBy({ top: -container.clientHeight, behavior: 'smooth' });
+        mainContainerRef.current.scrollBy({ top: -mainContainerRef.current.clientHeight, behavior: 'smooth' });
       }
     };
 

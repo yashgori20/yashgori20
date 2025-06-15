@@ -26,7 +26,7 @@ type ChatInterfaceProps = {
 const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView }: ChatInterfaceProps) => (
     <div className="flex-1 flex flex-col h-full">
       {messages.length === 0 ? (
-        <div className="flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
+        <div className="relative flex-1 flex flex-col justify-center items-center text-center p-8 max-w-4xl mx-auto w-full">
           <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
             <Button asChild variant="outline" className="text-sm text-muted-foreground hover:text-foreground">
               <a href="https://yash-ai-hub-portfolio.lovable.app/" target="_blank" rel="noopener noreferrer">
@@ -56,10 +56,10 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   <SuggestionCard title="How can I contact you?" onClick={() => handleSuggestionClick("How can I contact you?")} />
                   <SuggestionCard title="What are your latest projects?" onClick={() => handleSuggestionClick("What are your latest projects?")} />
               </div>
-              <div className="mt-8">
-                <ArrowDown className="h-6 w-6 mx-auto text-muted-foreground animate-bounce" />
-              </div>
             </div>
+          </div>
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+            <ArrowDown className="h-6 w-6 mx-auto text-muted-foreground animate-bounce" />
           </div>
         </div>
       ) : (

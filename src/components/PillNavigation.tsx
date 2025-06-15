@@ -33,9 +33,9 @@ type PillNavigationProps = {
 const PillNavigation = ({ setActiveView }: PillNavigationProps) => {
     const pills = [
         { icon: User, label: 'About', view: 'about' as View },
-        { icon: Briefcase, label: 'Experience', view: 'experience' as View },
-        { icon: Code, label: 'Projects', view: 'projects' as View },
         { icon: BrainCircuit, label: 'Skills', view: 'skills' as View },
+        { icon: Code, label: 'Projects', view: 'projects' as View },
+        { icon: Briefcase, label: 'Experience', view: 'experience' as View },
         { icon: Mail, label: 'Contact', view: 'contact' as View },
     ];
 

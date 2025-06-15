@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -50,7 +49,7 @@ const Index = () => {
     isSidebarCollapsed,
     isSidebarVisible,
     toggleSidebarCollapse
-  } = useSidebarState(pageIndex, viewContainerRefs);
+  } = useSidebarState();
 
   const {
     messages,

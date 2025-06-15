@@ -1,5 +1,4 @@
-
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { View } from '@/types';
 import ChatInterface from '@/components/ChatInterface';
@@ -54,8 +53,7 @@ const PageContainer = ({
         <motion.div
           className="h-full w-full"
           drag={isMobile ? "y" : false}
-          dragConstraints={{ top: 0, bottom: 0 }}
-          dragElastic={0.2}
+          dragElastic={0}
           dragMomentum={false}
           onDragEnd={handleDragEnd}
           animate={{ y: -pageIndex * windowHeight }}

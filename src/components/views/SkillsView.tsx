@@ -3,8 +3,15 @@ import React from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
 import { Code, BrainCircuit, Wrench } from 'lucide-react';
+import { View } from '@/types';
+import PageNavigation from '@/components/PageNavigation';
 
-const SkillsView = () => (
+type ViewProps = {
+  activeView: View;
+  setActiveView: (view: View) => void;
+};
+
+const SkillsView = ({ activeView, setActiveView }: ViewProps) => (
     <Section title="Skills & Expertise">
       <div className="space-y-12">
         <div>
@@ -121,6 +128,7 @@ const SkillsView = () => (
           </div>
         </div>
       </div>
+      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { View } from '@/types';
@@ -27,6 +28,8 @@ type PageContainerProps = {
   isMobile: boolean;
   chatInterfaceProps: any;
   viewContainerRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  activeView: View;
+  setActiveView: (view: View) => void;
 };
 
 const PageContainer = ({
@@ -38,7 +41,9 @@ const PageContainer = ({
   handleDragEnd,
   isMobile,
   chatInterfaceProps,
-  viewContainerRefs
+  viewContainerRefs,
+  activeView,
+  setActiveView,
 }: PageContainerProps) => {
   useEffect(() => {
     viewContainerRefs.current = viewContainerRefs.current.slice(0, views.length);
@@ -77,7 +82,7 @@ const PageContainer = ({
                 {viewName === 'chat' ? (
                   <ChatInterface {...chatInterfaceProps} />
                 ) : (
-                  <PageComponent />
+                  <PageComponent activeView={activeView} setActiveView={setActiveView} />
                 )}
               </div>
             );

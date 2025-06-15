@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -160,6 +159,8 @@ const Index = () => {
             isMobile={isMobile}
             chatInterfaceProps={chatInterfaceProps}
             viewContainerRefs={viewContainerRefs}
+            activeView={activeView}
+            setActiveView={setActiveView}
           />
 
         {activeView === 'chat' && messages.length > 0 && (

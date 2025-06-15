@@ -4,8 +4,15 @@ import { resumeData, Project } from '@/data/resume';
 import Section from '@/components/layout/Section';
 import { Button } from '@/components/ui/button';
 import { Code, ExternalLink, Github } from 'lucide-react';
+import { View } from '@/types';
+import PageNavigation from '@/components/PageNavigation';
 
-const ProjectsView = () => (
+type ViewProps = {
+  activeView: View;
+  setActiveView: (view: View) => void;
+};
+
+const ProjectsView = ({ activeView, setActiveView }: ViewProps) => (
     <Section title="Featured Projects">
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
@@ -51,6 +58,7 @@ const ProjectsView = () => (
           </Button>
         </a>
       </div>
+      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 

@@ -3,8 +3,15 @@ import React from 'react';
 import { resumeData, Experience } from '@/data/resume';
 import Section from '@/components/layout/Section';
 import { MapPin } from 'lucide-react';
+import { View } from '@/types';
+import PageNavigation from '@/components/PageNavigation';
 
-const ExperienceView = () => (
+type ViewProps = {
+  activeView: View;
+  setActiveView: (view: View) => void;
+};
+
+const ExperienceView = ({ activeView, setActiveView }: ViewProps) => (
     <Section title="Work Experience">
       <div className="space-y-16">
         <div>
@@ -73,6 +80,7 @@ const ExperienceView = () => (
             </div>
         </div>
       </div>
+      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 

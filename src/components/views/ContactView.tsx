@@ -5,8 +5,15 @@ import Section from '@/components/layout/Section';
 import ContactForm from '@/components/ContactForm';
 import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
+import { View } from '@/types';
+import PageNavigation from '@/components/PageNavigation';
 
-const ContactView = () => (
+type ViewProps = {
+  activeView: View;
+  setActiveView: (view: View) => void;
+};
+
+const ContactView = ({ activeView, setActiveView }: ViewProps) => (
     <Section title="Get In Touch">
       <div className="grid lg:grid-cols-2 gap-12">
         <div className="space-y-8">
@@ -77,6 +84,7 @@ const ContactView = () => (
         
         <ContactForm />
       </div>
+      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 

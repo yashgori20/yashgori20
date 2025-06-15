@@ -3,8 +3,15 @@ import React from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
 import { MapPin, Globe, GraduationCap } from 'lucide-react';
+import { View } from '@/types';
+import PageNavigation from '@/components/PageNavigation';
 
-const AboutView = () => (
+type ViewProps = {
+  activeView: View;
+  setActiveView: (view: View) => void;
+};
+
+const AboutView = ({ activeView, setActiveView }: ViewProps) => (
     <Section title="About Me">
       <div className="grid lg:grid-cols-5 gap-12 items-start">
         <div className="lg:col-span-3 space-y-12">
@@ -100,6 +107,7 @@ const AboutView = () => (
           </div>
         </div>
       </div>
+      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 

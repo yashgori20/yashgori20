@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
@@ -115,7 +116,7 @@ const Index = () => {
   };
 
   const toggleSidebarCollapse = () => {
-    setSidebarCollapsed(!isSidebarCollapsed);
+    setSidebarCollapsed(isCollapsed => !isCollapsed);
   };
 
   useEffect(() => {
@@ -141,6 +142,8 @@ const Index = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeView === 'chat') return;
+
       const target = e.target as HTMLElement;
       const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
 
@@ -148,10 +151,10 @@ const Index = () => {
 
       if (e.key === 'ArrowDown' || e.key === ' ') {
         e.preventDefault();
-        mainContainerRef.current.scrollBy({ top: mainContainerRef.current.clientHeight, behavior: 'smooth' });
+        mainContainerRef.current?.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        mainContainerRef.current.scrollBy({ top: -mainContainerRef.current.clientHeight, behavior: 'smooth' });
+        mainContainerRef.current?.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
       }
     };
 
@@ -236,7 +239,7 @@ const Index = () => {
               "flex-1",
               activeView === 'chat'
                 ? 'overflow-hidden'
-                : 'overflow-y-auto'
+                : 'overflow-y-auto scroll-snap-type-y-mandatory'
             )}
           >
             {renderView()}

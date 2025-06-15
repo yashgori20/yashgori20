@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -116,7 +115,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
         onClick={toggleCollapse} 
         variant="ghost" 
         size="icon" 
-        className="absolute top-5 right-0 transform translate-x-1/2 z-50 h-6 w-6 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
+        className="absolute top-5 right-4 z-50 h-6 w-6 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
       >
         <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
       </Button>

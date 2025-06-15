@@ -5,9 +5,9 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  // Replace 'your-repo-name' with your actual repository name
-  basePath: process.env.NODE_ENV === 'production' ? '/your-repo-name' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/your-repo-name/' : '',
+  // Your repository name
+  basePath: process.env.NODE_ENV === 'production' ? '/yashgori20' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/yashgori20/' : '',
 }
 
 module.exports = nextConfig

@@ -330,7 +330,20 @@ const Index = () => {
                       {viewName === 'chat' ? (
                         <ChatInterface {...chatInterfaceProps} />
                       ) : (
-                        <PageComponent />
+                        <>
+                          <PageComponent />
+                          {isMobile && i < views.length - 1 && (
+                            <div className="flex justify-center items-center py-8">
+                              <button
+                                onClick={() => changePage(i + 1)}
+                                className="flex flex-col items-center justify-center h-16 w-16 gap-1 rounded-full bg-background/80 text-foreground shadow-lg backdrop-blur-sm border border-border"
+                              >
+                                <span className="text-xs font-medium">Next</span>
+                                <ChevronsDown className="h-4 w-4 animate-bounce" />
+                              </button>
+                            </div>
+                          )}
+                        </>
                       )}
 
                       {isMobile && i > 0 && (
@@ -340,16 +353,6 @@ const Index = () => {
                         >
                           <ChevronsUp className="h-5 w-5 animate-bounce" />
                           <span className="text-xs font-medium">Previous</span>
-                        </button>
-                      )}
-
-                      {isMobile && viewName !== 'chat' && i < views.length - 1 && (
-                        <button
-                          onClick={() => changePage(i + 1)}
-                          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 rounded-full bg-background/80 px-4 py-2 text-foreground shadow-lg backdrop-blur-sm border border-border"
-                        >
-                          <span className="text-xs font-medium">Next</span>
-                          <ChevronsDown className="h-5 w-5 animate-bounce" />
                         </button>
                       )}
                     </div>

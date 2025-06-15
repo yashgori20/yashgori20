@@ -248,7 +248,7 @@ const Index = () => {
     }
   };
   
-  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint };
+  const chatInterfaceProps = { messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint, setMessages };
   const finalIsCollapsed = isMobile || isSidebarCollapsed;
 
   return (

@@ -10,7 +10,7 @@ import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronsDown } from 'lucide-react';
+import { ChevronsDown, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type ChatInterfaceProps = {
@@ -25,9 +25,10 @@ type ChatInterfaceProps = {
     setActiveView: (view: View) => void,
     glowIntensity: number;
     triggerScrollHint: (deltaY: number) => void;
+    setMessages: (messages: Message[]) => void;
 };
 
-const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint }: ChatInterfaceProps) => {
+const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint, setMessages }: ChatInterfaceProps) => {
   const handleScrollAttempt = (e: React.WheelEvent<HTMLDivElement>) => {
     if (Math.abs(e.deltaY) > 0) {
       triggerScrollHint(e.deltaY);
@@ -38,6 +39,10 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
     opacity: glowIntensity > 0 ? 0.7 + glowIntensity * 0.3 : undefined,
     textShadow: `0 0 ${glowIntensity * 8}px rgba(255,255,255,0.8)`,
     filter: `drop-shadow(0 0 ${glowIntensity * 4}px rgba(255,255,255,0.7))`
+  };
+
+  const handleBack = () => {
+    setMessages([]);
   };
 
   return (
@@ -95,14 +100,22 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             </button>
         </div>
       ) : (
-        <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-          <div className="max-w-4xl mx-auto space-y-6">
-            {messages.map((msg, idx) => (
-              <ChatMessage key={idx} message={msg} />
-            ))}
-            {askApi.isPending && <LoadingMessage />}
+        <>
+          <div className="flex items-center p-2 border-b border-border sticky top-0 bg-background/95 backdrop-blur-sm z-10">
+            <Button variant="ghost" size="icon" onClick={handleBack}>
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <h3 className="font-semibold text-lg ml-2">Chat with Yash</h3>
           </div>
-        </ScrollArea>
+          <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+            <div className="max-w-4xl mx-auto space-y-6">
+              {messages.map((msg, idx) => (
+                <ChatMessage key={idx} message={msg} />
+              ))}
+              {askApi.isPending && <LoadingMessage />}
+            </div>
+          </ScrollArea>
+        </>
       )}
     </div>
   );

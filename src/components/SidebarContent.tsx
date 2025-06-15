@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -97,7 +98,7 @@ const SidebarContent = ({ isSidebarCollapsed, setIsSidebarCollapsed, activeView,
               </a>
             </div>
             <div className="space-y-3">
-              <a href="https://drive.google.com/file/d/1aWrJqUWgxKvDZ9zWgvZg6GYxUi96Px-N/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+              <a href="/Yash-Gori-Resume.pdf" download="Yash-Gori-Resume.pdf">
                 <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
                   <Download className="mr-2 h-4 w-4" />
                   Download Resume

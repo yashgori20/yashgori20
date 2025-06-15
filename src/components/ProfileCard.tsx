@@ -78,7 +78,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
           </Button>
           <Button
             size="sm"
-            variant="outline"
             className="w-full"
             onClick={handleDownloadResume}
           >

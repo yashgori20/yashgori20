@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -17,7 +16,6 @@ import { useSound } from '@/hooks/useSound';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion, PanInfo } from 'framer-motion';
 import { useWindowSize } from '@/hooks/use-window-size';
-import { ChevronsDown, ChevronsUp } from 'lucide-react';
 
 const views: View[] = ['chat', 'about', 'experience', 'projects', 'skills', 'contact'];
 
@@ -310,33 +308,13 @@ const Index = () => {
                     <div 
                       key={viewName} 
                       ref={el => (viewContainerRefs.current[i] = el)}
-                      className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar relative" 
+                      className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" 
                       style={{ height: windowHeight }}
                     >
                       {viewName === 'chat' ? (
                         <ChatInterface {...chatInterfaceProps} />
                       ) : (
                         <PageComponent />
-                      )}
-
-                      {isMobile && i > 0 && (
-                        <button
-                          onClick={() => changePage(i - 1)}
-                          className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity z-10"
-                        >
-                          <ChevronsUp className="w-4 h-4 animate-bounce" />
-                          <p className="text-xs">Previous</p>
-                        </button>
-                      )}
-
-                      {isMobile && viewName !== 'chat' && i < views.length - 1 && (
-                        <button
-                          onClick={() => changePage(i + 1)}
-                          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-opacity z-10"
-                        >
-                          <p className="text-xs">Next</p>
-                          <ChevronsDown className="w-4 h-4 animate-bounce" />
-                        </button>
                       )}
                     </div>
                   );

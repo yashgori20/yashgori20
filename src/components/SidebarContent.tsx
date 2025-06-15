@@ -22,7 +22,7 @@ type SidebarContentProps = {
 const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages, scrollToContact, isCollapsed, toggleCollapse }: SidebarContentProps) => (
     <div className={cn(
       "relative flex flex-col h-full bg-white/5 backdrop-blur-lg border-r border-border/50 text-foreground transition-all duration-300",
-      isCollapsed ? "w-16" : "w-64 md:w-72"
+      isCollapsed ? "w-10" : "w-64 md:w-72"
     )}>
       <div className={cn("p-4 pt-16 flex flex-col")}>
         {!isCollapsed && (
@@ -116,7 +116,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
         onClick={toggleCollapse} 
         variant="ghost" 
         size="icon" 
-        className="absolute top-5 right-2 z-50 bg-background/50 hover:bg-background/80 rounded-full hidden md:flex"
+        className="absolute top-5 right-2 z-50 hidden md:flex"
       >
         <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
       </Button>
@@ -125,7 +125,7 @@ const SidebarContent = ({ activeView, setActiveView, setSidebarOpen, setMessages
         onClick={toggleCollapse} 
         variant="ghost" 
         size="icon" 
-        className="absolute top-5 right-4 z-20 h-6 w-6 bg-background/50 hover:bg-background/80 rounded-full md:hidden"
+        className="absolute top-5 right-4 z-20 h-6 w-6 md:hidden"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>

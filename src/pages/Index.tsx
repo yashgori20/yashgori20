@@ -675,10 +675,10 @@ const Index = () => {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Good morning!";
-    if (hour < 18) return "Good afternoon!";
-    return "Good evening!";
-  };
+    if (>= 5  && hour < 12) return "Good Morning !";
+    if (hour >= 12 && hour < 17) return "Good Afternoon !";
+    if (hour >= 17 && hour < 21) return "Good Evening !";
+    return "Good Night !";
 
   const askApi = useMutation({
     mutationFn: async (userInput: string): Promise<string> => {

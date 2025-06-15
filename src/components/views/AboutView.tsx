@@ -94,7 +94,7 @@ const AboutView = () => (
           <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border">
             <img 
               src={resumeData.profileImage} 
-              alt={resumeData.name} 
+              alt="Yash Gori" 
               className="w-full h-full object-cover"
             />
           </div>

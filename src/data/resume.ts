@@ -16,7 +16,7 @@ export interface Experience {
 }
 
 export const resumeData = {
-  name: "Yash Nilesh Gori",
+  name: "Yash Gori",
   contact: {
     email: "yashnileshgori@gmail.com",
     phone: "7718081766",

@@ -114,7 +114,7 @@ const Index = () => {
         const isTypingInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
 
         if (!isTypingInInput && e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
-            const chatInput = document.querySelector('input[placeholder="Ask me anything about Yash..."]') as HTMLInputElement;
+            const chatInput = document.querySelector('input[placeholder="Ask me anything about Yash Gori..."]') as HTMLInputElement;
             if (chatInput) {
                 chatInput.focus();
             }
@@ -168,14 +168,14 @@ const Index = () => {
       </div>
       
       <main className="flex-1 flex flex-col h-full bg-background overflow-y-auto relative">
-          <div className="absolute top-4 right-4 md:top-8 md-right-8 z-10">
+          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
             <div 
               className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
               onClick={handleProfileClick}
             >
               <img 
                 src={resumeData.profileImage} 
-                alt={resumeData.name} 
+                alt="Yash Gori" 
                 className="w-full h-full object-cover"
               />
             </div>

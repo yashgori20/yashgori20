@@ -67,24 +67,21 @@ const Index = () => {
 
   useEffect(() => {
     if (isFirstVisit && messages.length === 0) {
-      const toastId = 'welcome-toast';
-
-      toast({
-        id: toastId,
+      const welcomeToast = toast({
         duration: 5000,
         description: (
           <div className="flex flex-col gap-4">
             <p>Hi, I’m Yash Gori, a Gen-AI Engineer.</p>
             <div className="flex gap-2">
-              <Button size="sm" onClick={() => { setActiveView('about'); dismiss(toastId); }}>About Me</Button>
-              <Button size="sm" variant="secondary" onClick={() => { setActiveView('projects'); dismiss(toastId); }}>Projects</Button>
+              <Button size="sm" onClick={() => { setActiveView('about'); dismiss(welcomeToast.id); }}>About Me</Button>
+              <Button size="sm" variant="secondary" onClick={() => { setActiveView('projects'); dismiss(welcomeToast.id); }}>Projects</Button>
             </div>
           </div>
         ),
       });
 
       const dismissOnFocus = () => {
-        dismiss(toastId);
+        dismiss(welcomeToast.id);
         window.removeEventListener('focusin', dismissOnFocus);
       };
 

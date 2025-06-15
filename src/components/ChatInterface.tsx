@@ -40,7 +40,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                 setInput={setInput}
                 handleSend={handleSend}
                 isPending={askApi.isPending}
-                inputClassName="text-center rounded-b-none focus:ring-0 focus:ring-offset-0"
+                inputClassName="text-center"
               />
             <div className="overflow-hidden px-4">
                 <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />

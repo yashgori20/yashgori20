@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -29,7 +28,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
       {messages.length === 0 ? (
         <div className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full">
           
-          <div className="w-full mb-8">
+          <div className="w-full mb-4">
             <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
             <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
             

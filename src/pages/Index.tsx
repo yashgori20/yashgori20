@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -166,16 +165,30 @@ const Index = () => {
     }
   };
   
-  const handleWheel = (e: React.WheelEvent) => {
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (isAnimating.current) return;
 
-    const scrollDownThreshold = pageIndex === 0 ? 100 : 50;
-    const scrollUpThreshold = -50;
+    const viewContainer = (e.currentTarget.firstChild as HTMLElement)?.children[pageIndex] as HTMLElement;
+    if (!viewContainer) return;
 
-    if (e.deltaY > scrollDownThreshold) {
-      changePage(pageIndex + 1);
-    } else if (e.deltaY < scrollUpThreshold) {
-      changePage(pageIndex - 1);
+    if (pageIndex > 0) {
+      // For content pages, check scroll position
+      const { scrollTop, scrollHeight, clientHeight } = viewContainer;
+      const isAtTop = scrollTop < 1;
+      const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
+      const scrollThreshold = 10;
+
+      if (e.deltaY > scrollThreshold && isAtBottom) {
+        changePage(pageIndex + 1);
+      } else if (e.deltaY < -scrollThreshold && isAtTop) {
+        changePage(pageIndex - 1);
+      }
+    } else {
+      // For the initial chat screen, use a simple threshold
+      const scrollDownThreshold = 100;
+      if (e.deltaY > scrollDownThreshold) {
+        changePage(pageIndex + 1);
+      }
     }
   };
   

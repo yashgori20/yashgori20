@@ -75,6 +75,13 @@ export const resumeData = {
   },
   projects: [
     {
+      title: "Interactive AI Portfolio",
+      description: "A dynamic personal portfolio designed as a chat-based experience. Built with React, Vite, and Tailwind CSS, it leverages a custom-trained AI model to answer questions about my skills, projects, and experience, offering a unique and interactive way to explore my profile.",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Vite", "TanStack Query", "Shadcn UI"],
+      codeUrl: "https://github.com/yashgori20/yashgori20",
+      liveUrl: "https://yashgori20.vercel.app/",
+    },
+    {
       title: "DocuTalk (AI-Enhanced Conversational Interface for Document Understanding)",
       description: "Developed a cross-platform application that allows users to interact with documents through a conversational interface. Implemented semantic search functionality using FAISS and Langchain to provide contextually relevant answers to user queries.",
       technologies: ["Python", "Flutter", "Flask", "Gemini LLM", "FAISS", "Langchain"],

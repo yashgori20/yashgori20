@@ -42,7 +42,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                 isPending={askApi.isPending}
                 inputClassName="text-center rounded-b-none focus:ring-0 focus:ring-offset-0"
               />
-            <div className="border-x border-b border-border rounded-b-xl divide-y divide-border overflow-hidden">
+            <div className="border-b border-border rounded-b-xl overflow-hidden px-4">
                 <SuggestionCard title="What are your key skills?" onClick={() => handleSuggestionClick("What are your key skills?")} />
                 <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
                 <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />

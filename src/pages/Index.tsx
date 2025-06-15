@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Menu } from 'lucide-react';
@@ -16,6 +15,10 @@ import ProjectsView from '@/components/views/ProjectsView';
 import SkillsView from '@/components/views/SkillsView';
 import ContactView from '@/components/views/ContactView';
 import ChatInputBar from '@/components/ChatInputBar';
+import { useToast } from "@/components/ui/use-toast";
+import { useFirstVisit } from '@/hooks/useFirstVisit';
+import { useSound } from '@/hooks/useSound';
+import EdgeNavigation from '@/components/EdgeNavigation';
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
@@ -26,6 +29,9 @@ const Index = () => {
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { toast, dismiss } = useToast();
+  const isFirstVisit = useFirstVisit();
+  const { playPopSound } = useSound();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -55,8 +61,40 @@ const Index = () => {
     },
     onSuccess: (data) => {
       setMessages((prev) => [...prev, { role: 'assistant', content: data }]);
+      playPopSound();
     },
   });
+
+  useEffect(() => {
+    if (isFirstVisit && messages.length === 0) {
+      const toastId = 'welcome-toast';
+
+      toast({
+        id: toastId,
+        duration: 5000,
+        description: (
+          <div className="flex flex-col gap-4">
+            <p>Hi, I’m Yash Gori, a Gen-AI Engineer.</p>
+            <div className="flex gap-2">
+              <Button size="sm" onClick={() => { setActiveView('about'); dismiss(toastId); }}>About Me</Button>
+              <Button size="sm" variant="secondary" onClick={() => { setActiveView('projects'); dismiss(toastId); }}>Projects</Button>
+            </div>
+          </div>
+        ),
+      });
+
+      const dismissOnFocus = () => {
+        dismiss(toastId);
+        window.removeEventListener('focusin', dismissOnFocus);
+      };
+
+      window.addEventListener('focusin', dismissOnFocus, { once: true });
+
+      return () => {
+        window.removeEventListener('focusin', dismissOnFocus);
+      };
+    }
+  }, [isFirstVisit, messages.length, toast, dismiss, setActiveView]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -146,6 +184,7 @@ const Index = () => {
         onClose={() => setProfileCardOpen(false)} 
         position={profileCardPosition} 
       />
+      <EdgeNavigation activeView={activeView} setActiveView={setActiveView} />
       
       <div className="md:hidden">
           <Sheet open={isSidebarOpen} onOpenChange={setSidebarOpen}>

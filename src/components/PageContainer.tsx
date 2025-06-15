@@ -27,6 +27,7 @@ type PageContainerProps = {
   handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: any) => void;
   isMobile: boolean;
   chatInterfaceProps: any;
+  viewContainerRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
 };
 
 const PageContainer = ({
@@ -37,10 +38,9 @@ const PageContainer = ({
   handleWheel,
   handleDragEnd,
   isMobile,
-  chatInterfaceProps
+  chatInterfaceProps,
+  viewContainerRefs
 }: PageContainerProps) => {
-  const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   useEffect(() => {
     viewContainerRefs.current = viewContainerRefs.current.slice(0, views.length);
   }, [views.length]);
@@ -48,21 +48,21 @@ const PageContainer = ({
   return (
     <div
       className="flex-1 overflow-hidden"
-      onWheel={pageIndex > 0 ? handleWheel : undefined}
+      onWheel={handleWheel}
     >
       {windowHeight > 0 && (
         <motion.div
           className="h-full w-full"
-          drag={isMobile && pageIndex > 0 ? "y" : false}
+          drag={isMobile ? "y" : false}
           dragConstraints={{ top: 0, bottom: 0 }}
-          dragElastic={0.1}
+          dragElastic={0.2}
           dragMomentum={false}
           onDragEnd={handleDragEnd}
           animate={{ y: -pageIndex * windowHeight }}
           transition={{ 
             type: 'spring', 
-            stiffness: 400, 
-            damping: 40,
+            stiffness: 300, 
+            damping: 30,
             mass: 1
           }}
           onAnimationComplete={onAnimationComplete}

@@ -71,7 +71,7 @@ const Index = () => {
     setTimeout(() => {
       const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
       if (messageInput) messageInput.focus();
-    }, 400); // Increased delay for animation
+    }, 400);
   };
 
   const finalIsCollapsed = isMobile || isSidebarCollapsed;
@@ -137,6 +137,7 @@ const Index = () => {
             handleDragEnd={handleDragEnd}
             isMobile={isMobile}
             chatInterfaceProps={chatInterfaceProps}
+            viewContainerRefs={viewContainerRefs}
           />
 
         {activeView === 'chat' && messages.length > 0 && (

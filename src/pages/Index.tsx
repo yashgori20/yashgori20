@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { resumeData } from '@/data/resume';
@@ -31,13 +30,14 @@ const PageComponents: Record<View, React.ComponentType<any>> = {
 
 const Index = () => {
   const [activeView, setActiveView] = useState<View>('chat');
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0); // 0 for chat, 1 for content
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
   const [profileCardPosition, setProfileCardPosition] = useState({ x: 0, y: 0 });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const { playPop } = useSound();
   const isMobile = useIsMobile();
   const { height: windowHeight } = useWindowSize();
@@ -86,21 +86,40 @@ const Index = () => {
 
   const changePage = useCallback((newIndex: number) => {
     if (isAnimating.current || !windowHeight) return;
-    const clampedIndex = Math.max(0, Math.min(newIndex, views.length - 1));
+    const clampedIndex = Math.max(0, Math.min(newIndex, 1)); // Only two pages: chat and content
     if (clampedIndex !== pageIndex) {
       isAnimating.current = true;
       setPageIndex(clampedIndex);
-      setActiveView(views[clampedIndex]);
     }
   }, [pageIndex, windowHeight]);
 
   useEffect(() => {
-    const newIndex = views.indexOf(activeView);
-    if (newIndex !== -1 && newIndex !== pageIndex) {
-      isAnimating.current = true;
-      setPageIndex(newIndex);
+    const newViewIndex = views.indexOf(activeView);
+    if (newViewIndex === -1) return;
+
+    if (newViewIndex === 0) { // Chat view
+      if (pageIndex !== 0) changePage(0);
+    } else { // Content views
+      const switchAndScroll = () => {
+        const sectionEl = document.getElementById(activeView);
+        sectionEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        if (activeView === 'contact') {
+            setTimeout(() => {
+                const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
+                if (messageInput) messageInput.focus();
+            }, 500); // Delay for scroll and focus
+        }
+      };
+
+      if (pageIndex !== 1) {
+        changePage(1);
+        setTimeout(switchAndScroll, 400); // Delay to allow page transition animation
+      } else {
+        switchAndScroll();
+      }
     }
-  }, [activeView, pageIndex]);
+  }, [activeView, pageIndex, changePage]);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -123,10 +142,6 @@ const Index = () => {
 
   const scrollToContact = () => {
     setActiveView('contact');
-    setTimeout(() => {
-      const messageInput = document.querySelector('textarea[placeholder="Your Message"]') as HTMLTextAreaElement;
-      if (messageInput) messageInput.focus();
-    }, 400); // Increased delay for animation
   };
 
   const handleProfileClick = (event: React.MouseEvent) => {
@@ -148,34 +163,35 @@ const Index = () => {
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const { offset, velocity } = info;
-    
-    let swipeThreshold = windowHeight / 4;
-    // Increase threshold for swipe from home to about
-    if (pageIndex === 0 && offset.y < 0) {
-        swipeThreshold = windowHeight / 2.5; 
-    }
 
-    const velocityThreshold = 300;
-
-    if (Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold) {
-      if (offset.y < 0) {
-        changePage(pageIndex + 1);
-      } else {
-        changePage(pageIndex - 1);
-      }
+    // Swipe up from chat to content
+    if (pageIndex === 0 && (offset.y < -windowHeight / 2.5 || velocity.y < -300)) {
+        changePage(1);
+        setActiveView('about');
+    } 
+    // Swipe down from top of content to chat
+    else if (pageIndex === 1 && contentRef.current?.scrollTop === 0 && (offset.y > windowHeight / 4 || velocity.y > 300)) {
+        changePage(0);
+        setActiveView('chat');
     }
   };
   
   const handleWheel = (e: React.WheelEvent) => {
     if (isAnimating.current) return;
 
-    const scrollDownThreshold = pageIndex === 0 ? 100 : 50;
-    const scrollUpThreshold = -50;
-
-    if (e.deltaY > scrollDownThreshold) {
-      changePage(pageIndex + 1);
-    } else if (e.deltaY < scrollUpThreshold) {
-      changePage(pageIndex - 1);
+    // Scroll down from chat page to content
+    if (pageIndex === 0) {
+      if (e.deltaY > 100) {
+        changePage(1);
+        setActiveView('about');
+      }
+    } 
+    // Scroll up from top of content page to chat
+    else if (pageIndex === 1) {
+      if (e.deltaY < -50 && contentRef.current?.scrollTop === 0) {
+        changePage(0);
+        setActiveView('chat');
+      }
     }
   };
   
@@ -214,7 +230,7 @@ const Index = () => {
 
           <div
             className="flex-1 overflow-hidden"
-            onWheel={(pageIndex > 0 || messages.length === 0) ? handleWheel : undefined}
+            onWheel={handleWheel}
           >
             {windowHeight > 0 && (
               <motion.div
@@ -227,18 +243,20 @@ const Index = () => {
                 transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                 onAnimationComplete={onAnimationComplete}
               >
-                {views.map((viewName) => {
-                  const PageComponent = PageComponents[viewName];
-                  return (
-                    <div key={viewName} className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" style={{ height: windowHeight }}>
-                      {viewName === 'chat' ? (
-                        <ChatInterface {...chatInterfaceProps} />
-                      ) : (
+                <div key="chat" className="w-full h-full" style={{ height: windowHeight }}>
+                    <ChatInterface {...chatInterfaceProps} />
+                </div>
+                
+                <div key="content" ref={contentRef} className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" style={{ height: windowHeight }}>
+                  {views.slice(1).map((viewName) => {
+                    const PageComponent = PageComponents[viewName];
+                    return (
+                      <div id={viewName} key={viewName}>
                         <PageComponent />
-                      )}
-                    </div>
-                  );
-                })}
+                      </div>
+                    );
+                  })}
+                </div>
               </motion.div>
             )}
           </div>

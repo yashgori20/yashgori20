@@ -19,8 +19,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
   };
 
   const handleDownloadResume = () => {
-    // This will trigger the download of a file located in the public directory.
-    // Please add a 'Yash-Gori-Resume.pdf' file to the `public` folder for this to work.
     const link = document.createElement('a');
     link.href = '/Yash-Gori-Resume.pdf';
     link.setAttribute('download', 'Yash-Gori-Resume.pdf');
@@ -32,12 +30,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
 
   return (
     <>
-      <div className="fixed inset-0 z-40" onClick={onClose} />
+      <div className="fixed inset-0 z-[100]" onClick={onClose} />
       <div 
-        className="fixed z-50 bg-card border rounded-lg shadow-lg p-4 w-64"
+        className="fixed z-[101] bg-card border rounded-lg shadow-lg p-4 w-64 touch-manipulation"
         style={{
           top: `${position.y + 10}px`,
-          left: `${Math.min(position.x - 128, window.innerWidth - 280)}px`
+          left: `${Math.min(position.x - 128, window.innerWidth - 280)}px`,
+          touchAction: 'manipulation'
         }}
       >
         <div className="flex items-center gap-3 mb-3">

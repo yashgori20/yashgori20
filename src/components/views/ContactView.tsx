@@ -1,19 +1,29 @@
-
 import React from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
 import ContactForm from '@/components/ContactForm';
-import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Twitter, Download } from 'lucide-react';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
 import { View } from '@/types';
 import PageNavigation from '@/components/PageNavigation';
+import { Button } from '@/components/ui/button';
 
 type ViewProps = {
   activeView: View;
   setActiveView: (view: View) => void;
 };
 
-const ContactView = ({ activeView, setActiveView }: ViewProps) => (
+const ContactView = ({ activeView, setActiveView }: ViewProps) => {
+  const handleDownloadResume = () => {
+    const link = document.createElement('a');
+    link.href = '/Yash-Gori-Resume.pdf';
+    link.setAttribute('download', 'Yash-Gori-Resume.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
     <Section title="Get In Touch">
       <div className="grid lg:grid-cols-2 gap-12">
         <div className="space-y-8">
@@ -59,7 +69,24 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => (
                     <p className="text-muted-foreground">{resumeData.contact.location}</p>
                 </div>
             </div>
+            
+            <Button 
+              onClick={handleDownloadResume}
+              className="w-full p-4 h-auto bg-gradient-to-br from-primary/5 to-secondary/5 text-foreground border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              variant="outline"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                  <Download className="h-6 w-6 text-primary"/>
+                </div>
+                <div className="text-left">
+                  <p className="font-medium">Download Resume</p>
+                  <p className="text-muted-foreground text-sm">Get my latest CV</p>
+                </div>
+              </div>
+            </Button>
           </div>
+          
            <div className="space-y-6 pt-6">
             <h3 className="text-2xl font-semibold">Follow Me</h3>
             <div className="flex items-center gap-6">
@@ -87,5 +114,6 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => (
       <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
+};
 
 export default ContactView;

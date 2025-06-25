@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -93,6 +92,15 @@ const Index = () => {
     }, 400);
   };
 
+  const handleDownloadResume = () => {
+    const link = document.createElement('a');
+    link.href = '/Yash-Gori-Resume.pdf';
+    link.setAttribute('download', 'Yash-Gori-Resume.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const finalIsCollapsed = isMobile || isSidebarCollapsed;
 
   const chatInterfaceProps = { 
@@ -139,16 +147,32 @@ const Index = () => {
         isMobile ? "ml-0" : (finalIsCollapsed ? "ml-[calc(45px+1rem)]" : "ml-[17rem]")
       )}>
           {isMobile && (
-            <div className="absolute top-4 left-4 z-10">
-              <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
-                <Menu className="h-6 w-6" />
-              </Button>
-            </div>
+            <>
+              <div className="absolute top-4 left-4 z-10">
+                <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </div>
+              
+              {activeView === 'about' && (
+                <div className="absolute bottom-6 right-4 z-10">
+                  <Button 
+                    onClick={handleDownloadResume}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
+                    size="sm"
+                  >
+                    Download Resume
+                  </Button>
+                </div>
+              )}
+            </>
           )}
-          <div className="absolute top-4 right-4 md:top-8 md:right-8">
+          
+          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-30">
             <div 
-              className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform touch-manipulation"
               onClick={handleProfileClick}
+              style={{ touchAction: 'manipulation' }}
             >
               <img 
                 src={resumeData.profileImage} 

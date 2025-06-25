@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
@@ -72,10 +73,10 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
             
             <Button 
               onClick={handleDownloadResume}
-              className="w-full p-4 h-auto bg-gradient-to-br from-primary/5 to-secondary/5 text-foreground border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-              variant="outline"
+              className="w-full p-4 h-auto bg-gradient-to-br from-primary/5 to-secondary/5 text-foreground hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              variant="ghost"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 justify-start w-full">
                 <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
                   <Download className="h-6 w-6 text-primary"/>
                 </div>

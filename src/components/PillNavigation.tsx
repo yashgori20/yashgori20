@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { User, Briefcase, Code, BrainCircuit, Mail } from 'lucide-react';
+import { User, Briefcase, Code, BrainCircuit, Mail, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { View } from '@/types';
 import { cn } from '@/lib/utils';
@@ -27,9 +28,10 @@ const PillButton = ({ icon: Icon, label, onClick, className }: PillButtonProps) 
 
 type PillNavigationProps = {
     setActiveView: (view: View) => void;
+    handleDownloadResume?: () => void;
 };
 
-const PillNavigation = ({ setActiveView }: PillNavigationProps) => {
+const PillNavigation = ({ setActiveView, handleDownloadResume }: PillNavigationProps) => {
     const pills = [
         { icon: User, label: 'About', view: 'about' as View },
         { icon: BrainCircuit, label: 'Skills', view: 'skills' as View },
@@ -39,16 +41,28 @@ const PillNavigation = ({ setActiveView }: PillNavigationProps) => {
     ];
 
     return (
-        <div className="grid grid-cols-6 gap-2 mb-8 max-w-xs sm:max-w-sm mx-auto">
-            {pills.map((pill, index) => (
-                <PillButton
-                    key={pill.view}
-                    icon={pill.icon}
-                    label={pill.label}
-                    onClick={() => setActiveView(pill.view)}
-                    className={cn(index < 3 ? "col-span-2" : "col-span-3")}
-                />
-            ))}
+        <div className="max-w-xs sm:max-w-sm mx-auto">
+            <div className="grid grid-cols-6 gap-2 mb-4">
+                {pills.map((pill, index) => (
+                    <PillButton
+                        key={pill.view}
+                        icon={pill.icon}
+                        label={pill.label}
+                        onClick={() => setActiveView(pill.view)}
+                        className={cn(index < 3 ? "col-span-2" : "col-span-3")}
+                    />
+                ))}
+            </div>
+            {handleDownloadResume && (
+                <div className="mt-2">
+                    <PillButton
+                        icon={Download}
+                        label="Download Resume"
+                        onClick={handleDownloadResume}
+                        className="col-span-full"
+                    />
+                </div>
+            )}
         </div>
     );
 };

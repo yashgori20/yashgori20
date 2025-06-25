@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
@@ -115,7 +116,8 @@ const Index = () => {
     setActiveView, 
     glowIntensity, 
     triggerScrollHint, 
-    setMessages 
+    setMessages,
+    handleDownloadResume
   };
 
   return (
@@ -147,25 +149,11 @@ const Index = () => {
         isMobile ? "ml-0" : (finalIsCollapsed ? "ml-[calc(45px+1rem)]" : "ml-[17rem]")
       )}>
           {isMobile && (
-            <>
-              <div className="absolute top-4 left-4 z-10">
-                <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </div>
-              
-              {activeView === 'about' && (
-                <div className="absolute bottom-6 right-4 z-10">
-                  <Button 
-                    onClick={handleDownloadResume}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
-                    size="sm"
-                  >
-                    Download Resume
-                  </Button>
-                </div>
-              )}
-            </>
+            <div className="absolute top-4 left-4 z-10">
+              <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
+                <Menu className="h-6 w-6" />
+              </Button>
+            </div>
           )}
           
           <div className="absolute top-4 right-4 md:top-8 md:right-8 z-30">

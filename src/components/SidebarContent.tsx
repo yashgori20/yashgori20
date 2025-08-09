@@ -115,8 +115,8 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
               <div className="space-y-3">
                 <div>
                   <a href="/Yash-Gori-Resume.pdf" download="Yash-Gori-Resume.pdf">
-                    <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50">
-                      <Download className="mr-2 h-4 w-4" />
+                    <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50 hover:text-primary hover:border-white transition-all duration-300 group">
+                      <Download className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                       Download Resume
                     </Button>
                   </a>
@@ -130,8 +130,8 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                     </a>
                   </div>
                 </div>
-                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50" onClick={scrollToContact}>
-                  <Mail className="mr-2 h-4 w-4" />
+                <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50 hover:text-primary hover:border-white transition-all duration-300 group" onClick={scrollToContact}>
+                  <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                   Get In Touch
                 </Button>
               </div>

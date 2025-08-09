@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Code, ExternalLink, X, Calendar, User, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Project, resumeData } from '@/data/resume';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -13,10 +14,10 @@ interface ProjectModalProps {
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, onNavigate }) => {
-  if (!project) return null;
+  const isMobile = useIsMobile();
 
   // Get current project index and navigation functions
-  const currentIndex = resumeData.projects.findIndex(p => p.title === project.title);
+  const currentIndex = project ? resumeData.projects.findIndex(p => p.title === project.title) : 0;
   const totalProjects = resumeData.projects.length;
 
   const getProjectImage = (project: Project) => {
@@ -61,48 +62,36 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, currentIndex]);
+  }, [isOpen, currentIndex, goToNext, goToPrevious, onClose]);
+
+  if (!project) return null;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-y-auto">
-        <div className="relative">
-          {/* Header with Navigation */}
-          <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white hover:bg-black/20 bg-black/10"
-              onClick={onClose}
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <span className="text-white text-sm bg-black/20 px-2 py-1 rounded">
-              {currentIndex + 1} of {totalProjects}
-            </span>
-          </div>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="max-w-6xl max-h-[95vh] p-0 overflow-y-auto overflow-x-hidden">
+          <div className="relative" 
+               onTouchStart={isMobile ? (e) => {
+                 const touch = e.touches[0];
+                 e.currentTarget.dataset.startX = touch.clientX.toString();
+               } : undefined}
+               onTouchEnd={isMobile ? (e) => {
+                 const startX = parseFloat(e.currentTarget.dataset.startX || '0');
+                 const endX = e.changedTouches[0].clientX;
+                 const diff = startX - endX;
+                 
+                 if (Math.abs(diff) > 50) { // Minimum swipe distance
+                   if (diff > 0) {
+                     goToNext();
+                   } else {
+                     goToPrevious();
+                   }
+                 }
+               } : undefined}>
 
-          {/* Navigation Buttons */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-1/2 left-4 -translate-y-1/2 z-10 text-white hover:bg-black/20 bg-black/10"
-            onClick={goToPrevious}
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </Button>
-          
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-1/2 right-4 -translate-y-1/2 z-10 text-white hover:bg-black/20 bg-black/10"
-            onClick={goToNext}
-          >
-            <ChevronRight className="h-6 w-6" />
-          </Button>
 
           {/* Project Image */}
-          <div className="relative h-64 bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden">
+          <div className="relative h-80 bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden">
             <img 
               src={getProjectImage(project)}
               alt={project.title}
@@ -161,7 +150,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4 pt-4 border-t">
+              <div className="flex justify-between items-center pt-4 border-t">
                 {project.codeUrl && (
                   <a href={project.codeUrl} target="_blank" rel="noopener noreferrer">
                     <Button variant="outline" className="group">
@@ -172,7 +161,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
                 )}
                 {project.liveUrl && (
                   <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="group">
+                    <Button className="group ml-auto">
                       <ExternalLink className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                       Live Demo
                     </Button>
@@ -181,9 +170,33 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
               </div>
             </div>
           </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Navigation Buttons - Only show on desktop, outside the dialog */}
+      {!isMobile && isOpen && (
+        <div className="fixed inset-0 pointer-events-none z-[100]">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-1/2 left-4 -translate-y-1/2 pointer-events-auto bg-background/90 backdrop-blur-sm border hover:bg-secondary/50 w-14 h-14 shadow-lg"
+            onClick={goToPrevious}
+          >
+            <ChevronLeft className="h-7 w-7" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-auto bg-background/90 backdrop-blur-sm border hover:bg-secondary/50 w-14 h-14 shadow-lg"
+            onClick={goToNext}
+          >
+            <ChevronRight className="h-7 w-7" />
+          </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 };
 

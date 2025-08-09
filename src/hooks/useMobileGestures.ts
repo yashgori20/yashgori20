@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { PanInfo } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -19,6 +19,7 @@ export const useMobileGestures = ({
   isAnimating
 }: UseMobileGesturesProps) => {
   const isMobile = useIsMobile();
+  const [scrollDisabled, setScrollDisabled] = useState(false);
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (!isMobile || isAnimating.current) return;
@@ -58,30 +59,33 @@ export const useMobileGestures = ({
   };
   
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (isAnimating.current) return;
+    if (isAnimating.current || scrollDisabled) return;
 
-    // For chat view, allow wheel navigation
+    // For chat view, implement 2-second pause when switching to content
     if (pageIndex === 0) {
       if (e.deltaY > 50) {
         changePage(1);
+        // Disable scroll for 2 seconds after switching to content
+        setScrollDisabled(true);
+        setTimeout(() => {
+          setScrollDisabled(false);
+        }, 2000);
       }
       return;
     }
 
+    // For content view, allow normal scrolling within the container
     const viewContainer = viewContainerRefs.current[pageIndex];
     if (!viewContainer) return;
 
-    const { scrollTop, scrollHeight, clientHeight } = viewContainer;
-    const isAtTop = scrollTop <= 5;
-    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
+    // Let the content scroll normally - don't prevent default
+    // Only navigate back to chat if scrolling up from the very top
+    const { scrollTop } = viewContainer;
     const scrollThreshold = 50;
-
-    if (e.deltaY > scrollThreshold && (isAtBottom || scrollHeight <= clientHeight)) {
+    
+    if (e.deltaY < -scrollThreshold && scrollTop <= 5) {
       e.preventDefault();
-      changePage(pageIndex + 1);
-    } else if (e.deltaY < -scrollThreshold && isAtTop) {
-      e.preventDefault();
-      changePage(pageIndex - 1);
+      changePage(0);
     }
   };
 

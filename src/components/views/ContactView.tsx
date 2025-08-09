@@ -6,7 +6,6 @@ import ContactForm from '@/components/ContactForm';
 import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Twitter, Download, MessageCircle } from 'lucide-react';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
 import { View } from '@/types';
-import PageNavigation from '@/components/PageNavigation';
 import { Button } from '@/components/ui/button';
 
 type ViewProps = {
@@ -34,7 +33,7 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
   };
 
   return (
-    <Section title="Get In Touch">
+    <Section title="Get In Touch" id="contact">
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div>
@@ -148,7 +147,6 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
         
         <ContactForm />
       </div>
-      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 };

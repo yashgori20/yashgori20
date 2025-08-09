@@ -14,7 +14,7 @@ interface ProjectModalProps {
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, onNavigate }) => {
-  const isMobile = useIsMobile();
+  const isMobile = window.innerWidth < 768;
 
   // Get current project index and navigation functions
   const currentIndex = project ? resumeData.projects.findIndex(p => p.title === project.title) : 0;
@@ -112,7 +112,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
           </div>
 
           {/* Project Content */}
-          <div className="p-8">
+          <div className="p-8 px-24">
             <div className="mb-6">
               <h2 className="text-2xl font-bold">{project.title}</h2>
             </div>
@@ -170,32 +170,27 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
               </div>
             </div>
           </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-      
-      {/* Navigation Buttons - Only show on desktop, outside the dialog */}
-      {!isMobile && isOpen && (
-        <div className="fixed inset-0 pointer-events-none z-[100]">
+          {/* Navigation Buttons - Inside modal overlay */}
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
-            className="absolute top-1/2 left-4 -translate-y-1/2 pointer-events-auto bg-background/90 backdrop-blur-sm border hover:bg-secondary/50 w-14 h-14 shadow-lg"
+            className="absolute top-1/2 left-4 -translate-y-1/2 z-10 bg-white/95 border-2 border-gray-400 hover:bg-gray-100 w-16 h-16 shadow-xl rounded-full"
             onClick={goToPrevious}
           >
-            <ChevronLeft className="h-7 w-7" />
+            <ChevronLeft className="h-8 w-8 text-gray-800" />
           </Button>
           
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
-            className="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-auto bg-background/90 backdrop-blur-sm border hover:bg-secondary/50 w-14 h-14 shadow-lg"
+            className="absolute top-1/2 right-4 -translate-y-1/2 z-10 bg-white/95 border-2 border-gray-400 hover:bg-gray-100 w-16 h-16 shadow-xl rounded-full"
             onClick={goToNext}
           >
-            <ChevronRight className="h-7 w-7" />
+            <ChevronRight className="h-8 w-8 text-gray-800" />
           </Button>
-        </div>
-      )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { UseMutationResult } from '@tanstack/react-query';
@@ -29,9 +29,46 @@ type ChatInterfaceProps = {
 };
 
 const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint, setMessages }: ChatInterfaceProps) => {
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isMouseOverSuggestions, setIsMouseOverSuggestions] = useState(false);
+  const [bounceAnimation, setBounceAnimation] = useState(false);
+  
+  const suggestions = [
+    "What are my key skills?",
+    "Tell me about the DocuTalk project",
+    "Summarize my experience", 
+    "How can I contact you?",
+    "What are your latest projects?",
+    "Tell me about your education",
+    "What programming languages do you know?",
+    "Describe your AI/ML experience",
+    "What's your strongest project?",
+    "How did you build Swift Check AI?"
+  ];
+
   const handleScrollAttempt = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (Math.abs(e.deltaY) > 0) {
+    // Don't trigger scroll hint if mouse is over suggestions
+    // Also increase threshold for scroll sensitivity
+    if (!isMouseOverSuggestions && Math.abs(e.deltaY) > 50) {
       triggerScrollHint(e.deltaY);
+    }
+  };
+
+  const handleSuggestionScroll = (e: React.WheelEvent<HTMLDivElement>) => {
+    e.stopPropagation(); // Prevent event from bubbling up
+    const target = e.currentTarget;
+    const { scrollTop, scrollHeight, clientHeight } = target;
+    
+    // Check if we're at the top or bottom
+    const isAtTop = scrollTop === 0;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    
+    // If trying to scroll beyond bounds, trigger bounce animation
+    if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+      e.preventDefault();
+      setBounceAnimation(true);
+      setTimeout(() => setBounceAnimation(false), 300);
     }
   };
 
@@ -43,6 +80,54 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
 
   const handleBack = () => {
     setMessages([]);
+  };
+
+  const [inputFocused, setInputFocused] = useState(false);
+
+  const handleInputFocus = () => {
+    setInputFocused(true);
+    setShowSuggestions(true);
+  };
+
+  const handleInputBlur = () => {
+    setInputFocused(false);
+    // Delay hiding dropdown to allow clicks
+    setTimeout(() => setShowSuggestions(false), 150);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedIndex >= 0) {
+          handleSuggestionClick(suggestions[selectedIndex]);
+          setShowSuggestions(false);
+        } else if (input.trim()) {
+          handleSend();
+          setShowSuggestions(false);
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setSelectedIndex(-1);
+        break;
+    }
+  };
+
+  const handleSuggestionSelect = (suggestion: string) => {
+    handleSuggestionClick(suggestion);
+    setShowSuggestions(false);
+    setSelectedIndex(-1);
   };
 
   return (
@@ -60,32 +145,87 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             <PillNavigation setActiveView={setActiveView} />
           </div>
 
-          <div>
-            <div className="w-full max-w-2xl mx-auto mb-4">
-               <ChatInputBar
-                  input={input}
-                  setInput={setInput}
-                  handleSend={handleSend}
-                  isPending={askApi.isPending}
-                  inputClassName="text-center"
-                />
+          <div className="relative w-full max-w-2xl mx-auto">
+            <div className="mb-4">
+               <div
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+               >
+                  <ChatInputBar
+                     input={input}
+                     setInput={setInput}
+                     handleSend={handleSend}
+                     isPending={askApi.isPending}
+                     showSuggestions={inputFocused}
+                     onKeyDown={handleKeyDown}
+                  />
+               </div>
             </div>
+            
+            {/* Dropdown when focused - full width of container */}
             <AnimatePresence>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full max-w-2xl mx-auto"
-                >
-                  <div className="max-h-[20vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
-                      <SuggestionCard title="What are my key skills?" onClick={() => handleSuggestionClick("What are my key skills?")} />
-                      <SuggestionCard title="Tell me about the DocuTalk project" onClick={() => handleSuggestionClick("Tell me about the DocuTalk project")} />
-                      <SuggestionCard title="Summarize my experience" onClick={() => handleSuggestionClick("Summarize my experience")} />
-                      <SuggestionCard title="How can I contact me?" onClick={() => handleSuggestionClick("How can I contact me?")} />
-                      <SuggestionCard title="What are my latest projects?" onClick={() => handleSuggestionClick("What are my latest projects?")} />
-                  </div>
-                </motion.div>
+               {inputFocused && showSuggestions && (
+                  <motion.div
+                     initial={{ opacity: 0, y: -10 }}
+                     animate={{ 
+                        opacity: 1, 
+                        y: 0,
+                        scale: bounceAnimation ? [1, 1.02, 1] : 1
+                     }}
+                     exit={{ opacity: 0, y: -10 }}
+                     transition={{ duration: 0.2 }}
+                     className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+                     onMouseEnter={() => setIsMouseOverSuggestions(true)}
+                     onMouseLeave={() => setIsMouseOverSuggestions(false)}
+                     onWheel={handleSuggestionScroll}
+                  >
+                     {suggestions.map((suggestion, index) => (
+                        <button
+                           key={suggestion}
+                           onClick={() => handleSuggestionSelect(suggestion)}
+                           className={cn(
+                              "w-full text-left px-4 py-3 text-sm hover:bg-accent transition-colors",
+                              "first:rounded-t-lg last:rounded-b-lg",
+                              selectedIndex === index && "bg-accent"
+                           )}
+                        >
+                           {suggestion}
+                        </button>
+                     ))}
+                  </motion.div>
+               )}
+            </AnimatePresence>
+            
+            {/* Default suggestions when not focused - with more space */}
+            <AnimatePresence>
+               {!inputFocused && (
+                  <motion.div
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ 
+                        opacity: 1, 
+                        y: 0,
+                        scale: bounceAnimation ? [1, 1.02, 1] : 1
+                     }}
+                     exit={{ opacity: 0, y: -10 }}
+                     transition={{ duration: 0.3 }}
+                     className="w-full max-w-2xl mx-auto mt-8"
+                     onMouseEnter={() => setIsMouseOverSuggestions(true)}
+                     onMouseLeave={() => setIsMouseOverSuggestions(false)}
+                  >
+                     <div 
+                        className="max-h-[25vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                        onWheel={handleSuggestionScroll}
+                     >
+                        {suggestions.map((suggestion) => (
+                           <SuggestionCard 
+                              key={suggestion}
+                              title={suggestion} 
+                              onClick={() => handleSuggestionClick(suggestion)} 
+                           />
+                        ))}
+                     </div>
+                  </motion.div>
+               )}
             </AnimatePresence>
           </div>
             <button

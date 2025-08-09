@@ -17,9 +17,6 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => (
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
           <div key={proj.title} className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border overflow-hidden hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg group flex flex-col">
-            <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-              <Code className="h-16 w-16 text-primary/50 group-hover:text-primary transition-colors" />
-            </div>
             <div className="p-6 flex flex-col flex-1">
               <h3 className="text-xl font-bold mb-3">{proj.title}</h3>
               <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>

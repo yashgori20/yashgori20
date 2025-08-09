@@ -11,20 +11,41 @@ type ChatInputBarProps = {
     handleSend: () => void,
     isPending: boolean,
     className?: string,
-    inputClassName?: string
+    inputClassName?: string,
+    showSuggestions?: boolean,
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 };
 
-const ChatInputBar = ({ input, setInput, handleSend, isPending, className, inputClassName }: ChatInputBarProps) => (
+const ChatInputBar = ({ 
+    input, 
+    setInput, 
+    handleSend, 
+    isPending, 
+    className, 
+    inputClassName,
+    showSuggestions = false,
+    onKeyDown
+}: ChatInputBarProps) => (
     <div className={cn("relative", className)}>
         <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder="What do you want to know about me?"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !showSuggestions) {
+              handleSend();
+            }
+            onKeyDown?.(e);
+          }}
+          placeholder={showSuggestions ? "" : "What do you want to know about me?"}
           className={cn("pr-12 h-12", inputClassName)}
-          autoFocus
         />
-        <Button size="icon" variant="ghost" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSend} disabled={isPending}>
+        <Button 
+          size="icon" 
+          variant="ghost" 
+          className="absolute right-2 top-1/2 -translate-y-1/2" 
+          onClick={handleSend} 
+          disabled={isPending}
+        >
           <CornerDownLeft className="h-5 w-5 font-bold" />
         </Button>
     </div>

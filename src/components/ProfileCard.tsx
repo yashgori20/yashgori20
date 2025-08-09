@@ -62,18 +62,32 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
         </div>
         
         <div className="space-y-2 mb-4">
-          <div className="flex items-center gap-2 text-sm">
+          <a 
+            href={`mailto:${resumeData.contact.email}`}
+            className="flex items-center gap-2 text-sm hover:text-primary transition-colors cursor-pointer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Mail className="h-4 w-4 text-primary" />
-            <span className="text-muted-foreground">{resumeData.contact.email}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm">
+            <span className="text-muted-foreground hover:text-primary transition-colors">{resumeData.contact.email}</span>
+          </a>
+          <a 
+            href={`tel:${resumeData.contact.phone}`}
+            className="flex items-center gap-2 text-sm hover:text-primary transition-colors cursor-pointer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Phone className="h-4 w-4 text-primary" />
-            <span className="text-muted-foreground">{resumeData.contact.phone}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm">
+            <span className="text-muted-foreground hover:text-primary transition-colors">{resumeData.contact.phone}</span>
+          </a>
+          <a 
+            href={`https://maps.google.com/?q=${encodeURIComponent(resumeData.contact.location)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm hover:text-primary transition-colors cursor-pointer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <MapPin className="h-4 w-4 text-primary" />
-            <span className="text-muted-foreground">{resumeData.contact.location}</span>
-          </div>
+            <span className="text-muted-foreground hover:text-primary transition-colors">{resumeData.contact.location}</span>
+          </a>
         </div>
         
         <div className="flex flex-col space-y-2">

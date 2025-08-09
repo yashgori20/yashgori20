@@ -5,7 +5,6 @@ import Section from '@/components/layout/Section';
 import { Button } from '@/components/ui/button';
 import { Code, ExternalLink, ArrowUpRight, Github } from 'lucide-react';
 import { View } from '@/types';
-import PageNavigation from '@/components/PageNavigation';
 import ProjectModal from '@/components/ProjectModal';
 
 type ViewProps = {
@@ -29,7 +28,7 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
   };
 
   return (
-    <Section title="Featured Projects">
+    <Section title="Featured Projects" id="projects">
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
           <div 
@@ -82,7 +81,6 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
           </Button>
         </a>
       </div>
-      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 };

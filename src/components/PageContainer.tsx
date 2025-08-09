@@ -3,19 +3,11 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { View } from '@/types';
 import ChatInterface from '@/components/ChatInterface';
-import AboutView from '@/components/views/AboutView';
-import ExperienceView from '@/components/views/ExperienceView';
-import ProjectsView from '@/components/views/ProjectsView';
-import SkillsView from '@/components/views/SkillsView';
-import ContactView from '@/components/views/ContactView';
+import ContentView from '@/components/views/ContentView';
 
 const PageComponents: Record<View, React.ComponentType<any>> = {
   chat: ChatInterface,
-  about: AboutView,
-  experience: ExperienceView,
-  projects: ProjectsView,
-  skills: SkillsView,
-  contact: ContactView,
+  content: ContentView,
 };
 
 type PageContainerProps = {

@@ -4,7 +4,6 @@ import { resumeData, Experience } from '@/data/resume';
 import Section from '@/components/layout/Section';
 import { MapPin } from 'lucide-react';
 import { View } from '@/types';
-import PageNavigation from '@/components/PageNavigation';
 
 type ViewProps = {
   activeView: View;
@@ -12,7 +11,7 @@ type ViewProps = {
 };
 
 const ExperienceView = ({ activeView, setActiveView }: ViewProps) => (
-    <Section title="Work Experience">
+    <Section title="Work Experience" id="experience">
       <div className="space-y-16">
         <div>
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Career Path</h2>
@@ -80,7 +79,6 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => (
             </div>
         </div>
       </div>
-      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 

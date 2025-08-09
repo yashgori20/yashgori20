@@ -1,9 +1,8 @@
 import React from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
-import { Code, BrainCircuit, Wrench, Users } from 'lucide-react';
+import { Code, BrainCircuit, Wrench, Users, Database } from 'lucide-react';
 import { View } from '@/types';
-import PageNavigation from '@/components/PageNavigation';
 
 type ViewProps = {
   activeView: View;
@@ -14,6 +13,7 @@ const getSkillIcon = (category: string) => {
   const iconMap: { [key: string]: JSX.Element } = {
     'Tools': <Wrench className="h-5 w-5 text-primary" />,
     'Technical': <Code className="h-5 w-5 text-primary" />,
+    'Data': <Database className="h-5 w-5 text-primary" />,
     'AI/ML': <BrainCircuit className="h-5 w-5 text-primary" />,
     'Soft Skills': <Users className="h-5 w-5 text-primary" />
   };
@@ -30,13 +30,11 @@ const SkillItem = ({ name, category }: { name: string; category: string }) => (
 );
 
 const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
-  // Organize skills into 4 clear categories
+  // Organize skills into 5 clear categories
   const skillCategories = {
     'Tools': [
       'Docker',
       'GitHub Actions',
-      'Power BI',
-      'PostgreSQL',
       'Redis',
       'FAISS',
       'Pinecone'
@@ -45,11 +43,19 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
       'Python',
       'JavaScript',
       'TypeScript',
-      'SQL',
       'Flask',
       'React',
       'FastAPI',
       'Azure OpenAI'
+    ],
+    'Data': [
+      'SQL',
+      'PostgreSQL',
+      'Pandas',
+      'NumPy',
+      'Power BI',
+      'Excel',
+      'Data Analytics'
     ],
     'AI/ML': [
       'LangChain',
@@ -57,8 +63,7 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
       'Prompt Engineering',
       'Azure AI Search',
       'Streamlit',
-      'Pandas',
-      'NumPy'
+      'Machine Learning'
     ],
     'Soft Skills': [
       'Team Management',
@@ -71,8 +76,8 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
   };
 
   return (
-    <Section title="Skills & Expertise">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <Section title="Skills & Expertise" id="skills">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {Object.entries(skillCategories).map(([category, skills]) => (
           <div key={category} className="space-y-4">
             <div className="text-center">
@@ -89,7 +94,6 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
           </div>
         ))}
       </div>
-      <PageNavigation activeView={activeView} setActiveView={setActiveView} />
     </Section>
   );
 };

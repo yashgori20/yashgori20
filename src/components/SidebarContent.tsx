@@ -8,6 +8,7 @@ import { User, Briefcase, Code, BrainCircuit, Mail, Sparkles, Download, Github, 
 import SidebarButton from './SidebarButton';
 import HuggingFaceLogo from './HuggingFaceLogo';
 import { View, Message } from '@/types';
+import { useActiveSection } from '@/hooks/useActiveSection';
 
 type SidebarContentProps = {
     activeView: View;
@@ -20,7 +21,21 @@ type SidebarContentProps = {
     isMobileSidebarOpen?: boolean;
 };
 
-const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse, isMobileSidebarOpen }: SidebarContentProps) => (
+const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse, isMobileSidebarOpen }: SidebarContentProps) => {
+  const activeSection = useActiveSection();
+  
+  const scrollToSection = (sectionId: string) => {
+    if (activeView !== 'content') {
+      setActiveView('content');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
+  return (
     <div className={cn(
       "fixed top-1/2 -translate-y-1/2 left-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 text-foreground transition-all duration-300 z-30 rounded-2xl shadow-lg",
       isCollapsed ? "w-[45px]" : "w-64",
@@ -84,11 +99,71 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
               <Sparkles className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
               {!isCollapsed && <span>Home</span>}
             </Button>
-          <SidebarButton icon={User} label="About" view="about" {...{ activeView, setActiveView, isCollapsed }}/>
-          <SidebarButton icon={Briefcase} label="Experience" view="experience" {...{ activeView, setActiveView, isCollapsed }}/>
-          <SidebarButton icon={Code} label="Projects" view="projects" {...{ activeView, setActiveView, isCollapsed }}/>
-          <SidebarButton icon={BrainCircuit} label="Skills" view="skills" {...{ activeView, setActiveView, isCollapsed }}/>
-          <SidebarButton icon={Mail} label="Contact" view="contact" {...{ activeView, setActiveView, isCollapsed }}/>
+          <Button 
+            variant={(activeView === 'content' && activeSection === 'about') ? "secondary" : "ghost"}
+            size={isCollapsed ? "icon" : "default"}
+            className={cn(
+              "w-full transition-all duration-200 justify-start hover:bg-secondary/50 hover:text-primary hover:border-white",
+              isCollapsed && "justify-center rounded-none"
+            )}
+            onClick={() => scrollToSection('about')}
+            title="About"
+          >
+            <User className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
+            {!isCollapsed && <span>About</span>}
+          </Button>
+          <Button 
+            variant={(activeView === 'content' && activeSection === 'experience') ? "secondary" : "ghost"}
+            size={isCollapsed ? "icon" : "default"}
+            className={cn(
+              "w-full transition-all duration-200 justify-start hover:bg-secondary/50 hover:text-primary hover:border-white",
+              isCollapsed && "justify-center rounded-none"
+            )}
+            onClick={() => scrollToSection('experience')}
+            title="Experience"
+          >
+            <Briefcase className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
+            {!isCollapsed && <span>Experience</span>}
+          </Button>
+          <Button 
+            variant={(activeView === 'content' && activeSection === 'projects') ? "secondary" : "ghost"}
+            size={isCollapsed ? "icon" : "default"}
+            className={cn(
+              "w-full transition-all duration-200 justify-start hover:bg-secondary/50 hover:text-primary hover:border-white",
+              isCollapsed && "justify-center rounded-none"
+            )}
+            onClick={() => scrollToSection('projects')}
+            title="Projects"
+          >
+            <Code className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
+            {!isCollapsed && <span>Projects</span>}
+          </Button>
+          <Button 
+            variant={(activeView === 'content' && activeSection === 'skills') ? "secondary" : "ghost"}
+            size={isCollapsed ? "icon" : "default"}
+            className={cn(
+              "w-full transition-all duration-200 justify-start hover:bg-secondary/50 hover:text-primary hover:border-white",
+              isCollapsed && "justify-center rounded-none"
+            )}
+            onClick={() => scrollToSection('skills')}
+            title="Skills"
+          >
+            <BrainCircuit className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
+            {!isCollapsed && <span>Skills</span>}
+          </Button>
+          <Button 
+            variant={(activeView === 'content' && activeSection === 'contact') ? "secondary" : "ghost"}
+            size={isCollapsed ? "icon" : "default"}
+            className={cn(
+              "w-full transition-all duration-200 justify-start hover:bg-secondary/50 hover:text-primary hover:border-white",
+              isCollapsed && "justify-center rounded-none"
+            )}
+            onClick={() => scrollToSection('contact')}
+            title="Contact"
+          >
+            <Mail className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
+            {!isCollapsed && <span>Contact</span>}
+          </Button>
         </div>
       </ScrollArea>
       
@@ -140,5 +215,6 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
       )}
     </div>
   );
+};
 
 export default SidebarContent;

@@ -10,7 +10,7 @@ import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronsDown, ChevronLeft } from 'lucide-react';
+import { ChevronsDown, ChevronLeft, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type ChatInterfaceProps = {
@@ -228,16 +228,17 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                )}
             </AnimatePresence>
           </div>
-            <button
-              onClick={() => setActiveView('content')}
-              className={cn(
-                "absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-all duration-300"
-              )}
-              style={glowStyle}
-            >
-              <p className="text-xs">Click here to switch to Portfolio mode</p>
-              <ChevronsDown className={cn("w-4 h-4", glowIntensity === 0 && "animate-bounce")} />
-            </button>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+              <Button 
+                onClick={() => setActiveView('content')}
+                variant="outline"
+                className="bg-primary/10 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+                style={glowStyle}
+              >
+                <User className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                Switch to Portfolio Mode
+              </Button>
+            </div>
         </div>
       ) : (
         <>

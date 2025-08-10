@@ -30,12 +30,11 @@ const SkillItem = ({ name, level, category, index }: { name: string; level?: num
           {getSkillIcon(category)}
         </div>
         
-        <div className="relative w-full h-3 bg-secondary/20 rounded-sm overflow-hidden border border-dashed border-muted-foreground/30">
+        <div className="relative w-full h-3 bg-secondary/20 rounded-sm overflow-hidden border-2 border-white">
           <div 
-            className="h-full bg-foreground/80 transition-all duration-1000 ease-out rounded-sm"
+            className="h-full bg-white transition-all duration-1000 ease-out"
             style={{ 
-              width: `${percentage}%`,
-              margin: '1px'
+              width: `${percentage}%`
             }}
           />
           <div 
@@ -43,13 +42,11 @@ const SkillItem = ({ name, level, category, index }: { name: string; level?: num
             style={{ 
               width: `${100 - percentage}%`,
               backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground)) 1px, transparent 1px)`,
-              backgroundSize: '3px 3px',
-              right: '1px',
-              top: '1px'
+              backgroundSize: '3px 3px'
             }}
           />
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-[8px] font-bold text-background mix-blend-difference">
+            <span className="text-[8px] font-bold text-black mix-blend-difference">
               {percentage}%
             </span>
           </div>

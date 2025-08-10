@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
-import { Code, BrainCircuit, Monitor, Users, Database, Cloud } from 'lucide-react';
+import { Code, BrainCircuit, Monitor, Users, Database, Cloud, ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { View } from '@/types';
 
 type ViewProps = {
@@ -11,12 +12,14 @@ type ViewProps = {
 
 const getSkillIcon = (category: string) => {
   const iconMap: { [key: string]: JSX.Element } = {
+    'Technical': <Code className="h-4 w-4 text-primary" />,
+    'Tools': <Database className="h-4 w-4 text-primary" />,
+    'Soft Skills': <Users className="h-4 w-4 text-primary" />,
     'Programming': <Code className="h-4 w-4 text-primary" />,
     'AI/ML': <BrainCircuit className="h-4 w-4 text-primary" />,
     'Frameworks': <Monitor className="h-4 w-4 text-primary" />,
     'Cloud': <Cloud className="h-4 w-4 text-primary" />,
-    'Data': <Database className="h-4 w-4 text-primary" />,
-    'Soft Skills': <Users className="h-4 w-4 text-primary" />
+    'Data': <Database className="h-4 w-4 text-primary" />
   };
   return iconMap[category] || <Code className="h-4 w-4 text-primary" />;
 };
@@ -59,7 +62,35 @@ const SkillItem = ({ name, level, category, index }: { name: string; level?: num
 };
 
 const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
-  const skillCategories = {
+  const [showMore, setShowMore] = useState(false);
+
+  // Main 3 categories with important skills only
+  const mainSkillCategories = {
+    'Technical': [
+      { name: "Python", level: 95 },
+      { name: "RAG Systems", level: 95 },
+      { name: "SQL", level: 85 },
+      { name: "JavaScript", level: 80 },
+      { name: "TypeScript", level: 75 }
+    ],
+    'Tools': [
+      { name: "Git", level: 90 },
+      { name: "Docker", level: 85 },
+      { name: "Firebase", level: 80 },
+      { name: "Azure OpenAI", level: 90 },
+      { name: "LangChain", level: 90 }
+    ],
+    'Soft Skills': [
+      { name: "Team Management", level: 90 },
+      { name: "Problem Solving", level: 95 },
+      { name: "Communication", level: 95 },
+      { name: "Strategic Thinking", level: 85 },
+      { name: "Adaptability", level: 90 }
+    ]
+  };
+
+  // All categories for "See More"
+  const allSkillCategories = {
     'Programming': resumeData.skills.programming,
     'AI/ML': resumeData.skills.aiml,
     'Frameworks': resumeData.skills.frameworks,
@@ -68,10 +99,13 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
     'Soft Skills': resumeData.skills.soft
   };
 
+  const skillCategoriesToShow = showMore ? allSkillCategories : mainSkillCategories;
+  const gridCols = showMore ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 lg:grid-cols-3";
+
   return (
     <Section title="Skills & Expertise" id="skills">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        {Object.entries(skillCategories).map(([category, skills]) => (
+      <div className={`grid ${gridCols} gap-4 md:gap-6`}>
+        {Object.entries(skillCategoriesToShow).map(([category, skills]) => (
           <div key={category} className="space-y-2 md:space-y-4">
             <div className="text-center">
               <div className="inline-flex items-center gap-1.5 px-2 py-1 md:px-3 md:py-1.5 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border">
@@ -92,6 +126,27 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
             </div>
           </div>
         ))}
+      </div>
+      
+      {/* See More / See Less Button */}
+      <div className="flex justify-center mt-8">
+        <Button 
+          onClick={() => setShowMore(!showMore)}
+          variant="outline"
+          className="bg-primary/10 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+        >
+          {showMore ? (
+            <>
+              <ChevronUp className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+              Show Less
+            </>
+          ) : (
+            <>
+              <ChevronDown className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+              See More Skills
+            </>
+          )}
+        </Button>
       </div>
     </Section>
   );

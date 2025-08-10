@@ -49,8 +49,8 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
 
   const handleScrollAttempt = (e: React.WheelEvent<HTMLDivElement>) => {
     // Don't trigger scroll hint if mouse is over suggestions
-    // Also increase threshold for scroll sensitivity
-    if (!isMouseOverSuggestions && Math.abs(e.deltaY) > 50) {
+    // Lower threshold for more sensitive scroll detection
+    if (!isMouseOverSuggestions && Math.abs(e.deltaY) > 20) {
       triggerScrollHint(e.deltaY);
     }
   };
@@ -139,8 +139,8 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
         >
           
           <div className="w-full mb-4">
-            <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
-            <p className="text-muted-foreground mb-8 text-sm">Welcome to Yash Gori's Portfolio</p>
+            <h1 className="text-2xl md:text-4xl font-bold mb-2">{getGreeting()}</h1>
+            <p className="text-muted-foreground mb-8 text-xs md:text-sm">Welcome to Yash Gori's Portfolio</p>
             
             <PillNavigation setActiveView={setActiveView} />
           </div>
@@ -174,7 +174,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      }}
                      exit={{ opacity: 0, y: -10 }}
                      transition={{ duration: 0.2 }}
-                     className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
+                     className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-48 md:max-h-64 overflow-y-auto"
                      onMouseEnter={() => setIsMouseOverSuggestions(true)}
                      onMouseLeave={() => setIsMouseOverSuggestions(false)}
                      onWheel={handleSuggestionScroll}
@@ -213,7 +213,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      onMouseLeave={() => setIsMouseOverSuggestions(false)}
                   >
                      <div 
-                        className="max-h-[25vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                        className="max-h-[20vh] md:max-h-[25vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
                         onWheel={handleSuggestionScroll}
                      >
                         {suggestions.map((suggestion) => (
@@ -229,7 +229,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             </AnimatePresence>
           </div>
             <button
-              onClick={() => setActiveView('about')}
+              onClick={() => setActiveView('content')}
               className={cn(
                 "absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground opacity-50 hover:opacity-100 transition-all duration-300"
               )}

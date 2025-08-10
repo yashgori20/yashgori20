@@ -1,11 +1,33 @@
 
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, PanInfo } from 'framer-motion';
 import { View } from '@/types';
 import ChatInterface from '@/components/ChatInterface';
 import ContentView from '@/components/views/ContentView';
 
-const PageComponents: Record<View, React.ComponentType<any>> = {
+interface ChatInterfaceProps {
+  messages: any[];
+  input: string;
+  setInput: (value: string) => void;
+  handleSend: () => void;
+  handleSuggestionClick: (suggestion: string) => void;
+  askApi: any;
+  getGreeting: () => string;
+  scrollAreaRef: React.RefObject<HTMLDivElement>;
+  setActiveView: (view: View) => void;
+  glowIntensity: number;
+  triggerScrollHint: (deltaY: number) => void;
+  setMessages: (messages: any[]) => void;
+  showDownloadButton?: boolean;
+  onDownloadResume?: () => void;
+}
+
+interface ContentViewProps {
+  activeView: View;
+  setActiveView: (view: View) => void;
+}
+
+const PageComponents: Record<View, React.ComponentType<ChatInterfaceProps | ContentViewProps>> = {
   chat: ChatInterface,
   content: ContentView,
 };
@@ -16,9 +38,9 @@ type PageContainerProps = {
   windowHeight: number;
   onAnimationComplete: () => void;
   handleWheel?: (e: React.WheelEvent<HTMLDivElement>) => void;
-  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: any) => void;
+  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
   isMobile: boolean;
-  chatInterfaceProps: any;
+  chatInterfaceProps: ChatInterfaceProps;
   viewContainerRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
   activeView: View;
   setActiveView: (view: View) => void;
@@ -39,7 +61,7 @@ const PageContainer = ({
 }: PageContainerProps) => {
   useEffect(() => {
     viewContainerRefs.current = viewContainerRefs.current.slice(0, views.length);
-  }, [views.length]);
+  }, [views.length, viewContainerRefs]);
 
   return (
     <div
@@ -69,7 +91,10 @@ const PageContainer = ({
                 key={viewName} 
                 ref={el => (viewContainerRefs.current[i] = el)}
                 className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" 
-                style={{ height: windowHeight, touchAction: 'pan-y' }}
+                style={{ 
+                  height: windowHeight, 
+                  touchAction: isMobile ? 'pan-y' : 'auto'
+                }}
               >
                 {viewName === 'chat' ? (
                   <ChatInterface {...chatInterfaceProps} />

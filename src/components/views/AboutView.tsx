@@ -2,7 +2,8 @@
 import React from 'react';
 import { resumeData } from '@/data/resume';
 import Section from '@/components/layout/Section';
-import { MapPin, Globe, GraduationCap } from 'lucide-react';
+import { MapPin, Globe, GraduationCap, MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { View } from '@/types';
 
 type ViewProps = {
@@ -11,8 +12,29 @@ type ViewProps = {
 };
 
 const AboutView = ({ activeView, setActiveView }: ViewProps) => (
-    <Section title="About Me" id="about">
-      <div className="grid lg:grid-cols-5 gap-8 items-start">
+    <section id="about" className="p-6 pt-8 md:p-12 md:pt-16 pb-16 min-h-screen relative">
+      <div className="max-w-6xl mx-auto w-full">
+        {/* Switch to Chat Button - Above title */}
+        <div className="mb-6 flex justify-center">
+          <Button 
+            onClick={() => setActiveView('chat')}
+            variant="outline"
+            className="bg-primary/10 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+          >
+            <MessageCircle className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+            Switch to Chat Mode
+          </Button>
+        </div>
+        
+        {/* Title Section */}
+        <div className="mb-12">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            About Me
+          </h1>
+          <div className="w-24 h-1 bg-primary rounded-full"></div>
+        </div>
+        
+        <div className="grid lg:grid-cols-5 gap-8 items-start">
         <div className="lg:col-span-3 space-y-8">
           <div className="space-y-4">
             <p className="text-base leading-relaxed text-muted-foreground">
@@ -50,17 +72,22 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
                         <Globe className="h-4 w-4 text-primary" />
                       </div>
                       
-                      <div className="relative w-full h-3 bg-secondary/20 rounded-sm overflow-hidden">
+                      <div className="relative w-full h-3 bg-secondary/20 rounded-sm overflow-hidden border border-dashed border-muted-foreground/30">
                         <div 
-                          className="h-full bg-foreground/80 transition-all duration-1000 ease-out"
-                          style={{ width: `${percentage}%` }}
+                          className="h-full bg-foreground/80 transition-all duration-1000 ease-out rounded-sm"
+                          style={{ 
+                            width: `${percentage}%`,
+                            margin: '1px'
+                          }}
                         />
                         <div 
                           className="absolute top-0 right-0 h-full opacity-50"
                           style={{ 
                             width: `${100 - percentage}%`,
                             backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground)) 1px, transparent 1px)`,
-                            backgroundSize: '3px 3px'
+                            backgroundSize: '3px 3px',
+                            right: '1px',
+                            top: '1px'
                           }}
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -110,7 +137,8 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
           </div>
         </div>
       </div>
-    </Section>
+      </div>
+    </section>
   );
 
 export default AboutView;

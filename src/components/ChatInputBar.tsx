@@ -37,7 +37,11 @@ const ChatInputBar = ({
             onKeyDown?.(e);
           }}
           placeholder={showSuggestions ? "" : "What do you want to know about me?"}
-          className={cn("pr-12 h-12", inputClassName)}
+          className={cn("pr-12 h-12 text-base", inputClassName)}
+          autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck="false"
         />
         <Button 
           size="icon" 

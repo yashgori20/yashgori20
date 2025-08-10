@@ -78,7 +78,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
         </div>
       )}
       
-      <ScrollArea className="flex-grow">
+      <ScrollArea className="flex-grow" style={{ touchAction: 'pan-y' }}>
         <div className={cn("space-y-2 py-2", isCollapsed ? "px-0" : "px-4", isMobile && "pt-4 pb-4")}>
            <Button 
               variant={activeView === 'chat' ? "secondary" : "ghost"}

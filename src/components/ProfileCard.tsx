@@ -42,10 +42,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
     <>
       <div className="fixed inset-0 z-[100]" onClick={onClose} />
       <div 
-        className="fixed z-[101] bg-card border rounded-lg shadow-lg p-4 w-64 touch-manipulation"
+        className="fixed z-[101] bg-card border rounded-lg shadow-lg p-4 w-64 sm:w-72 md:w-80 touch-manipulation"
         style={{
-          top: `${position.y + 10}px`,
-          left: `${Math.min(position.x - 128, window.innerWidth - 280)}px`,
+          top: `${Math.max(10, Math.min(position.y + 10, window.innerHeight - 350))}px`,
+          left: `${Math.max(10, Math.min(position.x - 128, window.innerWidth - (window.innerWidth < 640 ? 280 : 330)))}px`,
           touchAction: 'manipulation'
         }}
       >

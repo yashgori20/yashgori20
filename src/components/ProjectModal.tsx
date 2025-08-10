@@ -69,7 +69,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-6xl max-h-[95vh] p-0 overflow-y-auto overflow-x-hidden">
+        <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-y-auto border shadow-2xl rounded-xl bg-card backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
           <div className="relative" 
                onTouchStart={isMobile ? (e) => {
                  const touch = e.touches[0];
@@ -91,14 +91,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
 
 
           {/* Project Image */}
-          <div className="relative h-80 bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden">
+          <div className="relative h-80 bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden rounded-t-xl">
             <img 
               src={getProjectImage(project)}
               alt={project.title}
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
               <div className="text-center text-white">
                 <h1 className="text-3xl font-bold mb-2">{project.title}</h1>
                 <div className="flex items-center justify-center gap-2 text-sm opacity-90">
@@ -112,7 +112,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
           </div>
 
           {/* Project Content */}
-          <div className="p-8 px-24">
+          <div className="p-4 md:p-8 px-6 md:px-12 bg-card">
             <div className="mb-6">
               <h2 className="text-2xl font-bold">{project.title}</h2>
             </div>
@@ -170,24 +170,20 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
               </div>
             </div>
           </div>
-          {/* Navigation Buttons - Inside modal overlay */}
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute top-1/2 left-4 -translate-y-1/2 z-10 bg-white/95 border-2 border-gray-400 hover:bg-gray-100 w-16 h-16 shadow-xl rounded-full"
+          {/* Navigation Arrows - Smaller size */}
+          <button
+            className="absolute top-1/2 left-2 md:left-4 -translate-y-1/2 z-10 p-2 hover:scale-110 transition-transform"
             onClick={goToPrevious}
           >
-            <ChevronLeft className="h-8 w-8 text-gray-800" />
-          </Button>
+            <ChevronLeft className="h-6 w-6 md:h-7 md:w-7 text-white drop-shadow-lg" strokeWidth={2.5} />
+          </button>
           
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute top-1/2 right-4 -translate-y-1/2 z-10 bg-white/95 border-2 border-gray-400 hover:bg-gray-100 w-16 h-16 shadow-xl rounded-full"
+          <button
+            className="absolute top-1/2 right-2 md:right-4 -translate-y-1/2 z-10 p-2 hover:scale-110 transition-transform"
             onClick={goToNext}
           >
-            <ChevronRight className="h-8 w-8 text-gray-800" />
-          </Button>
+            <ChevronRight className="h-6 w-6 md:h-7 md:w-7 text-white drop-shadow-lg" strokeWidth={2.5} />
+          </button>
           </div>
         </DialogContent>
       </Dialog>

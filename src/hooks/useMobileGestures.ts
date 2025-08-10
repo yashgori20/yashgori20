@@ -25,8 +25,8 @@ export const useMobileGestures = ({
     if (!isMobile || isAnimating.current) return;
     
     const { offset, velocity } = info;
-    const swipeThreshold = windowHeight / 6; // Reduced threshold for easier swiping
-    const velocityThreshold = 300; // Reduced velocity threshold
+    const swipeThreshold = windowHeight / 8; // Further reduced threshold for easier swiping
+    const velocityThreshold = 250; // Further reduced velocity threshold
 
     const isSignificantSwipe = Math.abs(offset.y) > swipeThreshold || Math.abs(velocity.y) > velocityThreshold;
 

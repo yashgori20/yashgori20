@@ -97,12 +97,11 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
             </div>
             
             <div>
-              <Button 
+              <button 
                 onClick={handleDownloadResume}
-                className="w-full p-3 h-auto bg-gradient-to-br from-primary/5 to-secondary/5 text-foreground hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                variant="ghost"
+                className="w-full block group"
               >
-                <div className="flex items-center gap-3 justify-start w-full">
+                <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                   <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
                     <Download className="h-5 w-5 text-primary"/>
                   </div>
@@ -111,7 +110,7 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
                     <p className="text-muted-foreground text-xs">Get my latest CV</p>
                   </div>
                 </div>
-              </Button>
+              </button>
               <div className="text-center mt-2">
                 <button
                   onClick={handleDownloadTechnicalResume}

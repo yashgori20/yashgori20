@@ -18,12 +18,26 @@ export const useChatApi = () => {
   const glowTimeoutRef = useRef<number | null>(null);
   const { playPop } = useSound();
 
-  // Initialize session from localStorage
+  // Initialize session from localStorage and track returning users
   useEffect(() => {
     const storedSessionId = localStorage.getItem('yashChatSession');
-    if (storedSessionId) {
-      setSessionId(storedSessionId);
+    const lastVisit = localStorage.getItem('yashChatLastVisit');
+    const now = Date.now();
+    
+    if (storedSessionId && lastVisit) {
+      const daysSinceLastVisit = (now - parseInt(lastVisit)) / (1000 * 60 * 60 * 24);
+      // Consider someone a returning user if they visited within the last 30 days
+      if (daysSinceLastVisit <= 30) {
+        setSessionId(storedSessionId);
+      } else {
+        // Clear old session after 30 days
+        localStorage.removeItem('yashChatSession');
+        localStorage.removeItem('yashChatLastVisit');
+      }
     }
+    
+    // Update last visit timestamp
+    localStorage.setItem('yashChatLastVisit', now.toString());
   }, []);
 
   const triggerScrollHint = (deltaY: number) => {
@@ -61,7 +75,79 @@ export const useChatApi = () => {
           throw new Error(`API error: ${response.statusText}`);
         }
         
-        const data: ApiResponse = await response.json();
+        const rawData = await response.json();
+        
+        // Check if this is the old API format (just {answer: "..."})
+        if (rawData.answer && !rawData.success && !rawData.api_version) {
+          // Convert old format to new format
+          const convertedData: ApiResponse = {
+            success: true,
+            api_version: '1.0',
+            session: {
+              session_id: sessionId || `legacy-${Date.now()}`,
+              conversation_number: 1,
+              user_status: sessionId ? 'returning' : 'new',
+              session_created: new Date().toISOString()
+            },
+            request: {
+              question: userInput,
+              processed_at: new Date().toISOString(),
+              response_time_ms: null
+            },
+            response: {
+              answer: rawData.answer,
+              model_used: 'legacy-api',
+              confidence_indicators: {
+                question_clarity: 1,
+                user_type_confidence: 0.5,
+                response_relevance: 1
+              }
+            },
+            intelligence: {
+              user_analysis: {
+                detected_type: 'general',
+                sophistication_level: 'intermediate',
+                question_clarity: 'Clear',
+                is_returning_user: !!sessionId && !!localStorage.getItem('yashChatLastVisit'),
+                previous_topics: []
+              },
+              conversation_state: {
+                total_exchanges: 1,
+                main_themes: [],
+                user_progression: [],
+                conversation_depth: 'light'
+              },
+              smart_suggestions: {
+                follow_up_questions: [
+                  "Tell me more about your projects",
+                  "What are your technical skills?",
+                  "How can we work together?"
+                ],
+                topic_transitions: [],
+                depth_exploration: []
+              }
+            },
+            rich_content: {},
+            metadata: {
+              rate_limit: {
+                requests_remaining: 50,
+                window_reset: new Date().toISOString()
+              },
+              developer: 'Yash Gori',
+              timestamp: new Date().toISOString()
+            }
+          };
+          
+          // Store session ID for legacy format too
+          if (!sessionId) {
+            setSessionId(convertedData.session.session_id);
+            localStorage.setItem('yashChatSession', convertedData.session.session_id);
+          }
+          
+          return convertedData;
+        }
+        
+        const data: ApiResponse = rawData;
         
         // Store session ID if new session was created
         if (data.session?.session_id && !sessionId) {

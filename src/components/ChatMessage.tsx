@@ -66,12 +66,23 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
             {message.content}
           </div>
           
-          {/* Rich content - only show for assistant messages */}
-          {!isUser && richContent && Object.keys(richContent).length > 0 && (
+          {/* Rich content - only show for assistant messages with actual content */}
+          {!isUser && richContent && Object.keys(richContent).length > 0 && 
+            Object.entries(richContent).some(([_, project]) => 
+              project.github_link || 
+              (project.technical_specs && project.technical_specs.length > 0) || 
+              project.key_achievement
+            ) && (
             <div className="space-y-2 mt-3">
-              {Object.entries(richContent).map(([projectName, project]) => (
-                <ProjectCard key={projectName} projectName={projectName} project={project} />
-              ))}
+              {Object.entries(richContent)
+                .filter(([_, project]) => 
+                  project.github_link || 
+                  (project.technical_specs && project.technical_specs.length > 0) || 
+                  project.key_achievement
+                )
+                .map(([projectName, project]) => (
+                  <ProjectCard key={projectName} projectName={projectName} project={project} />
+                ))}
             </div>
           )}
         </div>

@@ -10,7 +10,8 @@ import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronsDown, ChevronLeft, User } from 'lucide-react';
+import { ChevronsDown, ChevronLeft, User, Github, Linkedin } from 'lucide-react';
+import HuggingFaceLogo from './HuggingFaceLogo';
 import { cn } from '@/lib/utils';
 
 type ChatInterfaceProps = {
@@ -146,11 +147,23 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
+        const nextIndex = selectedIndex < suggestions.length - 1 ? selectedIndex + 1 : 0;
+        setSelectedIndex(nextIndex);
+        // Scroll to the selected item
+        setTimeout(() => {
+          const selectedElement = document.querySelector(`[data-suggestion-index="${nextIndex}"]`);
+          selectedElement?.scrollIntoView({ block: 'nearest' });
+        }, 0);
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
+        const prevIndex = selectedIndex > 0 ? selectedIndex - 1 : suggestions.length - 1;
+        setSelectedIndex(prevIndex);
+        // Scroll to the selected item
+        setTimeout(() => {
+          const selectedElement = document.querySelector(`[data-suggestion-index="${prevIndex}"]`);
+          selectedElement?.scrollIntoView({ block: 'nearest' });
+        }, 0);
         break;
       case 'Enter':
         e.preventDefault();
@@ -184,16 +197,48 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           onWheel={handleScrollAttempt}
         >
           
-          <div className="absolute top-16 left-0 right-0">
-            <h1 className="text-3xl md:text-5xl font-bold mb-1">{getGreeting()}</h1>
+          <div className="absolute top-12 left-0 right-0">
+            <h1 className="text-3xl md:text-5xl font-bold mb-3">{getGreeting()}</h1>
             <p className="text-muted-foreground text-sm md:text-base">Welcome to Yash Gori's Portfolio</p>
           </div>
           
+          <p className="text-muted-foreground mb-10 text-xs md:text-sm leading-relaxed mt-6">
+            AI Developer with hands-on experience in Azure services, LLM integration, RAG systems, and AI agents.<br />
+            Building intelligent systems that solve real business problems.
+          </p>
+          
           <div className="w-full">
-            <p className="text-muted-foreground mb-8 text-xs md:text-sm leading-relaxed mt-4">
-              AI Developer with hands-on experience in Azure services, LLM integration, RAG systems, and AI agents.<br />
-              Building intelligent systems that solve real business problems.
-            </p>
+            
+            {/* Social Media Pills */}
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              <a 
+                href="https://github.com/yashgori20" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/30 border border-secondary text-sm text-muted-foreground hover:bg-secondary/50 hover:text-primary transition-all duration-200"
+              >
+                <Github className="h-3.5 w-3.5" />
+                GitHub
+              </a>
+              <a 
+                href="https://linkedin.com/in/yashgori20" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/30 border border-secondary text-sm text-muted-foreground hover:bg-secondary/50 hover:text-primary transition-all duration-200"
+              >
+                <Linkedin className="h-3.5 w-3.5" />
+                LinkedIn
+              </a>
+              <a 
+                href="https://huggingface.co/yashgori20" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/30 border border-secondary text-sm text-muted-foreground hover:bg-secondary/50 hover:text-primary transition-all duration-200"
+              >
+                <HuggingFaceLogo className="h-3.5 w-3.5" />
+                HuggingFace
+              </a>
+            </div>
             
             <PillNavigation setActiveView={setActiveView} />
           </div>
@@ -227,7 +272,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      }}
                      exit={{ opacity: 0, y: -10 }}
                      transition={{ duration: 0.2 }}
-                     className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-48 md:max-h-64 overflow-y-auto"
+                     className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-32 md:max-h-40 overflow-y-auto"
                      onMouseEnter={() => setIsMouseOverSuggestions(true)}
                      onMouseLeave={() => {
                        setIsMouseOverSuggestions(false);
@@ -240,6 +285,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      {suggestions.map((suggestion, index) => (
                         <button
                            key={suggestion}
+                           data-suggestion-index={index}
                            onClick={() => handleSuggestionSelect(suggestion)}
                            className={cn(
                               "w-full text-left px-4 py-3 text-sm hover:bg-accent transition-colors",
@@ -266,12 +312,12 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      }}
                      exit={{ opacity: 0, y: -10 }}
                      transition={{ duration: 0.3 }}
-                     className="w-full max-w-2xl mx-auto mt-8"
+                     className="w-full max-w-3xl mx-auto mt-10"
                      onMouseEnter={() => setIsMouseOverSuggestions(true)}
                      onMouseLeave={() => setIsMouseOverSuggestions(false)}
                   >
                      <div 
-                        className="max-h-[15vh] md:max-h-[18vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                        className="max-h-[18vh] md:max-h-[22vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
                         onWheel={handleSuggestionScroll}
                      >
                         {suggestions.map((suggestion) => (
@@ -286,7 +332,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                )}
             </AnimatePresence>
           </div>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
               <Button 
                 onClick={() => setActiveView('content')}
                 variant="outline"

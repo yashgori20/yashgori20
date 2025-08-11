@@ -92,7 +92,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
   const handleInputBlur = () => {
     setInputFocused(false);
     // Delay hiding dropdown to allow clicks
-    setTimeout(() => setShowSuggestions(false), 150);
+    setTimeout(() => {
+      if (!isMouseOverSuggestions) {
+        setShowSuggestions(false);
+      }
+    }, 200);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -128,10 +132,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
     handleSuggestionClick(suggestion);
     setShowSuggestions(false);
     setSelectedIndex(-1);
+    setInputFocused(false);
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full">
+    <div className="flex-1 flex flex-col h-full overflow-hidden">
       {messages.length === 0 ? (
         <div 
           className="relative flex-1 flex flex-col justify-center items-center text-center p-4 md:p-8 max-w-4xl mx-auto w-full"
@@ -176,7 +181,12 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      transition={{ duration: 0.2 }}
                      className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-48 md:max-h-64 overflow-y-auto"
                      onMouseEnter={() => setIsMouseOverSuggestions(true)}
-                     onMouseLeave={() => setIsMouseOverSuggestions(false)}
+                     onMouseLeave={() => {
+                       setIsMouseOverSuggestions(false);
+                       if (!inputFocused) {
+                         setTimeout(() => setShowSuggestions(false), 100);
+                       }
+                     }}
                      onWheel={handleSuggestionScroll}
                   >
                      {suggestions.map((suggestion, index) => (
@@ -241,22 +251,29 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
             </div>
         </div>
       ) : (
-        <>
-          <div className="flex items-center p-2 border-b border-border sticky top-0 bg-background/95 backdrop-blur-sm z-10">
+        <div 
+          className="flex-1 flex flex-col overflow-hidden"
+          onWheel={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center p-2 border-b border-border bg-background/95 backdrop-blur-sm z-10 shrink-0">
             <Button variant="ghost" size="icon" onClick={handleBack}>
               <ChevronLeft className="h-5 w-5" />
             </Button>
             <h3 className="font-semibold text-lg ml-2">Chat with Yash</h3>
           </div>
-          <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-            <div className="max-w-4xl mx-auto space-y-6">
+          <ScrollArea 
+            className="flex-1 p-4 overflow-y-auto" 
+            ref={scrollAreaRef}
+            onWheel={(e) => e.stopPropagation()}
+          >
+            <div className="max-w-4xl mx-auto space-y-6 pb-36">
               {messages.map((msg, idx) => (
                 <ChatMessage key={idx} message={msg} />
               ))}
               {askApi.isPending && <LoadingMessage />}
             </div>
           </ScrollArea>
-        </>
+        </div>
       )}
     </div>
   );

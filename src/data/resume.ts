@@ -121,19 +121,20 @@ export const resumeData = {
       description: "Multi-agent system for loan compliance verification with 80% accuracy on RBI regulatory documents.",
       technologies: ["Python", "Mixtral LLM", "GROQ Cloud", "FAISS", "Custom Model Training"],
       codeUrl: "https://github.com/yashgori20/Finance-Advisor-Agent",
+      liveUrl: "https://yashgori20-finllm-rag.hf.space/",
     },
     {
       title: "LinkedIn Profile Optimization Platform",
       description: "Multi-agent system providing role-specific LinkedIn profile optimization with conversational AI guidance.",
       technologies: ["Streamlit", "GROQ Cloud", "Mixtral LLM", "Multi-Agent System"],
       codeUrl: "https://github.com/yashgori20/Inhance",
-      liveUrl: "https://huggingface.co/spaces/yashgori20/Inhance",
+      liveUrl: "https://yashgori20-inhance.hf.space/",
     },
     {
       title: "Customer Churn Predictor",
       description: "Machine learning model achieving 94% accuracy in telecom customer churn prediction with Power BI dashboard.",
       technologies: ["Python", "Random Forest", "Decision trees", "Power BI", "Numpy", "Pandas", "Seaborn", "Matplotlib"],
-      codeUrl: "https://github.com/yashgori20/Customer_Churn_Predictor",
+      codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
   ] as Project[],
   experience: [
@@ -187,9 +188,9 @@ export const resumeData = {
     },
   ] as Experience[],
   volunteering: {
-      organization: "Vacha NGO",
-      role: "English & Computer Instructor",
-      period: "July 2024",
-      description: "Coached English and computer skills to students, crafted innovative learning aids to improve engagement."
+    organization: "Vacha NGO",
+    role: "English & Computer Instructor",
+    period: "July 2024",
+    description: "Coached English and computer skills to students, crafted innovative learning aids to improve engagement."
   }
 };

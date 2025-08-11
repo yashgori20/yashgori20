@@ -22,7 +22,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
 
   const getProjectImage = (project: Project) => {
     const projectIndex = resumeData.projects.findIndex(p => p.title === project.title);
-    const projectNumber = projectIndex + 1;
+    const projectNumber = projectIndex >= 0 ? projectIndex + 1 : 1;
     return `/images/projects/p${projectNumber}.png`;
   };
 
@@ -93,6 +93,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
             {/* Project Image */}
             <div className="relative h-96 md:h-[500px] bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden rounded-t-xl p-4 md:p-8">
               <img
+                key={`project-${currentIndex}-${project.title}`}
                 src={getProjectImage(project)}
                 alt={project.title}
                 className="w-full h-full object-contain rounded-lg"

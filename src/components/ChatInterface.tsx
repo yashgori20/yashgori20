@@ -42,8 +42,8 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
   
   // Combine all smart suggestions from API response
   const getSmartSuggestions = (): string[] => {
-    if (!smartSuggestions) {
-      // Default suggestions for initial state
+    // If no messages, always show default suggestions (home state)
+    if (messages.length === 0) {
       return [
         "What are my key skills?",
         "Tell me about the DocuTalk project",
@@ -56,6 +56,10 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
         "What's your strongest project?",
         "How did you build Swift Check AI?"
       ];
+    }
+
+    if (!smartSuggestions) {
+      return [];
     }
 
     const allSuggestions = [
@@ -108,6 +112,15 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
 
   const handleBack = () => {
     setMessages([]);
+    setInput(''); // Clear any text in input field
+    
+    // Reset focus and suggestion states with a small delay to ensure clean transition
+    setTimeout(() => {
+      setInputFocused(false);
+      setShowSuggestions(false);
+      setSelectedIndex(-1);
+      setIsMouseOverSuggestions(false);
+    }, 50);
   };
 
   const [inputFocused, setInputFocused] = useState(false);
@@ -290,42 +303,16 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
               </Button>
               <h3 className="font-semibold text-lg ml-2">Chat with Yash</h3>
               
-              {/* User Analysis & Rate Limit Indicators */}
+              {/* Rate Limit Warning (only show when low) */}
               <div className="ml-auto flex items-center gap-2">
-                {userAnalysis && (
-                  <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className={cn(
-                      "px-2 py-1 rounded-full text-xs font-medium",
-                      userAnalysis.detected_type === 'recruiter' && "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-                      userAnalysis.detected_type === 'technical' && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-                      userAnalysis.detected_type === 'student' && "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-                      userAnalysis.detected_type === 'general' && "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
-                    )}>
-                      {userAnalysis.detected_type}
-                    </span>
-                    <span className="text-xs">
-                      {userAnalysis.sophistication_level}
-                    </span>
-                  </div>
-                )}
-                
-                {rateLimit && rateLimit.requests_remaining < 10 && (
+                {rateLimit && rateLimit.requests_remaining < 5 && (
                   <div className="text-xs text-orange-600 dark:text-orange-400 font-medium">
-                    {rateLimit.requests_remaining} left
+                    {rateLimit.requests_remaining} questions left
                   </div>
                 )}
               </div>
             </div>
             
-            {/* Session info */}
-            {sessionId && (
-              <div className="px-4 pb-2 text-xs text-muted-foreground">
-                Session: {sessionId.slice(0, 8)}...
-                {userAnalysis?.is_returning_user && (
-                  <span className="ml-2 text-green-600 dark:text-green-400">Returning user</span>
-                )}
-              </div>
-            )}
           </div>
           <ScrollArea 
             className="flex-1 p-4 overflow-y-auto" 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { UseMutationResult } from '@tanstack/react-query';
-import { Message, View } from '@/types';
+import { Message, View, SmartSuggestions, RichContent, UserAnalysis, RateLimit, ApiResponse } from '@/types';
 import ChatInputBar from './ChatInputBar';
 import SuggestionCard from './SuggestionCard';
 import ChatMessage from './ChatMessage';
@@ -19,33 +19,61 @@ type ChatInterfaceProps = {
     setInput: (value: string) => void,
     handleSend: () => void,
     handleSuggestionClick: (suggestion: string) => void,
-    askApi: UseMutationResult<string, Error, string, unknown>,
+    askApi: UseMutationResult<ApiResponse, Error, string, unknown>,
     getGreeting: () => string,
     scrollAreaRef: React.RefObject<HTMLDivElement>,
     setActiveView: (view: View) => void,
     glowIntensity: number;
     triggerScrollHint: (deltaY: number) => void;
     setMessages: (messages: Message[]) => void;
+    sessionId?: string | null;
+    smartSuggestions?: SmartSuggestions | null;
+    richContent?: RichContent;
+    userAnalysis?: UserAnalysis | null;
+    rateLimit?: RateLimit | null;
+    apiResponseData?: ApiResponse | null;
 };
 
-const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint, setMessages }: ChatInterfaceProps) => {
+const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestionClick, askApi, getGreeting, scrollAreaRef, setActiveView, glowIntensity, triggerScrollHint, setMessages, sessionId, smartSuggestions, richContent, userAnalysis, rateLimit, apiResponseData }: ChatInterfaceProps) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isMouseOverSuggestions, setIsMouseOverSuggestions] = useState(false);
   const [bounceAnimation, setBounceAnimation] = useState(false);
   
-  const suggestions = [
-    "What are my key skills?",
-    "Tell me about the DocuTalk project",
-    "Summarize my experience", 
-    "How can I contact you?",
-    "What are your latest projects?",
-    "Tell me about your education",
-    "What programming languages do you know?",
-    "Describe your AI/ML experience",
-    "What's your strongest project?",
-    "How did you build Swift Check AI?"
-  ];
+  // Combine all smart suggestions from API response
+  const getSmartSuggestions = (): string[] => {
+    if (!smartSuggestions) {
+      // Default suggestions for initial state
+      return [
+        "What are my key skills?",
+        "Tell me about the DocuTalk project",
+        "Summarize my experience", 
+        "How can I contact you?",
+        "What are your latest projects?",
+        "Tell me about your education",
+        "What programming languages do you know?",
+        "Describe your AI/ML experience",
+        "What's your strongest project?",
+        "How did you build Swift Check AI?"
+      ];
+    }
+
+    const allSuggestions = [
+      ...(smartSuggestions.follow_up_questions || []),
+      ...(smartSuggestions.topic_transitions || []),
+      ...(smartSuggestions.depth_exploration || [])
+    ];
+
+    // If no smart suggestions, fallback to default
+    return allSuggestions.length > 0 ? allSuggestions : [
+      "Tell me more about your experience",
+      "What projects are you most proud of?",
+      "How can we work together?",
+      "What are your technical strengths?"
+    ];
+  };
+
+  const suggestions = getSmartSuggestions();
 
   const handleScrollAttempt = (e: React.WheelEvent<HTMLDivElement>) => {
     // Don't trigger scroll hint if mouse is over suggestions
@@ -255,11 +283,49 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           className="flex-1 flex flex-col overflow-hidden"
           onWheel={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center p-2 border-b border-border bg-background/95 backdrop-blur-sm z-10 shrink-0">
-            <Button variant="ghost" size="icon" onClick={handleBack}>
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <h3 className="font-semibold text-lg ml-2">Chat with Yash</h3>
+          <div className="border-b border-border bg-background/95 backdrop-blur-sm z-10 shrink-0">
+            <div className="flex items-center p-2">
+              <Button variant="ghost" size="icon" onClick={handleBack}>
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <h3 className="font-semibold text-lg ml-2">Chat with Yash</h3>
+              
+              {/* User Analysis & Rate Limit Indicators */}
+              <div className="ml-auto flex items-center gap-2">
+                {userAnalysis && (
+                  <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className={cn(
+                      "px-2 py-1 rounded-full text-xs font-medium",
+                      userAnalysis.detected_type === 'recruiter' && "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+                      userAnalysis.detected_type === 'technical' && "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
+                      userAnalysis.detected_type === 'student' && "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
+                      userAnalysis.detected_type === 'general' && "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+                    )}>
+                      {userAnalysis.detected_type}
+                    </span>
+                    <span className="text-xs">
+                      {userAnalysis.sophistication_level}
+                    </span>
+                  </div>
+                )}
+                
+                {rateLimit && rateLimit.requests_remaining < 10 && (
+                  <div className="text-xs text-orange-600 dark:text-orange-400 font-medium">
+                    {rateLimit.requests_remaining} left
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Session info */}
+            {sessionId && (
+              <div className="px-4 pb-2 text-xs text-muted-foreground">
+                Session: {sessionId.slice(0, 8)}...
+                {userAnalysis?.is_returning_user && (
+                  <span className="ml-2 text-green-600 dark:text-green-400">Returning user</span>
+                )}
+              </div>
+            )}
           </div>
           <ScrollArea 
             className="flex-1 p-4 overflow-y-auto" 
@@ -268,7 +334,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           >
             <div className="max-w-4xl mx-auto space-y-6 pb-36">
               {messages.map((msg, idx) => (
-                <ChatMessage key={idx} message={msg} />
+                <ChatMessage 
+                  key={idx} 
+                  message={msg} 
+                  richContent={msg.role === 'assistant' && idx === messages.length - 1 ? richContent : undefined}
+                />
               ))}
               {askApi.isPending && <LoadingMessage />}
             </div>

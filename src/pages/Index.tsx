@@ -67,7 +67,13 @@ const Index = () => {
     getGreeting,
     scrollAreaRef,
     glowIntensity,
-    triggerScrollHint
+    triggerScrollHint,
+    sessionId,
+    smartSuggestions,
+    richContent,
+    userAnalysis,
+    rateLimit,
+    apiResponseData
   } = useChatApi();
 
   const setActiveView = (view: View) => {
@@ -118,7 +124,13 @@ const Index = () => {
     triggerScrollHint, 
     setMessages,
     showDownloadButton: isMobile,
-    onDownloadResume: handleDownloadResume
+    onDownloadResume: handleDownloadResume,
+    sessionId,
+    smartSuggestions,
+    richContent,
+    userAnalysis,
+    rateLimit,
+    apiResponseData
   };
 
   return (

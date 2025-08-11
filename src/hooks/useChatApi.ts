@@ -18,26 +18,16 @@ export const useChatApi = () => {
   const glowTimeoutRef = useRef<number | null>(null);
   const { playPop } = useSound();
 
-  // Initialize session from localStorage and track returning users
+  // Initialize session for current browser session only (no cross-session tracking)
   useEffect(() => {
-    const storedSessionId = localStorage.getItem('yashChatSession');
-    const lastVisit = localStorage.getItem('yashChatLastVisit');
-    const now = Date.now();
-    
-    if (storedSessionId && lastVisit) {
-      const daysSinceLastVisit = (now - parseInt(lastVisit)) / (1000 * 60 * 60 * 24);
-      // Consider someone a returning user if they visited within the last 30 days
-      if (daysSinceLastVisit <= 30) {
-        setSessionId(storedSessionId);
-      } else {
-        // Clear old session after 30 days
-        localStorage.removeItem('yashChatSession');
-        localStorage.removeItem('yashChatLastVisit');
-      }
+    // Get or create a session ID for this browser session
+    let storedSessionId = sessionStorage.getItem('yashChatSession');
+    if (!storedSessionId) {
+      // Generate new session ID if none exists
+      storedSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem('yashChatSession', storedSessionId);
     }
-    
-    // Update last visit timestamp
-    localStorage.setItem('yashChatLastVisit', now.toString());
+    setSessionId(storedSessionId);
   }, []);
 
   const triggerScrollHint = (deltaY: number) => {
@@ -56,14 +46,18 @@ export const useChatApi = () => {
   const askApi = useMutation({
     mutationFn: async (userInput: string): Promise<ApiResponse> => {
       try {
-        const payload: { question: string; session_id?: string } = {
-          question: userInput,
-        };
-
-        // Include session_id if we have one
-        if (sessionId) {
-          payload.session_id = sessionId;
+        // Ensure we have a session ID
+        let currentSessionId = sessionId;
+        if (!currentSessionId) {
+          currentSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          setSessionId(currentSessionId);
+          sessionStorage.setItem('yashChatSession', currentSessionId);
         }
+
+        const payload: { question: string; session_id: string } = {
+          question: userInput,
+          session_id: currentSessionId,
+        };
 
         const response = await fetch('https://yashgori20-yashgori.hf.space/ask', {
           method: 'POST',
@@ -108,7 +102,7 @@ export const useChatApi = () => {
                 detected_type: 'general',
                 sophistication_level: 'intermediate',
                 question_clarity: 'Clear',
-                is_returning_user: !!sessionId && !!localStorage.getItem('yashChatLastVisit'),
+                is_returning_user: false,
                 previous_topics: []
               },
               conversation_state: {
@@ -138,10 +132,10 @@ export const useChatApi = () => {
             }
           };
           
-          // Store session ID for legacy format too
+          // Store session ID for legacy format too (session only)
           if (!sessionId) {
             setSessionId(convertedData.session.session_id);
-            localStorage.setItem('yashChatSession', convertedData.session.session_id);
+            sessionStorage.setItem('yashChatSession', convertedData.session.session_id);
           }
           
           return convertedData;
@@ -149,10 +143,10 @@ export const useChatApi = () => {
         
         const data: ApiResponse = rawData;
         
-        // Store session ID if new session was created
+        // Store session ID if new session was created (session only)
         if (data.session?.session_id && !sessionId) {
           setSessionId(data.session.session_id);
-          localStorage.setItem('yashChatSession', data.session.session_id);
+          sessionStorage.setItem('yashChatSession', data.session.session_id);
         }
 
         return data;

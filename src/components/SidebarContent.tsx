@@ -187,6 +187,22 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                   <Twitter className="h-6 w-6 hover:text-primary transition-colors"/>
                 </a>
               </div>
+              
+              {/* Contact Information */}
+              <div className="space-y-1 text-center">
+                <div className="text-xs text-muted-foreground">
+                  <a 
+                    href={`mailto:${resumeData.contact.email}`}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {resumeData.contact.email}
+                  </a>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  +91 {resumeData.contact.phone}
+                </div>
+              </div>
+              
               <div className="space-y-3">
                 <div>
                   <a href="/Yash-Gori-Resume.pdf" download="Yash-Gori-Resume.pdf">

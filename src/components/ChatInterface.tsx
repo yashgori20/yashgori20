@@ -184,9 +184,16 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           onWheel={handleScrollAttempt}
         >
           
-          <div className="w-full mb-4">
-            <h1 className="text-2xl md:text-4xl font-bold mb-2">{getGreeting()}</h1>
-            <p className="text-muted-foreground mb-8 text-xs md:text-sm">Welcome to Yash Gori's Portfolio</p>
+          <div className="absolute top-16 left-0 right-0">
+            <h1 className="text-3xl md:text-5xl font-bold mb-1">{getGreeting()}</h1>
+            <p className="text-muted-foreground text-sm md:text-base">Welcome to Yash Gori's Portfolio</p>
+          </div>
+          
+          <div className="w-full">
+            <p className="text-muted-foreground mb-8 text-xs md:text-sm leading-relaxed mt-4">
+              AI Developer with hands-on experience in Azure services, LLM integration, RAG systems, and AI agents.<br />
+              Building intelligent systems that solve real business problems.
+            </p>
             
             <PillNavigation setActiveView={setActiveView} />
           </div>
@@ -264,7 +271,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                      onMouseLeave={() => setIsMouseOverSuggestions(false)}
                   >
                      <div 
-                        className="max-h-[20vh] md:max-h-[25vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                        className="max-h-[15vh] md:max-h-[18vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
                         onWheel={handleSuggestionScroll}
                      >
                         {suggestions.map((suggestion) => (

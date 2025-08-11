@@ -193,9 +193,19 @@ const Index = () => {
               handleSend={handleSend}
               isPending={askApi.isPending}
             />
-            <p className="text-xs text-center text-muted-foreground mt-2">
-                YashGori-GPT can make mistakes. Consider checking important information.
-            </p>
+            <div className="flex flex-col items-center gap-2 mt-3">
+              <Button 
+                onClick={() => setActiveView('content')}
+                variant="outline"
+                size="sm"
+                className="bg-primary/10 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                Switch to Portfolio Mode
+              </Button>
+              <p className="text-xs text-center text-muted-foreground">
+                  YashGori-GPT can make mistakes. Consider checking important information.
+              </p>
+            </div>
           </div>
         )}
       </main>

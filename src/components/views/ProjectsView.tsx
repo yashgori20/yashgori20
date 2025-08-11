@@ -38,19 +38,14 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
           >
             <div className="p-6 flex flex-col flex-1">
               <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{proj.title}</h3>
-              <p className="text-muted-foreground mb-4 leading-relaxed flex-1 line-clamp-3">{proj.description}</p>
+              <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
               
               <div className="flex flex-wrap gap-2 mb-4">
-                {proj.technologies.slice(0, 3).map(tech => (
+                {proj.technologies.map(tech => (
                   <span key={tech} className="px-3 py-1 bg-secondary text-xs font-medium rounded-full border">
                     {tech}
                   </span>
                 ))}
-                {proj.technologies.length > 3 && (
-                  <span className="px-3 py-1 bg-muted text-xs font-medium rounded-full border">
-                    +{proj.technologies.length - 3} more
-                  </span>
-                )}
               </div>
 
               <div className="mt-auto pt-4 border-t border-border/50 flex items-center justify-between">

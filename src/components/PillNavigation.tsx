@@ -16,7 +16,7 @@ const PillButton = ({ icon: Icon, label, onClick, className }: PillButtonProps) 
     <Button
         variant="outline"
         className={cn(
-            "rounded-full border-primary/20 bg-secondary/30 hover:bg-secondary/50 h-auto py-2 px-4 flex items-center gap-2 w-full justify-center",
+            "rounded-full border-primary/20 bg-secondary/30 hover:bg-secondary/50 h-auto py-2 px-3 flex items-center gap-2 w-full justify-center",
             className
         )}
         onClick={onClick}
@@ -35,22 +35,22 @@ type PillNavigationProps = {
 const PillNavigation = ({ setActiveView, showDownloadButton = false, onDownloadResume }: PillNavigationProps) => {
     const pills = [
         { icon: User, label: 'About', view: 'about' as View },
+        { icon: Briefcase, label: 'Experience', view: 'experience' as View },
         { icon: BrainCircuit, label: 'Skills', view: 'skills' as View },
         { icon: Code, label: 'Projects', view: 'projects' as View },
-        { icon: Briefcase, label: 'Experience', view: 'experience' as View },
         { icon: Mail, label: 'Contact', view: 'contact' as View },
     ];
 
     return (
-        <div className="max-w-xs sm:max-w-sm mx-auto mb-6">
-            <div className="grid grid-cols-6 gap-2 mb-4">
-                {pills.map((pill, index) => (
+        <div className="max-w-2xl mx-auto mb-6">
+            <div className="grid grid-cols-5 gap-2 mb-4">
+                {pills.map((pill) => (
                     <PillButton
                         key={pill.view}
                         icon={pill.icon}
                         label={pill.label}
                         onClick={() => setActiveView(pill.view)}
-                        className={cn(index < 3 ? "col-span-2" : "col-span-3")}
+                        className="col-span-1"
                     />
                 ))}
             </div>

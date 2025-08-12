@@ -7,6 +7,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 type ChatMessageProps = {
     message: Message;
@@ -62,8 +64,26 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
           </Avatar>
         )}
         <div className={cn("max-w-xl", isUser ? "text-right" : "")}>
-          <div className={cn("p-4 rounded-lg whitespace-pre-wrap", isUser ? "bg-primary text-primary-foreground" : "bg-secondary")}>
-            {message.content}
+          <div className={cn("p-4 rounded-lg", isUser ? "bg-primary text-primary-foreground" : "bg-secondary")}>
+            {isUser ? (
+              <div className="whitespace-pre-wrap">{message.content}</div>
+            ) : (
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                className="prose prose-sm max-w-none dark:prose-invert prose-p:my-2 prose-ul:my-2 prose-li:my-1 prose-headings:mb-3 prose-headings:mt-4 first:prose-headings:mt-0 prose-strong:font-semibold prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded"
+                components={{
+                  // Customize list styling
+                  ul: ({ children }) => <ul className="space-y-1 ml-4">{children}</ul>,
+                  li: ({ children }) => <li className="flex items-start"><span className="mr-2 mt-1.5 h-1.5 w-1.5 rounded-full bg-current flex-shrink-0"></span><span>{children}</span></li>,
+                  // Customize strong text
+                  strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+                  // Customize code blocks
+                  code: ({ children }) => <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>,
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
+            )}
           </div>
           
           {/* Rich content - only show for assistant messages with actual content */}

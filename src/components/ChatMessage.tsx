@@ -70,15 +70,73 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
             ) : (
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
-                className="prose prose-sm max-w-none dark:prose-invert prose-p:my-2 prose-ul:my-2 prose-li:my-1 prose-headings:mb-3 prose-headings:mt-4 first:prose-headings:mt-0 prose-strong:font-semibold prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded"
+                className="prose prose-sm max-w-none dark:prose-invert prose-p:my-2 prose-ul:my-2 prose-li:my-1 prose-headings:mb-3 prose-headings:mt-4 first:prose-headings:mt-0 prose-strong:font-semibold prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-md prose-pre:p-4 prose-pre:overflow-x-auto"
                 components={{
                   // Customize list styling
                   ul: ({ children }) => <ul className="space-y-1 ml-4">{children}</ul>,
                   li: ({ children }) => <li className="flex items-start"><span className="mr-2 mt-1.5 h-1.5 w-1.5 rounded-full bg-current flex-shrink-0"></span><span>{children}</span></li>,
                   // Customize strong text
                   strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
-                  // Customize code blocks
-                  code: ({ children }) => <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>,
+                  // Enhanced code blocks
+                  code: ({ node, inline, className, children, ...props }) => {
+                    const match = /language-(\w+)/.exec(className || '')
+                    const language = match ? match[1] : ''
+                    
+                    if (!inline && language) {
+                      // Block code with language
+                      return (
+                        <div className="relative">
+                          {language && (
+                            <div className="absolute top-2 right-2 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded border">
+                              {language}
+                            </div>
+                          )}
+                          <pre className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                            <code className="text-sm font-mono text-foreground" {...props}>
+                              {children}
+                            </code>
+                          </pre>
+                        </div>
+                      )
+                    }
+                    
+                    // Inline code
+                    return (
+                      <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono border" {...props}>
+                        {children}
+                      </code>
+                    )
+                  },
+                  // Enhanced pre blocks
+                  pre: ({ children }) => <div className="my-4">{children}</div>,
+                  // Better headings for README-style content
+                  h1: ({ children }) => <h1 className="text-lg font-bold mb-3 mt-4 first:mt-0 text-foreground">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-base font-semibold mb-2 mt-4 first:mt-0 text-foreground">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-sm font-semibold mb-2 mt-3 first:mt-0 text-foreground">{children}</h3>,
+                  // Enhanced blockquotes
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-4 border-border bg-muted/30 pl-4 py-2 my-3 italic">
+                      {children}
+                    </blockquote>
+                  ),
+                  // Better tables
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto my-4">
+                      <table className="min-w-full border border-border rounded-md">
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  th: ({ children }) => (
+                    <th className="border border-border bg-muted px-3 py-2 text-left font-semibold text-sm">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="border border-border px-3 py-2 text-sm">
+                      {children}
+                    </td>
+                  ),
                 }}
               >
                 {message.content}

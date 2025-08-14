@@ -7,21 +7,13 @@ import { Link } from 'react-router-dom';
 
 const GetMeAJob = () => {
   const handleDownloadWindows = () => {
-    const link = document.createElement('a');
-    link.href = '/releases/GetMeAJob-Windows.exe';
-    link.setAttribute('download', 'GetMeAJob-Windows.exe');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Google Drive direct download link
+    window.open('https://drive.google.com/uc?export=download&id=1OXztpgwmgcDPBdBLs6uk1hnvgpG9cKRg', '_blank');
   };
 
   const handleDownloadMac = () => {
-    const link = document.createElement('a');
-    link.href = '/releases/GetMeAJob-Mac.dmg';
-    link.setAttribute('download', 'GetMeAJob-Mac.dmg');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Google Drive direct download link
+    window.open('https://drive.google.com/uc?export=download&id=1F1NDoqmmv2S94qnrqYoI5ETcRkmkqwFD', '_blank');
   };
 
   return (

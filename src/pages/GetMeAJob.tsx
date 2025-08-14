@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Download, Camera, Mic, MessageSquare, Zap, Brain, Eye, Keyboard, Settings, Monitor, Apple } from 'lucide-react';
+import { ArrowLeft, Download, Camera, Mic, MessageSquare, Zap, Brain, Eye, Keyboard, Settings, Monitor, Apple, X, Archive } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const GetMeAJob = () => {
+  const [showMacOverlay, setShowMacOverlay] = useState(false);
+
   const handleDownloadWindows = () => {
     // Google Drive direct download link
     window.open('https://drive.google.com/uc?export=download&id=1OXztpgwmgcDPBdBLs6uk1hnvgpG9cKRg', '_blank');
   };
 
-  const handleDownloadMac = () => {
-    // Google Drive direct download link
-    window.open('https://drive.google.com/uc?export=download&id=1F1NDoqmmv2S94qnrqYoI5ETcRkmkqwFD', '_blank');
+  const handleDownloadMacDMG = () => {
+    // Google Drive direct download link for DMG
+    window.open('https://drive.google.com/uc?export=download&id=18egMsd7S-EVikkLM4vxiuR0pFxJlLsvs', '_blank');
+    setShowMacOverlay(false);
+  };
+
+  const handleDownloadMacZIP = () => {
+    // Google Drive direct download link for ZIP
+    window.open('https://drive.google.com/uc?export=download&id=1idh2SPohfomkSbjwsRxpiOEuUlJYYXS5', '_blank');
+    setShowMacOverlay(false);
+  };
+
+  const handleMacClick = () => {
+    setShowMacOverlay(true);
   };
 
   return (
@@ -66,7 +79,7 @@ const GetMeAJob = () => {
                   <div className="text-sm opacity-90">GetMeAJob-Windows.exe</div>
                 </div>
               </Button>
-              <Button onClick={handleDownloadMac} size="lg" variant="outline" className="h-16 flex items-center gap-4">
+              <Button onClick={handleMacClick} size="lg" variant="outline" className="h-16 flex items-center gap-4">
                 <Apple className="h-6 w-6" />
                 <div className="text-left">
                   <div className="font-semibold">macOS</div>
@@ -257,6 +270,59 @@ const GetMeAJob = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Mac Download Overlay */}
+      {showMacOverlay && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Apple className="h-5 w-5" />
+                  Choose Mac Format
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowMacOverlay(false)}
+                  className="h-8 w-8 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              <CardDescription>
+                Select your preferred download format for macOS
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button
+                onClick={handleDownloadMacDMG}
+                size="lg"
+                className="w-full h-16 flex items-center gap-4 justify-start"
+              >
+                <Apple className="h-8 w-8" />
+                <div className="text-left">
+                  <div className="font-semibold">DMG Installer</div>
+                  <div className="text-sm opacity-90">Traditional Mac installer package</div>
+                </div>
+              </Button>
+
+              <Button
+                onClick={handleDownloadMacZIP}
+                size="lg"
+                variant="outline"
+                className="w-full h-16 flex items-center gap-4 justify-start"
+              >
+                <Archive className="h-8 w-8" />
+                <div className="text-left">
+                  <div className="font-semibold">ZIP Archive</div>
+                  <div className="text-sm opacity-70">Portable app bundle</div>
+                </div>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
+import GetMeAJob from "./pages/GetMeAJob";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -21,9 +22,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/getmeajob" element={<GetMeAJob />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Toaster 
+        <Toaster
           position="bottom-right"
           toastOptions={{
             duration: 4000,

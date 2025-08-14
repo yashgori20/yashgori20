@@ -197,7 +197,12 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                 </a>
               </div>
               <div className="text-xs text-muted-foreground">
-                +91 {resumeData.contact.phone}
+                <a
+                  href={`tel:+91${resumeData.contact.phone}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  +91 {resumeData.contact.phone}
+                </a>
               </div>
             </div>
 

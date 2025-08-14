@@ -77,29 +77,185 @@ const GetMeAJob = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center">
-          <Card className="bg-primary/5 border-primary/20">
-            <CardContent className="pt-6">
-              <h2 className="text-2xl font-bold mb-4">Ready to Ace Your Interviews?</h2>
-              <p className="text-muted-foreground mb-6">
-                Download Get Me A Job and transform your technical interview preparation with AI-powered assistance.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button size="lg" onClick={handleDownloadWindows}>
-                  <Monitor className="h-4 w-4 mr-2" />
-                  Download for Windows
-                </Button>
-                <Button variant="outline" size="lg" onClick={handleDownloadMac}>
-                  <Apple className="h-4 w-4 mr-2" />
-                  Download for Mac
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                This is a secret release - not advertised anywhere else
-              </p>
-            </CardContent>
-          </Card>
+        {/* Core Features */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-6 text-center">Core Features</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Camera className="h-6 w-6 text-primary" />
+                  <h3 className="font-semibold">Screenshot Analysis</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Capture coding problems and get instant solutions with Llama 4 Scout 17B
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Mic className="h-6 w-6 text-primary" />
+                  <h3 className="font-semibold">Voice Input</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Record questions (up to 20MB/~8-12 minutes) with Whisper Large V3 + GPT OSS 120B
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <MessageSquare className="h-6 w-6 text-primary" />
+                  <h3 className="font-semibold">Smart Text Input</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Type questions with conversation memory and context awareness
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Eye className="h-6 w-6 text-primary" />
+                  <h3 className="font-semibold">Contextual Questions</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Ask specific questions about screenshots with AI context
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Zap className="h-6 w-6 text-primary" />
+                  <h3 className="font-semibold">Fast Processing</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  2-3x faster responses with specialized model architecture
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Brain className="h-6 w-6 text-primary" />
+                  <h3 className="font-semibold">Multi-Model AI</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Uses specialized Groq models for optimal performance
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
+
+        {/* Keyboard Shortcuts */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Keyboard className="h-5 w-5" />
+              Keyboard Shortcuts
+            </CardTitle>
+            <CardDescription>Master these shortcuts for lightning-fast workflow</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/20">
+                  <span className="text-sm">Take screenshot</span>
+                  <Badge variant="outline">Ctrl/Cmd + H</Badge>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/20">
+                  <span className="text-sm">Toggle voice recording</span>
+                  <Badge variant="outline">Ctrl/Cmd + M</Badge>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/20">
+                  <span className="text-sm">Open text input</span>
+                  <Badge variant="outline">Ctrl/Cmd + T</Badge>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/20">
+                  <span className="text-sm">Toggle window visibility</span>
+                  <Badge variant="outline">Ctrl/Cmd + B</Badge>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/20">
+                  <span className="text-sm">Complete reset</span>
+                  <Badge variant="outline">Ctrl/Cmd + R</Badge>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/20">
+                  <span className="text-sm">Process screenshots</span>
+                  <Badge variant="outline">Ctrl/Cmd + Enter</Badge>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Roadmap */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              Roadmap v2.0 - Stealth & Enhanced UX
+            </CardTitle>
+            <CardDescription>Upcoming features in development</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Login/Logout System</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Language Preferences</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Continuous Listening</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Arrow Key Selection</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Stealth Mode Toggle</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Settings Panel</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Custom Shortcuts</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Local AI Integration</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Better Labels</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <span className="text-sm">Configuration Website</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

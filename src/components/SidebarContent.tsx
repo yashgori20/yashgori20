@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { resumeData } from '@/data/resume';
-import { User, Briefcase, Code, BrainCircuit, Mail, Sparkles, Download, Github, Linkedin, Instagram, Twitter, ChevronLeft } from 'lucide-react';
+import { User, Briefcase, Code, BrainCircuit, Mail, Sparkles, Download, Github, Linkedin, Instagram, ChevronLeft } from 'lucide-react';
 import SidebarButton from './SidebarButton';
+import XLogo from './XLogo';
 
 import { View, Message } from '@/types';
 import { useActiveSection } from '@/hooks/useActiveSection';
@@ -182,7 +183,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                 <Instagram className="h-6 w-6 hover:text-primary transition-colors" />
               </a>
               <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                <Twitter className="h-6 w-6 hover:text-primary transition-colors" />
+                <XLogo className="h-6 w-6 hover:text-primary transition-colors" />
               </a>
             </div>
 

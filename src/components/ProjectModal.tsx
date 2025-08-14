@@ -136,15 +136,16 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
                 </div>
 
                 {/* Key Features */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-3">Key Features</h3>
-                  <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    <li>Modern and responsive user interface</li>
-                    <li>Optimized for performance and scalability</li>
-                    <li>Clean, maintainable code architecture</li>
-                    <li>Cross-platform compatibility</li>
-                  </ul>
-                </div>
+                {project.features && project.features.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Key Features</h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      {project.features.map((feature, index) => (
+                        <li key={index}>{feature}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="flex justify-between items-center pt-4 border-t">

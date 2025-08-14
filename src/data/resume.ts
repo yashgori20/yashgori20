@@ -2,6 +2,7 @@ export interface Project {
   title: string;
   description: string;
   technologies: string[];
+  features?: string[];
   codeUrl?: string;
   liveUrl?: string;
 }
@@ -81,6 +82,13 @@ export const resumeData = {
       title: "Swift Check AI: Enterprise QC Platform",
       description: "I led AI product development lifecycle from ideation to B2B deployment, securing Microsoft AI Hub funding and delivering multi-tenant SaaS platform serving manufacturing industries.",
       technologies: ["Product Strategy", "AI/ML", "B2B SaaS", "Azure OpenAI", "Flask", "Cosmos DB", "Redis", "Docker"],
+      features: [
+        "90% reduction in document generation time",
+        "Multi-tenant SaaS architecture for enterprise clients",
+        "Microsoft AI Hub funding secured",
+        "B2B production deployment with pilot success",
+        "80% compliance accuracy with sub-second response times"
+      ],
       codeUrl: "https://github.com/yashgori20/swift-check-ai",
       liveUrl: "https://swift-check-ai.azurewebsites.net",
     },
@@ -88,6 +96,13 @@ export const resumeData = {
       title: "Interactive AI Portfolio",
       description: "Chat-based portfolio using custom AI model to answer questions about skills and experience.",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Vite", "TanStack Query", "Shadcn UI"],
+      features: [
+        "AI-powered chatbot with conversation memory",
+        "Multi-modal interface with smooth animations",
+        "Responsive design with mobile gesture support",
+        "Real-time chat with smart suggestions",
+        "Professional portfolio showcase with interactive elements"
+      ],
       codeUrl: "https://github.com/yashgori20/yashgori20",
       liveUrl: "https://yashgori20.vercel.app/",
     },
@@ -95,12 +110,26 @@ export const resumeData = {
       title: "AI-Powered Document Intelligence Platform",
       description: "I identified user pain points (70% time on manual document review) and designed conversational AI interface, improving adoption rate by 40% with cross-platform deployment.",
       technologies: ["User Research", "API Design", "Cross-platform", "Python", "FAISS", "LangChain", "Gemini Embeddings", "Flask", "Flutter"],
+      features: [
+        "70% reduction in manual document review time",
+        "40% improvement in user adoption rate",
+        "Conversational AI interface for document queries",
+        "Cross-platform deployment (Flutter + Flask)",
+        "Semantic search with FAISS vector database"
+      ],
       codeUrl: "https://github.com/yashgori20/DocuTalk",
     },
     {
       title: "Financial Compliance Automation Tool",
       description: "I analyzed RBI compliance requirements and identified automation opportunity worth ₹10% annual savings for banks, achieving 80% accuracy through iterative AI product refinement.",
       technologies: ["Regulatory Tech", "Market Analysis", "Python", "Mixtral LLM", "GROQ Cloud", "FAISS", "Custom Model Training"],
+      features: [
+        "₹10% annual savings opportunity identified for banks",
+        "80% accuracy in RBI compliance automation",
+        "Custom RAG system for regulatory document processing",
+        "Mixtral LLM integration with GROQ Cloud",
+        "Iterative AI product refinement methodology"
+      ],
       codeUrl: "https://github.com/yashgori20/FinLLM-RAG-rbi",
       liveUrl: "https://yashgori20-FinLLM-RAG.hf.space",
     },
@@ -108,6 +137,13 @@ export const resumeData = {
       title: "Inhance: AI-Powered Professional Development Platform",
       description: "Comprehensive career enhancement platform leveraging AI for LinkedIn profile optimization and resume creation. Features smart profile analysis, ATS score evaluation, and interactive AI agents providing personalized career guidance with multi-format support.",
       technologies: ["Streamlit", "GROQ Cloud", "Mixtral LLM", "Multi-Agent System", "LinkedIn API", "ATS Analysis", "LaTeX", "PDF Processing"],
+      features: [
+        "Multi-agent AI system for profile evaluation",
+        "ATS score analysis with optimization suggestions",
+        "LinkedIn profile scraping and enhancement",
+        "LaTeX resume generation with professional formatting",
+        "Multi-format support (PDF, DOCX, TXT)"
+      ],
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
     },
@@ -115,6 +151,13 @@ export const resumeData = {
       title: "Customer Churn Predictor",
       description: "Machine learning model achieving 94% accuracy in telecom customer churn prediction with Power BI dashboard.",
       technologies: ["Python", "Random Forest", "Decision trees", "Power BI", "Numpy", "Pandas", "Seaborn", "Matplotlib"],
+      features: [
+        "94% accuracy in customer churn prediction",
+        "Random Forest and Decision Tree algorithms",
+        "Interactive Power BI dashboard for insights",
+        "Comprehensive data analysis with Pandas/NumPy",
+        "Visual analytics with Seaborn and Matplotlib"
+      ],
       codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
   ] as Project[],

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import GetMeAJob from "./pages/GetMeAJob";
+import Demo1 from "./pages/Demo1";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/getmeajob" element={<GetMeAJob />} />
+          <Route path="/demo1" element={<Demo1 />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster

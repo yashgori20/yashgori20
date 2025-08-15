@@ -14,6 +14,7 @@ export interface Experience {
   points: string[];
   location: string;
   technologies?: string[];
+  additionalPoints?: string[];
 }
 
 export const resumeData = {
@@ -80,14 +81,14 @@ export const resumeData = {
   projects: [
     {
       title: "Swift Check AI: Enterprise QC Platform",
-      description: "I led AI product development lifecycle from ideation to B2B deployment, securing Microsoft AI Hub funding and delivering multi-tenant SaaS platform serving manufacturing industries.",
+      description: "Led product architecture and implementation: Azure OpenAI RAG templates, OCR ingestion, multi-tenant design; converted pilots into paid deployments.",
       technologies: ["Product Strategy", "AI/ML", "B2B SaaS", "Azure OpenAI", "Flask", "Cosmos DB", "Redis", "Docker"],
       features: [
-        "90% reduction in document generation time",
-        "Multi-tenant SaaS architecture for enterprise clients",
-        "Microsoft AI Hub funding secured",
-        "B2B production deployment with pilot success",
-        "80% compliance accuracy with sub-second response times"
+        "Framed value for buyers: 90% time reduction on document workflows and clear compliance accuracy KPIs",
+        "Live demo link + short video: show template generation (before vs after) and config UI for 25+ parameters",
+        "Diagram: pipeline (OCR → embeddings → RAG → template renderer); annotate latency and compliance checks",
+        "Include pilot case study: client name (anonymized if needed), pilot-to-paid conversion rate, and ROI table",
+        "Multi-tenant SaaS architecture for enterprise clients with Microsoft AI Hub funding secured"
       ],
       codeUrl: "https://github.com/yashgori20/swift-check-ai",
       liveUrl: "https://swift-check-ai.azurewebsites.net",
@@ -107,85 +108,96 @@ export const resumeData = {
       liveUrl: "https://yashgori20.vercel.app/",
     },
     {
-      title: "AI-Powered Document Intelligence Platform",
-      description: "I identified user pain points (70% time on manual document review) and designed conversational AI interface, improving adoption rate by 40% with cross-platform deployment.",
+      title: "DocuTalk: AI Document Intelligence Platform",
+      description: "Scoped conversational UI from user interviews; delivered FAISS-backed retrieval and Flutter client for multi-platform reach.",
       technologies: ["User Research", "API Design", "Cross-platform", "Python", "FAISS", "LangChain", "Gemini Embeddings", "Flask", "Flutter"],
       features: [
-        "70% reduction in manual document review time",
-        "40% improvement in user adoption rate",
-        "Conversational AI interface for document queries",
-        "Cross-platform deployment (Flutter + Flask)",
-        "Semantic search with FAISS vector database"
+        "Outcome: major time-savings on document review and measurable adoption lift",
+        "Embed interactive demo (upload a doc + ask Q) and short screencast of Flutter UX",
+        "Show FAISS + embedding architecture graphic and call out 40% adoption improvement",
+        "Link to code and a sample dataset (redacted) so reviewers can validate retrieval accuracy",
+        "Cross-platform deployment with conversational AI interface for document queries"
       ],
       codeUrl: "https://github.com/yashgori20/DocuTalk",
     },
     {
-      title: "Financial Compliance Automation Tool",
-      description: "I analyzed RBI compliance requirements and identified automation opportunity worth ₹10% annual savings for banks, achieving 80% accuracy through iterative AI product refinement.",
+      title: "FinLLM-RAG: RBI Compliance Automation",
+      description: "Combined regulatory research with RAG model engineering; validated ₹10% cost-savings case and improved model accuracy to ~80%.",
       technologies: ["Regulatory Tech", "Market Analysis", "Python", "Mixtral LLM", "GROQ Cloud", "FAISS", "Custom Model Training"],
       features: [
-        "₹10% annual savings opportunity identified for banks",
-        "80% accuracy in RBI compliance automation",
-        "Custom RAG system for regulatory document processing",
-        "Mixtral LLM integration with GROQ Cloud",
-        "Iterative AI product refinement methodology"
+        "Packaged outputs into investor-ready demos and compliance dashboards",
+        "Publish a short compliance playbook showing sample rule → model output → human review loop",
+        "Include accuracy/confusion matrix screenshot and cost-savings calculation that led to the ₹10% claim",
+        "Custom RAG system for regulatory document processing with Mixtral LLM integration",
+        "Iterative AI product refinement methodology for compliance automation"
       ],
       codeUrl: "https://github.com/yashgori20/FinLLM-RAG-rbi",
       liveUrl: "https://yashgori20-FinLLM-RAG.hf.space",
     },
     {
-      title: "Inhance: AI-Powered Professional Development Platform",
-      description: "Comprehensive career enhancement platform leveraging AI for LinkedIn profile optimization and resume creation. Features smart profile analysis, ATS score evaluation, and interactive AI agents providing personalized career guidance with multi-format support.",
+      title: "Inhance & Interactive Portfolio",
+      description: "Built the product flow (evaluation → recommendation → resume generation) and integrated LLM agents for conversational help.",
       technologies: ["Streamlit", "GROQ Cloud", "Mixtral LLM", "Multi-Agent System", "LinkedIn API", "ATS Analysis", "LaTeX", "PDF Processing"],
       features: [
-        "Multi-agent AI system for profile evaluation",
-        "ATS score analysis with optimization suggestions",
-        "LinkedIn profile scraping and enhancement",
-        "LaTeX resume generation with professional formatting",
-        "Multi-format support (PDF, DOCX, TXT)"
+        "Result: tangible recruiter-facing demos, ATS scoring, and exportable resumes",
+        "Add an interactive widget on portfolio: 'Score my LinkedIn' demo with live ATS output",
+        "Provide before/after LinkedIn profile examples and downloadable LaTeX resume templates",
+        "Multi-agent AI system for profile evaluation with optimization suggestions",
+        "Multi-format support (PDF, DOCX, TXT) with professional LaTeX formatting"
       ],
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
     },
     {
-      title: "Customer Churn Predictor",
-      description: "Machine learning model achieving 94% accuracy in telecom customer churn prediction with Power BI dashboard.",
+      title: "Additional Tools: Churn Predictor & Utilities",
+      description: "Produced robust analytics (churn 94% accuracy) and multimodal utilities that showcase end-to-end AI product thinking — from data collection to deployment and UX.",
       technologies: ["Python", "Random Forest", "Decision trees", "Power BI", "Numpy", "Pandas", "Seaborn", "Matplotlib"],
       features: [
-        "94% accuracy in customer churn prediction",
-        "Random Forest and Decision Tree algorithms",
-        "Interactive Power BI dashboard for insights",
-        "Comprehensive data analysis with Pandas/NumPy",
-        "Visual analytics with Seaborn and Matplotlib"
+        "Attach Power BI embed or screenshots highlighting feature importance and actionable insights",
+        "Provide code link + README showing evaluation pipeline and data preprocessing steps",
+        "94% accuracy in customer churn prediction with Random Forest and Decision Tree algorithms",
+        "Interactive Power BI dashboard for comprehensive business insights",
+        "Visual analytics pipeline with Seaborn and Matplotlib for data storytelling"
       ],
       codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
   ] as Project[],
   experience: [
     {
-      role: "AI Product Lead (Intern)",
+      role: "AI Product Lead",
       company: "Webotix IT Consultancy",
       period: "December 2024 – June 2025",
       location: "Mumbai, Maharashtra (Remote)",
-      technologies: ["Azure OpenAI", "Product Strategy", "AI/ML", "B2B SaaS", "Microsoft AI Hub"],
+      technologies: ["Azure OpenAI GPT-4o", "Azure Cosmos DB", "Azure Document Intelligence OCR", "Product Strategy", "B2B SaaS"],
       points: [
-        "I led AI product development lifecycle from ideation to B2B deployment with enterprise QC automation platform, securing Microsoft AI Hub funding.",
-        "I collaborated with CEO on AI product strategy and roadmap with features that reduced document generation time by 90%.",
-        "I managed cross-functional coordination between frontend (Flutter) and backend AI teams with timely feature delivery.",
-        "I presented AI product demos to enterprise clients with successful pilot to B2B production deployment conversion.",
-        "I defined AI success metrics and KPIs with 80% compliance accuracy, sub-second response times, 25+ parameter support.",
+        "I led technical architecture and product strategy for enterprise QC automation platform serving food industry clients.",
+        "I scoped and delivered MVP using Azure OpenAI GPT-4o, Azure Cosmos DB, and Azure Document Intelligence OCR.",
+        "I coordinated with C-suite on positioning, securing $5k Microsoft AI Hub funding.",
+      ],
+      additionalPoints: [
+        "Translated compliance requirements into 25+ parameterized templates, achieving 80% accuracy and sub-second performance.",
+        "First B2B SaaS product from Webotix to receive Microsoft AI Hub funding.",
+        "Independently handled architecture and deployment for production-ready enterprise solution.",
+        "Designed compliance-first AI pipeline for regulated industries.",
       ],
     },
     {
-      role: "Business Analyst & Strategy Lead",
+      role: "Business Analyst",
       company: "N.K. Engineering",
       period: "June 2024 – November 2024",
       location: "Mumbai, Maharashtra",
-      technologies: ["Data Analytics", "Power BI", "Market Research", "Financial Modeling"],
+      technologies: ["Predictive Analytics", "Business Intelligence", "HTML/CSS/JS", "Market Research", "Financial Modeling"],
       points: [
-        "I developed product-market fit strategies through customer research and competitive analysis with 12% market share expansion.",
-        "I identified new revenue opportunities through market analysis with investment from 5 new stakeholders.",
-        "I created product analytics dashboards and market intelligence reports with ₹5Cr+ revenue opportunity identification.",
+        "I used predictive analytics and BI to identify ₹5Cr+ market potential and packaged insights into investor-ready decks.",
+        "I spearheaded responsive e-commerce launch   from wireframes to deployment   while aligning scope to market demand.",
+        "I balanced product delivery with investor relations: closed 5 new funding deals while hitting digital product launch timelines.",
+      ],
+      additionalPoints: [
+        "Rolled out automated competitor tracking tools, enabling faster pivots in market strategy.",
+        "Developed fully responsive e-commerce site in HTML, CSS, JS   integrated with BI dashboards for sales tracking.",
+        "Automated competitor monitoring to refresh market intelligence weekly, cutting manual research by 80%.",
+        "Built predictive models for demand forecasting; results informed product roadmap and stock planning.",
+        "Authored concise investor one-pagers with key metrics and opportunities; reduced funding pitch cycles by 30%.",
       ],
     },
     {
@@ -195,9 +207,14 @@ export const resumeData = {
       location: "Mumbai, Maharashtra",
       technologies: ["Product Management", "Figma", "UI/UX Design", "Flutter", "Stakeholder Management"],
       points: [
-        "I led AI-enhanced product development for 2 major projects including GuestInMe app revamp with full product lifecycle management for 1,000+ active users.",
-        "I negotiated project terms with PR representatives and club managers with AI-driven features like table booking that increased user engagement by 40%.",
-        "I managed cross-functional development teams as primary mediator between clients and developers with on-time delivery across multiple concurrent AI projects.",
+        "I owned end-to-end product for two projects including GuestInMe (1,000+ users) with AI-assisted content and UX updates.",
+        "I shipped monetization features (table booking, club passes) and aligned them with stakeholder goals achieving 40% engagement increase.",
+        "I ran roadmap, prioritization, and stakeholder communications while mediating clients ↔ devs to keep releases on schedule.",
+      ],
+      additionalPoints: [
+        "Defined PRD-level specs from stakeholder asks and converted to developer-ready tickets with clear acceptance criteria.",
+        "Mapped UX via Figma and coordinated handoff to Flutter devs, reducing back-and-forth during implementation.",
+        "Introduced lightweight post-release reviews to decide what iterates, what ships, and what gets cut.",
       ],
     },
     {
@@ -205,11 +222,16 @@ export const resumeData = {
       company: "Watermelon Gang",
       period: "August 2022 – November 2023",
       location: "Mumbai, Maharashtra",
-      technologies: ["Content Strategy", "Social Media Marketing", "Client Management", "Analytics"],
+      technologies: ["AI Content Workflows", "Market Analysis", "Client Lifecycle Management", "Data Analytics"],
       points: [
-        "I managed team of 2 (editor, copywriter) for AI-driven content production pipeline with quality assurance.",
-        "I onboarded 5 enterprise fintech and cryptocurrency clients through strategic outreach with AI content optimization.",
-        "I increased engagement metrics by 35% through data-driven content strategy optimization with AI analytics tools.",
+        "I directed AI-powered content workflows, managing a 2-person creative team to deliver for 5 enterprise clients.",
+        "I combined market analysis with AI content optimization to boost engagement metrics by 35%.",
+        "I owned client relationship lifecycle, from outreach to delivery, across fintech and cryptocurrency sectors.",
+      ],
+      additionalPoints: [
+        "Built a modular AI-assisted content system that reduced production time by 40%.",
+        "Introduced data-backed A/B testing for social media creatives, influencing future campaign strategies.",
+        "Integrated sentiment analysis into reporting to better gauge audience reception.",
       ],
     },
   ] as Experience[],

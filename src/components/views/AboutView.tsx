@@ -14,17 +14,7 @@ type ViewProps = {
 const AboutView = ({ activeView, setActiveView }: ViewProps) => (
   <section id="about" className="p-6 pt-8 md:p-12 md:pt-16 pb-16 min-h-screen relative">
     <div className="max-w-6xl mx-auto w-full">
-      {/* Switch to Chat Button - Above title */}
-      <div className="mb-6 flex justify-center">
-        <Button
-          onClick={() => setActiveView('chat')}
-          variant="outline"
-          className="bg-primary/10 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
-        >
-          <MessageCircle className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-          Switch to Chat Mode
-        </Button>
-      </div>
+
 
       {/* Title Section */}
       <div className="mb-12">

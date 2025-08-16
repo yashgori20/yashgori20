@@ -3,10 +3,10 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { View } from '@/types';
 import { useWindowSize } from '@/hooks/use-window-size';
 
-const views: View[] = ['chat', 'content'];
+const views: View[] = ['content'];
 
 export const usePageNavigation = () => {
-  const [activeView, setActiveView] = useState<View>('chat');
+  const [activeView, setActiveView] = useState<View>('content');
   const [pageIndex, setPageIndex] = useState(0);
   const { height: windowHeight } = useWindowSize();
   const isAnimating = useRef(false);

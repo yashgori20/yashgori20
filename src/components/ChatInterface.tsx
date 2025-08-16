@@ -197,14 +197,13 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           onWheel={handleScrollAttempt}
         >
 
-          <div className="absolute top-12 left-0 right-0">
+          <div className="mb-16">
             <h1 className="text-3xl md:text-5xl font-bold mb-3">{getGreeting()}</h1>
-            <p className="text-muted-foreground text-sm md:text-base">I'm his assistant - you can ask me anything about him here!</p>
+            <p className="text-muted-foreground text-sm md:text-base mb-6">I'm his assistant - you can ask me anything about him here!</p>
+            <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
+              Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.
+            </p>
           </div>
-
-          <p className="text-muted-foreground mb-10 text-xs md:text-sm leading-relaxed mt-6">
-            Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.<br />
-          </p>
 
           <div className="w-full">
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Download, Camera, Mic, MessageSquare, Zap, Brain, Eye, Keyboard, Settings, Monitor, Apple, X, Archive } from 'lucide-react';
+import { ArrowLeft, Download, Camera, Mic, MessageSquare, Zap, Brain, Eye, Keyboard, Settings, Monitor, Apple, X, Archive, LogIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const GetMeAJob = () => {
@@ -38,7 +38,15 @@ const GetMeAJob = () => {
               <ArrowLeft className="h-4 w-4" />
               Back to Portfolio
             </Link>
-            <Badge variant="secondary" className="px-3 py-1">Secret Release</Badge>
+            <div className="flex items-center gap-3">
+              <Link to="/getmeajob/login">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Login
+                </Button>
+              </Link>
+              <Badge variant="secondary" className="px-3 py-1">Secret Release</Badge>
+            </div>
           </div>
         </div>
       </div>
@@ -211,64 +219,6 @@ const GetMeAJob = () => {
           </CardContent>
         </Card>
 
-        {/* Roadmap */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              Roadmap v2.0 - Stealth & Enhanced UX
-            </CardTitle>
-            <CardDescription>Upcoming features in development</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Login/Logout System</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Language Preferences</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Continuous Listening</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Arrow Key Selection</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Stealth Mode Toggle</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Settings Panel</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Custom Shortcuts</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Local AI Integration</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Better Labels</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm">Configuration Website</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Mac Download Overlay */}

@@ -331,17 +331,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
               )}
             </AnimatePresence>
           </div>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-            <Button
-              onClick={() => setActiveView('content')}
-              variant="outline"
-              className="bg-primary/10 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
-              style={glowStyle}
-            >
-              <User className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-              Switch to Portfolio Mode
-            </Button>
-          </div>
+
         </div>
       ) : (
         <div

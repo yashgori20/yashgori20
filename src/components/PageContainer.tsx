@@ -25,6 +25,7 @@ interface ChatInterfaceProps {
 interface ContentViewProps {
   activeView: View;
   setActiveView: (view: View) => void;
+  chatInterfaceProps: ChatInterfaceProps;
 }
 
 const PageComponents: Record<View, React.ComponentType<ChatInterfaceProps | ContentViewProps>> = {
@@ -76,34 +77,31 @@ const PageContainer = ({
           dragMomentum={false}
           onDragEnd={handleDragEnd}
           animate={{ y: -pageIndex * windowHeight }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 300, 
+          transition={{
+            type: 'spring',
+            stiffness: 300,
             damping: 30,
             mass: 1
           }}
           onAnimationComplete={onAnimationComplete}
         >
-          {views.map((viewName, i) => {
-            const PageComponent = PageComponents[viewName];
-            return (
-              <div 
-                key={viewName} 
-                ref={el => (viewContainerRefs.current[i] = el)}
-                className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar" 
-                style={{ 
-                  height: windowHeight, 
-                  touchAction: isMobile ? 'pan-y' : 'auto'
-                }}
-              >
-                {viewName === 'chat' ? (
-                  <ChatInterface {...chatInterfaceProps} />
-                ) : (
-                  <PageComponent activeView={activeView} setActiveView={setActiveView} />
-                )}
-              </div>
-            );
-          })}
+          {views.map((viewName, i) => (
+            <div
+              key={viewName}
+              ref={el => (viewContainerRefs.current[i] = el)}
+              className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar"
+              style={{
+                height: windowHeight,
+                touchAction: isMobile ? 'pan-y' : 'auto'
+              }}
+            >
+              <ContentView
+                activeView={activeView}
+                setActiveView={setActiveView}
+                chatInterfaceProps={chatInterfaceProps}
+              />
+            </div>
+          ))}
         </motion.div>
       )}
     </div>

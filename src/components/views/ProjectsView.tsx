@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Code, ExternalLink, ArrowUpRight, Github } from 'lucide-react';
 import { View } from '@/types';
 import ProjectModal from '@/components/ProjectModal';
+import HuggingFaceLogo from '@/components/HuggingFaceLogo';
 
 type ViewProps = {
   activeView: View;
@@ -31,15 +32,15 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
     <Section title="Featured Projects" id="projects">
       <div className="grid md:grid-cols-2 gap-8">
         {resumeData.projects.map((proj: Project, index) => (
-          <div 
-            key={proj.title} 
+          <div
+            key={proj.title}
             className={`bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border overflow-hidden hover:border-primary/30 transition-all duration-500 hover:scale-105 hover:shadow-lg group flex flex-col animate-slideInUp animate-delay-${index * 100} cursor-pointer`}
             onClick={() => handleProjectClick(proj)}
           >
             <div className="p-6 flex flex-col flex-1">
               <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{proj.title}</h3>
               <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
-              
+
               <div className="flex flex-wrap gap-2 mb-4">
                 {proj.technologies.map(tech => (
                   <span key={tech} className="px-3 py-1 bg-secondary text-xs font-medium rounded-full border">
@@ -69,12 +70,20 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
         }}
       />
       <div className="text-center mt-12">
-        <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
-          <Button size="lg" className="group">
-            View All Projects on GitHub
-            <Github className="ml-2 h-5 w-5 transition-transform group-hover:animate-bounce" />
-          </Button>
-        </a>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+            <Button size="lg" className="group">
+              View All Projects on GitHub
+              <Github className="ml-2 h-5 w-5 transition-transform group-hover:animate-bounce" />
+            </Button>
+          </a>
+          <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer">
+            <Button size="lg" variant="outline" className="group">
+              View All Projects on Hugging Face
+              <HuggingFaceLogo className="ml-2 h-5 w-5 transition-transform group-hover:animate-bounce" />
+            </Button>
+          </a>
+        </div>
       </div>
     </Section>
   );

@@ -15,14 +15,14 @@ type SidebarContentProps = {
   activeView: View;
   setActiveView: (view: View) => void;
   setMessages: (messages: Message[]) => void;
-  scrollToContact: () => void;
+
   isCollapsed: boolean;
   isMobile: boolean;
   toggleCollapse: () => void;
   isMobileSidebarOpen?: boolean;
 };
 
-const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContact, isCollapsed, isMobile, toggleCollapse, isMobileSidebarOpen }: SidebarContentProps) => {
+const SidebarContent = ({ activeView, setActiveView, setMessages, isCollapsed, isMobile, toggleCollapse, isMobileSidebarOpen }: SidebarContentProps) => {
   const activeSection = useActiveSection();
 
   const scrollToSection = (sectionId: string) => {
@@ -82,23 +82,17 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
       <ScrollArea className="flex-grow" style={{ touchAction: 'pan-y' }}>
         <div className={cn("space-y-2 py-2", isCollapsed ? "px-0" : "px-4", isMobile && "pt-4 pb-4")}>
           <Button
-            variant={activeView === 'chat' ? "secondary" : "ghost"}
+            variant={(activeView === 'content' && activeSection === 'chat') ? "secondary" : "ghost"}
             size={isCollapsed ? "icon" : "default"}
             className={cn(
               "w-full transition-all duration-200 justify-start",
               isCollapsed && "justify-center rounded-none"
             )}
-            onClick={() => {
-              if (activeView === 'chat') {
-                setMessages([]);
-              } else {
-                setActiveView('chat');
-              }
-            }}
-            title="Home"
+            onClick={() => scrollToSection('chat')}
+            title="Chat"
           >
             <Sparkles className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
-            {!isCollapsed && <span>Home</span>}
+            {!isCollapsed && <span>Chat</span>}
           </Button>
           <Button
             variant={(activeView === 'content' && activeSection === 'about') ? "secondary" : "ghost"}
@@ -225,7 +219,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, scrollToContac
                   </a>
                 </div>
               </div>
-              <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50 hover:text-primary hover:border-white transition-all duration-300 group" onClick={scrollToContact}>
+              <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50 hover:text-primary hover:border-white transition-all duration-300 group" onClick={() => scrollToSection('contact')}>
                 <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                 Get In Touch
               </Button>

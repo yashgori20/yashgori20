@@ -32,8 +32,8 @@ export const resumeData = {
     },
   },
   profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
-  about: "AI Product Manager with experience leading AI product development from ideation to B2B deployment. Drove 90% reduction in operational time for enterprise QC platform. Skilled in stakeholder management, feature prioritization, and translating complex technical requirements into market-ready AI solutions.",
-  whatIBring: "I transform AI concepts into market-ready products. Whether it's leading cross-functional teams to build enterprise platforms, managing product lifecycles from ideation to deployment, or securing funding through strategic pitches - I bring AI product vision, stakeholder management, and business impact to every project.",
+  about: "I design and launch AI-powered solutions that deliver measurable business impact. With expertise spanning LLM architectures to product strategy, I've led projects that improved system performance and shaped product direction. I specialize in translating cutting-edge AI capabilities into scalable, real-world products.",
+  whatIBring: "Technical Execution: Hands-on expertise in building and deploying AI/ML solutions, from LLM-powered applications to production-grade APIs and scalable data pipelines. Product Vision: Proven ability to translate complex AI technologies into user-centric features that align with business objectives and drive real value. End-to-End Ownership: Adept at guiding projects from initial concept to full deployment, striking an optimal balance between speed and high-quality outcomes. Cross-Functional Collaboration: Strong communicator who bridges engineering, design, and business teams to foster alignment and achieve shared goals. Impact-First Approach: Prioritizes measurable results, focusing on enhancements in accuracy, latency, user adoption, or revenue to deliver tangible business impact.",
   languages: ["English (Fluent)", "Hindi (Native)", "Gujarati (Native)", "Marathi (Conversational)"],
   education: [
     {

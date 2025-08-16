@@ -6,7 +6,7 @@
 </div>
 
 ## 🚀 About Me
-I'm a BTech IT student at KJ Somaiya College of Engineering, passionate about building AI-powered solutions that make a difference. When I'm not coding, you'll find me exploring new tech, solving problems, or sharing knowledge with the community.
+Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.
 
 ### 🎯 Current Focus
 - 🔭 Working on DocuTalk - an AI-Enhanced Document Understanding System

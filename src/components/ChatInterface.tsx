@@ -46,16 +46,16 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
     // If no messages, always show default suggestions (home state)
     if (messages.length === 0) {
       return [
-        "What are my key skills?",
-        "Tell me about the DocuTalk project",
-        "Summarize my experience",
-        "How can I contact you?",
-        "What are your latest projects?",
-        "Tell me about your education",
-        "What programming languages do you know?",
-        "Describe your AI/ML experience",
-        "What's your strongest project?",
-        "How did you build Swift Check AI?"
+        "What are Yash's key skills?",
+        "Tell me about his DocuTalk project",
+        "Summarize his experience",
+        "How can I contact Yash?",
+        "What are his latest projects?",
+        "Tell me about his education",
+        "What programming languages does he know?",
+        "Describe his AI/ML experience",
+        "What's his strongest project?",
+        "How did he build Swift Check AI?"
       ];
     }
 
@@ -71,10 +71,10 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
 
     // If no smart suggestions, fallback to default
     return allSuggestions.length > 0 ? allSuggestions : [
-      "Tell me more about your experience",
-      "What projects are you most proud of?",
-      "How can we work together?",
-      "What are your technical strengths?"
+      "Tell me more about his experience",
+      "What projects is he most proud of?",
+      "How can I work with Yash?",
+      "What are his technical strengths?"
     ];
   };
 
@@ -199,12 +199,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
 
           <div className="absolute top-12 left-0 right-0">
             <h1 className="text-3xl md:text-5xl font-bold mb-3">{getGreeting()}</h1>
-            <p className="text-muted-foreground text-sm md:text-base">Welcome to Yash Gori's Portfolio</p>
+            <p className="text-muted-foreground text-sm md:text-base">I'm his assistant - you can ask me anything about him here!</p>
           </div>
 
           <p className="text-muted-foreground mb-10 text-xs md:text-sm leading-relaxed mt-6">
-            AI Developer with hands-on experience in Azure services, LLM integration, RAG systems, and AI agents.<br />
-            Building intelligent systems that solve real business problems.
+            Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.<br />
           </p>
 
           <div className="w-full">

@@ -64,13 +64,13 @@ export const useChatApi = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        
+
         if (!response.ok) {
           throw new Error(`API error: ${response.statusText}`);
         }
-        
+
         const rawData = await response.json();
-        
+
         // Check if this is the old API format (just {answer: "..."})
         if (rawData.answer && !rawData.success && !rawData.api_version) {
           // Convert old format to new format
@@ -131,18 +131,18 @@ export const useChatApi = () => {
               timestamp: new Date().toISOString()
             }
           };
-          
+
           // Store session ID for legacy format too (session only)
           if (!sessionId) {
             setSessionId(convertedData.session.session_id);
             sessionStorage.setItem('yashChatSession', convertedData.session.session_id);
           }
-          
+
           return convertedData;
         }
-        
+
         const data: ApiResponse = rawData;
-        
+
         // Store session ID if new session was created (session only)
         if (data.session?.session_id && !sessionId) {
           setSessionId(data.session.session_id);
@@ -211,16 +211,16 @@ export const useChatApi = () => {
     },
     onSuccess: (data: ApiResponse) => {
       const answerText = data.success ? data.response.answer : data.fallback_answer || data.response.answer;
-      
+
       setMessages((prev) => [...prev, { role: 'assistant', content: answerText }]);
-      
+
       // Update state with API response data
       setApiResponseData(data);
       setSmartSuggestions(data.intelligence?.smart_suggestions || null);
       setRichContent(data.rich_content || {});
       setUserAnalysis(data.intelligence?.user_analysis || null);
       setRateLimit(data.metadata?.rate_limit || null);
-      
+
       playPop();
     },
   });
@@ -249,7 +249,7 @@ export const useChatApi = () => {
     if (hour >= 5 && hour < 12) return "Good Morning!";
     if (hour >= 12 && hour < 18) return "Good Afternoon!";
     if (hour >= 18 && hour < 22) return "Good Evening!";
-    return "Good Night!";
+    return "Hey there!";
   };
 
   const handleSend = () => {
@@ -260,7 +260,7 @@ export const useChatApi = () => {
       setInput('');
     }
   };
-  
+
   const handleSuggestionClick = (suggestion: string) => {
     setInput(suggestion);
     const newMessages: Message[] = [...messages, { role: 'user', content: suggestion }];

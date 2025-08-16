@@ -43,7 +43,32 @@ const PillNavigation = ({ setActiveView, showDownloadButton = false, onDownloadR
 
     return (
         <div className="max-w-2xl mx-auto mb-6">
-            <div className="grid grid-cols-5 gap-2 mb-4">
+            {/* Mobile: 2 rows (2+3), Tablet+: single row */}
+            <div className="block sm:hidden">
+                <div className="grid grid-cols-2 gap-2 mb-2">
+                    {pills.slice(0, 2).map((pill) => (
+                        <PillButton
+                            key={pill.view}
+                            icon={pill.icon}
+                            label={pill.label}
+                            onClick={() => setActiveView(pill.view)}
+                        />
+                    ))}
+                </div>
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                    {pills.slice(2, 5).map((pill) => (
+                        <PillButton
+                            key={pill.view}
+                            icon={pill.icon}
+                            label={pill.label}
+                            onClick={() => setActiveView(pill.view)}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            {/* Tablet and Desktop: single row */}
+            <div className="hidden sm:grid grid-cols-5 gap-2 mb-4">
                 {pills.map((pill) => (
                     <PillButton
                         key={pill.view}
@@ -54,7 +79,7 @@ const PillNavigation = ({ setActiveView, showDownloadButton = false, onDownloadR
                     />
                 ))}
             </div>
-            
+
             {showDownloadButton && onDownloadResume && (
                 <div className="mt-3">
                     <PillButton

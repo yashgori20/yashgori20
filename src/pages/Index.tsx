@@ -208,9 +208,9 @@ const Index = () => {
                 setActiveView('content');
                 if (isMobile) closeMobileSidebar();
               }}
-              className="w-6 h-6 flex items-center justify-center hover:bg-[#303030] rounded transition-colors"
+              className="w-6 h-6 flex items-center justify-center hover:bg-[#303030] rounded transition-colors group"
             >
-              <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4" />
+              <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4 group-hover:animate-spin transition-transform" />
             </button>
           )}
           <button 

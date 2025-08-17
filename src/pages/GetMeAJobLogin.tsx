@@ -57,7 +57,7 @@ const GetMeAJobLogin = () => {
         response = await apiService.login(credentials);
       }
 
-      if (response.success && response.token) {
+      if (response.token) {
         // Store JWT token and user data
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('userEmail', response.user?.email || email);

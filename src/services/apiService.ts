@@ -6,11 +6,12 @@ export interface AuthRequest {
 }
 
 export interface AuthResponse {
-  success: boolean;
+  success?: boolean;
   token?: string;
   user?: {
+    id?: string;
     email: string;
-    subscription: 'free' | 'pro';
+    subscription?: 'free' | 'pro';
   };
   message?: string;
 }
@@ -44,6 +45,11 @@ class ApiService {
 
       if (!response.ok) {
         throw new Error(data.message || `HTTP error! status: ${response.status}`);
+      }
+
+      // Add success field if missing (for backend compatibility)
+      if (response.ok && !data.hasOwnProperty('success')) {
+        data.success = true;
       }
 
       return data;

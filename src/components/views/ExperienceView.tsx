@@ -29,11 +29,10 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
       <div className="space-y-16">
         <div>
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Career Path</h2>
-          <div className="space-y-8">
+          <div className="space-y-0">
             {resumeData.experience.map((exp: Experience, index) => (
               <div key={exp.company} className="relative group">
-                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
-                <div className="ml-8 bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="p-6">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                     <div>
                       <h3 className="text-xl font-bold">{exp.role}</h3>
@@ -83,10 +82,10 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
                   {exp.additionalPoints && exp.additionalPoints.length > 0 && (
                     <div className="mt-4">
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => toggleExpanded(exp.company)}
-                        className="text-primary hover:text-primary/80 p-0 h-auto font-medium"
+                        className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50"
                       >
                         {expandedExperiences.has(exp.company) ? (
                           <>
@@ -103,6 +102,10 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
                     </div>
                   )}
                 </div>
+                {/* Subtle separator line */}
+                {index < resumeData.experience.length - 1 && (
+                  <div className="mx-6 border-b border-gray-200/20 my-6"></div>
+                )}
               </div>
             ))}
           </div>

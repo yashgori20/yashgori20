@@ -197,15 +197,29 @@ const Index = () => {
 
       {/* Demo1-style Sidebar */}
       <div className={cn(
-        "bg-[#181818] flex flex-col transition-all duration-300",
-        isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : "w-64"
+        "bg-[#181818] flex flex-col transition-all duration-300 overflow-hidden",
+        isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : (isSidebarCollapsed ? "w-16" : "w-64")
       )}>
         {/* Header with Logo */}
         <div className="p-4 flex items-center justify-between">
-          <div className="w-6 h-6 flex items-center justify-center">
-            <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4" />
-          </div>
-          <button className="w-6 h-6 border border-gray-600 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-colors">
+          {!isSidebarCollapsed && (
+            <button 
+              onClick={() => {
+                setActiveView('content');
+                if (isMobile) closeMobileSidebar();
+              }}
+              className="w-6 h-6 flex items-center justify-center hover:bg-[#303030] rounded transition-colors"
+            >
+              <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4" />
+            </button>
+          )}
+          <button 
+            onClick={toggleSidebarCollapse}
+            className={cn(
+              "w-6 h-6 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-colors",
+              isSidebarCollapsed && "mx-auto"
+            )}
+          >
             {isSidebarCollapsed ? (
               <ChevronRight className="h-3 w-3 text-gray-400" />
             ) : (
@@ -218,22 +232,32 @@ const Index = () => {
         <div className="px-3 pb-4">
           <div className="space-y-0.5">
             <button
-              className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors"
+              className={cn(
+                "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
+                isSidebarCollapsed ? "px-2 py-2.5 flex justify-center" : "px-3 py-2.5"
+              )}
               onClick={() => {
                 setMessages([]);
                 setActiveView('chat');
                 if (isMobile) closeMobileSidebar();
               }}
             >
-              <div className="flex items-center gap-3">
+              <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
                 <Plus className="h-4 w-4 text-gray-400" />
-                <div className="text-sm text-white truncate">New chat</div>
+                {!isSidebarCollapsed && (
+                  <div className="text-sm text-white truncate whitespace-nowrap">New chat</div>
+                )}
               </div>
             </button>
-            <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors">
-              <div className="flex items-center gap-3">
+            <button className={cn(
+              "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
+              isSidebarCollapsed ? "px-2 py-2.5 flex justify-center" : "px-3 py-2.5"
+            )}>
+              <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
                 <Search className="h-4 w-4 text-gray-400" />
-                <div className="text-sm text-white truncate">Search chats</div>
+                {!isSidebarCollapsed && (
+                  <div className="text-sm text-white truncate whitespace-nowrap">Search chats</div>
+                )}
               </div>
             </button>
             {portfolioChats.map((chat) => {
@@ -242,11 +266,16 @@ const Index = () => {
                 <button
                   key={chat.id}
                   onClick={() => handleChatClick(chat.id)}
-                  className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors group"
+                  className={cn(
+                    "w-full text-left rounded-lg hover:bg-[#303030] transition-colors group",
+                    isSidebarCollapsed ? "px-2 py-2.5 flex justify-center" : "px-3 py-2.5"
+                  )}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
                     <Icon className="h-4 w-4 text-gray-400" />
-                    <div className="text-sm text-white truncate">{chat.title}</div>
+                    {!isSidebarCollapsed && (
+                      <div className="text-sm text-white truncate whitespace-nowrap">{chat.title}</div>
+                    )}
                   </div>
                 </button>
               );
@@ -255,14 +284,16 @@ const Index = () => {
         </div>
 
         {/* Chats Section */}
-        <div className="px-3 pb-4">
-          <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide px-3">Chats</div>
-          <div className="space-y-0.5">
-            <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors">
-              <div className="text-sm text-white truncate">Resume optimization steps</div>
-            </button>
+        {!isSidebarCollapsed && (
+          <div className="px-3 pb-4">
+            <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide px-3">Chats</div>
+            <div className="space-y-0.5">
+              <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors">
+                <div className="text-sm text-white truncate whitespace-nowrap">Resume optimization steps</div>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Spacer to push profile to bottom */}
         <div className="flex-1"></div>
@@ -271,21 +302,26 @@ const Index = () => {
         <div className="p-3">
           <div className="relative">
             <button
-              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#303030] transition-colors"
+              onClick={() => !isSidebarCollapsed && setShowProfileDropdown(!showProfileDropdown)}
+              className={cn(
+                "w-full flex items-center rounded-lg hover:bg-[#303030] transition-colors",
+                isSidebarCollapsed ? "px-2 py-2 justify-center" : "gap-3 px-3 py-2"
+              )}
             >
               <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
                 <img src={resumeData.profileImage} alt="Yash Gori" className="w-full h-full object-cover" />
               </div>
-              <div className="flex-1 text-left">
-                <div className="text-sm text-white">Yash Gori</div>
-                <div className="text-xs text-gray-400">AI Engineer</div>
-              </div>
+              {!isSidebarCollapsed && (
+                <div className="flex-1 text-left">
+                  <div className="text-sm text-white">Yash Gori</div>
+                  <div className="text-xs text-gray-400">AI Engineer</div>
+                </div>
+              )}
             </button>
 
             {/* Profile Dropdown */}
-            {showProfileDropdown && (
-              <div className="absolute bottom-full left-0 right-0 mb-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg">
+            {showProfileDropdown && !isSidebarCollapsed && (
+              <div className="absolute bottom-full left-0 right-0 mb-2 bg-[#2a2a2a] rounded-lg shadow-lg">
                 <div className="p-4 border-b border-gray-600">
                   <div className="flex items-center gap-3 mb-3">
                     <Avatar className="h-10 w-10">
@@ -446,17 +482,6 @@ const Index = () => {
                     </div>
                   </div>
                 )}
-              </div>
-              <div
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform touch-manipulation"
-                onClick={handleProfileClick}
-                style={{ touchAction: 'manipulation' }}
-              >
-                <img
-                  src={resumeData.profileImage}
-                  alt="Yash Gori"
-                  className="w-full h-full object-cover"
-                />
               </div>
             </div>
           </div>

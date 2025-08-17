@@ -1,52 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, LogIn, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { ArrowLeft, LogIn, UserPlus, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiService, AuthRequest } from '@/services/apiService';
 
 const GetMeAJobLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSignUpMode, setIsSignUpMode] = useState(false);
   const navigate = useNavigate();
+
+  // Check if already authenticated and redirect
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      navigate('/getmeajob/dashboard');
+    }
+  }, [navigate]);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setEmailError('');
+    setIsLoading(true);
     
     // Validate email
     if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setError('Please enter a valid email address');
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      setIsLoading(false);
       return;
     }
     
-    setIsLoading(true);
-    
     try {
-      // Hardcoded credentials check
-      if (email === 'admin@gmail.com' && password === 'admin123') {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      const credentials: AuthRequest = { email, password };
+      let response;
+
+      if (isSignUpMode) {
+        response = await apiService.register(credentials);
+      } else {
+        response = await apiService.login(credentials);
+      }
+
+      if (response.success && response.token) {
+        // Store JWT token and user data
+        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('userEmail', response.user?.email || email);
+        localStorage.setItem('userPlan', response.user?.subscription || 'free');
         
-        // Store mock auth token
-        localStorage.setItem('authToken', 'mock-auth-token-' + Date.now());
         navigate('/getmeajob/dashboard');
       } else {
-        setError('Invalid email or password. Use admin@gmail.com / admin123');
+        setError(response.message || 'Authentication failed');
       }
     } catch (error) {
-      setError('Login failed. Please try again.');
+      setError(error instanceof Error ? error.message : 'Authentication failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +77,6 @@ const GetMeAJobLogin = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    setEmailError('');
     setError('');
   };
 
@@ -74,14 +95,45 @@ const GetMeAJobLogin = () => {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2">
-              <LogIn className="h-5 w-5" />
-              Login to Get Me A Job
+              {isSignUpMode ? <UserPlus className="h-5 w-5" /> : <LogIn className="h-5 w-5" />}
+              {isSignUpMode ? 'Sign Up for Get Me A Job' : 'Login to Get Me A Job'}
             </CardTitle>
             <CardDescription>
-              Access your API token and manage your account
+              {isSignUpMode 
+                ? 'Create your account to get your API token' 
+                : 'Access your API token and manage your account'
+              }
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Mode Toggle */}
+            <div className="flex justify-center">
+              <div className="flex bg-muted rounded-lg p-1">
+                <button
+                  type="button"
+                  onClick={() => setIsSignUpMode(false)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    !isSignUpMode 
+                      ? 'bg-background text-foreground shadow-sm' 
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  Log In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsSignUpMode(true)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isSignUpMode 
+                      ? 'bg-background text-foreground shadow-sm' 
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+
             {error && (
               <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
                 <AlertCircle className="h-4 w-4 text-destructive" />
@@ -89,21 +141,17 @@ const GetMeAJobLogin = () => {
               </div>
             )}
             
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@gmail.com"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={handleEmailChange}
-                  className={emailError ? 'border-destructive' : ''}
                   required
                 />
-                {emailError && (
-                  <span className="text-sm text-destructive">{emailError}</span>
-                )}
               </div>
               
               <div className="space-y-2">
@@ -112,10 +160,11 @@ const GetMeAJobLogin = () => {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="admin123"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    minLength={6}
                   />
                   <Button
                     type="button"
@@ -134,14 +183,17 @@ const GetMeAJobLogin = () => {
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading 
+                  ? (isSignUpMode ? 'Creating Account...' : 'Signing In...') 
+                  : (isSignUpMode ? 'Create Account' : 'Sign In')
+                }
               </Button>
             </form>
 
             <div className="text-center text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
-              <p><strong>Demo Credentials:</strong></p>
-              <p>Email: admin@gmail.com</p>
-              <p>Password: admin123</p>
+              <p><strong>Instructions:</strong></p>
+              <p>After {isSignUpMode ? 'creating your account' : 'logging in'}, you'll get an API token.</p>
+              <p>Copy this token and paste it into the Get Me A Job app to authenticate.</p>
             </div>
           </CardContent>
         </Card>

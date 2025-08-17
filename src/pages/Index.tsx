@@ -198,11 +198,21 @@ const Index = () => {
         "bg-[#181818] flex flex-col transition-all duration-300",
         isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : "w-64"
       )}>
+        {/* Header with Logo */}
+        <div className="p-4 flex items-center justify-between">
+          <div className="w-6 h-6 flex items-center justify-center">
+            <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4" />
+          </div>
+          <button className="w-6 h-6 border border-gray-600 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-colors">
+            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+          </button>
+        </div>
+
         {/* Navigation */}
-        <div className="p-4">
-          <div className="space-y-1">
+        <div className="px-3 pb-4">
+          <div className="space-y-0.5">
             <button
-              className="w-full text-left p-3 rounded-lg hover:bg-[#303030] transition-colors"
+              className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors"
               onClick={() => {
                 setMessages([]);
                 setActiveView('chat');
@@ -214,7 +224,7 @@ const Index = () => {
                 <div className="text-sm text-white truncate">New chat</div>
               </div>
             </button>
-            <button className="w-full text-left p-3 rounded-lg hover:bg-[#303030] transition-colors">
+            <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors">
               <div className="flex items-center gap-3">
                 <Search className="h-4 w-4 text-gray-400" />
                 <div className="text-sm text-white truncate">Search chats</div>
@@ -226,7 +236,7 @@ const Index = () => {
                 <button
                   key={chat.id}
                   onClick={() => handleChatClick(chat.id)}
-                  className="w-full text-left p-3 rounded-lg hover:bg-[#303030] transition-colors group"
+                  className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors group"
                 >
                   <div className="flex items-center gap-3">
                     <Icon className="h-4 w-4 text-gray-400" />
@@ -238,25 +248,33 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Chats Section */}
+        <div className="px-3 pb-4">
+          <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide px-3">Chats</div>
+          <div className="space-y-0.5">
+            <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors">
+              <div className="text-sm text-white truncate">Resume optimization steps</div>
+            </button>
+          </div>
+        </div>
+
         {/* Spacer to push profile to bottom */}
         <div className="flex-1"></div>
 
         {/* Profile Section */}
-        <div className="p-4">
+        <div className="p-3">
           <div className="relative">
             <button
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-[#303030] transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#303030] transition-colors"
             >
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={resumeData.profileImage} alt="Yash Gori" />
-                <AvatarFallback>YG</AvatarFallback>
-              </Avatar>
-              <div className="flex-1 text-left">
-                <div className="text-sm font-medium">Yash Gori</div>
-                <div className="text-xs text-gray-400">AI Product Lead</div>
+              <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
+                <img src={resumeData.profileImage} alt="Yash Gori" className="w-full h-full object-cover" />
               </div>
-              <ChevronDown className="h-4 w-4 text-gray-400" />
+              <div className="flex-1 text-left">
+                <div className="text-sm text-white">Yash Gori</div>
+                <div className="text-xs text-gray-400">Free</div>
+              </div>
             </button>
 
             {/* Profile Dropdown */}

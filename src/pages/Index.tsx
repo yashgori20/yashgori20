@@ -33,7 +33,9 @@ import {
   Database,
   Instagram,
   Linkedin,
-  Github
+  Github,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import XLogo from '@/components/XLogo';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
@@ -204,7 +206,11 @@ const Index = () => {
             <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4" />
           </div>
           <button className="w-6 h-6 border border-gray-600 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-colors">
-            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+            {isSidebarCollapsed ? (
+              <ChevronRight className="h-3 w-3 text-gray-400" />
+            ) : (
+              <ChevronLeft className="h-3 w-3 text-gray-400" />
+            )}
           </button>
         </div>
 
@@ -273,7 +279,7 @@ const Index = () => {
               </div>
               <div className="flex-1 text-left">
                 <div className="text-sm text-white">Yash Gori</div>
-                <div className="text-xs text-gray-400">Free</div>
+                <div className="text-xs text-gray-400">AI Engineer</div>
               </div>
             </button>
 

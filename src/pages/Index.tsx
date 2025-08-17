@@ -46,6 +46,7 @@ const Index = () => {
   const [showPersonalityModal, setShowPersonalityModal] = useState(false);
   const [showMemoryModal, setShowMemoryModal] = useState(false);
   const [showReachOutOverlay, setShowReachOutOverlay] = useState(false);
+  const [reachOutTimeout, setReachOutTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const {
     activeView,
@@ -197,7 +198,8 @@ const Index = () => {
 
       {/* Demo1-style Sidebar */}
       <div className={cn(
-        "bg-[#181818] flex flex-col transition-all duration-300 overflow-hidden",
+        "flex flex-col transition-all duration-300 overflow-hidden",
+        isSidebarCollapsed ? "bg-[#212121] border-r border-gray-700/30" : "bg-[#181818]",
         isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : (isSidebarCollapsed ? "w-14" : "w-64")
       )}>
         {/* Header with Logo */}
@@ -311,7 +313,7 @@ const Index = () => {
         <div className={cn(isSidebarCollapsed ? "p-2" : "p-3")}>
           <div className="relative">
             <button
-              onClick={() => !isSidebarCollapsed && setShowProfileDropdown(!showProfileDropdown)}
+              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               className={cn(
                 "w-full flex items-center rounded-lg hover:bg-[#303030] transition-colors",
                 isSidebarCollapsed ? "p-2.5 justify-center" : "gap-3 px-3 py-2"
@@ -329,8 +331,13 @@ const Index = () => {
             </button>
 
             {/* Profile Dropdown */}
-            {showProfileDropdown && !isSidebarCollapsed && (
-              <div className="absolute bottom-full left-0 right-0 mb-2 bg-[#2a2a2a] rounded-lg shadow-lg">
+            {showProfileDropdown && (
+              <div className={cn(
+                "absolute bg-[#2a2a2a] rounded-lg shadow-lg z-50",
+                isSidebarCollapsed 
+                  ? "bottom-0 left-full ml-2 w-64" 
+                  : "bottom-full left-0 right-0 mb-2"
+              )}>
                 <div className="p-4 border-b border-gray-600">
                   <div className="flex items-center gap-3 mb-3">
                     <Avatar className="h-10 w-10">
@@ -423,11 +430,24 @@ const Index = () => {
               )}
             </div>
             <div className="flex items-center gap-4">
-              <div className="relative">
+              <div 
+                className="relative"
+                onMouseEnter={() => {
+                  if (reachOutTimeout) {
+                    clearTimeout(reachOutTimeout);
+                    setReachOutTimeout(null);
+                  }
+                  setShowReachOutOverlay(true);
+                }}
+                onMouseLeave={() => {
+                  const timeout = setTimeout(() => {
+                    setShowReachOutOverlay(false);
+                  }, 500);
+                  setReachOutTimeout(timeout);
+                }}
+              >
                 <button
                   className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
-                  onMouseEnter={() => setShowReachOutOverlay(true)}
-                  onMouseLeave={() => setShowReachOutOverlay(false)}
                 >
                   <Mail className="h-4 w-4 text-gray-400" />
                   <div className="text-sm truncate">Reach out</div>
@@ -437,7 +457,8 @@ const Index = () => {
                 {showReachOutOverlay && (
                   <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
                     <div className="space-y-3">
-                      <div className="text-sm text-white font-medium mb-3">Get in touch</div>
+                      <div className="text-sm text-white font-medium mb-3">Yash Gori - AI Engineer</div>
+                      <div className="text-xs text-gray-400 mb-3">Get in touch</div>
                       
                       {/* Email */}
                       <div className="flex items-center gap-3 text-sm">

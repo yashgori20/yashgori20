@@ -43,6 +43,7 @@ const Index = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showPersonalityModal, setShowPersonalityModal] = useState(false);
   const [showMemoryModal, setShowMemoryModal] = useState(false);
+  const [showReachOutOverlay, setShowReachOutOverlay] = useState(false);
 
   const {
     activeView,
@@ -194,57 +195,42 @@ const Index = () => {
 
       {/* Demo1-style Sidebar */}
       <div className={cn(
-        "bg-[#171717] border-r border-gray-700 flex flex-col transition-all duration-300",
+        "bg-[#181818] flex flex-col transition-all duration-300",
         isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : "w-64"
       )}>
-        {/* Header */}
-        <div className="p-4 border-b border-gray-700">
-          <Button
-            className="w-full justify-start bg-transparent border border-gray-600 hover:bg-gray-700 text-white"
-            onClick={() => {
-              setMessages([]);
-              setActiveView('chat');
-              if (isMobile) closeMobileSidebar();
-            }}
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            New chat
-          </Button>
-        </div>
-
-        {/* Search */}
+        {/* Navigation */}
         <div className="p-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Search chats"
-              className="pl-10 bg-transparent border-gray-600 text-white placeholder-gray-400"
-            />
-          </div>
-        </div>
-
-        {/* Navigation Tools */}
-        <div className="px-4 mb-4">
-          <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Portfolio</div>
           <div className="space-y-1">
+            <button
+              className="w-full text-left p-3 rounded-lg hover:bg-[#303030] transition-colors"
+              onClick={() => {
+                setMessages([]);
+                setActiveView('chat');
+                if (isMobile) closeMobileSidebar();
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <Plus className="h-4 w-4 text-gray-400" />
+                <div className="text-sm text-white truncate">New chat</div>
+              </div>
+            </button>
+            <button className="w-full text-left p-3 rounded-lg hover:bg-[#303030] transition-colors">
+              <div className="flex items-center gap-3">
+                <Search className="h-4 w-4 text-gray-400" />
+                <div className="text-sm text-white truncate">Search chats</div>
+              </div>
+            </button>
             {portfolioChats.map((chat) => {
               const Icon = chat.icon;
               return (
                 <button
                   key={chat.id}
                   onClick={() => handleChatClick(chat.id)}
-                  className="w-full text-left p-3 rounded-lg hover:bg-gray-700 transition-colors group"
+                  className="w-full text-left p-3 rounded-lg hover:bg-[#303030] transition-colors group"
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className="h-4 w-4 text-gray-400 group-hover:text-white" />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-white truncate">
-                        {chat.title}
-                      </div>
-                      <div className="text-xs text-gray-400 truncate">
-                        {chat.description}
-                      </div>
-                    </div>
+                    <Icon className="h-4 w-4 text-gray-400" />
+                    <div className="text-sm text-white truncate">{chat.title}</div>
                   </div>
                 </button>
               );
@@ -252,55 +238,15 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Recent Chats */}
-        <div className="px-4 mb-4 flex-1">
-          <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Recent</div>
-          <div className="space-y-1">
-            <button
-              className="w-full text-left p-3 rounded-lg hover:bg-gray-700 transition-colors"
-              onClick={() => {
-                setActiveView('chat');
-                if (isMobile) closeMobileSidebar();
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <MessageSquare className="h-4 w-4 text-gray-400" />
-                <div className="text-sm text-white truncate">AI Product Strategy Discussion</div>
-              </div>
-            </button>
-            <button
-              className="w-full text-left p-3 rounded-lg hover:bg-gray-700 transition-colors"
-              onClick={() => {
-                setActiveView('chat');
-                if (isMobile) closeMobileSidebar();
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <MessageSquare className="h-4 w-4 text-gray-400" />
-                <div className="text-sm text-white truncate">Technical Skills Overview</div>
-              </div>
-            </button>
-            <button
-              className="w-full text-left p-3 rounded-lg hover:bg-gray-700 transition-colors"
-              onClick={() => {
-                setActiveView('chat');
-                if (isMobile) closeMobileSidebar();
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <MessageSquare className="h-4 w-4 text-gray-400" />
-                <div className="text-sm text-white truncate">Project Collaboration Ideas</div>
-              </div>
-            </button>
-          </div>
-        </div>
+        {/* Spacer to push profile to bottom */}
+        <div className="flex-1"></div>
 
         {/* Profile Section */}
-        <div className="p-4 border-t border-gray-700">
+        <div className="p-4">
           <div className="relative">
             <button
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-[#303030] transition-colors"
             >
               <Avatar className="h-8 w-8">
                 <AvatarImage src={resumeData.profileImage} alt="Yash Gori" />
@@ -361,23 +307,23 @@ const Index = () => {
                 <div className="p-2">
                   <button
                     onClick={() => setShowPersonalityModal(true)}
-                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-gray-700 text-left"
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
                   >
                     <Palette className="h-4 w-4" />
                     <span className="text-sm">Change Chatbot Personality</span>
                   </button>
                   <button
                     onClick={() => setShowMemoryModal(true)}
-                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-gray-700 text-left"
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
                   >
                     <Database className="h-4 w-4" />
                     <span className="text-sm">Memory & Preferences</span>
                   </button>
-                  <button className="w-full flex items-center gap-3 p-2 rounded hover:bg-gray-700 text-left">
+                  <button className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left">
                     <HelpCircle className="h-4 w-4" />
                     <span className="text-sm">Help & Support</span>
                   </button>
-                  <button className="w-full flex items-center gap-3 p-2 rounded hover:bg-gray-700 text-left">
+                  <button className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left">
                     <Settings className="h-4 w-4" />
                     <span className="text-sm">Settings</span>
                   </button>
@@ -398,7 +344,7 @@ const Index = () => {
         )}
 
         {/* Header */}
-        <div className="border-b border-gray-700 p-4">
+        <div className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {isMobile && (
@@ -406,15 +352,77 @@ const Index = () => {
                   <Menu className="h-6 w-6" />
                 </Button>
               )}
-              <h1 className="text-xl font-semibold">YashBot 3000 🚀</h1>
-              <Badge variant="secondary" className="bg-purple-600 text-white">
-                Your AI Product Buddy
-              </Badge>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-gray-700">
-                Upgrade your plan
-              </Button>
+              <div className="relative">
+                <button
+                  className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
+                  onMouseEnter={() => setShowReachOutOverlay(true)}
+                  onMouseLeave={() => setShowReachOutOverlay(false)}
+                >
+                  <Mail className="h-4 w-4 text-gray-400" />
+                  <div className="text-sm truncate">Reach out</div>
+                </button>
+                
+                {/* Contact Overlay */}
+                {showReachOutOverlay && (
+                  <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
+                    <div className="space-y-3">
+                      <div className="text-sm text-white font-medium mb-3">Get in touch</div>
+                      
+                      {/* Email */}
+                      <div className="flex items-center gap-3 text-sm">
+                        <Mail className="h-4 w-4 text-gray-400" />
+                        <span className="text-white">{resumeData.contact.email}</span>
+                      </div>
+                      
+                      {/* Phone */}
+                      <div className="flex items-center gap-3 text-sm">
+                        <span className="text-gray-400">📞</span>
+                        <span className="text-white">{resumeData.contact.phone}</span>
+                      </div>
+                      
+                      {/* Social Links */}
+                      <div className="flex gap-2 pt-2">
+                        <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <Linkedin className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <Github className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <XLogo className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <Instagram className="h-4 w-4" />
+                          </Button>
+                        </a>
+                      </div>
+                      
+                      {/* Contact Me Button */}
+                      <button
+                        onClick={() => {
+                          setActiveView('content');
+                          setTimeout(() => {
+                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                          }, 300);
+                          setShowReachOutOverlay(false);
+                        }}
+                        className="w-full mt-3 p-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm transition-colors"
+                      >
+                        Contact Me
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
               <div
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform touch-manipulation"
                 onClick={handleProfileClick}
@@ -445,7 +453,7 @@ const Index = () => {
         />
 
         {activeView === 'chat' && messages.length > 0 && (
-          <div className="p-4 border-t border-gray-700 bg-[#171717]">
+          <div className="p-4 border-t border-gray-700 bg-[#181818]">
             <ChatInputBar
               input={input}
               setInput={setInput}

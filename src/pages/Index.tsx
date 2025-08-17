@@ -198,7 +198,7 @@ const Index = () => {
       {/* Demo1-style Sidebar */}
       <div className={cn(
         "bg-[#181818] flex flex-col transition-all duration-300 overflow-hidden",
-        isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : (isSidebarCollapsed ? "w-16" : "w-64")
+        isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : (isSidebarCollapsed ? "w-14" : "w-64")
       )}>
         {/* Header with Logo */}
         <div className="p-4 flex items-center justify-between">

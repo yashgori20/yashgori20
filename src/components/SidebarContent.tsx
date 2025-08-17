@@ -1,12 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { resumeData } from '@/data/resume';
-import { User, Briefcase, Code, BrainCircuit, Mail, Sparkles, Download, Github, Linkedin, Instagram, ChevronLeft } from 'lucide-react';
-import SidebarButton from './SidebarButton';
+import { User, Briefcase, Code, BrainCircuit, Mail, Sparkles, Download, Github, Linkedin, Instagram, ChevronLeft, Plus, Search, MessageSquare, ChevronDown, Settings, HelpCircle, Palette, Database } from 'lucide-react';
 import XLogo from './XLogo';
+import HuggingFaceLogo from './HuggingFaceLogo';
 
 import { View, Message } from '@/types';
 import { useActiveSection } from '@/hooks/useActiveSection';

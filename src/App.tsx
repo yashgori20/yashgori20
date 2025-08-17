@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import GetMeAJob from "./pages/GetMeAJob";
 import GetMeAJobLogin from "./pages/GetMeAJobLogin";
 import GetMeAJobDashboard from "./pages/GetMeAJobDashboard";
-import Demo1 from "./pages/Demo1";
+import GetMeAJobDownload from "./pages/GetMeAJobDownload";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -28,7 +28,7 @@ const App = () => (
           <Route path="/getmeajob" element={<GetMeAJob />} />
           <Route path="/getmeajob/login" element={<GetMeAJobLogin />} />
           <Route path="/getmeajob/dashboard" element={<GetMeAJobDashboard />} />
-          <Route path="/demo1" element={<Demo1 />} />
+          <Route path="/getmeajob/download" element={<GetMeAJobDownload />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster

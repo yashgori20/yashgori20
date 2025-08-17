@@ -91,3 +91,28 @@ export interface ApiResponse {
   metadata: ApiMetadata;
   fallback_answer?: string;
 }
+
+// GetMeAJob API Types
+export interface AuthRequest {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  token?: string;
+  user?: {
+    email: string;
+    subscription: 'free' | 'pro';
+  };
+  message?: string;
+}
+
+export interface SubscriptionResponse {
+  success: boolean;
+  isPaid: boolean;
+  usageLeft: number;
+  plan: 'free' | 'pro';
+  renewalDate?: string;
+}
+

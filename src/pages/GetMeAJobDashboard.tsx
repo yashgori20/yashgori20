@@ -5,50 +5,65 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Copy, Check, RefreshCw, LogOut, Key, Crown, Zap, Star, CreditCard, TrendingUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiService } from '@/services/apiService';
 
 const GetMeAJobDashboard = () => {
   const [token, setToken] = useState('');
   const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentPlan, setCurrentPlan] = useState('free');
+  const [isTokenLoading, setIsTokenLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState('');
+  const [userPlan, setUserPlan] = useState<'free' | 'pro'>('free');
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchToken();
-    // Get current plan from localStorage
-    const plan = localStorage.getItem('userPlan') || 'free';
-    setCurrentPlan(plan);
-  }, []);
+    initializeDashboard();
+  }, [navigate]);
 
-  const fetchToken = async () => {
-    setIsLoading(true);
+  const initializeDashboard = async () => {
+    setIsTokenLoading(true);
+    
     try {
-      // TODO: Replace with actual API call
       const authToken = localStorage.getItem('authToken');
+      const savedEmail = localStorage.getItem('userEmail');
+      const savedPlan = localStorage.getItem('userPlan') as 'free' | 'pro';
+
       if (!authToken) {
         navigate('/getmeajob/login');
         return;
       }
 
-      const response = await fetch('/api/auth/token', {
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-        },
-      });
+      // Set the token (it's the JWT from backend)
+      setToken(authToken);
       
-      if (response.ok) {
-        const data = await response.json();
-        setToken(data.apiToken);
-      } else {
-        // Mock token for demo purposes
-        setToken('sk-abc123xyz789def456ghi101112131415');
+      // Set user data from localStorage
+      if (savedEmail) {
+        setUserEmail(savedEmail);
       }
+      
+      if (savedPlan) {
+        setUserPlan(savedPlan);
+      }
+
+      // Verify token with backend and get fresh subscription data
+      try {
+        const verifyResponse = await apiService.verifyToken(authToken);
+        if (verifyResponse.success && verifyResponse.user) {
+          setUserEmail(verifyResponse.user.email);
+          setUserPlan(verifyResponse.user.subscription);
+          
+          // Update localStorage with fresh data
+          localStorage.setItem('userEmail', verifyResponse.user.email);
+          localStorage.setItem('userPlan', verifyResponse.user.subscription);
+        }
+      } catch (verifyError) {
+        console.log('Token verification failed, using cached data');
+      }
+      
     } catch (error) {
-      console.error('Token fetch error:', error);
-      // Mock token for demo purposes
-      setToken('sk-abc123xyz789def456ghi101112131415');
+      console.error('Dashboard initialization error:', error);
+      navigate('/getmeajob/login');
     } finally {
-      setIsLoading(false);
+      setIsTokenLoading(false);
     }
   };
 
@@ -63,47 +78,42 @@ const GetMeAJobDashboard = () => {
   };
 
   const regenerateToken = async () => {
-    setIsLoading(true);
+    setIsTokenLoading(true);
     try {
-      // TODO: Replace with actual API call
-      const authToken = localStorage.getItem('authToken');
-      const response = await fetch('/api/auth/regenerate-token', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-        },
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setToken(data.apiToken);
-      } else {
-        // Mock new token for demo purposes
-        const newToken = 'sk-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        setToken(newToken);
+      const currentToken = localStorage.getItem('authToken');
+      if (!currentToken) {
+        navigate('/getmeajob/login');
+        return;
       }
+
+      // For now, we'll keep the same token since regeneration 
+      // would require a new API endpoint. The token is valid until logout.
+      setToken(currentToken);
+      console.log('Token refreshed');
     } catch (error) {
       console.error('Token regeneration error:', error);
-      // Mock new token for demo purposes
-      const newToken = 'sk-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      setToken(newToken);
     } finally {
-      setIsLoading(false);
+      setIsTokenLoading(false);
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userPlan');
+    localStorage.removeItem('userEmail');
     navigate('/getmeajob/login');
   };
 
-  const handleUpgrade = (plan: string) => {
-    // TODO: Integrate with payment processor (Stripe, PayPal, etc.)
-    console.log(`Upgrading to ${plan} plan`);
-    // For demo, just update the plan
+  const handleUpgrade = async (plan: 'free' | 'pro' | 'enterprise') => {
+    // For demo, just update the plan in localStorage
+    // In real implementation, this would call a subscription API
     localStorage.setItem('userPlan', plan);
-    setCurrentPlan(plan);
+    setUserPlan(plan as 'free' | 'pro');
+  };
+
+  // Get current subscription type
+  const getCurrentSubscription = () => {
+    return userPlan;
   };
 
   const getPlanDetails = (plan: string) => {
@@ -148,6 +158,45 @@ const GetMeAJobDashboard = () => {
         </div>
 
         <div className="space-y-6">
+          {/* User Information */}
+          {userEmail && (
+            <Card className="border-primary/20 bg-primary/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Star className="h-5 w-5" />
+                  Account Information
+                </CardTitle>
+                <CardDescription>
+                  Your Get Me A Job account details
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Email:</span>
+                    <span className="text-sm">{userEmail}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Subscription:</span>
+                    <Badge variant={userPlan === 'pro' ? 'default' : 'secondary'} className="flex items-center gap-1">
+                      {userPlan === 'pro' ? (
+                        <>
+                          <Crown className="h-3 w-3" />
+                          You are a Pro user
+                        </>
+                      ) : (
+                        <>
+                          <Star className="h-3 w-3" />
+                          You are on Free tier
+                        </>
+                      )}
+                    </Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -155,7 +204,7 @@ const GetMeAJobDashboard = () => {
                 Your API Token
               </CardTitle>
               <CardDescription>
-                Copy this token and paste it into the app to authenticate your requests
+                Copy this token and paste it into the Get Me A Job desktop app to authenticate
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -164,7 +213,7 @@ const GetMeAJobDashboard = () => {
                   <div className="relative">
                     <Input
                       type="text"
-                      value={isLoading ? 'Loading...' : token}
+                      value={isTokenLoading ? 'Loading...' : token}
                       readOnly
                       className="pr-12 font-mono text-sm"
                     />
@@ -173,7 +222,7 @@ const GetMeAJobDashboard = () => {
                       size="sm"
                       variant="ghost"
                       className="absolute right-1 top-1 h-8 w-8 p-0"
-                      disabled={isLoading}
+                      disabled={isTokenLoading}
                     >
                       {copied ? (
                         <Check className="h-4 w-4 text-green-500" />
@@ -188,7 +237,7 @@ const GetMeAJobDashboard = () => {
                       onClick={copyToken}
                       variant="default"
                       size="sm"
-                      disabled={isLoading}
+                      disabled={isTokenLoading}
                       className="flex-1"
                     >
                       {copied ? (
@@ -208,9 +257,9 @@ const GetMeAJobDashboard = () => {
                       onClick={regenerateToken}
                       variant="outline"
                       size="sm"
-                      disabled={isLoading}
+                      disabled={isTokenLoading}
                     >
-                      <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                      <RefreshCw className={`h-4 w-4 mr-2 ${isTokenLoading ? 'animate-spin' : ''}`} />
                       Regenerate
                     </Button>
                   </div>
@@ -219,8 +268,15 @@ const GetMeAJobDashboard = () => {
 
               <div className="bg-muted/50 rounded-lg p-4">
                 <p className="text-sm text-muted-foreground instructions">
-                  <strong>Instructions:</strong> Go back to the Get Me A Job app and paste this token in the login field to authenticate your API requests.
+                  <strong>Instructions:</strong>
                 </p>
+                <ol className="text-sm text-muted-foreground mt-2 space-y-1 list-decimal list-inside">
+                  <li>Copy the token above</li>
+                  <li>Open the Get Me A Job desktop app</li>
+                  <li>Go to Settings ⚙️ and click "Login"</li>
+                  <li>Paste the token in the overlay box</li>
+                  <li>Press "Login" to authenticate</li>
+                </ol>
               </div>
             </CardContent>
           </Card>
@@ -239,22 +295,24 @@ const GetMeAJobDashboard = () => {
                   <div className="text-sm text-muted-foreground">Requests Today</div>
                 </div>
                 <div className="text-center p-4 bg-secondary/20 rounded-lg">
-                  <div className="text-2xl font-bold text-primary">{getPlanDetails(currentPlan).limit}</div>
+                  <div className="text-2xl font-bold text-primary">
+                    {getPlanDetails(getCurrentSubscription()).limit}
+                  </div>
                   <div className="text-sm text-muted-foreground">Daily Limit</div>
                 </div>
               </div>
               <div className="mt-4 flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Current Plan:</span>
                 <Badge variant="secondary" className="flex items-center gap-1">
-                  {React.createElement(getPlanDetails(currentPlan).icon, { className: `h-3 w-3 ${getPlanDetails(currentPlan).color}` })}
-                  {getPlanDetails(currentPlan).name}
+                  {React.createElement(getPlanDetails(getCurrentSubscription()).icon, { className: `h-3 w-3 ${getPlanDetails(getCurrentSubscription()).color}` })}
+                  {getPlanDetails(getCurrentSubscription()).name}
                 </Badge>
               </div>
             </CardContent>
           </Card>
 
           {/* Upgrade Plans */}
-          {currentPlan === 'free' && (
+          {getCurrentSubscription() === 'free' && (
             <Card className="border-primary/20 bg-primary/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -332,33 +390,33 @@ const GetMeAJobDashboard = () => {
           )}
 
           {/* Current Plan Details for Pro/Enterprise */}
-          {currentPlan !== 'free' && (
+          {getCurrentSubscription() !== 'free' && (
             <Card className="border-primary/20 bg-primary/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  {React.createElement(getPlanDetails(currentPlan).icon, { className: `h-5 w-5 ${getPlanDetails(currentPlan).color}` })}
-                  {getPlanDetails(currentPlan).name}
+                  {React.createElement(getPlanDetails(getCurrentSubscription()).icon, { className: `h-5 w-5 ${getPlanDetails(getCurrentSubscription()).color}` })}
+                  {getPlanDetails(getCurrentSubscription()).name}
                 </CardTitle>
                 <CardDescription>
-                  You're on our {currentPlan} plan with premium features
+                  You're on our {getCurrentSubscription()} plan with premium features
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Daily API Limit:</span>
-                    <Badge variant="outline">{getPlanDetails(currentPlan).limit} requests</Badge>
+                    <Badge variant="outline">{getPlanDetails(getCurrentSubscription()).limit} requests</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Response Priority:</span>
-                    <Badge variant="outline">{currentPlan === 'enterprise' ? 'Instant' : 'Priority'}</Badge>
+                    <Badge variant="outline">{getCurrentSubscription() === 'enterprise' ? 'Instant' : 'Priority'}</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Support Level:</span>
-                    <Badge variant="outline">{currentPlan === 'enterprise' ? 'Priority + Training' : 'Email Support'}</Badge>
+                    <Badge variant="outline">{getCurrentSubscription() === 'enterprise' ? 'Priority + Training' : 'Email Support'}</Badge>
                   </div>
                   
-                  {currentPlan === 'pro' && (
+                  {getCurrentSubscription() === 'pro' && (
                     <div className="pt-4 border-t">
                       <Button 
                         variant="outline" 

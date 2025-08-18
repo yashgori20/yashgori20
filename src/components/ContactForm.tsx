@@ -133,8 +133,8 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="space-y-6 p-6 h-full">
-      <h3 className="text-xl font-semibold text-center mb-4">Get In Touch</h3>
+    <div className="border border-gray-200/20 rounded-lg p-6 h-full">
+      <h3 className="text-xl font-semibold text-center mb-6">Get In Touch</h3>
 
       {/* Division 1: Quick Message */}
       <div className="space-y-3 p-4">
@@ -149,7 +149,7 @@ const ContactForm = () => {
               if (errors.quickMessage) setErrors(prev => ({ ...prev, quickMessage: undefined }));
             }}
             rows={2}
-            className={errors.quickMessage ? 'border-destructive' : ''}
+            className={`bg-transparent border-gray-600 ${errors.quickMessage ? 'border-destructive' : ''}`}
           />
           {errors.quickMessage && <p className="text-sm text-destructive">{errors.quickMessage}</p>}
         </div>
@@ -187,7 +187,7 @@ const ContactForm = () => {
                 setName(e.target.value);
                 if (errors.name) setErrors(prev => ({ ...prev, name: undefined }));
               }}
-              className={`h-10 ${errors.name ? 'border-destructive' : ''}`}
+              className={`h-10 bg-transparent border-gray-600 ${errors.name ? 'border-destructive' : ''}`}
             />
             {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
           </div>
@@ -202,7 +202,7 @@ const ContactForm = () => {
                   setEmail(e.target.value);
                   if (errors.email) setErrors(prev => ({ ...prev, email: undefined }));
                 }}
-                className={`h-10 ${errors.email ? 'border-destructive' : ''}`}
+                className={`h-10 bg-transparent border-gray-600 ${errors.email ? 'border-destructive' : ''}`}
               />
               {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
             </div>
@@ -216,7 +216,7 @@ const ContactForm = () => {
                   setPhone(e.target.value);
                   if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
                 }}
-                className={`h-10 ${errors.phone ? 'border-destructive' : ''}`}
+                className={`h-10 bg-transparent border-gray-600 ${errors.phone ? 'border-destructive' : ''}`}
               />
               {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
             </div>
@@ -233,7 +233,7 @@ const ContactForm = () => {
                 if (errors.message) setErrors(prev => ({ ...prev, message: undefined }));
               }}
               rows={3}
-              className={errors.message ? 'border-destructive' : ''}
+              className={`bg-transparent border-gray-600 ${errors.message ? 'border-destructive' : ''}`}
             />
             {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>

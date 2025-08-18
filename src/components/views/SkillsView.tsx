@@ -43,30 +43,27 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
 
     return (
         <Section title="Skills & Expertise" id="skills">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {Object.entries(skillCategories).flatMap(([category, skills]) =>
-                    skills.map((skill, skillIndex, skillsArray) => {
-                        const globalIndex = Object.entries(skillCategories)
-                            .slice(0, Object.keys(skillCategories).indexOf(category))
-                            .reduce((acc, [, prevSkills]) => acc + prevSkills.length, 0) + skillIndex;
-                        
-                        const totalSkills = Object.values(skillCategories).flat().length;
-                        
-                        return (
-                            <div key={skill.name}>
-                                <SkillItem
-                                    name={skill.name}
-                                    category={category}
-                                    index={globalIndex}
-                                />
-                                {/* Subtle separator line between items */}
-                                {globalIndex < totalSkills - 1 && (
-                                    <div className="mt-4 border-b border-gray-200/20"></div>
-                                )}
-                            </div>
-                        );
-                    })
-                )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                {Object.entries(skillCategories).map(([category, skills], categoryIndex) => (
+                    <div key={category} className="space-y-4">
+                        <h3 className="text-lg font-semibold text-white mb-4">{category}</h3>
+                        <div className="space-y-3">
+                            {skills.map((skill, skillIndex) => (
+                                <div key={skill.name}>
+                                    <SkillItem
+                                        name={skill.name}
+                                        category={category}
+                                        index={skillIndex}
+                                    />
+                                    {/* Subtle separator line between items */}
+                                    {skillIndex < skills.length - 1 && (
+                                        <div className="border-b border-gray-200/20 my-2"></div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
             </div>
         </Section>
     );

@@ -34,22 +34,22 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
         {resumeData.projects.map((proj: Project, index) => (
           <div key={proj.title}>
             <div
-              className={`bg-[#2a2a2a] rounded-xl border border-gray-600 overflow-hidden hover:border-gray-500 transition-all duration-500 hover:scale-105 hover:shadow-lg group flex flex-col animate-slideInUp animate-delay-${index * 100} cursor-pointer`}
+              className={`py-6 group cursor-pointer animate-slideInUp animate-delay-${index * 100}`}
               onClick={() => handleProjectClick(proj)}
             >
-              <div className="p-6 flex flex-col flex-1">
+              <div className="flex flex-col flex-1">
                 <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gray-200 transition-colors">{proj.title}</h3>
                 <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {proj.technologies.map(tech => (
-                    <span key={tech} className="px-3 py-1 bg-[#404040] text-white text-xs font-medium rounded-full border border-gray-600">
+                    <span key={tech} className="px-3 py-1 text-gray-300 text-xs font-medium">
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-auto pt-4 border-t border-gray-600 flex items-center justify-between">
+                <div className="pt-4 flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">Click to view details</span>
                   <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
                 </div>
@@ -57,7 +57,7 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
             </div>
             {/* Subtle separator line */}
             {index < resumeData.projects.length - 1 && (
-              <div className="mx-6 border-b border-gray-200/20 my-6"></div>
+              <div className="border-b border-gray-200/20 my-6"></div>
             )}
           </div>
         ))}

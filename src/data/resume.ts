@@ -51,7 +51,7 @@ export const resumeData = {
   ],
   skills: {
     "AI/ML Core": [
-      { name: "Retrieval-Augmented Generation (RAG) Systems", level: 95, category: "AI Architecture" },
+      { name: "Retrieval-Augmented Generation (RAG)", level: 95, category: "AI Architecture" },
       { name: "Prompt Engineering", level: 95, category: "AI Engineering" },
       { name: "Vector Databases (FAISS, Pinecone)", level: 90, category: "Vector DB" },
       { name: "LLM Integration (GPT, Mixtral, LLaMA, Gemini)", level: 90, category: "LLM" },

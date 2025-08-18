@@ -47,9 +47,9 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
 
           <div className="space-y-3">
             <a href={`mailto:${resumeData.contact.email}`} className="block group">
-              <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <Mail className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
+                  <Mail className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <p className="font-medium text-sm">Email</p>
@@ -59,9 +59,9 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
             </a>
 
             <a href={`tel:${resumeData.contact.phone}`} className="block group">
-              <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <p className="font-medium text-sm">Phone</p>
@@ -76,9 +76,9 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
               rel="noopener noreferrer"
               className="block group"
             >
-              <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <MessageCircle className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
+                  <MessageCircle className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <p className="font-medium text-sm">WhatsApp</p>
@@ -87,9 +87,9 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
               </div>
             </a>
 
-            <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-              <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                <MapPin className="h-5 w-5 text-primary" />
+            <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 hover:border-gray-500 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
+                <MapPin className="h-5 w-5 text-white" />
               </div>
               <div>
                 <p className="font-medium text-sm">Location</p>
@@ -102,9 +102,9 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
                 onClick={handleDownloadResume}
                 className="w-full block group"
               >
-                <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border group-hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                    <Download className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
+                    <Download className="h-5 w-5 text-white" />
                   </div>
                   <div className="text-left">
                     <p className="font-medium text-sm">Download Resume</p>
@@ -115,7 +115,7 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
               <div className="text-center mt-2">
                 <button
                   onClick={handleDownloadTechnicalResume}
-                  className="text-xs text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+                  className="text-xs text-muted-foreground hover:text-white underline-offset-4 hover:underline"
                 >
                   Need a more technical version? Download here
                 </button>
@@ -126,19 +126,19 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
           <div className="space-y-4 pt-4">
             <h3 className="text-lg font-semibold">Follow Me</h3>
             <div className="flex items-center gap-4">
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-white transition-all duration-300 hover:scale-110 block">
                 <Linkedin className="h-6 w-6" />
               </a>
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-white transition-all duration-300 hover:scale-110 block">
                 <Github className="h-6 w-6" />
               </a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-white transition-all duration-300 hover:scale-110 block">
                 <HuggingFaceLogo className="h-6 w-6" />
               </a>
-              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-white transition-all duration-300 hover:scale-110 block">
                 <Instagram className="h-6 w-6" />
               </a>
-              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 block">
+              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-white transition-all duration-300 hover:scale-110 block">
                 <XLogo className="h-6 w-6" />
               </a>
             </div>

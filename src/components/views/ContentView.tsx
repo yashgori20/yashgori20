@@ -24,23 +24,54 @@ interface ChatInterfaceProps {
   onDownloadResume?: () => void;
 }
 
-type ContentViewProps = {
+interface ContentViewProps {
   activeView: View;
   setActiveView: (view: View) => void;
   chatInterfaceProps: ChatInterfaceProps;
-};
+  currentSection?: string;
+  onSectionChange?: (section: string) => void;
+}
 
-const ContentView = ({ activeView, setActiveView, chatInterfaceProps }: ContentViewProps) => {
+const ContentView = ({ activeView, setActiveView, chatInterfaceProps, currentSection = 'chat' }: ContentViewProps) => {
   return (
-    <div className="w-full pb-[100px]">
+    <div className="w-full h-full overflow-y-auto">
+      {/* Chat Section */}
       <section id="chat" className="min-h-screen">
         <ChatInterface {...chatInterfaceProps} />
       </section>
-      <AboutView activeView={activeView} setActiveView={setActiveView} />
-      <ExperienceView activeView={activeView} setActiveView={setActiveView} />
-      <ProjectsView activeView={activeView} setActiveView={setActiveView} />
-      <SkillsView activeView={activeView} setActiveView={setActiveView} />
-      <ContactView activeView={activeView} setActiveView={setActiveView} />
+      
+      {/* Home Section */}
+      <section id="home" className="min-h-screen">
+        <ChatInterface {...chatInterfaceProps} />
+      </section>
+      
+      {/* About Section */}
+      <section id="about" className="min-h-screen">
+        <AboutView activeView={activeView} setActiveView={setActiveView} />
+      </section>
+      
+      {/* Experience Section */}
+      <section id="experience" className="min-h-screen">
+        <ExperienceView activeView={activeView} setActiveView={setActiveView} />
+      </section>
+      
+      {/* Projects Section */}
+      <section id="projects" className="min-h-screen">
+        <ProjectsView activeView={activeView} setActiveView={setActiveView} />
+      </section>
+      
+      {/* Skills Section */}
+      <section id="skills" className="min-h-screen">
+        <SkillsView activeView={activeView} setActiveView={setActiveView} />
+      </section>
+      
+      {/* Contact Section */}
+      <section id="contact" className="min-h-screen">
+        <ContactView activeView={activeView} setActiveView={setActiveView} />
+      </section>
+      
+      {/* Bottom padding */}
+      <div className="h-[100px]"></div>
     </div>
   );
 };

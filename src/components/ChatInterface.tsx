@@ -198,50 +198,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
         >
 
           <div className="mb-16">
-            <h1 className="text-3xl md:text-5xl font-bold mb-3">{getGreeting()}</h1>
-            <p className="text-muted-foreground text-sm md:text-base mb-6">I'm his assistant - you can ask me anything about him here!</p>
-            <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
-              Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.
-            </p>
+            <h1 className="text-3xl md:text-5xl font-bold mb-8">How can I help, Yash?</h1>
           </div>
 
           <div className="w-full">
-
-            {/* Social Media Pills */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
-              <a
-                href="https://github.com/yashgori20"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/30 border border-secondary text-sm text-muted-foreground hover:bg-secondary/50 hover:text-primary transition-all duration-200"
-              >
-                <Github className="h-3.5 w-3.5" />
-                GitHub
-              </a>
-              <a
-                href="https://linkedin.com/in/yashgori20"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/30 border border-secondary text-sm text-muted-foreground hover:bg-secondary/50 hover:text-primary transition-all duration-200"
-              >
-                <Linkedin className="h-3.5 w-3.5" />
-                LinkedIn
-              </a>
-              <a
-                href="https://huggingface.co/yashgori20"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/30 border border-secondary text-sm text-muted-foreground hover:bg-secondary/50 hover:text-primary transition-all duration-200"
-              >
-                <HuggingFaceLogo className="h-3.5 w-3.5" />
-                HuggingFace
-              </a>
-            </div>
-
-            <PillNavigation setActiveView={setActiveView} />
-          </div>
-
-          <div className="relative w-full max-w-2xl mx-auto">
+            <div className="relative w-full max-w-2xl mx-auto">
             <div className="mb-4">
               <div
                 onFocus={handleInputFocus}
@@ -329,6 +290,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                 </motion.div>
               )}
             </AnimatePresence>
+            </div>
           </div>
 
         </div>

@@ -11,45 +11,23 @@ type ViewProps = {
 
 const getSkillIcon = (category: string) => {
     const iconMap: { [key: string]: JSX.Element } = {
-        'AI/ML Core': <BrainCircuit className="h-4 w-4 text-primary" />,
-        'Technical Delivery': <Monitor className="h-4 w-4 text-primary" />,
-        'Product & Collaboration': <Users className="h-4 w-4 text-primary" />
+        'AI/ML Core': <BrainCircuit className="h-4 w-4 text-white" />,
+        'Technical Delivery': <Monitor className="h-4 w-4 text-white" />,
+        'Product & Collaboration': <Users className="h-4 w-4 text-white" />
     };
-    return iconMap[category] || <Code className="h-4 w-4 text-primary" />;
+    return iconMap[category] || <Code className="h-4 w-4 text-white" />;
 };
 
-const SkillItem = ({ name, level, category, index }: { name: string; level?: number; category: string; index: number }) => {
-    const percentage = level || 0;
+const SkillItem = ({ name, category, index }: { name: string; category: string; index: number }) => {
     return (
-        <div className={`group bg-gradient-to-br from-primary/5 to-secondary/5 p-3 rounded-lg border hover:border-primary/30 transition-all duration-500 hover:scale-105 hover:shadow-lg animate-slideInUp animate-delay-${index * 100}`}>
-            <div className="flex flex-col items-center space-y-2">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+        <div className={`group transition-all duration-300 animate-slideInUp animate-delay-${index * 100} py-2`}>
+            <div className="flex items-center gap-3">
+                <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
                     {getSkillIcon(category)}
                 </div>
-
-                <div className="relative w-full h-3 bg-secondary/20 rounded-sm overflow-hidden border-2 border-white">
-                    <div
-                        className="h-full bg-white transition-all duration-1000 ease-out"
-                        style={{
-                            width: `${percentage}%`
-                        }}
-                    />
-                    <div
-                        className="absolute top-0 right-0 h-full opacity-50"
-                        style={{
-                            width: `${100 - percentage}%`,
-                            backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground)) 1px, transparent 1px)`,
-                            backgroundSize: '3px 3px'
-                        }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-[8px] font-bold text-black mix-blend-difference">
-                            {percentage}%
-                        </span>
-                    </div>
+                <div className="flex-1">
+                    <span className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">{name}</span>
                 </div>
-
-                <h3 className="font-medium text-xs text-center group-hover:text-primary transition-colors">{name}</h3>
             </div>
         </div>
     );
@@ -66,27 +44,29 @@ const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
     return (
         <Section title="Skills & Expertise" id="skills">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {Object.entries(skillCategories).map(([category, skills]) => (
-                    <div key={category} className="space-y-2 md:space-y-4">
-                        <div className="text-center">
-                            <div className="inline-flex items-center gap-1.5 px-2 py-1 md:px-3 md:py-1.5 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border">
-                                {getSkillIcon(category)}
-                                <h3 className="font-semibold text-sm md:text-base">{category}</h3>
-                            </div>
-                        </div>
-                        <div className="space-y-2 md:space-y-3">
-                            {skills.map((skill, index) => (
+                {Object.entries(skillCategories).flatMap(([category, skills]) =>
+                    skills.map((skill, skillIndex, skillsArray) => {
+                        const globalIndex = Object.entries(skillCategories)
+                            .slice(0, Object.keys(skillCategories).indexOf(category))
+                            .reduce((acc, [, prevSkills]) => acc + prevSkills.length, 0) + skillIndex;
+                        
+                        const totalSkills = Object.values(skillCategories).flat().length;
+                        
+                        return (
+                            <div key={skill.name}>
                                 <SkillItem
-                                    key={skill.name}
                                     name={skill.name}
-                                    level={skill.level}
                                     category={category}
-                                    index={index}
+                                    index={globalIndex}
                                 />
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                                {/* Subtle separator line between items */}
+                                {globalIndex < totalSkills - 1 && (
+                                    <div className="mt-4 border-b border-gray-200/20"></div>
+                                )}
+                            </div>
+                        );
+                    })
+                )}
             </div>
         </Section>
     );

@@ -3,7 +3,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { View } from '@/types';
 import { useWindowSize } from '@/hooks/use-window-size';
 
-const views: View[] = ['content'];
+const views: View[] = ['content', 'newchat'];
 
 export const usePageNavigation = () => {
   const [activeView, setActiveView] = useState<View>('content');

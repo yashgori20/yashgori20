@@ -3,6 +3,7 @@ import { motion, PanInfo } from 'framer-motion';
 import { View } from '@/types';
 import ChatInterface from '@/components/ChatInterface';
 import ContentView from '@/components/views/ContentView';
+import NewChatView from '@/components/views/NewChatView';
 
 interface ChatInterfaceProps {
   messages: any[];
@@ -32,6 +33,7 @@ interface ContentViewProps {
 const PageComponents: Record<View, React.ComponentType<ChatInterfaceProps | ContentViewProps>> = {
   chat: ChatInterface,
   content: ContentView,
+  newchat: NewChatView,
 };
 
 type PageContainerProps = {
@@ -94,11 +96,19 @@ const PageContainer = ({
                 touchAction: isMobile ? 'pan-y' : 'auto'
               }}
             >
-              <ContentView
-                activeView={activeView}
-                setActiveView={setActiveView}
-                chatInterfaceProps={chatInterfaceProps}
-              />
+              {viewName === 'content' ? (
+                <ContentView
+                  activeView={activeView}
+                  setActiveView={setActiveView}
+                  chatInterfaceProps={chatInterfaceProps}
+                />
+              ) : viewName === 'newchat' ? (
+                <NewChatView
+                  activeView={activeView}
+                  setActiveView={setActiveView}
+                  chatInterfaceProps={chatInterfaceProps}
+                />
+              ) : null}
             </div>
           ))}
         </motion.div>

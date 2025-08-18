@@ -4,7 +4,7 @@ export type Message = {
   content: string;
 };
 
-export type View = 'chat' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
+export type View = 'chat' | 'about' | 'experience' | 'projects' | 'skills' | 'contact' | 'content' | 'newchat';
 
 // v2.0 API Types
 export interface ChatSession {

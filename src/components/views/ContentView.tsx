@@ -32,19 +32,9 @@ interface ContentViewProps {
   onSectionChange?: (section: string) => void;
 }
 
-const ContentView = ({ activeView, setActiveView, chatInterfaceProps, currentSection = 'chat' }: ContentViewProps) => {
+const ContentView = ({ activeView, setActiveView, chatInterfaceProps, currentSection = 'about' }: ContentViewProps) => {
   return (
     <div className="w-full h-full overflow-y-auto">
-      {/* Chat Section */}
-      <section id="chat" className="min-h-screen">
-        <ChatInterface {...chatInterfaceProps} />
-      </section>
-      
-      {/* Home Section */}
-      <section id="home" className="min-h-screen">
-        <ChatInterface {...chatInterfaceProps} />
-      </section>
-      
       {/* About Section */}
       <section id="about" className="min-h-screen">
         <AboutView activeView={activeView} setActiveView={setActiveView} />

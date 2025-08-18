@@ -118,7 +118,6 @@ const Index = () => {
 
   // Portfolio sections as "chats" - matching Demo1 structure
   const portfolioChats = [
-    { id: 'home', title: 'Home', icon: Home, description: 'Welcome to my portfolio' },
     { id: 'about', title: 'About Me', icon: User, description: 'Learn about my background' },
     { id: 'experience', title: 'Work Experience', icon: Briefcase, description: 'My professional journey' },
     { id: 'projects', title: 'Projects', icon: Code, description: 'Things I\'ve built' },
@@ -266,15 +265,11 @@ const Index = () => {
               className={cn(
                 "w-full text-left rounded-lg transition-colors",
                 isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5",
-                (activeView === 'content' && activeSection === 'chat') ? "bg-[#303030]" : "hover:bg-[#303030]"
+                activeView === 'newchat' ? "bg-[#303030]" : "hover:bg-[#303030]"
               )}
               onClick={() => {
                 setMessages([]);
-                const element = document.getElementById('chat');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-                setActiveView('content');
+                setActiveView('newchat');
                 if (isMobile) closeMobileSidebar();
               }}
             >
@@ -576,7 +571,7 @@ const Index = () => {
           setActiveView={setActiveView}
         />
 
-        {activeView === 'chat' && messages.length > 0 && (
+        {activeView === 'newchat' && messages.length > 0 && (
           <div className="p-4 border-t border-gray-700 bg-[#181818]">
             <ChatInputBar
               input={input}

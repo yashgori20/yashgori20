@@ -133,11 +133,11 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="space-y-6 bg-card p-6 rounded-2xl border h-full">
+    <div className="space-y-6 p-6 h-full">
       <h3 className="text-xl font-semibold text-center mb-4">Get In Touch</h3>
 
       {/* Division 1: Quick Message */}
-      <div className="space-y-3 p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border">
+      <div className="space-y-3 p-4">
         <h4 className="text-base font-semibold">Quick Message</h4>
 
         <div className="space-y-2">
@@ -174,7 +174,7 @@ const ContactForm = () => {
       </div>
 
       {/* Division 2: Full Contact Form */}
-      <div className="space-y-3 p-4 bg-gradient-to-br from-secondary/5 to-primary/5 rounded-xl border">
+      <div className="space-y-3 p-4">
         <h4 className="text-base font-semibold">Reach Out</h4>
 
         <form onSubmit={handleFullFormSubmit} className="space-y-3">

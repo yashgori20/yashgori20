@@ -1,5 +1,5 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { resumeData } from '@/data/resume';
 import { cn } from '@/lib/utils';
 import ProfileCard from '@/components/ProfileCard';
@@ -36,10 +36,15 @@ import {
   Linkedin,
   Github,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Grid2X2,
+  Home,
+  Phone
 } from 'lucide-react';
 import XLogo from '@/components/XLogo';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
+import SearchChatsOverlay from '@/components/SearchChatsOverlay';
+import ProjectModal from '@/components/ProjectModal';
 
 const Index = () => {
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -48,6 +53,9 @@ const Index = () => {
   const [showMemoryModal, setShowMemoryModal] = useState(false);
   const [showReachOutOverlay, setShowReachOutOverlay] = useState(false);
   const [reachOutTimeout, setReachOutTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [showSearchOverlay, setShowSearchOverlay] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [showProjectModal, setShowProjectModal] = useState(false);
   const activeSection = useActiveSection();
 
   const {
@@ -110,6 +118,7 @@ const Index = () => {
 
   // Portfolio sections as "chats" - matching Demo1 structure
   const portfolioChats = [
+    { id: 'home', title: 'Home', icon: Home, description: 'Welcome to my portfolio' },
     { id: 'about', title: 'About Me', icon: User, description: 'Learn about my background' },
     { id: 'experience', title: 'Work Experience', icon: Briefcase, description: 'My professional journey' },
     { id: 'projects', title: 'Projects', icon: Code, description: 'Things I\'ve built' },
@@ -133,23 +142,12 @@ const Index = () => {
   };
 
   const handleChatClick = (chatId: string) => {
-    // Navigate to the corresponding section
-    const sectionMap: { [key: string]: View } = {
-      'about': 'content',
-      'experience': 'content',
-      'projects': 'content',
-      'skills': 'content',
-      'contact': 'content'
-    };
-
-    const targetView = sectionMap[chatId];
-    if (targetView) {
-      setActiveView(targetView);
-      // Scroll to section after a brief delay to ensure view is loaded
-      setTimeout(() => {
-        document.getElementById(chatId)?.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+    // Scroll to the specific section (each section is separate)
+    const element = document.getElementById(chatId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
+    setActiveView('content');
 
     if (isMobile) {
       closeMobileSidebar();
@@ -163,6 +161,22 @@ const Index = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleSearchSectionClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setActiveView('content');
+    if (isMobile) {
+      closeMobileSidebar();
+    }
+  };
+
+  const handleSearchProjectClick = (project: any) => {
+    setSelectedProject(project);
+    setShowProjectModal(true);
   };
 
   const finalIsCollapsed = isMobile || isSidebarCollapsed;
@@ -209,6 +223,10 @@ const Index = () => {
           {!isSidebarCollapsed && (
             <button 
               onClick={() => {
+                const element = document.getElementById('chat');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
                 setActiveView('content');
                 if (isMobile) closeMobileSidebar();
               }}
@@ -248,11 +266,15 @@ const Index = () => {
               className={cn(
                 "w-full text-left rounded-lg transition-colors",
                 isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5",
-                (activeView === 'chat' || activeSection === 'chat') ? "bg-[#303030]" : "hover:bg-[#303030]"
+                (activeView === 'content' && activeSection === 'chat') ? "bg-[#303030]" : "hover:bg-[#303030]"
               )}
               onClick={() => {
                 setMessages([]);
-                setActiveView('chat');
+                const element = document.getElementById('chat');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+                setActiveView('content');
                 if (isMobile) closeMobileSidebar();
               }}
             >
@@ -263,27 +285,57 @@ const Index = () => {
                 )}
               </div>
             </button>
+            <button 
+              className={cn(
+                "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
+                isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
+              )}
+              onClick={() => setShowSearchOverlay(true)}
+            >
+              <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
+                <Search className="h-4 w-4 text-gray-400" />
+                {!isSidebarCollapsed && (
+                  <div className="text-sm text-white truncate whitespace-nowrap">Search</div>
+                )}
+              </div>
+            </button>
             <button className={cn(
               "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
               isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
             )}>
               <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
-                <Search className="h-4 w-4 text-gray-400" />
+                <Grid2X2 className="h-4 w-4 text-gray-400" />
                 {!isSidebarCollapsed && (
-                  <div className="text-sm text-white truncate whitespace-nowrap">Search chats</div>
+                  <div className="text-sm text-white truncate whitespace-nowrap">Explore</div>
                 )}
               </div>
             </button>
+          </div>
+        </div>
+
+        {/* Separator when collapsed */}
+        {isSidebarCollapsed && (
+          <div className="mx-2 border-b border-gray-700/30 mb-4"></div>
+        )}
+
+        {/* Chats Section */}
+        <div className={cn(isSidebarCollapsed ? "px-2" : "px-3", "pb-4")}>
+          {!isSidebarCollapsed && (
+            <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide px-3">Chats</div>
+          )}
+          <div className={cn(isSidebarCollapsed ? "space-y-2" : "space-y-0.5")}>
             {portfolioChats.map((chat) => {
               const Icon = chat.icon;
-              const isActive = activeSection === chat.id;
+              const isActive = activeView === 'content' && activeSection === chat.id;
               return (
                 <button
                   key={chat.id}
                   onClick={() => handleChatClick(chat.id)}
                   className={cn(
-                    "w-full text-left rounded-lg transition-colors group",
-                    isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5",
+                    "w-full text-left rounded-lg transition-colors",
+                    isSidebarCollapsed 
+                      ? "p-2.5 flex justify-center" 
+                      : "px-3 py-2.5",
                     isActive ? "bg-[#303030]" : "hover:bg-[#303030]"
                   )}
                 >
@@ -298,18 +350,6 @@ const Index = () => {
             })}
           </div>
         </div>
-
-        {/* Chats Section */}
-        {!isSidebarCollapsed && (
-          <div className="px-3 pb-4">
-            <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide px-3">Chats</div>
-            <div className="space-y-0.5">
-              <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#303030] transition-colors">
-                <div className="text-sm text-white truncate whitespace-nowrap">Resume optimization steps</div>
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Spacer to push profile to bottom */}
         <div className="flex-1"></div>
@@ -473,7 +513,7 @@ const Index = () => {
                       
                       {/* Phone */}
                       <div className="flex items-center gap-3 text-sm">
-                        <span className="text-gray-400">📞</span>
+                        <Phone className="h-4 w-4 text-gray-400" />
                         <span className="text-white">{resumeData.contact.phone}</span>
                       </div>
                       
@@ -510,7 +550,7 @@ const Index = () => {
                           }, 300);
                           setShowReachOutOverlay(false);
                         }}
-                        className="w-full mt-3 p-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm transition-colors"
+                        className="w-full mt-3 p-2 bg-[#404040] hover:bg-[#505050] text-white rounded-lg text-sm transition-colors"
                       >
                         Contact Me
                       </button>
@@ -552,6 +592,24 @@ const Index = () => {
           </div>
         )}
       </div>
+
+      {/* Search Chats Overlay */}
+      <SearchChatsOverlay
+        isOpen={showSearchOverlay}
+        onClose={() => setShowSearchOverlay(false)}
+        onSectionClick={handleSearchSectionClick}
+        onProjectClick={handleSearchProjectClick}
+      />
+
+      {/* Project Modal */}
+      <ProjectModal
+        project={selectedProject}
+        isOpen={showProjectModal}
+        onClose={() => {
+          setShowProjectModal(false);
+          setSelectedProject(null);
+        }}
+      />
     </div>
   );
 };

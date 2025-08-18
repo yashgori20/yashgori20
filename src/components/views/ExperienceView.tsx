@@ -85,7 +85,7 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
                         variant="outline"
                         size="sm"
                         onClick={() => toggleExpanded(exp.company)}
-                        className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50"
+                        className="border-gray-600 text-white hover:bg-[#404040] hover:border-gray-500 bg-transparent"
                       >
                         {expandedExperiences.has(exp.company) ? (
                           <>
@@ -112,21 +112,18 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Volunteering</h2>
-          <div className="relative group">
-            <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary to-primary/20 rounded-full transition-transform duration-300 group-hover:scale-y-105"></div>
-            <div className="ml-8 bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border hover:border-primary/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold">{resumeData.volunteering.role}</h3>
-                  <p className="text-primary font-medium">{resumeData.volunteering.organization}</p>
-                </div>
-                <div className="bg-secondary px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0 whitespace-nowrap">
-                  {resumeData.volunteering.period}
-                </div>
+          <h2 className="text-3xl font-bold mb-8">Volunteering</h2>
+          <div className="py-6">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold text-white">{resumeData.volunteering.role}</h3>
+                <p className="text-gray-300 font-medium">{resumeData.volunteering.organization}</p>
               </div>
-              <p className="text-muted-foreground">{resumeData.volunteering.description}</p>
+              <div className="text-sm font-medium mt-2 md:mt-0 whitespace-nowrap text-gray-400">
+                {resumeData.volunteering.period}
+              </div>
             </div>
+            <p className="text-muted-foreground">{resumeData.volunteering.description}</p>
           </div>
         </div>
       </div>

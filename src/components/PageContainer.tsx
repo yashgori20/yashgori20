@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import { View } from '@/types';
@@ -26,6 +25,8 @@ interface ContentViewProps {
   activeView: View;
   setActiveView: (view: View) => void;
   chatInterfaceProps: ChatInterfaceProps;
+  currentSection?: string;
+  onSectionChange?: (section: string) => void;
 }
 
 const PageComponents: Record<View, React.ComponentType<ChatInterfaceProps | ContentViewProps>> = {
@@ -78,10 +79,8 @@ const PageContainer = ({
           onDragEnd={handleDragEnd}
           animate={{ y: -pageIndex * windowHeight }}
           transition={{
-            type: 'spring',
-            stiffness: 300,
-            damping: 30,
-            mass: 1
+            duration: 0.3,
+            ease: "easeInOut"
           }}
           onAnimationComplete={onAnimationComplete}
         >

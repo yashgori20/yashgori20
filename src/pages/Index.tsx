@@ -12,6 +12,7 @@ import { useMobileGestures } from '@/hooks/useMobileGestures';
 import { useProfileCard } from '@/hooks/useProfileCard';
 import { useSidebarState } from '@/hooks/useSidebarState';
 import { useChatApi } from '@/hooks/useChatApi';
+import { useActiveSection } from '@/hooks/useActiveSection';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -47,6 +48,7 @@ const Index = () => {
   const [showMemoryModal, setShowMemoryModal] = useState(false);
   const [showReachOutOverlay, setShowReachOutOverlay] = useState(false);
   const [reachOutTimeout, setReachOutTimeout] = useState<NodeJS.Timeout | null>(null);
+  const activeSection = useActiveSection();
 
   const {
     activeView,
@@ -244,8 +246,9 @@ const Index = () => {
           <div className={cn(isSidebarCollapsed ? "space-y-2" : "space-y-0.5")}>
             <button
               className={cn(
-                "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
-                isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
+                "w-full text-left rounded-lg transition-colors",
+                isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5",
+                (activeView === 'chat' || activeSection === 'chat') ? "bg-[#303030]" : "hover:bg-[#303030]"
               )}
               onClick={() => {
                 setMessages([]);
@@ -273,13 +276,15 @@ const Index = () => {
             </button>
             {portfolioChats.map((chat) => {
               const Icon = chat.icon;
+              const isActive = activeSection === chat.id;
               return (
                 <button
                   key={chat.id}
                   onClick={() => handleChatClick(chat.id)}
                   className={cn(
-                    "w-full text-left rounded-lg hover:bg-[#303030] transition-colors group",
-                    isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
+                    "w-full text-left rounded-lg transition-colors group",
+                    isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5",
+                    isActive ? "bg-[#303030]" : "hover:bg-[#303030]"
                   )}
                 >
                   <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>

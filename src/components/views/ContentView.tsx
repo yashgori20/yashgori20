@@ -32,7 +32,7 @@ type ContentViewProps = {
 
 const ContentView = ({ activeView, setActiveView, chatInterfaceProps }: ContentViewProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full pb-[100px]">
       <section id="chat" className="min-h-screen">
         <ChatInterface {...chatInterfaceProps} />
       </section>

@@ -37,21 +37,47 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
               className={`py-6 group cursor-pointer animate-slideInUp animate-delay-${index * 100}`}
               onClick={() => handleProjectClick(proj)}
             >
-              <div className="flex flex-col flex-1">
-                <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gray-200 transition-colors">{proj.title}</h3>
-                <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
+              {/* 65/35 Split Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-center">
+                {/* 65% - Project Content */}
+                <div className="lg:col-span-6 flex flex-col">
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gray-200 transition-colors">{proj.title}</h3>
+                  <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {proj.technologies.map(tech => (
-                    <span key={tech} className="px-3 py-1 text-gray-300 text-xs font-medium">
-                      {tech}
-                    </span>
-                  ))}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {proj.technologies.map(tech => (
+                      <span key={tech} className="px-3 py-1 text-gray-300 text-xs font-medium">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-4 flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">Click to view details</span>
+                    <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
+                  </div>
                 </div>
 
-                <div className="pt-4 flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Click to view details</span>
-                  <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
+                {/* 35% - Project Image with Dark Glass Overlay */}
+                <div className="lg:col-span-4 hidden lg:block">
+                  <div className="relative overflow-hidden rounded-xl shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                    <img
+                      src={getProjectImage(index)}
+                      alt={`${proj.title} preview`}
+                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {/* Dark Glass Overlay */}
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] transition-all duration-300 group-hover:bg-black/40">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    </div>
+                    {/* Optional overlay content */}
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <div className="flex items-center justify-between text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="font-medium">Preview</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

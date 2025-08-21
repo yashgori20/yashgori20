@@ -28,18 +28,15 @@ import {
   BrainCircuit,
   Mail,
   ChevronDown,
-  Settings,
-  HelpCircle,
-  Palette,
-  Database,
   Instagram,
   Linkedin,
   Github,
   ChevronLeft,
   ChevronRight,
-  Grid2X2,
   Home,
-  Phone
+  Phone,
+  Download,
+  Link
 } from 'lucide-react';
 import XLogo from '@/components/XLogo';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
@@ -118,6 +115,7 @@ const Index = () => {
 
   // Portfolio sections as "chats" - matching Demo1 structure
   const portfolioChats = [
+    { id: 'home', title: 'Home', icon: Home, description: 'Welcome to my portfolio' },
     { id: 'about', title: 'About Me', icon: User, description: 'Learn about my background' },
     { id: 'experience', title: 'Work Experience', icon: Briefcase, description: 'My professional journey' },
     { id: 'projects', title: 'Projects', icon: Code, description: 'Things I\'ve built' },
@@ -294,17 +292,6 @@ const Index = () => {
                 )}
               </div>
             </button>
-            <button className={cn(
-              "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
-              isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
-            )}>
-              <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
-                <Grid2X2 className="h-4 w-4 text-gray-400" />
-                {!isSidebarCollapsed && (
-                  <div className="text-sm text-white truncate whitespace-nowrap">Explore</div>
-                )}
-              </div>
-            </button>
           </div>
         </div>
 
@@ -422,26 +409,48 @@ const Index = () => {
 
                 <div className="p-2">
                   <button
-                    onClick={() => setShowPersonalityModal(true)}
+                    onClick={handleDownloadResume}
                     className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
                   >
-                    <Palette className="h-4 w-4" />
-                    <span className="text-sm">Change Chatbot Personality</span>
+                    <Download className="h-4 w-4" />
+                    <span className="text-sm">Download Resume</span>
                   </button>
                   <button
-                    onClick={() => setShowMemoryModal(true)}
+                    onClick={() => {
+                      setMessages([]);
+                      setActiveView('newchat');
+                      setShowProfileDropdown(false);
+                      if (isMobile) closeMobileSidebar();
+                    }}
                     className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
                   >
-                    <Database className="h-4 w-4" />
-                    <span className="text-sm">Memory & Preferences</span>
+                    <Plus className="h-4 w-4" />
+                    <span className="text-sm">New Chat</span>
                   </button>
-                  <button className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left">
-                    <HelpCircle className="h-4 w-4" />
-                    <span className="text-sm">Help & Support</span>
+                  <button 
+                    onClick={() => {
+                      setActiveView('content');
+                      setTimeout(() => {
+                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                      setShowProfileDropdown(false);
+                      if (isMobile) closeMobileSidebar();
+                    }}
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
+                  >
+                    <Mail className="h-4 w-4" />
+                    <span className="text-sm">Contact Me</span>
                   </button>
-                  <button className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left">
-                    <Settings className="h-4 w-4" />
-                    <span className="text-sm">Settings</span>
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                      // You could add a toast notification here
+                      setShowProfileDropdown(false);
+                    }}
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
+                  >
+                    <Link className="h-4 w-4" />
+                    <span className="text-sm">Copy Portfolio Link</span>
                   </button>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export const useActiveSection = () => {
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const observerOptions = {

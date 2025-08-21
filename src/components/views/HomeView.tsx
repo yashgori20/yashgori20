@@ -23,7 +23,7 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
   };
 
   return (
-    <section id="home" className="p-6 pt-4 md:p-8 md:pt-8 pb-16 min-h-screen relative">
+    <section id="home" className="p-6 pt-0 md:p-8 md:pt-0 pb-16 min-h-screen relative">
       <div className="max-w-6xl mx-auto w-full">
         <div className="flex flex-col justify-center items-center min-h-[60vh] space-y-6">
           {/* Dynamic Greeting */}

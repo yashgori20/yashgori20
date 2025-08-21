@@ -42,6 +42,7 @@ import XLogo from '@/components/XLogo';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
 import SearchChatsOverlay from '@/components/SearchChatsOverlay';
 import ProjectModal from '@/components/ProjectModal';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Index = () => {
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -53,7 +54,16 @@ const Index = () => {
   const [showSearchOverlay, setShowSearchOverlay] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [showProjectModal, setShowProjectModal] = useState(false);
+  const [currentMode, setCurrentMode] = useState('Recruiter Mode');
+  const [showModeDropdown, setShowModeDropdown] = useState(false);
   const activeSection = useActiveSection();
+
+  const conversationModes = [
+    { id: 'recruiter', name: 'Recruiter Mode', description: 'Professional hiring perspective' },
+    { id: 'collaboration', name: 'Collaboration Mode', description: 'Team-oriented discussions' },
+    { id: 'friendly', name: 'Friendly Mode', description: 'Casual, friendly conversations' },
+    { id: 'technical', name: 'Technical Mode', description: 'Deep technical discussions' },
+  ];
 
   const {
     activeView,
@@ -469,13 +479,56 @@ const Index = () => {
         )}
 
         {/* Header */}
-        <div className="p-4">
+        <div className="p-2 px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {isMobile && (
                 <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
                   <Menu className="h-6 w-6" />
                 </Button>
+              )}
+              
+              {/* Mode Selector - Only show on chat screens */}
+              {(activeView === 'newchat' || activeView === 'chat') && (
+                <div className="relative">
+                <button
+                  onClick={() => setShowModeDropdown(!showModeDropdown)}
+                  className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] hover:bg-[#303030] rounded-lg text-white text-sm font-medium transition-colors"
+                >
+                  <span>{currentMode}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+                
+                {/* Mode Dropdown */}
+                <AnimatePresence>
+                  {showModeDropdown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 mt-2 w-64 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-xl z-50"
+                    >
+                      {conversationModes.map((mode) => (
+                        <button
+                          key={mode.id}
+                          onClick={() => {
+                            setCurrentMode(mode.name);
+                            setShowModeDropdown(false);
+                          }}
+                          className={cn(
+                            "w-full text-left px-4 py-3 hover:bg-[#303030] transition-colors first:rounded-t-lg last:rounded-b-lg",
+                            currentMode === mode.name && "bg-[#303030]"
+                          )}
+                        >
+                          <div className="text-white font-medium text-sm">{mode.name}</div>
+                          <div className="text-gray-400 text-xs mt-1">{mode.description}</div>
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                </div>
               )}
             </div>
             <div className="flex items-center gap-4">
@@ -581,18 +634,13 @@ const Index = () => {
         />
 
         {activeView === 'newchat' && messages.length > 0 && (
-          <div className="p-4 border-t border-gray-700 bg-[#181818]">
+          <div className="p-3 pb-2">
             <ChatInputBar
               input={input}
               setInput={setInput}
               handleSend={handleSend}
               isPending={askApi.isPending}
             />
-            <div className="flex flex-col items-center gap-2 mt-3">
-              <p className="text-xs text-center text-gray-400">
-                YashGori-GPT can make mistakes. Consider checking important information.
-              </p>
-            </div>
           </div>
         )}
       </div>

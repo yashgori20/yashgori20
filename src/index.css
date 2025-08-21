@@ -103,6 +103,15 @@
     }
   }
 
+  @keyframes pulse-scale {
+    0%, 100% {
+      transform: scale(0.67); /* 10px from 15px base */
+    }
+    50% {
+      transform: scale(1.33); /* 20px from 15px base */
+    }
+  }
+
   .animate-fadeIn {
     animation: fadeIn 0.5s ease-out;
   }
@@ -121,6 +130,11 @@
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
   }
+
+  .animate-pulse-scale {
+    animation: pulse-scale 1.5s ease-in-out infinite;
+  }
+
 
   /* Staggered animation delays */
   .animate-delay-100 { animation-delay: 0.1s; }

@@ -54,25 +54,19 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
   );
 
   return (
-    <div className={cn("flex items-start gap-4", isUser ? "justify-end" : "justify-start")}>
-      {!isUser && (
-        <Avatar className="w-8 h-8 rounded-none animate-gentle-pulse">
-          <AvatarImage src="/images/triquetra-logo.png" alt="AI Assistant" />
-          <AvatarFallback>
-            <Bot className="w-5 h-5" />
-          </AvatarFallback>
-        </Avatar>
-      )}
-      <div className={cn("max-w-xl", isUser ? "text-right" : "")}>
-        <div className={cn("p-4 rounded-lg", isUser ? "bg-primary text-primary-foreground" : "bg-secondary")}>
-          {isUser ? (
-            <div className="whitespace-pre-wrap">{message.content}</div>
-          ) : (
+    <div className={cn("mb-8", isUser ? "text-right" : "text-left")}>
+      <div className={cn("max-w-4xl", isUser ? "ml-auto" : "mr-auto")}>
+        {isUser ? (
+          <div className="inline-block bg-[#303030] px-4 py-3 rounded-2xl text-white text-lg font-medium whitespace-pre-wrap">
+            {message.content}
+          </div>
+        ) : (
+          <div className="text-white text-base leading-relaxed">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {message.content}
             </ReactMarkdown>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Rich content - only show for assistant messages with actual content */}
         {!isUser && richContent && Object.keys(richContent).length > 0 &&
@@ -81,7 +75,7 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
             (project.technical_specs && project.technical_specs.length > 0) ||
             project.key_achievement
           ) && (
-            <div className="space-y-2 mt-3">
+            <div className="space-y-2 mt-4">
               {Object.entries(richContent)
                 .filter(([_, project]) =>
                   project.github_link ||
@@ -94,7 +88,6 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
             </div>
           )}
       </div>
-      {isUser && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><User className="w-5 h-5 text-secondary-foreground" /></div>}
     </div>
   );
 };

@@ -37,7 +37,7 @@ const ChatInputBar = ({
         onKeyDown?.(e);
       }}
       placeholder={showSuggestions ? "" : "Ask me anything about Yash"}
-      className={cn("h-14 text-base rounded-3xl bg-[#2a2a2a] border-gray-600 pl-4 pr-16", inputClassName)}
+      className={cn("h-11 text-base rounded-3xl bg-[#2a2a2a] border-gray-600 pl-4 pr-16", inputClassName)}
       autoComplete="off"
       autoCapitalize="off"
       autoCorrect="off"
@@ -46,7 +46,7 @@ const ChatInputBar = ({
     <Button
       size="icon"
       variant="ghost"
-      className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-gray-600 hover:bg-gray-500"
+      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-gray-600 hover:bg-gray-500"
       onClick={handleSend}
       disabled={isPending}
     >

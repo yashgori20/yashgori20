@@ -634,15 +634,9 @@ const Index = () => {
           setActiveView={setActiveView}
         />
 
-      </div>
-
-      {/* Persistent Floating Chat Input Bar - Show on all screens except empty new chat */}
-      {!(activeView === 'newchat' && messages.length === 0) && (
-        <div className={cn(
-          "fixed bottom-4 z-40 transition-all duration-300",
-          finalIsCollapsed ? "right-4 left-16" : "right-4 left-72"
-        )}>
-          <div className="bg-[#2a2a2a] border border-gray-600 rounded-3xl p-2 shadow-lg backdrop-blur-sm">
+        {/* Chat Input Bar - Show at bottom of active chat */}
+        {activeView === 'newchat' && messages.length > 0 && (
+          <div className="p-3 pb-2 border-t border-gray-600">
             <ChatInputBar
               input={input}
               setInput={setInput}
@@ -650,6 +644,22 @@ const Index = () => {
               isPending={askApi.isPending}
             />
           </div>
+        )}
+      </div>
+
+      {/* Persistent Floating Chat Input Bar - Show on portfolio screens only */}
+      {activeView !== 'newchat' && (
+        <div className={cn(
+          "fixed bottom-4 z-40 transition-all duration-300",
+          finalIsCollapsed ? "right-4 left-16" : "right-4 left-72"
+        )}>
+          <ChatInputBar
+            input={input}
+            setInput={setInput}
+            handleSend={handleSend}
+            isPending={askApi.isPending}
+            className="shadow-lg"
+          />
         </div>
       )}
 

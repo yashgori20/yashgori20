@@ -134,11 +134,11 @@ const ContactForm = () => {
 
   return (
     <div className="bg-[#2a2a2a] border border-gray-600 rounded-lg p-6 h-full">
-      <h3 className="text-xl font-semibold text-center mb-6">Get In Touch</h3>
-
+      <h3 className="text-xl font-semibold text-center mb-6 text-white">Get In Touch</h3>
+      <div className="space-y-6">
       {/* Division 1: Quick Message */}
-      <div className="space-y-3 p-4">
-        <h4 className="text-base font-semibold">Quick Message</h4>
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-white">Quick Message</h3>
 
         <div className="space-y-2">
           <Textarea
@@ -155,29 +155,41 @@ const ContactForm = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Button
+          <button
             onClick={handleQuickWhatsApp}
-            variant="ghost"
-            className="h-10 group text-sm bg-transparent border border-gray-600 hover:bg-[#303030] hover:border-gray-500"
+            className="group py-2"
           >
-            <MessageCircle className="mr-2 h-4 w-4" />
-            WhatsApp
-          </Button>
+            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+              <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                <MessageCircle className="h-4 w-4 text-white" />
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">WhatsApp</p>
+                <p className="text-xs text-gray-400">Send via WhatsApp</p>
+              </div>
+            </div>
+          </button>
 
-          <Button
+          <button
             onClick={handleQuickEmail}
-            variant="ghost"
-            className="h-10 group text-sm bg-transparent border border-gray-600 hover:bg-[#303030] hover:border-gray-500"
+            className="group py-2"
           >
-            <Mail className="mr-2 h-4 w-4" />
-            Email
-          </Button>
+            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+              <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                <Mail className="h-4 w-4 text-white" />
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Email</p>
+                <p className="text-xs text-gray-400">Send via email client</p>
+              </div>
+            </div>
+          </button>
         </div>
       </div>
 
       {/* Division 2: Full Contact Form */}
-      <div className="space-y-3 p-4">
-        <h4 className="text-base font-semibold">Reach Out</h4>
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-white">Reach Out</h3>
 
         <form onSubmit={handleFullFormSubmit} className="space-y-3">
           <div className="space-y-2">
@@ -240,25 +252,31 @@ const ContactForm = () => {
             {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>
 
-          <Button
+          <button
             type="submit"
             disabled={isSubmitting}
-            variant="ghost"
-            className="w-full h-10 group text-sm bg-transparent border border-gray-600 hover:bg-[#303030] hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full group py-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send Message
-              </>
-            )}
-          </Button>
+            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+              <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 text-white animate-spin" />
+                ) : (
+                  <Send className="h-4 w-4 text-white" />
+                )}
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </p>
+                <p className="text-xs text-gray-400">
+                  {isSubmitting ? 'Please wait' : 'Submit your message'}
+                </p>
+              </div>
+            </div>
+          </button>
         </form>
+      </div>
       </div>
     </div>
   );

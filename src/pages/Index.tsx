@@ -636,12 +636,13 @@ const Index = () => {
 
         {/* Chat Input Bar - Show at bottom of active chat */}
         {activeView === 'newchat' && messages.length > 0 && (
-          <div className="p-3 pb-2 border-t border-gray-600">
+          <div className="p-4">
             <ChatInputBar
               input={input}
               setInput={setInput}
               handleSend={handleSend}
               isPending={askApi.isPending}
+              className="shadow-lg"
             />
           </div>
         )}

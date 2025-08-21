@@ -45,7 +45,7 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
           </div>
 
           {/* Profile Picture */}
-          <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border shadow-2xl">
+          <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border shadow-2xl">
             <img
               src={resumeData.profileImage}
               alt="Yash Gori"

@@ -45,81 +45,86 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
             </p>
           </div>
 
-          <div className="space-y-3">
-            <a href={`mailto:${resumeData.contact.email}`} className="block group">
-              <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-colors hover:bg-[#303030]">
-                <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
-                  <Mail className="h-5 w-5 text-white" />
+          <div className="space-y-2">
+            <a href={`mailto:${resumeData.contact.email}`} className="block group py-2">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                  <Mail className="h-4 w-4 text-white" />
                 </div>
-                <div>
-                  <p className="font-medium text-sm">Email</p>
-                  <p className="text-muted-foreground text-xs">{resumeData.contact.email}</p>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Email</p>
+                  <p className="text-xs text-gray-400">{resumeData.contact.email}</p>
                 </div>
               </div>
+              <div className="border-b border-gray-200/20 my-2"></div>
             </a>
 
-            <a href={`tel:${resumeData.contact.phone}`} className="block group">
-              <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-colors hover:bg-[#303030]">
-                <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-white" />
+            <a href={`tel:${resumeData.contact.phone}`} className="block group py-2">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                  <Phone className="h-4 w-4 text-white" />
                 </div>
-                <div>
-                  <p className="font-medium text-sm">Phone</p>
-                  <p className="text-muted-foreground text-xs">{resumeData.contact.phone}</p>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Phone</p>
+                  <p className="text-xs text-gray-400">{resumeData.contact.phone}</p>
                 </div>
               </div>
+              <div className="border-b border-gray-200/20 my-2"></div>
             </a>
 
             <a
               href={`https://wa.me/91${resumeData.contact.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Hi Yash! 👋 I saw your portfolio and would like to connect.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block group"
+              className="block group py-2"
             >
-              <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-colors hover:bg-[#303030]">
-                <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
-                  <MessageCircle className="h-5 w-5 text-white" />
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                  <MessageCircle className="h-4 w-4 text-white" />
                 </div>
-                <div>
-                  <p className="font-medium text-sm">WhatsApp</p>
-                  <p className="text-muted-foreground text-xs">Quick message</p>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">WhatsApp</p>
+                  <p className="text-xs text-gray-400">Quick message</p>
                 </div>
               </div>
+              <div className="border-b border-gray-200/20 my-2"></div>
             </a>
 
-            <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 hover:border-gray-500 transition-colors hover:bg-[#303030]">
-              <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
-                <MapPin className="h-5 w-5 text-white" />
+            <div className="group py-2">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                  <MapPin className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Location</p>
+                  <p className="text-xs text-gray-400">{resumeData.contact.location}</p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium text-sm">Location</p>
-                <p className="text-muted-foreground text-xs">{resumeData.contact.location}</p>
-              </div>
+              <div className="border-b border-gray-200/20 my-2"></div>
             </div>
 
-            <div>
-              <button
-                onClick={handleDownloadResume}
-                className="w-full block group"
-              >
-                <div className="flex items-center gap-3 p-3 bg-[#2a2a2a] rounded-lg border border-gray-600 group-hover:border-gray-500 transition-colors hover:bg-[#303030]">
-                  <div className="w-10 h-10 bg-[#404040] rounded-lg flex items-center justify-center">
-                    <Download className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-sm">Download Resume</p>
-                    <p className="text-muted-foreground text-xs">Get my latest CV</p>
-                  </div>
+            <button
+              onClick={handleDownloadResume}
+              className="w-full block group py-2"
+            >
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
+                  <Download className="h-4 w-4 text-white" />
                 </div>
-              </button>
-              <div className="text-center mt-2">
-                <button
-                  onClick={handleDownloadTechnicalResume}
-                  className="text-xs text-gray-400 hover:text-white transition-colors"
-                >
-                  Need a more technical version? Download here
-                </button>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Download Resume</p>
+                  <p className="text-xs text-gray-400">Get my latest CV</p>
+                </div>
               </div>
+            </button>
+            
+            <div className="text-center mt-2">
+              <button
+                onClick={handleDownloadTechnicalResume}
+                className="text-xs text-gray-400 hover:text-white transition-colors"
+              >
+                Need a more technical version? Download here
+              </button>
             </div>
           </div>
 

@@ -37,7 +37,7 @@ const ChatInputBar = ({
         onKeyDown?.(e);
       }}
       placeholder={showSuggestions ? "" : "Ask me anything about Yash"}
-      className={cn("h-11 text-base rounded-3xl bg-[#2a2a2a] border-gray-600 focus:border-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 pl-4 pr-16", inputClassName)}
+      className={cn("h-11 text-base rounded-3xl bg-[#2a2a2a] border-0 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-lg shadow-black/50 pl-4 pr-16", inputClassName)}
       autoComplete="off"
       autoCapitalize="off"
       autoCorrect="off"

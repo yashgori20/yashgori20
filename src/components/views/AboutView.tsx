@@ -14,17 +14,16 @@ type ViewProps = {
 const AboutView = ({ activeView, setActiveView }: ViewProps) => (
   <section id="about" className="p-6 pt-8 md:p-12 md:pt-16 pb-16 min-h-screen relative">
     <div className="max-w-6xl mx-auto w-full">
-
-
-      {/* Title Section */}
-      <div className="mb-12">
-        <h1 className="text-2xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-          About Me
-        </h1>
-        <div className="w-24 h-1 bg-primary rounded-full"></div>
+      {/* User Question Bubble - Right Aligned */}
+      <div className="mb-8 text-right">
+        <div className="inline-block bg-[#303030] px-6 py-4 rounded-2xl text-white text-lg md:text-xl font-bold shadow-lg">
+          Tell me more about Yash
+        </div>
       </div>
 
-      <div className="grid lg:grid-cols-5 gap-8 items-start">
+      {/* AI Response Content - Left Aligned with margin */}
+      <div className="ml-8">
+        <div className="grid lg:grid-cols-5 gap-8 items-start">
         <div className="lg:col-span-3 space-y-6">
           <div className="space-y-4">
             <p className="text-base leading-relaxed text-muted-foreground">
@@ -119,6 +118,7 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>

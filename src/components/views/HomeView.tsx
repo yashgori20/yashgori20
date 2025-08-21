@@ -23,9 +23,9 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
   };
 
   return (
-    <section id="home" className="p-6 pt-8 md:p-12 md:pt-16 pb-16 min-h-screen relative">
+    <section id="home" className="p-6 pt-4 md:p-8 md:pt-8 pb-16 min-h-screen relative">
       <div className="max-w-6xl mx-auto w-full">
-        <div className="flex flex-col justify-center items-center min-h-[60vh] space-y-8">
+        <div className="flex flex-col justify-center items-center min-h-[60vh] space-y-6">
           {/* Dynamic Greeting */}
           <div className="text-center space-y-4">
             <h1 className="text-3xl md:text-5xl font-bold text-white">
@@ -39,6 +39,9 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
             <p className="text-lg md:text-xl text-gray-300">
               Welcome to my portfolio
             </p>
+            <p className="text-base md:text-lg text-gray-400 mt-4 max-w-3xl mx-auto">
+              Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.
+            </p>
           </div>
 
           {/* Profile Picture */}
@@ -51,7 +54,7 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-4 pt-4">
+          <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white text-center">Connect With Me</h3>
             <div className="flex items-center justify-center gap-4">
               <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
@@ -73,7 +76,7 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
           </div>
 
           {/* Download Resume Button */}
-          <div className="pt-4">
+          <div>
             <button
               onClick={handleDownloadResume}
               className="group py-2"

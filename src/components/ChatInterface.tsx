@@ -10,7 +10,7 @@ import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronsDown, ChevronLeft, User, Github, Linkedin } from 'lucide-react';
+import { ChevronsDown, User, Github, Linkedin, ChevronDown } from 'lucide-react';
 import HuggingFaceLogo from './HuggingFaceLogo';
 import { cn } from '@/lib/utils';
 
@@ -40,6 +40,15 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isMouseOverSuggestions, setIsMouseOverSuggestions] = useState(false);
   const [bounceAnimation, setBounceAnimation] = useState(false);
+  const [currentMode, setCurrentMode] = useState('Recruiter Mode');
+  const [showModeDropdown, setShowModeDropdown] = useState(false);
+
+  const conversationModes = [
+    { id: 'recruiter', name: 'Recruiter Mode', description: 'Professional hiring perspective' },
+    { id: 'collaboration', name: 'Collaboration Mode', description: 'Team-oriented discussions' },
+    { id: 'friendly', name: 'Friendly Mode', description: 'Casual, friendly conversations' },
+    { id: 'technical', name: 'Technical Mode', description: 'Deep technical discussions' },
+  ];
 
   // Combine all smart suggestions from API response
   const getSmartSuggestions = (): string[] => {
@@ -197,27 +206,30 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           onWheel={handleScrollAttempt}
         >
 
-          <div className="mb-16">
+          <div className="mb-16 flex-shrink-0">
             <h1 className="text-3xl md:text-5xl font-bold mb-8">How can I help, Yash?</h1>
           </div>
 
-          <div className="w-full">
+          <div className="w-full flex-shrink-0">
             <div className="relative w-full max-w-2xl mx-auto">
-            <div className="mb-4">
-              <div
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
-              >
-                <ChatInputBar
-                  input={input}
-                  setInput={setInput}
-                  handleSend={handleSend}
-                  isPending={askApi.isPending}
-                  showSuggestions={inputFocused}
-                  onKeyDown={handleKeyDown}
-                />
+              <div className="mb-4 relative">
+                <div
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                >
+                  <ChatInputBar
+                    input={input}
+                    setInput={setInput}
+                    handleSend={handleSend}
+                    isPending={askApi.isPending}
+                    showSuggestions={inputFocused}
+                    onKeyDown={handleKeyDown}
+                  />
+                </div>
               </div>
-            </div>
+
+              {/* Reserve space for suggestions to prevent layout shift */}
+              <div className="h-[450px] relative w-full">
 
             {/* Dropdown when focused - full width of container */}
             <AnimatePresence>
@@ -231,7 +243,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   }}
                   exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.2 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-32 md:max-h-40 overflow-y-auto"
+                  className="absolute top-2 left-0 right-0 bg-card border rounded-lg shadow-lg z-50 max-h-44 overflow-y-auto pointer-events-auto custom-scrollbar"
                   onMouseEnter={() => setIsMouseOverSuggestions(true)}
                   onMouseLeave={() => {
                     setIsMouseOverSuggestions(false);
@@ -271,12 +283,12 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                   }}
                   exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.3 }}
-                  className="w-full max-w-3xl mx-auto mt-10"
+                  className="absolute top-16 left-0 right-0 w-full max-w-3xl mx-auto"
                   onMouseEnter={() => setIsMouseOverSuggestions(true)}
                   onMouseLeave={() => setIsMouseOverSuggestions(false)}
                 >
                   <div
-                    className="max-h-[18vh] md:max-h-[22vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                    className="max-h-[24vh] md:max-h-[28vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
                     onWheel={handleSuggestionScroll}
                   >
                     {suggestions.map((suggestion) => (
@@ -290,6 +302,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                 </motion.div>
               )}
             </AnimatePresence>
+              </div>
             </div>
           </div>
 
@@ -299,30 +312,19 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           className="flex-1 flex flex-col overflow-hidden"
           onWheel={(e) => e.stopPropagation()}
         >
-          <div className="border-b border-border bg-background/95 backdrop-blur-sm z-10 shrink-0">
-            <div className="flex items-center p-2">
-              <Button variant="ghost" size="icon" onClick={handleBack}>
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-              <h3 className="font-semibold text-lg ml-2">Chat with Yash</h3>
-
-              {/* Rate Limit Warning (only show when low) */}
-              <div className="ml-auto flex items-center gap-2">
-                {rateLimit && rateLimit.requests_remaining < 5 && (
-                  <div className="text-xs text-orange-600 dark:text-orange-400 font-medium">
-                    {rateLimit.requests_remaining} questions left
-                  </div>
-                )}
-              </div>
-            </div>
-
-          </div>
           <ScrollArea
             className="flex-1 p-4 overflow-y-auto"
             ref={scrollAreaRef}
             onWheel={(e) => e.stopPropagation()}
           >
             <div className="max-w-4xl mx-auto space-y-6 pb-36">
+              {/* Rate Limit Warning (only show when low) */}
+              {rateLimit && rateLimit.requests_remaining < 5 && (
+                <div className="text-xs text-orange-600 dark:text-orange-400 font-medium text-center mb-4">
+                  {rateLimit.requests_remaining} questions left
+                </div>
+              )}
+              
               {messages.map((msg, idx) => (
                 <ChatMessage
                   key={idx}

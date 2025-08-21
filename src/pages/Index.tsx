@@ -657,7 +657,10 @@ const Index = () => {
           <ChatInputBar
             input={input}
             setInput={setInput}
-            handleSend={handleSend}
+            handleSend={() => {
+              handleSend();
+              setActiveView('newchat');
+            }}
             isPending={askApi.isPending}
             className="shadow-lg"
           />

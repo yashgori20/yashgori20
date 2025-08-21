@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatInterface from '@/components/ChatInterface';
+import HomeView from './HomeView';
 import AboutView from './AboutView';
 import ExperienceView from './ExperienceView';
 import ProjectsView from './ProjectsView';
@@ -32,9 +33,14 @@ interface ContentViewProps {
   onSectionChange?: (section: string) => void;
 }
 
-const ContentView = ({ activeView, setActiveView, chatInterfaceProps, currentSection = 'about' }: ContentViewProps) => {
+const ContentView = ({ activeView, setActiveView, chatInterfaceProps, currentSection = 'home' }: ContentViewProps) => {
   return (
     <div className="w-full h-full overflow-y-auto">
+      {/* Home Section */}
+      <section id="home" className="min-h-screen">
+        <HomeView activeView={activeView} setActiveView={setActiveView} />
+      </section>
+      
       {/* About Section */}
       <section id="about" className="min-h-screen">
         <AboutView activeView={activeView} setActiveView={setActiveView} />

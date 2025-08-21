@@ -69,32 +69,36 @@ const PageContainer = ({
 
   return (
     <div
-      className="flex-1 overflow-hidden"
+      className="flex-1 overflow-hidden relative"
       onWheel={handleWheel}
     >
       {windowHeight > 0 && (
-        <motion.div
-          className="h-full w-full"
-          drag={isMobile ? "y" : false}
-          dragElastic={0}
-          dragMomentum={false}
-          onDragEnd={handleDragEnd}
-          animate={{ y: -pageIndex * windowHeight }}
-          transition={{
-            duration: 0.3,
-            ease: "easeInOut"
-          }}
-          onAnimationComplete={onAnimationComplete}
-        >
+        <>
           {views.map((viewName, i) => (
-            <div
+            <motion.div
               key={viewName}
               ref={el => (viewContainerRefs.current[i] = el)}
-              className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar"
+              className="absolute inset-0 w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar"
               style={{
                 height: windowHeight,
                 touchAction: isMobile ? 'pan-y' : 'auto'
               }}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: i === pageIndex ? 1 : 0,
+                pointerEvents: i === pageIndex ? 'auto' : 'none'
+              }}
+              transition={{
+                duration: 0.1,
+                ease: "easeInOut"
+              }}
+              onAnimationComplete={() => {
+                if (i === pageIndex) onAnimationComplete();
+              }}
+              drag={isMobile && i === pageIndex ? "y" : false}
+              dragElastic={0}
+              dragMomentum={false}
+              onDragEnd={i === pageIndex ? handleDragEnd : undefined}
             >
               {viewName === 'content' ? (
                 <ContentView
@@ -109,9 +113,9 @@ const PageContainer = ({
                   chatInterfaceProps={chatInterfaceProps}
                 />
               ) : null}
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </>
       )}
     </div>
   );

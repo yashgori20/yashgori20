@@ -229,7 +229,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                     y: 0,
                     scale: bounceAnimation ? [1, 1.02, 1] : 1
                   }}
-                  exit={{ opacity: 0, y: -10 }}
+                  exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.2 }}
                   className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-lg shadow-lg z-50 max-h-32 md:max-h-40 overflow-y-auto"
                   onMouseEnter={() => setIsMouseOverSuggestions(true)}
@@ -269,7 +269,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
                     y: 0,
                     scale: bounceAnimation ? [1, 1.02, 1] : 1
                   }}
-                  exit={{ opacity: 0, y: -10 }}
+                  exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.3 }}
                   className="w-full max-w-3xl mx-auto mt-10"
                   onMouseEnter={() => setIsMouseOverSuggestions(true)}

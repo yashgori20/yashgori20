@@ -37,7 +37,7 @@ const Section = ({ title, children, id }: SectionProps) => {
         </div>
         
         {/* AI Response Content - Left Aligned with margin */}
-        <div className="ml-8">
+        <div className="mx-8">
           {children}
         </div>
       </div>

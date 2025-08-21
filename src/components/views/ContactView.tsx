@@ -35,7 +35,7 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
 
   return (
     <Section title="Get In Touch" id="contact">
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-8 mr-8">
         <div className="space-y-6">
           <div>
             <h3 className="text-xl font-semibold mb-3">Let's Connect</h3>

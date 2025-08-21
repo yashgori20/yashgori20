@@ -22,7 +22,7 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
       </div>
 
       {/* AI Response Content - Left Aligned with margin */}
-      <div className="ml-8">
+      <div className="mx-8">
         <div className="grid lg:grid-cols-5 gap-8 items-start">
         <div className="lg:col-span-3 space-y-6">
           <div className="space-y-4">

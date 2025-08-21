@@ -55,13 +55,13 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
 
   return (
     <div className={cn("mb-8", isUser ? "text-right" : "text-left")}>
-      <div className={cn("max-w-4xl", isUser ? "ml-auto" : "mr-auto")}>
+      <div className={cn("max-w-full", isUser ? "ml-auto" : "mr-auto")}>
         {isUser ? (
-          <div className="inline-block bg-[#303030] px-4 py-3 rounded-2xl text-white text-lg font-medium whitespace-pre-wrap">
+          <div className="inline-block bg-[#303030] px-4 py-3 rounded-2xl text-white text-base leading-relaxed whitespace-pre-wrap">
             {message.content}
           </div>
         ) : (
-          <div className="text-white text-base leading-relaxed">
+          <div className="text-white text-base leading-relaxed ml-8">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {message.content}
             </ReactMarkdown>

@@ -96,8 +96,14 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start justify-center pt-16">
-      <div className="bg-[#2a2a2a] rounded-lg shadow-lg w-full max-w-2xl mx-4 max-h-[80vh] overflow-hidden">
+    <div 
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start justify-center pt-16"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-[#2a2a2a] rounded-lg shadow-lg w-full max-w-2xl mx-4 max-h-[80vh] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-gray-600">
           <Search className="h-4 w-4 text-gray-400" />

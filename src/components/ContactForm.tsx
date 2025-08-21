@@ -133,7 +133,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="border border-gray-200/20 rounded-lg p-6 h-full">
+    <div className="bg-[#2a2a2a] border border-gray-600 rounded-lg p-6 h-full">
       <h3 className="text-xl font-semibold text-center mb-6">Get In Touch</h3>
 
       {/* Division 1: Quick Message */}
@@ -157,17 +157,19 @@ const ContactForm = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Button
             onClick={handleQuickWhatsApp}
-            className="h-10 group text-sm"
+            variant="ghost"
+            className="h-10 group text-sm bg-transparent border border-gray-600 hover:bg-[#303030] hover:border-gray-500"
           >
-            <MessageCircle className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+            <MessageCircle className="mr-2 h-4 w-4" />
             WhatsApp
           </Button>
 
           <Button
             onClick={handleQuickEmail}
-            className="h-10 group text-sm"
+            variant="ghost"
+            className="h-10 group text-sm bg-transparent border border-gray-600 hover:bg-[#303030] hover:border-gray-500"
           >
-            <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+            <Mail className="mr-2 h-4 w-4" />
             Email
           </Button>
         </div>
@@ -241,7 +243,8 @@ const ContactForm = () => {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-10 group text-sm"
+            variant="ghost"
+            className="w-full h-10 group text-sm bg-transparent border border-gray-600 hover:bg-[#303030] hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
               <>
@@ -250,7 +253,7 @@ const ContactForm = () => {
               </>
             ) : (
               <>
-                <Send className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Send className="mr-2 h-4 w-4" />
                 Send Message
               </>
             )}

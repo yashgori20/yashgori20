@@ -207,7 +207,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
         >
 
           <div className="mb-16 flex-shrink-0">
-            <h1 className="text-3xl md:text-5xl font-bold mb-8">How can I help, Yash?</h1>
+            <h1 className="text-3xl md:text-5xl font-bold mb-8">The Portal to Yash's Brain</h1>
           </div>
 
           <div className="w-full flex-shrink-0">
@@ -313,11 +313,11 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
           onWheel={(e) => e.stopPropagation()}
         >
           <ScrollArea
-            className="flex-1 p-4 overflow-y-auto"
+            className="flex-1 px-2 py-4 overflow-y-auto"
             ref={scrollAreaRef}
             onWheel={(e) => e.stopPropagation()}
           >
-            <div className="max-w-4xl mx-auto space-y-6 pb-36">
+            <div className="max-w-6xl mx-2 space-y-6 pb-36">
               {/* Rate Limit Warning (only show when low) */}
               {rateLimit && rateLimit.requests_remaining < 5 && (
                 <div className="text-xs text-orange-600 dark:text-orange-400 font-medium text-center mb-4">

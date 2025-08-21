@@ -87,15 +87,24 @@ export const useActiveSection = () => {
           score = Math.max(score, visibilityRatio);
         }
         
-        // Special handling for experience section (more aggressive detection)
-        if (section.id === 'experience') {
-          // Very aggressive detection for experience section
+        // Special handling for experience and projects sections (more aggressive detection)
+        if (section.id === 'experience' || section.id === 'projects') {
+          // Very aggressive detection for these sections
           if (rect.top <= viewportHeight * 0.8 && rect.bottom >= viewportHeight * 0.1) {
             score = Math.max(score, 0.95);
           }
-          // Also check if we're scrolling through the experience area
+          // Also check if we're scrolling through these sections
           if (rect.top < 0 && rect.bottom > viewportHeight * 0.3) {
             score = Math.max(score, 0.92);
+          }
+          // Additional check: if any part of the section is visible and takes up significant space
+          if (rect.top < viewportHeight && rect.bottom > 0) {
+            const overlapTop = Math.max(0, Math.min(rect.bottom, viewportHeight));
+            const overlapBottom = Math.max(0, Math.min(rect.top, 0));
+            const overlap = overlapTop - overlapBottom;
+            if (overlap > viewportHeight * 0.2) {
+              score = Math.max(score, 0.9);
+            }
           }
         }
         

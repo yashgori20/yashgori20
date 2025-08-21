@@ -54,6 +54,22 @@
 }
 
 @layer utilities {
+  /* Apply subtle scrollbar to all elements */
+  *::-webkit-scrollbar {
+    width: 4px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Keep the custom class for specific overrides if needed */
   .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
   }

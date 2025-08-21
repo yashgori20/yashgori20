@@ -532,6 +532,7 @@ const Index = () => {
               )}
             </div>
             <div className="flex items-center gap-4">
+              {/* Reach Out - Show on all screens */}
               <div 
                 className="relative"
                 onMouseEnter={() => {
@@ -548,72 +549,72 @@ const Index = () => {
                   setReachOutTimeout(timeout);
                 }}
               >
-                <button
-                  className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
-                >
-                  <Mail className="h-4 w-4 text-gray-400" />
-                  <div className="text-sm truncate">Reach out</div>
-                </button>
-                
-                {/* Contact Overlay */}
-                {showReachOutOverlay && (
-                  <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
-                    <div className="space-y-3">
-                      <div className="text-sm text-white font-medium mb-3">Yash Gori - AI Engineer</div>
-                      <div className="text-xs text-gray-400 mb-3">Get in touch</div>
-                      
-                      {/* Email */}
-                      <div className="flex items-center gap-3 text-sm">
-                        <Mail className="h-4 w-4 text-gray-400" />
-                        <span className="text-white">{resumeData.contact.email}</span>
-                      </div>
-                      
-                      {/* Phone */}
-                      <div className="flex items-center gap-3 text-sm">
-                        <Phone className="h-4 w-4 text-gray-400" />
-                        <span className="text-white">{resumeData.contact.phone}</span>
-                      </div>
-                      
-                      {/* Social Links */}
-                      <div className="flex gap-2 pt-2">
-                        <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                            <Linkedin className="h-4 w-4" />
-                          </Button>
-                        </a>
-                        <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                            <Github className="h-4 w-4" />
-                          </Button>
-                        </a>
-                        <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                            <XLogo className="h-4 w-4" />
-                          </Button>
-                        </a>
-                        <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                            <Instagram className="h-4 w-4" />
-                          </Button>
-                        </a>
-                      </div>
-                      
-                      {/* Contact Me Button */}
-                      <button
-                        onClick={() => {
-                          setActiveView('content');
-                          setTimeout(() => {
-                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                          }, 300);
-                          setShowReachOutOverlay(false);
-                        }}
-                        className="w-full mt-3 p-2 bg-[#404040] hover:bg-[#505050] text-white rounded-lg text-sm transition-colors"
-                      >
-                        Contact Me
-                      </button>
+              <button
+                className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
+              >
+                <Mail className="h-4 w-4 text-gray-400" />
+                <div className="text-sm truncate">Reach out</div>
+              </button>
+              
+              {/* Contact Overlay */}
+              {showReachOutOverlay && (
+                <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
+                  <div className="space-y-3">
+                    <div className="text-sm text-white font-medium mb-3">Yash Gori - AI Engineer</div>
+                    <div className="text-xs text-gray-400 mb-3">Get in touch</div>
+                    
+                    {/* Email */}
+                    <div className="flex items-center gap-3 text-sm">
+                      <Mail className="h-4 w-4 text-gray-400" />
+                      <span className="text-white">{resumeData.contact.email}</span>
                     </div>
+                    
+                    {/* Phone */}
+                    <div className="flex items-center gap-3 text-sm">
+                      <Phone className="h-4 w-4 text-gray-400" />
+                      <span className="text-white">{resumeData.contact.phone}</span>
+                    </div>
+                    
+                    {/* Social Links */}
+                    <div className="flex gap-2 pt-2">
+                      <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Linkedin className="h-4 w-4" />
+                        </Button>
+                      </a>
+                      <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Github className="h-4 w-4" />
+                        </Button>
+                      </a>
+                      <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <XLogo className="h-4 w-4" />
+                        </Button>
+                      </a>
+                      <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Instagram className="h-4 w-4" />
+                        </Button>
+                      </a>
+                    </div>
+                    
+                    {/* Contact Me Button */}
+                    <button
+                      onClick={() => {
+                        setActiveView('content');
+                        setTimeout(() => {
+                          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                        }, 300);
+                        setShowReachOutOverlay(false);
+                      }}
+                      className="w-full mt-3 p-2 bg-[#404040] hover:bg-[#505050] text-white rounded-lg text-sm transition-colors"
+                    >
+                      Contact Me
+                    </button>
                   </div>
-                )}
+                </div>
+              )}
               </div>
             </div>
           </div>
@@ -633,8 +634,15 @@ const Index = () => {
           setActiveView={setActiveView}
         />
 
-        {activeView === 'newchat' && messages.length > 0 && (
-          <div className="p-3 pb-2">
+      </div>
+
+      {/* Persistent Floating Chat Input Bar - Show on all screens except empty new chat */}
+      {!(activeView === 'newchat' && messages.length === 0) && (
+        <div className={cn(
+          "fixed bottom-4 z-40 transition-all duration-300",
+          finalIsCollapsed ? "right-4 left-16" : "right-4 left-72"
+        )}>
+          <div className="bg-[#2a2a2a] border border-gray-600 rounded-3xl p-2 shadow-lg backdrop-blur-sm">
             <ChatInputBar
               input={input}
               setInput={setInput}
@@ -642,8 +650,8 @@ const Index = () => {
               isPending={askApi.isPending}
             />
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Search Chats Overlay */}
       <SearchChatsOverlay

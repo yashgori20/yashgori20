@@ -38,7 +38,7 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
               onClick={() => handleProjectClick(proj)}
             >
               {/* 65/35 Split Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-center mr-8">
                 {/* 65% - Project Content */}
                 <div className="lg:col-span-6 flex flex-col">
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gray-200 transition-colors">{proj.title}</h3>

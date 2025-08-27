@@ -478,15 +478,24 @@ const Index = () => {
           />
         )}
 
+        {/* Fixed Mobile Hamburger Menu */}
+        {isMobile && (
+          <div className="fixed top-4 left-4 z-50">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleMobileSidebar}
+              className="bg-black/20 backdrop-blur-sm border border-white/10 hover:bg-black/30"
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+          </div>
+        )}
+
         {/* Header */}
         <div className="p-2 px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {isMobile && (
-                <Button variant="ghost" size="icon" onClick={toggleMobileSidebar}>
-                  <Menu className="h-6 w-6" />
-                </Button>
-              )}
               
               {/* Mode Selector - Only show on chat screens */}
               {(activeView === 'newchat' || activeView === 'chat') && (

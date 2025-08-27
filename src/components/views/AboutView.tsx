@@ -65,32 +65,27 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
 
 
         </div>
-        <div className="lg:col-span-2 space-y-4">
-          <div className="flex justify-center">
-            <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border">
-              <img
-                src={resumeData.profileImage}
-                alt="Yash Gori"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+      </div>
 
+      <div className="flex flex-col lg:flex-row gap-8 mt-8 mx-8">
+        <div className="flex-1"></div>
+        
+        <div className="lg:w-1/3 space-y-6">
           <div>
-            <h3 className="text-lg font-semibold mb-3 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent text-center">Languages</h3>
-            <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
+            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Languages</h3>
+            <div className="grid grid-cols-1 gap-3">
               {[
                 { name: "English", level: 95, description: "Fluent" },
                 { name: "Hindi", level: 100, description: "Native" },
                 { name: "Gujarati", level: 100, description: "Native" },
                 { name: "Marathi", level: 75, description: "Conversational" }
               ].map((language, index) => (
-                <div key={language.name} className="bg-gradient-to-br from-primary/5 to-secondary/5 p-2 rounded-lg border hover:border-primary/30 transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center gap-2">
-                    <Globe className="h-3 w-3 text-primary flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-xs truncate">{language.name}</h4>
-                      <p className="text-[10px] text-muted-foreground">{language.description}</p>
+                <div key={language.name} className="bg-gradient-to-br from-primary/5 to-secondary/5 p-3 rounded-lg border hover:border-primary/30 transition-all duration-300 hover:scale-105">
+                  <div className="flex items-center gap-3">
+                    <Globe className="h-4 w-4 text-primary flex-shrink-0" />
+                    <div className="flex-1">
+                      <h4 className="font-medium text-sm">{language.name}</h4>
+                      <p className="text-xs text-muted-foreground">{language.description}</p>
                     </div>
                   </div>
                 </div>
@@ -99,18 +94,18 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-3 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent text-center">Education</h3>
-            <div className="space-y-3 max-w-xs mx-auto">
+            <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Education</h3>
+            <div className="space-y-4">
               {resumeData.education.map((edu, index) => (
-                <div key={index} className="flex items-start gap-2">
-                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 border">
-                    <GraduationCap className="h-4 w-4 text-primary" />
+                <div key={index} className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1 border">
+                    <GraduationCap className="h-5 w-5 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">{edu.institution}</h4>
                     <p className="text-xs text-primary font-medium">{edu.degree}</p>
-                    <p className="text-[10px] text-muted-foreground">{edu.period}</p>
-                    <p className="text-[10px] text-muted-foreground">{edu.details}</p>
+                    <p className="text-xs text-muted-foreground">{edu.period}</p>
+                    <p className="text-xs text-muted-foreground">{edu.details}</p>
                   </div>
                 </div>
               ))}

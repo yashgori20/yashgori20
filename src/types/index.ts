@@ -116,3 +116,62 @@ export interface SubscriptionResponse {
   renewalDate?: string;
 }
 
+// Expense Tracker Types
+export interface Expense {
+  id: string;
+  date: string; // YYYY-MM-DD format
+  description: string;
+  amount: number;
+  category: string;
+  subcategory?: string;
+  paymentMethod: string;
+  notes?: string;
+  type?: 'income' | 'expense'; // Optional for backward compatibility
+  createdAt: string; // ISO string
+  updatedAt: string; // ISO string
+}
+
+export interface ExpenseCategory {
+  id: string;
+  name: string;
+  isDefault: boolean;
+  color?: string;
+}
+
+export interface ExpenseStats {
+  totalExpenses: number;
+  totalIncome: number;
+  netAmount: number;
+  totalTransactions: number;
+  averageDailySpent: number;
+  averageDailyIncome: number;
+  largestExpense: Expense | null;
+  largestIncome: Expense | null;
+  expenseCategoryTotals: { [category: string]: number };
+  incomeCategoryTotals: { [category: string]: number };
+  monthOverMonthExpenses: number;
+  monthOverMonthIncome: number;
+}
+
+export interface ExpenseFilters {
+  startDate?: string;
+  endDate?: string;
+  category?: string;
+  subcategory?: string;
+  paymentMethod?: string;
+  searchQuery?: string;
+}
+
+export type PaymentMethod = 'Cash' | 'UPI' | 'Credit Card' | 'Debit Card' | 'Net Banking' | 'Wallet' | 'Other';
+
+export interface ExpenseFormData {
+  date: string;
+  description: string;
+  amount: number;
+  category: string;
+  subcategory?: string;
+  paymentMethod: PaymentMethod;
+  notes?: string;
+  type: 'income' | 'expense';
+}
+

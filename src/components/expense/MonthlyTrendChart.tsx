@@ -48,10 +48,10 @@ const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ transactions }) =
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-gray-200 dark:bg-gray-700 border border-gray-400 dark:border-gray-500 rounded-lg p-3 shadow-lg">
-          <p className="font-medium">{`${label}`}</p>
+        <div className="bg-background border border-border rounded-lg p-3 shadow-lg text-foreground">
+          <p className="font-medium text-foreground">{`${label}`}</p>
           {payload.map((entry: any, index: number) => (
-            <p key={index} className="text-sm" style={{ color: entry.color }}>
+            <p key={index} className="text-sm text-foreground" style={{ color: entry.color }}>
               <span>{entry.dataKey}: </span>
               {formatCurrency(entry.value)}
             </p>
@@ -71,7 +71,7 @@ const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ transactions }) =
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 h-full">
+    <div className="bg-card rounded-lg p-4 h-full border border-border">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={monthlyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -85,7 +85,7 @@ const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({ transactions }) =
           className="text-muted-foreground"
           tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip />} cursor={false} />
         <Legend />
         <Bar 
           dataKey="Income" 

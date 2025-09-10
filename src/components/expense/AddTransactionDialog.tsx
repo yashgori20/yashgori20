@@ -49,6 +49,7 @@ interface AddTransactionDialogProps {
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: ExpenseFormData) => Promise<void>;
   defaultType?: 'income' | 'expense';
+  editingTransaction?: any;
 }
 
 const AddTransactionDialog: React.FC<AddTransactionDialogProps> = ({
@@ -56,6 +57,7 @@ const AddTransactionDialog: React.FC<AddTransactionDialogProps> = ({
   onOpenChange,
   onSubmit,
   defaultType = 'expense',
+  editingTransaction,
 }) => {
   const [transactionType, setTransactionType] = useState<'income' | 'expense'>(defaultType);
 
@@ -73,13 +75,30 @@ const AddTransactionDialog: React.FC<AddTransactionDialogProps> = ({
     },
   });
 
-  // Update transaction type when dialog opens with defaultType
+  // Update transaction type and form data when dialog opens
   useEffect(() => {
-    if (open && defaultType) {
-      setTransactionType(defaultType);
-      form.setValue('type', defaultType);
+    if (open) {
+      if (editingTransaction) {
+        // Populate form with existing transaction data
+        const transactionType = editingTransaction.type || 'expense';
+        setTransactionType(transactionType);
+        form.reset({
+          date: editingTransaction.date,
+          description: editingTransaction.description,
+          amount: editingTransaction.amount,
+          category: editingTransaction.category,
+          subcategory: editingTransaction.subcategory || '',
+          paymentMethod: editingTransaction.paymentMethod,
+          notes: editingTransaction.notes || '',
+          type: transactionType,
+        });
+      } else if (defaultType) {
+        // New transaction - use default type
+        setTransactionType(defaultType);
+        form.setValue('type', defaultType);
+      }
     }
-  }, [open, defaultType, form]);
+  }, [open, defaultType, editingTransaction, form]);
 
   const handleTypeChange = (type: 'income' | 'expense') => {
     setTransactionType(type);
@@ -113,9 +132,11 @@ const AddTransactionDialog: React.FC<AddTransactionDialogProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Add {transactionType === 'income' ? 'Income' : 'Expense'}</DialogTitle>
+          <DialogTitle>
+            {editingTransaction ? 'Edit' : 'Add'} {transactionType === 'income' ? 'Income' : 'Expense'}
+          </DialogTitle>
           <DialogDescription>
-            Enter the details of your {transactionType === 'income' ? 'income' : 'expense'} below.
+            {editingTransaction ? 'Update' : 'Enter'} the details of your {transactionType === 'income' ? 'income' : 'expense'} below.
           </DialogDescription>
         </DialogHeader>
 
@@ -269,7 +290,7 @@ const AddTransactionDialog: React.FC<AddTransactionDialogProps> = ({
                     Cancel
                   </Button>
                   <Button type="submit">
-                    Add {transactionType === 'income' ? 'Income' : 'Expense'}
+                    {editingTransaction ? 'Update' : 'Add'} {transactionType === 'income' ? 'Income' : 'Expense'}
                   </Button>
                 </DialogFooter>
               </form>

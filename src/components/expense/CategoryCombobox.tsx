@@ -37,14 +37,21 @@ const CategoryCombobox: React.FC<CategoryComboboxProps> = ({
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent 
-        className="max-h-[300px] overflow-y-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
-        style={{ scrollBehavior: 'smooth' }}
+        className="max-h-[200px] overflow-y-auto bg-popover border border-border"
+        style={{ 
+          scrollBehavior: 'smooth',
+          touchAction: 'pan-y',
+          overscrollBehavior: 'contain'
+        }}
+        onWheel={(e) => {
+          e.stopPropagation();
+        }}
       >
         {categoryArray.map((category) => (
           <SelectItem 
             key={category} 
             value={category}
-            className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 focus:bg-gray-50 dark:focus:bg-gray-800 cursor-pointer text-sm border-b border-gray-100 dark:border-gray-800 last:border-b-0"
+            className="px-4 py-3 hover:bg-muted focus:bg-muted cursor-pointer text-sm border-b border-border/50 last:border-b-0 text-foreground"
           >
             {category}
           </SelectItem>

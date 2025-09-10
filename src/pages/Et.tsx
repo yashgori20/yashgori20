@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ArrowLeft, Wallet, Plus, TrendingUp, TrendingDown, Edit3, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useExpenses } from '@/hooks/useExpenses';
+import { useTransactionFilters } from '@/hooks/useTransactionFilters';
+import TransactionFilters from '@/components/expense/TransactionFilters';
 import AddTransactionDialog from '@/components/expense/AddTransactionDialog';
 import EditExpenseDialog from '@/components/expense/EditExpenseDialog';
 import ExpenseChart from '@/components/expense/ExpenseChart';
@@ -16,6 +18,16 @@ const Et = () => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [dialogType, setDialogType] = useState<'income' | 'expense'>('expense');
   const [editingTransaction, setEditingTransaction] = useState<any>(null);
+
+  // Transaction filters
+  const {
+    incomeFilters,
+    updateIncomeFilters,
+    filteredIncomeTransactions,
+    expenseFilters,
+    updateExpenseFilters,
+    filteredExpenseTransactions,
+  } = useTransactionFilters(expenses, 'month', 'all');
 
   // Separate income and expenses (handle backward compatibility)
   const incomeTransactions = expenses.filter(e => e.type === 'income');
@@ -53,7 +65,8 @@ const Et = () => {
   // Handle edit transaction
   const handleEdit = (transaction: any) => {
     setEditingTransaction(transaction);
-    setShowEditDialog(true);
+    setDialogType(transaction.type || 'expense');
+    setShowAddDialog(true);
   };
 
   return (
@@ -197,18 +210,24 @@ const Et = () => {
         <div className="grid gap-6 md:grid-cols-2">
           {/* Recent Income */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-green-600" />
-                Recent Income
-              </CardTitle>
+            <CardHeader className="pb-3">
+              <TransactionFilters
+                title="Recent Income"
+                timePeriod={incomeFilters.timePeriod}
+                onTimePeriodChange={(period) => updateIncomeFilters({ timePeriod: period })}
+                selectedCategory={incomeFilters.selectedCategory}
+                onCategoryChange={(category) => updateIncomeFilters({ selectedCategory: category })}
+                currentDate={incomeFilters.currentDate}
+                onDateChange={(date) => updateIncomeFilters({ currentDate: date })}
+                transactionType="income"
+              />
             </CardHeader>
             <CardContent>
-              {incomeTransactions.length === 0 ? (
-                <p className="text-muted-foreground text-center py-4">No income recorded yet</p>
+              {filteredIncomeTransactions.length === 0 ? (
+                <p className="text-muted-foreground text-center py-4">No income found for selected period</p>
               ) : (
                 <div className="max-h-64 overflow-y-auto space-y-3 pr-2">
-                  {incomeTransactions.map((transaction) => (
+                  {filteredIncomeTransactions.map((transaction) => (
                     <div key={transaction.id} className="group flex items-center justify-between p-3 bg-card hover:bg-muted/50 rounded-lg border border-border transition-colors">
                       <div className="flex-1">
                         <p className="font-medium">{transaction.description}</p>
@@ -245,18 +264,24 @@ const Et = () => {
 
           {/* Recent Expenses */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingDown className="h-5 w-5 text-red-600" />
-                Recent Expenses
-              </CardTitle>
+            <CardHeader className="pb-3">
+              <TransactionFilters
+                title="Recent Expenses"
+                timePeriod={expenseFilters.timePeriod}
+                onTimePeriodChange={(period) => updateExpenseFilters({ timePeriod: period })}
+                selectedCategory={expenseFilters.selectedCategory}
+                onCategoryChange={(category) => updateExpenseFilters({ selectedCategory: category })}
+                currentDate={expenseFilters.currentDate}
+                onDateChange={(date) => updateExpenseFilters({ currentDate: date })}
+                transactionType="expense"
+              />
             </CardHeader>
             <CardContent>
-              {expenseTransactions.length === 0 ? (
-                <p className="text-muted-foreground text-center py-4">No expenses recorded yet</p>
+              {filteredExpenseTransactions.length === 0 ? (
+                <p className="text-muted-foreground text-center py-4">No expenses found for selected period</p>
               ) : (
                 <div className="max-h-64 overflow-y-auto space-y-3 pr-2">
-                  {expenseTransactions.map((transaction) => (
+                  {filteredExpenseTransactions.map((transaction) => (
                     <div key={transaction.id} className="group flex items-center justify-between p-3 bg-card hover:bg-muted/50 rounded-lg border border-border transition-colors">
                       <div className="flex-1">
                         <p className="font-medium">{transaction.description}</p>
@@ -439,9 +464,19 @@ const Et = () => {
       {/* Add Transaction Dialog */}
       <AddTransactionDialog
         open={showAddDialog}
-        onOpenChange={setShowAddDialog}
-        onSubmit={addExpense}
+        onOpenChange={(open) => {
+          setShowAddDialog(open);
+          if (!open) setEditingTransaction(null);
+        }}
+        onSubmit={async (data) => {
+          if (editingTransaction) {
+            await updateExpense(editingTransaction.id, data);
+          } else {
+            await addExpense(data);
+          }
+        }}
         defaultType={dialogType}
+        editingTransaction={editingTransaction}
       />
 
       {/* Edit Expense Dialog */}

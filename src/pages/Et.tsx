@@ -5,14 +5,17 @@ import { ArrowLeft, Wallet, Plus, TrendingUp, TrendingDown, Edit3, Trash2 } from
 import { Link } from 'react-router-dom';
 import { useExpenses } from '@/hooks/useExpenses';
 import AddTransactionDialog from '@/components/expense/AddTransactionDialog';
+import EditExpenseDialog from '@/components/expense/EditExpenseDialog';
 import ExpenseChart from '@/components/expense/ExpenseChart';
 import IncomeChart from '@/components/expense/IncomeChart';
 import MonthlyTrendChart from '@/components/expense/MonthlyTrendChart';
 
 const Et = () => {
-  const { expenses, loading, error, addExpense } = useExpenses();
+  const { expenses, loading, error, addExpense, updateExpense, deleteExpense } = useExpenses();
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [dialogType, setDialogType] = useState<'income' | 'expense'>('expense');
+  const [editingTransaction, setEditingTransaction] = useState<any>(null);
 
   // Separate income and expenses (handle backward compatibility)
   const incomeTransactions = expenses.filter(e => e.type === 'income');
@@ -38,6 +41,19 @@ const Et = () => {
   const handleAddExpense = () => {
     setDialogType('expense');
     setShowAddDialog(true);
+  };
+
+  // Handle delete transaction
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this transaction?')) {
+      await deleteExpense(id);
+    }
+  };
+
+  // Handle edit transaction
+  const handleEdit = (transaction: any) => {
+    setEditingTransaction(transaction);
+    setShowEditDialog(true);
   };
 
   return (
@@ -191,9 +207,9 @@ const Et = () => {
               {incomeTransactions.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">No income recorded yet</p>
               ) : (
-                <div className="space-y-3">
-                  {incomeTransactions.slice(0, 5).map((transaction) => (
-                    <div key={transaction.id} className="group flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                <div className="max-h-64 overflow-y-auto space-y-3 pr-2">
+                  {incomeTransactions.map((transaction) => (
+                    <div key={transaction.id} className="group flex items-center justify-between p-3 bg-card hover:bg-muted/50 rounded-lg border border-border transition-colors">
                       <div className="flex-1">
                         <p className="font-medium">{transaction.description}</p>
                         <p className="text-sm text-muted-foreground">{transaction.category} • {transaction.date}</p>
@@ -206,16 +222,16 @@ const Et = () => {
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
-                          onClick={() => {/* TODO: Edit function */}}
+                          className="h-8 w-8 p-0 hover:bg-muted"
+                          onClick={() => handleEdit(transaction)}
                         >
                           <Edit3 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                         </Button>
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
-                          onClick={() => {/* TODO: Delete function */}}
+                          className="h-8 w-8 p-0 hover:bg-muted"
+                          onClick={() => handleDelete(transaction.id)}
                         >
                           <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                         </Button>
@@ -239,9 +255,9 @@ const Et = () => {
               {expenseTransactions.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">No expenses recorded yet</p>
               ) : (
-                <div className="space-y-3">
-                  {expenseTransactions.slice(0, 5).map((transaction) => (
-                    <div key={transaction.id} className="group flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                <div className="max-h-64 overflow-y-auto space-y-3 pr-2">
+                  {expenseTransactions.map((transaction) => (
+                    <div key={transaction.id} className="group flex items-center justify-between p-3 bg-card hover:bg-muted/50 rounded-lg border border-border transition-colors">
                       <div className="flex-1">
                         <p className="font-medium">{transaction.description}</p>
                         <p className="text-sm text-muted-foreground">{transaction.category} • {transaction.date}</p>
@@ -254,16 +270,16 @@ const Et = () => {
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
-                          onClick={() => {/* TODO: Edit function */}}
+                          className="h-8 w-8 p-0 hover:bg-muted"
+                          onClick={() => handleEdit(transaction)}
                         >
                           <Edit3 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                         </Button>
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
-                          onClick={() => {/* TODO: Delete function */}}
+                          className="h-8 w-8 p-0 hover:bg-muted"
+                          onClick={() => handleDelete(transaction.id)}
                         >
                           <Trash2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                         </Button>
@@ -426,6 +442,14 @@ const Et = () => {
         onOpenChange={setShowAddDialog}
         onSubmit={addExpense}
         defaultType={dialogType}
+      />
+
+      {/* Edit Expense Dialog */}
+      <EditExpenseDialog
+        expense={editingTransaction}
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
+        onSubmit={updateExpense}
       />
     </div>
   );

@@ -36,12 +36,15 @@ const CategoryCombobox: React.FC<CategoryComboboxProps> = ({
       <SelectTrigger className="w-full">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="max-h-[300px] overflow-y-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
+      <SelectContent 
+        className="max-h-[300px] overflow-y-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+        style={{ scrollBehavior: 'smooth' }}
+      >
         {categoryArray.map((category) => (
           <SelectItem 
             key={category} 
             value={category}
-            className="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 focus:bg-gray-50 dark:focus:bg-gray-800 cursor-pointer"
+            className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 focus:bg-gray-50 dark:focus:bg-gray-800 cursor-pointer text-sm border-b border-gray-100 dark:border-gray-800 last:border-b-0"
           >
             {category}
           </SelectItem>

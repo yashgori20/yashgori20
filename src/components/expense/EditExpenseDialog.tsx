@@ -29,7 +29,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Expense, ExpenseFormData, PaymentMethod } from '@/types';
-import { DEFAULT_CATEGORIES, PAYMENT_METHODS } from '@/data/categories';
+import { DEFAULT_EXPENSE_CATEGORIES, DEFAULT_INCOME_CATEGORIES, PAYMENT_METHODS } from '@/data/categories';
 
 const formSchema = z.object({
   date: z.string().min(1, 'Date is required'),
@@ -172,7 +172,7 @@ const EditExpenseDialog: React.FC<EditExpenseDialogProps> = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {DEFAULT_CATEGORIES.map((category) => (
+                        {(expense?.type === 'income' ? DEFAULT_INCOME_CATEGORIES : DEFAULT_EXPENSE_CATEGORIES).map((category) => (
                           <SelectItem key={category} value={category}>
                             {category}
                           </SelectItem>

@@ -2,12 +2,13 @@
     "redirects": [
         {
             "source": "/pm",
-            "destination": "/pm.pdf"
+            "destination": "/pm.pdf",
+            "permanent": false
         }
     ],
     "rewrites": [
         {
-            "source": "/((?!.*\\.(pdf|jpg|png|gif|svg|ico|css|js)).*)",
+            "source": "/:path((?!.*\\.(pdf|jpg|png|gif|svg|ico|css|js)).*)",
             "destination": "/index.html"
         }
     ]

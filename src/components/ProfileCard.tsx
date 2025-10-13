@@ -41,7 +41,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
   return (
     <>
       <div className="fixed inset-0 z-[100]" onClick={onClose} />
-      <div 
+      <div
         className="fixed z-[101] bg-card border rounded-lg shadow-lg p-4 w-64 sm:w-72 md:w-80 touch-manipulation"
         style={{
           top: `${Math.max(10, Math.min(position.y + 10, window.innerHeight - 350))}px`,
@@ -50,9 +50,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
         }}
       >
         <div className="flex items-center gap-3 mb-3">
-          <img 
-            src={resumeData.profileImage} 
-            alt="Yash Gori" 
+          <img
+            src={resumeData.profileImage}
+            alt="Yash Gori"
             className="w-12 h-12 rounded-full"
           />
           <div>
@@ -60,9 +60,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
             <p className="text-sm text-muted-foreground">AI Developer & Engineer</p>
           </div>
         </div>
-        
+
         <div className="space-y-2 mb-4">
-          <a 
+          <a
             href={`mailto:${resumeData.contact.email}`}
             className="flex items-center gap-2 text-sm hover:text-primary transition-colors cursor-pointer"
             onClick={(e) => e.stopPropagation()}
@@ -70,7 +70,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
             <Mail className="h-4 w-4 text-primary" />
             <span className="text-muted-foreground hover:text-primary transition-colors">{resumeData.contact.email}</span>
           </a>
-          <a 
+          <a
             href={`tel:${resumeData.contact.phone}`}
             className="flex items-center gap-2 text-sm hover:text-primary transition-colors cursor-pointer"
             onClick={(e) => e.stopPropagation()}
@@ -78,7 +78,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
             <Phone className="h-4 w-4 text-primary" />
             <span className="text-muted-foreground hover:text-primary transition-colors">{resumeData.contact.phone}</span>
           </a>
-          <a 
+          <a
             href={`https://maps.google.com/?q=${encodeURIComponent(resumeData.contact.location)}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -89,10 +89,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
             <span className="text-muted-foreground hover:text-primary transition-colors">{resumeData.contact.location}</span>
           </a>
         </div>
-        
+
         <div className="flex flex-col space-y-2">
-          <Button 
-            size="sm" 
+          <Button
+            size="sm"
             className="w-full"
             onClick={handleSendMessage}
           >

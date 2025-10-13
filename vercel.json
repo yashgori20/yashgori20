@@ -1,4 +1,10 @@
 {
+    "redirects": [
+        {
+            "source": "/pm",
+            "destination": "/pm.pdf"
+        }
+    ],
     "rewrites": [
         {
             "source": "/((?!.*\\.(pdf|jpg|png|gif|svg|ico|css|js)).*)",

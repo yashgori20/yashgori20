@@ -7,6 +7,18 @@ export interface Project {
   liveUrl?: string;
 }
 
+export interface CaseStudy {
+  title: string;
+  role: string;
+  timeline: string;
+  focus: string[];
+  context: string;
+  problem: string;
+  process: string[];
+  outcome: string;
+  reflection: string;
+}
+
 export interface Experience {
   role: string;
   company: string;
@@ -50,6 +62,15 @@ export const resumeData = {
     },
   ],
   skills: {
+    "Product & Collaboration": [
+      { name: "Product Strategy", level: 95, category: "Product Management" },
+      { name: "Agile/Scrum", level: 90, category: "Methodology" },
+      { name: "Roadmap Planning", level: 90, category: "Planning" },
+      { name: "Cross-functional Team Leadership", level: 90, category: "Leadership" },
+      { name: "Stakeholder Communication", level: 95, category: "Communication" },
+      { name: "Client Relations", level: 90, category: "Business" },
+      { name: "Data-Driven Decision Making", level: 90, category: "Analytics" },
+    ],
     "AI/ML Core": [
       { name: "Retrieval-Augmented Generation (RAG)", level: 95, category: "AI Architecture" },
       { name: "Prompt Engineering", level: 95, category: "AI Engineering" },
@@ -67,16 +88,7 @@ export const resumeData = {
       { name: "Azure (OpenAI, Cosmos DB, Container Apps)", level: 85, category: "Cloud" },
       { name: "Docker", level: 85, category: "Containerization" },
       { name: "GitHub Actions", level: 80, category: "CI/CD" },
-    ],
-    "Product & Collaboration": [
-      { name: "Product Strategy", level: 95, category: "Product Management" },
-      { name: "Agile/Scrum", level: 90, category: "Methodology" },
-      { name: "Roadmap Planning", level: 90, category: "Planning" },
-      { name: "Cross-functional Team Leadership", level: 90, category: "Leadership" },
-      { name: "Stakeholder Communication", level: 95, category: "Communication" },
-      { name: "Client Relations", level: 90, category: "Business" },
-      { name: "Data-Driven Decision Making", level: 90, category: "Analytics" },
-    ],
+    ]
   },
   projects: [
     {
@@ -162,6 +174,24 @@ export const resumeData = {
       codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
   ] as Project[],
+  caseStudies: [
+    {
+      title: "ChargeOrFill – EV Charging Aggregator App",
+      role: "Product Strategist & Research Lead",
+      timeline: "Independent project",
+      focus: ["Market discovery", "User research", "Product validation"],
+      context: "As India's EV ecosystem grew, charging infrastructure remained fragmented across multiple provider apps, each with inconsistent coverage, pricing, and reliability. The project aimed to assess the feasibility of building ChargeOrFill, an aggregator platform simplifying discovery and payment across EV networks.",
+      problem: "EV owners faced friction in finding available, compatible charging stations — often juggling multiple apps, unclear pricing models, and lack of trust in reliability data. Operators, on the other hand, struggled with underutilization due to poor visibility. The hypothesis: a unified platform could create mutual efficiency and convenience.",
+      process: [
+        "Landscape Analysis: Mapped India's fragmented EV charging ecosystem and consolidated multi-app data from leading providers to estimate coverage overlap and demand density.",
+        "Market Validation: Modeled business viability through TAM/SAM/SOM analysis and Porter's Five Forces to evaluate competitive pressures and scalability potential.",
+        "User Research: Conducted empathy interviews using an interactive Figma prototype, complemented by surveys and competitor benchmarking, to uncover behavioral patterns and unmet needs among EV owners and charging operators.",
+        "Business Modeling: Designed data-backed pricing and adoption models, quantifying potential ROI and risk across B2C and B2B2C channels."
+      ],
+      outcome: "Validation showed a high conceptual appeal but low short-term market readiness, primarily due to limited public charging interoperability and regional fragmentation. Exercised strategic ownership by recommending deprioritization of launch, saving projected costs and focusing future exploration on potential partnerships and data-sharing models.",
+      reflection: "This project reinforced the importance of evidence-based go/no-go decisions in early product strategy. Beyond building something new, it highlighted the discipline of knowing when not to build — a core product mindset that balances ambition with realism."
+    },
+  ] as CaseStudy[],
   experience: [
     {
       role: "AI Product Lead",
@@ -182,25 +212,6 @@ export const resumeData = {
       ],
     },
     {
-      role: "Business Analyst",
-      company: "N.K. Engineering",
-      period: "June 2024 – November 2024",
-      location: "Mumbai, Maharashtra",
-      technologies: ["Predictive Analytics", "Business Intelligence", "HTML/CSS/JS", "Market Research", "Financial Modeling"],
-      points: [
-        "I used predictive analytics and BI to identify ₹5Cr+ market potential and packaged insights into investor-ready decks.",
-        "I spearheaded responsive e-commerce launch   from wireframes to deployment   while aligning scope to market demand.",
-        "I balanced product delivery with investor relations: closed 5 new funding deals while hitting digital product launch timelines.",
-      ],
-      additionalPoints: [
-        "Rolled out automated competitor tracking tools, enabling faster pivots in market strategy.",
-        "Developed fully responsive e-commerce site in HTML, CSS, JS   integrated with BI dashboards for sales tracking.",
-        "Automated competitor monitoring to refresh market intelligence weekly, cutting manual research by 80%.",
-        "Built predictive models for demand forecasting; results informed product roadmap and stock planning.",
-        "Authored concise investor one-pagers with key metrics and opportunities; reduced funding pitch cycles by 30%.",
-      ],
-    },
-    {
       role: "Product Design Lead",
       company: "MetaRizz",
       period: "December 2023 – May 2024",
@@ -218,7 +229,7 @@ export const resumeData = {
       ],
     },
     {
-      role: "Business Development Manager",
+      role: "Business & Growth Manager",
       company: "Watermelon Gang",
       period: "August 2022 – November 2023",
       location: "Mumbai, Maharashtra",
@@ -239,6 +250,6 @@ export const resumeData = {
     organization: "Vacha NGO",
     role: "English & Computer Instructor",
     period: "July 2024",
-    description: "I designed innovative AI-enhanced learning modules for underprivileged students with improved digital literacy engagement."
+    description: "I designed innovative AI-enhanced learning modules for underprivileged students with improved digital literacy engagement.",
   }
 };

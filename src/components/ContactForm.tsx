@@ -133,7 +133,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-[#2a2a2a] border border-gray-600 rounded-lg p-6 h-full">
+    <div className="bg-[#1a1a1a] border border-gray-700/30 rounded-lg p-6 h-full">
       <h3 className="text-xl font-semibold text-center mb-6 text-white">Get In Touch</h3>
       <div className="space-y-6">
       {/* Division 1: Quick Message */}

@@ -129,6 +129,7 @@ const Index = () => {
     { id: 'about', title: 'About Me', icon: User, description: 'Learn about my background' },
     { id: 'experience', title: 'Work Experience', icon: Briefcase, description: 'My professional journey' },
     { id: 'projects', title: 'Projects', icon: Code, description: 'Things I\'ve built' },
+    { id: 'case-studies', title: 'Case Studies', icon: Briefcase, description: 'Product research & strategy' },
     { id: 'skills', title: 'Skills & Expertise', icon: BrainCircuit, description: 'My technical abilities' },
     { id: 'contact', title: 'Contact Me', icon: Mail, description: 'Get in touch' },
   ];

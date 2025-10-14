@@ -24,11 +24,13 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
     { id: 'about', title: 'About Me', icon: User },
     { id: 'experience', title: 'Work Experience', icon: Briefcase },
     { id: 'projects', title: 'Projects', icon: Code },
+    { id: 'case-studies', title: 'Case Studies', icon: Briefcase },
     { id: 'skills', title: 'Skills & Expertise', icon: BrainCircuit },
     { id: 'contact', title: 'Contact Me', icon: Mail },
   ];
 
   const projects = resumeData.projects;
+  const caseStudies = resumeData.caseStudies;
 
   const socials = [
     { 
@@ -165,6 +167,29 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium truncate">{project.title}</div>
                     <div className="text-xs text-gray-400 truncate">{project.description}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Case Studies */}
+          <div className="mb-8">
+            <div className="mb-4">
+              <h3 className="text-sm font-medium text-gray-300 uppercase tracking-wide mb-2">Case Studies</h3>
+              <div className="h-px bg-gray-600"></div>
+            </div>
+            <div className="space-y-1">
+              {caseStudies.map((caseStudy, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSectionClick('case-studies')}
+                  className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-[#303030] transition-colors text-white"
+                >
+                  <Briefcase className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium truncate">{caseStudy.title}</div>
+                    <div className="text-xs text-gray-400 truncate">{caseStudy.context.substring(0, 80)}...</div>
                   </div>
                 </button>
               ))}

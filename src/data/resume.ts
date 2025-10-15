@@ -1,34 +1,3 @@
-export interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  features?: string[];
-  codeUrl?: string;
-  liveUrl?: string;
-}
-
-export interface CaseStudy {
-  title: string;
-  role: string;
-  timeline: string;
-  focus: string[];
-  context: string;
-  problem: string;
-  process: string[];
-  outcome: string;
-  reflection: string;
-}
-
-export interface Experience {
-  role: string;
-  company: string;
-  period: string;
-  points: string[];
-  location: string;
-  technologies?: string[];
-  additionalPoints?: string[];
-}
-
 export const resumeData = {
   name: "Yash Gori",
   contact: {
@@ -44,9 +13,25 @@ export const resumeData = {
     },
   },
   profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
-  about: "I design and launch AI-powered solutions that deliver measurable business impact. With expertise spanning LLM architectures to product strategy, I've led projects that improved system performance and shaped product direction. I specialize in translating cutting-edge AI capabilities into scalable, real-world products.",
-  whatIBring: "Technical Execution: Hands-on expertise in building and deploying AI/ML solutions, from LLM-powered applications to production-grade APIs and scalable data pipelines. Product Vision: Proven ability to translate complex AI technologies into user-centric features that align with business objectives and drive real value. End-to-End Ownership: Adept at guiding projects from initial concept to full deployment, striking an optimal balance between speed and high-quality outcomes. Cross-Functional Collaboration: Strong communicator who bridges engineering, design, and business teams to foster alignment and achieve shared goals. Impact-First Approach: Prioritizes measurable results, focusing on enhancements in accuracy, latency, user adoption, or revenue to deliver tangible business impact.",
-  languages: ["English (Fluent)", "Hindi (Native)", "Gujarati (Native)", "Marathi (Conversational)"],
+
+  about:
+    "Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.",
+
+  whatIBring:
+    `Technical Depth   I design RAG systems, production APIs, and low-latency inference pipelines with an obsession for reliability and measurable impact.
+Product Strategy   I convert ambiguous opportunities into clear roadmaps, PRDs, and prioritised backlogs that align engineering effort with business outcomes.
+Execution Ownership   I take products from prototype → pilot → paid deployment, handling architecture, delivery and stakeholder alignment end-to-end.
+Systems Thinking   I optimise the whole system (data, infra, UX, human-in-the-loop) rather than only tuning models.
+Cross-functional Communication   I translate technical tradeoffs into business language for execs while giving engineers concrete acceptance criteria and metrics.
+Impact-minded Metrics   I focus on the numbers that matter (accuracy, latency, adoption, ROI) and design experiments to make them move.`,
+
+  languages: [
+    "English (Fluent)",
+    "Hindi (Native)",
+    "Gujarati (Native)",
+    "Marathi (Conversational)"
+  ],
+
   education: [
     {
       institution: "K.J. SOMAIYA COLLEGE OF ENGINEERING",
@@ -61,154 +46,216 @@ export const resumeData = {
       details: "84.17%",
     },
   ],
+
   skills: {
     "Product & Collaboration": [
       { name: "Product Strategy", level: 95, category: "Product Management" },
-      { name: "Agile/Scrum", level: 90, category: "Methodology" },
+      { name: "Agile/Scrum", level: 92, category: "Methodology" },
       { name: "Roadmap Planning", level: 90, category: "Planning" },
       { name: "Cross-functional Team Leadership", level: 90, category: "Leadership" },
       { name: "Stakeholder Communication", level: 95, category: "Communication" },
       { name: "Client Relations", level: 90, category: "Business" },
-      { name: "Data-Driven Decision Making", level: 90, category: "Analytics" },
+      { name: "Data-Driven Decision Making", level: 92, category: "Analytics" },
     ],
     "AI/ML Core": [
-      { name: "Retrieval-Augmented Generation (RAG)", level: 95, category: "AI Architecture" },
+      { name: "Retrieval-Augmented Generation (RAG)", level: 96, category: "AI Architecture" },
       { name: "Prompt Engineering", level: 95, category: "AI Engineering" },
-      { name: "Vector Databases (FAISS, Pinecone)", level: 90, category: "Vector DB" },
+      { name: "Vector Databases (FAISS, Pinecone)", level: 92, category: "Vector DB" },
       { name: "LLM Integration (GPT, Mixtral, LLaMA, Gemini)", level: 90, category: "LLM" },
-      { name: "OCR Processing", level: 85, category: "AI Processing" },
-      { name: "Scikit-learn", level: 85, category: "ML Framework" },
-      { name: "Natural Language Processing", level: 85, category: "ML Framework" },
+      { name: "OCR & Document Intelligence", level: 88, category: "AI Processing" },
+      { name: "Natural Language Processing (NLP)", level: 86, category: "ML Framework" },
+      { name: "Model Evaluation & Fine-Tuning", level: 86, category: "AI Optimization" },
     ],
     "Technical Delivery": [
-      { name: "Python", level: 95, category: "Core" },
-      { name: "LangChain", level: 90, category: "AI Framework" },
+      { name: "Python", level: 96, category: "Core" },
+      { name: "LangChain", level: 92, category: "AI Framework" },
       { name: "Streamlit", level: 90, category: "ML Apps" },
-      { name: "API Development (REST,FASTAPI, Flask)", level: 90, category: "Backend" },
-      { name: "Azure (OpenAI, Cosmos DB, Container Apps)", level: 85, category: "Cloud" },
-      { name: "Docker", level: 85, category: "Containerization" },
-      { name: "GitHub Actions", level: 80, category: "CI/CD" },
+      { name: "API Development (REST, FastAPI, Flask)", level: 92, category: "Backend" },
+      { name: "Azure (OpenAI, Cosmos DB, Container Apps)", level: 88, category: "Cloud" },
+      { name: "Docker", level: 88, category: "Containerization" },
+      { name: "GitHub Actions", level: 84, category: "CI/CD" },
+    ],
+    "Tools": [
+      { name: "Jira", level: 92, category: "Project Management" },
+      { name: "Notion", level: 92, category: "Documentation" },
+      { name: "Figma", level: 92, category: "Design Collaboration" },
+      { name: "Power BI", level: 88, category: "Analytics" },
+      { name: "VS Code", level: 88, category: "Development" },
+      { name: "Postman", level: 86, category: "API Testing" },
+      { name: "GitHub", level: 92, category: "Version Control" },
+      { name: "Docker Hub / Container Registry", level: 84, category: "Deployment" }
     ]
   },
+
   projects: [
     {
       title: "Swift Check AI: Enterprise QC Platform",
-      description: "Led product architecture and implementation: Azure OpenAI RAG templates, OCR ingestion, multi-tenant design; converted pilots into paid deployments.",
-      technologies: ["Product Strategy", "AI/ML", "B2B SaaS", "Azure OpenAI", "Flask", "Cosmos DB", "Redis", "Docker"],
+      description:
+        `Led architecture, product strategy and delivery for an enterprise-grade quality control platform that automates document validation for regulated clients.
+Integrated Azure Document Intelligence OCR with vector-based retrieval and LLM reasoning to create a template-driven compliance checker.`,
+      technologies: [
+        "Product Strategy",
+        "AI/ML",
+        "Azure OpenAI",
+        "Flask",
+        "Cosmos DB",
+        "Redis",
+        "Docker",
+      ],
       features: [
-        "Framed value for buyers: 90% time reduction on document workflows and clear compliance accuracy KPIs",
-        "Live demo link + short video: show template generation (before vs after) and config UI for 25+ parameters",
-        "Diagram: pipeline (OCR → embeddings → RAG → template renderer); annotate latency and compliance checks",
-        "Include pilot case study: client name (anonymized if needed), pilot-to-paid conversion rate, and ROI table",
-        "Multi-tenant SaaS architecture for enterprise clients with Microsoft AI Hub funding secured"
+        "Reduced document ingestion + validation time by ~90% through parallel OCR pipelines and cached retrievers.",
+        "Designed 25+ parameterized compliance templates with human-review loops; end-to-end validation accuracy ~80% in production pilots.",
+        "Achieved sub-second responses for cached queries and <500ms cold-starts on optimized endpoints.",
+        "Secured Microsoft AI Founders Hub funding ($5k) and converted multiple pilot engagements to paid customers.",
+        "Built multi-tenant isolation, role-based access, and audit trails for enterprise compliance.",
+        "Ship-ready docs: demo scripts, API contract, rollout playbook, and ROI dashboard for buyer conversations."
       ],
       codeUrl: "https://github.com/yashgori20/swift-check-ai",
       liveUrl: "https://swift-check-ai.azurewebsites.net",
     },
     {
-      title: "Interactive AI Portfolio",
-      description: "Chat-based portfolio using custom AI model to answer questions about skills and experience.",
+      title: "Interactive AI Portfolio (this site)",
+      description:
+        `A chat-first portfolio that behaves like the products I build: interactive, contextual, and discoverable.
+The assistant answers questions about my skills, shows demos, and guides visitors through my case studies and code.`,
       technologies: ["React", "TypeScript", "Tailwind CSS", "Vite", "TanStack Query", "Shadcn UI"],
       features: [
-        "AI-powered chatbot with conversation memory",
-        "Multi-modal interface with smooth animations",
-        "Responsive design with mobile gesture support",
-        "Real-time chat with smart suggestions",
-        "Professional portfolio showcase with interactive elements"
+        "Context-retention chatbot that maps a user's query to portfolio sections and code samples.",
+        "Semantic routing for direct access to project demos and code links from conversation context.",
+        "Mobile-first gestures, accessible dark mode, and micro-interactions for fast, pleasant exploration.",
+        "Live deployment with CI and analytics to measure engagement and top queries.",
+        "Design intent: demonstrate conversational UX patterns and act as a meta proof-of-concept."
       ],
       codeUrl: "https://github.com/yashgori20/yashgori20",
       liveUrl: "https://yashgori20.vercel.app/",
     },
     {
       title: "DocuTalk: AI Document Intelligence Platform",
-      description: "Scoped conversational UI from user interviews; delivered FAISS-backed retrieval and Flutter client for multi-platform reach.",
-      technologies: ["User Research", "API Design", "Cross-platform", "Python", "FAISS", "LangChain", "Gemini Embeddings", "Flask", "Flutter"],
+      description:
+        `Cross-platform conversational assistant for document Q&A. Engineered embedding pipelines, vector retrieval and a multi-turn dialogue manager for context-aware answers.`,
+      technologies: [
+        "Python",
+        "FAISS",
+        "LangChain",
+        "Gemini Embeddings",
+        "Flask",
+        "Flutter",
+      ],
       features: [
-        "Outcome: major time-savings on document review and measurable adoption lift",
-        "Embed interactive demo (upload a doc + ask Q) and short screencast of Flutter UX",
-        "Show FAISS + embedding architecture graphic and call out 40% adoption improvement",
-        "Link to code and a sample dataset (redacted) so reviewers can validate retrieval accuracy",
-        "Cross-platform deployment with conversational AI interface for document queries"
+        "Built FAISS-backed semantic search and LLM layer to answer document queries with provenance and citation tracebacks.",
+        "Delivered a Flutter front-end for cross-device usage and a demo API for enterprise integration.",
+        "Reduced manual review hours by ~40% in pilot trials through precise retrieval and highlight extraction.",
+        "Implemented chunking, metadata-aware embeddings, and caching strategies to reduce retrieval latency.",
+        "Open-sourced example dataset and evaluation harness for reviewers to validate retrieval quality."
       ],
       codeUrl: "https://github.com/yashgori20/DocuTalk",
     },
     {
       title: "FinLLM-RAG: RBI Compliance Automation",
-      description: "Combined regulatory research with RAG model engineering; validated ₹10% cost-savings case and improved model accuracy to ~80%.",
-      technologies: ["Regulatory Tech", "Market Analysis", "Python", "Mixtral LLM", "GROQ Cloud", "FAISS", "Custom Model Training"],
+      description:
+        `A regulatory intelligence prototype that automates rule extraction and mapping from RBI documents into an auditable RAG pipeline.
+Worked with policy texts to generate candidate rules, human-in-the-loop verification, and exception reporting.`,
+      technologies: [
+        "Python",
+        "Mixtral LLM",
+        "GROQ Cloud",
+        "FAISS",
+        "Custom Model Training"
+      ],
       features: [
-        "Packaged outputs into investor-ready demos and compliance dashboards",
-        "Publish a short compliance playbook showing sample rule → model output → human review loop",
-        "Include accuracy/confusion matrix screenshot and cost-savings calculation that led to the ₹10% claim",
-        "Custom RAG system for regulatory document processing with Mixtral LLM integration",
-        "Iterative AI product refinement methodology for compliance automation"
+        "Achieved ~80% prediction accuracy on labeled compliance checks after iterative prompt + retrieval tuning.",
+        "Quantified potential operational savings (~10% annual cost reduction) using a conservative automation-to-review tradeoff model.",
+        "Provided confusion matrices, rule-mapping visualizations, and a human-review loop to ensure auditability.",
+        "Packaged a lightweight API and demo dashboard for stakeholder validation and investor briefings.",
+        "Documentation included: dataset provenance, evaluation scripts, and responsible-use guidelines."
       ],
       codeUrl: "https://github.com/yashgori20/FinLLM-RAG-rbi",
       liveUrl: "https://yashgori20-FinLLM-RAG.hf.space",
     },
     {
-      title: "Inhance & Interactive Portfolio",
-      description: "Built the product flow (evaluation → recommendation → resume generation) and integrated LLM agents for conversational help.",
-      technologies: ["Streamlit", "GROQ Cloud", "Mixtral LLM", "Multi-Agent System", "LinkedIn API", "ATS Analysis", "LaTeX", "PDF Processing"],
+      title: "Inhance: AI Profile Optimizer",
+      description:
+        `Multi-agent system that evaluates LinkedIn profiles and resumes, giving targeted, ATS-aware recommendations and generating LaTeX resumes tailored to job descriptions.`,
+      technologies: [
+        "Streamlit",
+        "GROQ Cloud",
+        "Mixtral LLM",
+        "Multi-Agent System",
+        "LinkedIn API",
+        "LaTeX"
+      ],
       features: [
-        "Result: tangible recruiter-facing demos, ATS scoring, and exportable resumes",
-        "Add an interactive widget on portfolio: 'Score my LinkedIn' demo with live ATS output",
-        "Provide before/after LinkedIn profile examples and downloadable LaTeX resume templates",
-        "Multi-agent AI system for profile evaluation with optimization suggestions",
-        "Multi-format support (PDF, DOCX, TXT) with professional LaTeX formatting"
+        "Implemented ATS-scoring, role-mapping and concrete rewrites to improve recruiter-facing signals.",
+        "Built exportable LaTeX resume templates and a 'Score My LinkedIn' interactive demo for recruiters.",
+        "Reduced manual profile review time by ~75% for test users through automated suggestions and prioritized edits.",
+        "Designed evaluation metrics and A/B test plan to assess impact on interview conversion rate."
       ],
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
     },
     {
-      title: "Additional Tools: Churn Predictor & Utilities",
-      description: "Produced robust analytics (churn 94% accuracy) and multimodal utilities that showcase end-to-end AI product thinking — from data collection to deployment and UX.",
-      technologies: ["Python", "Random Forest", "Decision trees", "Power BI", "Numpy", "Pandas", "Seaborn", "Matplotlib"],
+      title: "Customer Churn Predictor",
+      description:
+        `Various data products and utilities that demonstrate end-to-end ML thinking   from collection and cleaning to modelling, evaluation and visualization.`,
+      technologies: ["Python", "Random Forest", "Decision Trees", "Power BI", "NumPy", "Pandas", "Matplotlib"],
       features: [
-        "Attach Power BI embed or screenshots highlighting feature importance and actionable insights",
-        "Provide code link + README showing evaluation pipeline and data preprocessing steps",
-        "94% accuracy in customer churn prediction with Random Forest and Decision Tree algorithms",
-        "Interactive Power BI dashboard for comprehensive business insights",
-        "Visual analytics pipeline with Seaborn and Matplotlib for data storytelling"
+        "Built a churn predictor with Random Forest yielding ~94% train accuracy; productionized evaluation and feature importance reporting.",
+        "Delivered Power BI dashboards that surface actionable business signals and feature-level insights.",
+        "Shared reproducible notebooks, data preprocessing pipelines, and evaluation metrics for transparency.",
+        "Designed experiments and monitoring to guard against model drift and to measure long-term performance."
       ],
       codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
-  ] as Project[],
+  ],
   caseStudies: [
     {
       title: "ChargeOrFill – EV Charging Aggregator App",
       role: "Product Strategist & Research Lead",
-      timeline: "Independent project",
+      timeline: "Independent Project",
       focus: ["Market discovery", "User research", "Product validation"],
-      context: "As India's EV ecosystem grew, charging infrastructure remained fragmented across multiple provider apps, each with inconsistent coverage, pricing, and reliability. The project aimed to assess the feasibility of building ChargeOrFill, an aggregator platform simplifying discovery and payment across EV networks.",
-      problem: "EV owners faced friction in finding available, compatible charging stations — often juggling multiple apps, unclear pricing models, and lack of trust in reliability data. Operators, on the other hand, struggled with underutilization due to poor visibility. The hypothesis: a unified platform could create mutual efficiency and convenience.",
+      context:
+        `India's public charging infrastructure is fragmented across networks with inconsistent APIs, pricing and reliability. ChargeOrFill explored a single-pane aggregator to reduce friction for EV drivers and improve utilization for operators.`,
+      problem:
+        `Drivers struggled to find available, compatible chargers and trusted uptime metrics; operators struggled with demand visibility and dynamic pricing integration.`,
       process: [
-        "Landscape Analysis: Mapped India's fragmented EV charging ecosystem and consolidated multi-app data from leading providers to estimate coverage overlap and demand density.",
-        "Market Validation: Modeled business viability through TAM/SAM/SOM analysis and Porter's Five Forces to evaluate competitive pressures and scalability potential.",
-        "User Research: Conducted empathy interviews using an interactive Figma prototype, complemented by surveys and competitor benchmarking, to uncover behavioral patterns and unmet needs among EV owners and charging operators.",
-        "Business Modeling: Designed data-backed pricing and adoption models, quantifying potential ROI and risk across B2C and B2B2C channels."
+        "Landscape analysis: aggregated public provider data to map coverage, overlap and blackspots.",
+        "Market sizing: TAM/SAM/SOM modelling and sensitivity analysis for adoption assumptions.",
+        "User research: moderated interviews, prototype testing via Figma and surveys to validate user journeys.",
+        "Business modelling: pricing experiments, operator incentive structures and partnership frameworks for B2B2C integration."
       ],
-      outcome: "Validation showed a high conceptual appeal but low short-term market readiness, primarily due to limited public charging interoperability and regional fragmentation. Exercised strategic ownership by recommending deprioritization of launch, saving projected costs and focusing future exploration on potential partnerships and data-sharing models.",
-      reflection: "This project reinforced the importance of evidence-based go/no-go decisions in early product strategy. Beyond building something new, it highlighted the discipline of knowing when not to build — a core product mindset that balances ambition with realism."
+      outcome:
+        `Findings showed a strong long-term value proposition but near-term fragmentation and lack of API standards made immediate launch risky. Recommended a partner-first, phased approach focused on data-sharing pilots and operator tools.`,
+      reflection:
+        `The project emphasised disciplined product thinking: validation can be a feature too. We saved upfront costs by recommending partnerships and a phased pilot program rather than a full standalone build.`
     },
-  ] as CaseStudy[],
+  ],
+
   experience: [
     {
       role: "AI Product Lead",
       company: "Webotix IT Consultancy",
       period: "December 2024 – June 2025",
       location: "Mumbai, Maharashtra (Remote)",
-      technologies: ["Azure OpenAI GPT-4o", "Azure Cosmos DB", "Azure Document Intelligence OCR", "Product Strategy", "B2B SaaS"],
+      technologies: [
+        "Azure OpenAI GPT-4o",
+        "Azure Cosmos DB",
+        "Azure Document Intelligence OCR",
+        "Redis",
+        "Docker",
+        "Product Strategy",
+        "B2B SaaS"
+      ],
       points: [
-        "I led technical architecture and product strategy for enterprise QC automation platform serving food industry clients.",
-        "I scoped and delivered MVP using Azure OpenAI GPT-4o, Azure Cosmos DB, and Azure Document Intelligence OCR.",
-        "I coordinated with C-suite on positioning, securing $5k Microsoft AI Hub funding.",
+        "Led architecture and product strategy for SwiftCheck AI   a GenAI QC platform targeting regulated industries (food, finance).",
+        "Scoped, prototyped and delivered a demo-ready MVP within 4 weeks using open-source and cloud services; validated product–market fit with pilot clients.",
+        "Partnered with C-suite to define GTM, pricing, and enterprise SLAs; secured Microsoft AI Founders Hub funding ($5,000) to accelerate pilot expansion."
       ],
       additionalPoints: [
-        "Translated compliance requirements into 25+ parameterized templates, achieving 80% accuracy and sub-second performance.",
-        "First B2B SaaS product from Webotix to receive Microsoft AI Hub funding.",
-        "Independently handled architecture and deployment for production-ready enterprise solution.",
-        "Designed compliance-first AI pipeline for regulated industries.",
+        "Designed a compliance-first pipeline (OCR → chunking → embeddings → RAG → template validator) achieving ~80% validated output accuracy in pilots.",
+        "Built multi-tenant API endpoints with role-based access and audit logs suitable for compliance review.",
+        "Optimised throughput with Redis caching and container orchestration to achieve ~2.3× higher throughput and ~30% lower infra costs.",
+        "Created Power BI reporting for execs covering latency, accuracy, pilot-to-paid conversion, and projected ROI for enterprise customers.",
+        "Authored deployment runbooks, API contracts and a customer onboarding playbook that reduced time-to-first-value for pilot clients."
       ],
     },
     {
@@ -216,16 +263,16 @@ export const resumeData = {
       company: "MetaRizz",
       period: "December 2023 – May 2024",
       location: "Mumbai, Maharashtra",
-      technologies: ["Product Management", "Figma", "UI/UX Design", "Flutter", "Stakeholder Management"],
+      technologies: ["Figma", "Product Management", "UI/UX", "Flutter", "Agile"],
       points: [
-        "I owned end-to-end product for two projects including GuestInMe (1,000+ users) with AI-assisted content and UX updates.",
-        "I shipped monetization features (table booking, club passes) and aligned them with stakeholder goals achieving 40% engagement increase.",
-        "I ran roadmap, prioritization, and stakeholder communications while mediating clients ↔ devs to keep releases on schedule.",
+        "Owned product for GuestInMe (UX revamp) and MediNobel (0→1 hospitality platform), including discovery, PRD creation and release planning.",
+        "Drove a 40% increase in engagement by designing and shipping monetization features and streamlined booking flows.",
+        "Introduced sprint rituals, backlog hygiene and acceptance criteria templates to improve handoff and reduce dev ambiguity."
       ],
       additionalPoints: [
-        "Defined PRD-level specs from stakeholder asks and converted to developer-ready tickets with clear acceptance criteria.",
-        "Mapped UX via Figma and coordinated handoff to Flutter devs, reducing back-and-forth during implementation.",
-        "Introduced lightweight post-release reviews to decide what iterates, what ships, and what gets cut.",
+        "Wrote PRDs, feature specs and acceptance criteria; handoff artifacts reduced rework by ~30%.",
+        "Led cross-functional reviews to align product, design and engineering which improved release predictability.",
+        "Added lightweight telemetry and event tracking to inform post-launch iterations and A/B test prioritisation."
       ],
     },
     {
@@ -233,23 +280,29 @@ export const resumeData = {
       company: "Watermelon Gang",
       period: "August 2022 – November 2023",
       location: "Mumbai, Maharashtra",
-      technologies: ["AI Content Workflows", "Market Analysis", "Client Lifecycle Management", "Data Analytics"],
+      technologies: ["AI Content Systems", "Market Strategy", "Client Management", "Data Analytics"],
       points: [
-        "I directed AI-powered content workflows, managing a 2-person creative team to deliver for 5 enterprise clients.",
-        "I combined market analysis with AI content optimization to boost engagement metrics by 35%.",
-        "I owned client relationship lifecycle, from outreach to delivery, across fintech and cryptocurrency sectors.",
+        "Directed AI-assisted content workflows for 5+ enterprise clients in fintech and crypto, overseeing creative + ML-assisted tooling.",
+        "Scaled creator channels using iterative content testing: example   Ali Solanki channel grew from 50K → 70K subscribers under my strategy.",
+        "Implemented A/B testing cycles and KPI-driven content experiments that improved campaign CTRs and engagement metrics."
       ],
       additionalPoints: [
-        "Built a modular AI-assisted content system that reduced production time by 40%.",
-        "Introduced data-backed A/B testing for social media creatives, influencing future campaign strategies.",
-        "Integrated sentiment analysis into reporting to better gauge audience reception.",
+        "Built modular content generation pipelines using prompt templates and human-in-the-loop checks to ensure quality and brand tone.",
+        "Introduced sentiment analysis and reporting to provide clients with deeper engagement insights and content optimizations.",
+        "Reduced average campaign production time by ~40% through templating and automation."
       ],
     },
-  ] as Experience[],
+  ],
+
   volunteering: {
     organization: "Vacha NGO",
     role: "English & Computer Instructor",
     period: "July 2024",
-    description: "I designed innovative AI-enhanced learning modules for underprivileged students with improved digital literacy engagement.",
+    description:
+      `Designed and taught AI-augmented digital literacy programs for 30+ underprivileged students:
+- Created interactive lesson plans combining fundamental English, basic digital skills and simple computational thinking activities.
+- Led a career-guidance session that helped students identify strengths and set realistic academic/career goals.
+- Built lightweight assessments and hands-on exercises that increased engagement and basic competency in computer usage.
+- Packaged lesson materials and teacher notes to enable repeatable delivery by volunteer instructors.`
   }
 };

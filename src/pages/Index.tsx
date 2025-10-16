@@ -229,9 +229,9 @@ const Index = () => {
         {/* Header with Logo */}
         <div className="p-4 flex items-center justify-between">
           {!isSidebarCollapsed && (
-            <button 
+            <button
               onClick={() => {
-                const element = document.getElementById('chat');
+                const element = document.getElementById('home');
                 if (element) {
                   element.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -245,17 +245,23 @@ const Index = () => {
           )}
           
           {isSidebarCollapsed ? (
-            <button 
-              onClick={toggleSidebarCollapse}
+            <button
+              onClick={() => {
+                const element = document.getElementById('home');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+                setActiveView('content');
+                if (isMobile) closeMobileSidebar();
+              }}
               className="w-6 h-6 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-all duration-300 mx-auto group"
             >
-              <img 
-                src="/images/triquetra-logo.png" 
-                alt="Logo" 
-                className="w-4 h-4 group-hover:opacity-0 group-hover:animate-spin transition-all duration-300 origin-center absolute" 
-                style={{animationDuration: '0.5s'}} 
+              <img
+                src="/images/triquetra-logo.png"
+                alt="Logo"
+                className="w-4 h-4 group-hover:animate-spin transition-all duration-300 origin-center"
+                style={{animationDuration: '0.5s'}}
               />
-              <ChevronRight className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-all duration-300" />
             </button>
           ) : (
             <button 

@@ -159,7 +159,7 @@ const ContactForm = () => {
             onClick={handleQuickWhatsApp}
             className="group py-2"
           >
-            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+            <div className="flex items-center gap-3 p-2 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:bg-white/5 transition-all duration-200">
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
                 <MessageCircle className="h-4 w-4 text-white" />
               </div>
@@ -174,7 +174,7 @@ const ContactForm = () => {
             onClick={handleQuickEmail}
             className="group py-2"
           >
-            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+            <div className="flex items-center gap-3 p-2 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:bg-white/5 transition-all duration-200">
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
                 <Mail className="h-4 w-4 text-white" />
               </div>
@@ -257,7 +257,7 @@ const ContactForm = () => {
             disabled={isSubmitting}
             className="w-full group py-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+            <div className="flex items-center gap-3 p-2 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:bg-white/5 transition-all duration-200">
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 text-white animate-spin" />

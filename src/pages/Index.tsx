@@ -240,10 +240,10 @@ const Index = () => {
               }}
               className="w-6 h-6 flex items-center justify-center hover:bg-[#303030] rounded transition-colors group"
             >
-              <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4 group-hover:animate-spin transition-transform duration-500 origin-center" style={{animationDuration: '0.5s'}} />
+              <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4 group-hover:animate-spin transition-transform duration-500 origin-center" style={{ animationDuration: '0.5s' }} />
             </button>
           )}
-          
+
           {isSidebarCollapsed ? (
             <button
               onClick={() => {
@@ -260,11 +260,11 @@ const Index = () => {
                 src="/images/triquetra-logo.png"
                 alt="Logo"
                 className="w-4 h-4 group-hover:animate-spin transition-all duration-300 origin-center"
-                style={{animationDuration: '0.5s'}}
+                style={{ animationDuration: '0.5s' }}
               />
             </button>
           ) : (
-            <button 
+            <button
               onClick={toggleSidebarCollapse}
               className="w-6 h-6 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-colors"
             >
@@ -295,7 +295,7 @@ const Index = () => {
                 )}
               </div>
             </button>
-            <button 
+            <button
               className={cn(
                 "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
                 isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
@@ -332,8 +332,8 @@ const Index = () => {
                   onClick={() => handleChatClick(chat.id)}
                   className={cn(
                     "w-full text-left rounded-lg transition-colors",
-                    isSidebarCollapsed 
-                      ? "p-2.5 flex justify-center" 
+                    isSidebarCollapsed
+                      ? "p-2.5 flex justify-center"
                       : "px-3 py-2.5",
                     isActive ? "bg-[#303030]" : "hover:bg-[#303030]"
                   )}
@@ -369,7 +369,7 @@ const Index = () => {
               {!isSidebarCollapsed && (
                 <div className="flex-1 text-left">
                   <div className="text-sm text-white">Yash Gori</div>
-                  <div className="text-xs text-gray-400">AI Engineer</div>
+                  <div className="text-xs text-gray-400">AI Product Manager</div>
                 </div>
               )}
             </button>
@@ -378,8 +378,8 @@ const Index = () => {
             {showProfileDropdown && (
               <div className={cn(
                 "absolute bg-[#2a2a2a] rounded-lg shadow-lg z-50",
-                isSidebarCollapsed 
-                  ? "bottom-0 left-full ml-2 w-64" 
+                isSidebarCollapsed
+                  ? "bottom-0 left-full ml-2 w-64"
                   : "bottom-full left-0 right-0 mb-2"
               )}>
                 <div className="p-4 border-b border-gray-600">
@@ -444,7 +444,7 @@ const Index = () => {
                     <Plus className="h-4 w-4" />
                     <span className="text-sm">New Chat</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => {
                       setActiveView('content');
                       setTimeout(() => {
@@ -458,7 +458,7 @@ const Index = () => {
                     <Mail className="h-4 w-4" />
                     <span className="text-sm">Contact Me</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => {
                       navigator.clipboard.writeText(window.location.href);
                       // You could add a toast notification here
@@ -488,9 +488,9 @@ const Index = () => {
         {/* Fixed Mobile Hamburger Menu */}
         {isMobile && (
           <div className="fixed top-4 left-4 z-50">
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={toggleMobileSidebar}
               className="bg-black/20 backdrop-blur-sm border border-white/10 hover:bg-black/30"
             >
@@ -503,53 +503,53 @@ const Index = () => {
         <div className="p-2 px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              
+
               {/* Mode Selector - Only show on chat screens */}
               {(activeView === 'newchat' || activeView === 'chat') && (
                 <div className="relative">
-                <button
-                  onClick={() => setShowModeDropdown(!showModeDropdown)}
-                  className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] hover:bg-[#303030] rounded-lg text-white text-sm font-medium transition-colors"
-                >
-                  <span>{currentMode}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-                
-                {/* Mode Dropdown */}
-                <AnimatePresence>
-                  {showModeDropdown && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-64 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-xl z-50"
-                    >
-                      {conversationModes.map((mode) => (
-                        <button
-                          key={mode.id}
-                          onClick={() => {
-                            setCurrentMode(mode.name);
-                            setShowModeDropdown(false);
-                          }}
-                          className={cn(
-                            "w-full text-left px-4 py-3 hover:bg-[#303030] transition-colors first:rounded-t-lg last:rounded-b-lg",
-                            currentMode === mode.name && "bg-[#303030]"
-                          )}
-                        >
-                          <div className="text-white font-medium text-sm">{mode.name}</div>
-                          <div className="text-gray-400 text-xs mt-1">{mode.description}</div>
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                  <button
+                    onClick={() => setShowModeDropdown(!showModeDropdown)}
+                    className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] hover:bg-[#303030] rounded-lg text-white text-sm font-medium transition-colors"
+                  >
+                    <span>{currentMode}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+
+                  {/* Mode Dropdown */}
+                  <AnimatePresence>
+                    {showModeDropdown && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 mt-2 w-64 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-xl z-50"
+                      >
+                        {conversationModes.map((mode) => (
+                          <button
+                            key={mode.id}
+                            onClick={() => {
+                              setCurrentMode(mode.name);
+                              setShowModeDropdown(false);
+                            }}
+                            className={cn(
+                              "w-full text-left px-4 py-3 hover:bg-[#303030] transition-colors first:rounded-t-lg last:rounded-b-lg",
+                              currentMode === mode.name && "bg-[#303030]"
+                            )}
+                          >
+                            <div className="text-white font-medium text-sm">{mode.name}</div>
+                            <div className="text-gray-400 text-xs mt-1">{mode.description}</div>
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
             </div>
             <div className="flex items-center gap-4">
               {/* Reach Out - Show on all screens */}
-              <div 
+              <div
                 className="relative"
                 onMouseEnter={() => {
                   if (reachOutTimeout) {
@@ -565,72 +565,72 @@ const Index = () => {
                   setReachOutTimeout(timeout);
                 }}
               >
-              <button
-                className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
-              >
-                <Mail className="h-4 w-4 text-gray-400" />
-                <div className="text-sm truncate">Reach out</div>
-              </button>
-              
-              {/* Contact Overlay */}
-              {showReachOutOverlay && (
-                <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
-                  <div className="space-y-3">
-                    <div className="text-sm text-white font-medium mb-3">Yash Gori - AI Engineer</div>
-                    <div className="text-xs text-gray-400 mb-3">Get in touch</div>
-                    
-                    {/* Email */}
-                    <div className="flex items-center gap-3 text-sm">
-                      <Mail className="h-4 w-4 text-gray-400" />
-                      <span className="text-white">{resumeData.contact.email}</span>
+                <button
+                  className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
+                >
+                  <Mail className="h-4 w-4 text-gray-400" />
+                  <div className="text-sm truncate">Reach out</div>
+                </button>
+
+                {/* Contact Overlay */}
+                {showReachOutOverlay && (
+                  <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
+                    <div className="space-y-3">
+                      <div className="text-sm text-white font-medium mb-3">Yash Gori -  Product Manager </div>
+                      <div className="text-xs text-gray-400 mb-3">Get in touch</div>
+
+                      {/* Email */}
+                      <div className="flex items-center gap-3 text-sm">
+                        <Mail className="h-4 w-4 text-gray-400" />
+                        <span className="text-white">{resumeData.contact.email}</span>
+                      </div>
+
+                      {/* Phone */}
+                      <div className="flex items-center gap-3 text-sm">
+                        <Phone className="h-4 w-4 text-gray-400" />
+                        <span className="text-white">{resumeData.contact.phone}</span>
+                      </div>
+
+                      {/* Social Links */}
+                      <div className="flex gap-2 pt-2">
+                        <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <Linkedin className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <Github className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <XLogo className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                            <Instagram className="h-4 w-4" />
+                          </Button>
+                        </a>
+                      </div>
+
+                      {/* Contact Me Button */}
+                      <button
+                        onClick={() => {
+                          setActiveView('content');
+                          setTimeout(() => {
+                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                          }, 300);
+                          setShowReachOutOverlay(false);
+                        }}
+                        className="w-full mt-3 p-2 bg-[#404040] hover:bg-[#505050] text-white rounded-lg text-sm transition-colors"
+                      >
+                        Contact Me
+                      </button>
                     </div>
-                    
-                    {/* Phone */}
-                    <div className="flex items-center gap-3 text-sm">
-                      <Phone className="h-4 w-4 text-gray-400" />
-                      <span className="text-white">{resumeData.contact.phone}</span>
-                    </div>
-                    
-                    {/* Social Links */}
-                    <div className="flex gap-2 pt-2">
-                      <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                          <Linkedin className="h-4 w-4" />
-                        </Button>
-                      </a>
-                      <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                          <Github className="h-4 w-4" />
-                        </Button>
-                      </a>
-                      <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                          <XLogo className="h-4 w-4" />
-                        </Button>
-                      </a>
-                      <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
-                          <Instagram className="h-4 w-4" />
-                        </Button>
-                      </a>
-                    </div>
-                    
-                    {/* Contact Me Button */}
-                    <button
-                      onClick={() => {
-                        setActiveView('content');
-                        setTimeout(() => {
-                          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                        }, 300);
-                        setShowReachOutOverlay(false);
-                      }}
-                      className="w-full mt-3 p-2 bg-[#404040] hover:bg-[#505050] text-white rounded-lg text-sm transition-colors"
-                    >
-                      Contact Me
-                    </button>
                   </div>
-                </div>
-              )}
+                )}
               </div>
             </div>
           </div>

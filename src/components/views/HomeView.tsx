@@ -37,11 +37,25 @@ const HomeView = ({ activeView, setActiveView }: ViewProps) => {
               })()}
             </h1>
             <p className="text-lg md:text-xl text-gray-300">
-              Welcome to my portfolio
+              {resumeData.tagline}
             </p>
-            <p className="text-base md:text-lg text-gray-400 mt-4 max-w-3xl mx-auto">
-              Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.
+            <p className="text-sm md:text-base text-gray-500 mt-2 max-w-3xl mx-auto">
+              {resumeData.about}
             </p>
+          </div>
+
+          {/* Front-loaded outcome metrics: the "first 6 seconds" proof */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-3xl">
+            {resumeData.headlineMetrics.map((m) => (
+              <div
+                key={m.label}
+                className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-4 text-center transition-colors hover:border-white/25"
+              >
+                <div className="text-2xl md:text-3xl font-bold text-white">{m.value}</div>
+                <div className="mt-1 text-xs md:text-sm font-medium text-gray-300 leading-tight">{m.label}</div>
+                <div className="mt-0.5 text-[11px] text-gray-500 leading-tight">{m.sub}</div>
+              </div>
+            ))}
           </div>
 
           {/* Profile Picture */}

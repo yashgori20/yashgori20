@@ -15,15 +15,30 @@ export const resumeData = {
   profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
 
   about:
-    "Building AI-powered products from concept to deployment blending technical depth with product vision to turn complex ideas into scalable, impactful solutions.",
+    "I'm an AI Product Manager who ships. I don't just write the spec, I build and deploy the product, using AI as my engineering force-multiplier to take ideas from PRD to production. I've shipped GenAI products to enterprise clients, secured Microsoft Founders Hub funding, and turned manual workflows into systems that run themselves.",
+
+  // One-line positioning shown under the greeting; names the AI-builder edge explicitly
+  // (hiring managers now screen for AI fluency / ability to ship, not just talk about it).
+  tagline:
+    "AI Product Manager who ships. I scope, build and deploy AI products end-to-end, not just spec them.",
+
+  // Front-loaded outcome metrics for the home screen (the "first 6 seconds" proof).
+  // NOTE: confirm "20+ features" and "4 enterprise clients" are accurate for YOU before deploying;
+  // these mirror the FactWise framing and should reflect your real shipped work.
+  headlineMetrics: [
+    { value: "20+", label: "AI features shipped", sub: "scoped → built → deployed" },
+    { value: "90%", label: "less manual work", sub: "AI OCR & automation" },
+    { value: "$5K", label: "Microsoft Founders Hub grant", sub: "secured by pitching" },
+    { value: "4", label: "enterprise clients", sub: "live in production" },
+  ],
 
   whatIBring:
-    `Technical Depth   I design RAG systems, production APIs, and low-latency inference pipelines with an obsession for reliability and measurable impact.
-Product Strategy   I convert ambiguous opportunities into clear roadmaps, PRDs, and prioritised backlogs that align engineering effort with business outcomes.
-Execution Ownership   I take products from prototype → pilot → paid deployment, handling architecture, delivery and stakeholder alignment end-to-end.
-Systems Thinking   I optimise the whole system (data, infra, UX, human-in-the-loop) rather than only tuning models.
-Cross-functional Communication   I translate technical tradeoffs into business language for execs while giving engineers concrete acceptance criteria and metrics.
-Impact-minded Metrics   I focus on the numbers that matter (accuracy, latency, adoption, ROI) and design experiments to make them move.`,
+    `Technical Depth: I design RAG systems, production APIs, and low-latency inference pipelines with an obsession for reliability and measurable impact.
+Product Strategy: I convert ambiguous opportunities into clear roadmaps, PRDs, and prioritised backlogs that align engineering effort with business outcomes.
+Execution Ownership: I take products from prototype → pilot → paid deployment, handling architecture, delivery and stakeholder alignment end-to-end.
+Systems Thinking: I optimise the whole system (data, infra, UX, human-in-the-loop) rather than only tuning models.
+Cross-functional Communication: I translate technical tradeoffs into business language for execs while giving engineers concrete acceptance criteria and metrics.
+Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, adoption, ROI) and design experiments to make them move.`,
 
   languages: [
     "English (Fluent)",
@@ -67,6 +82,7 @@ Impact-minded Metrics   I focus on the numbers that matter (accuracy, latency, a
       { name: "Model Evaluation & Fine-Tuning", level: 86, category: "AI Optimization" },
     ],
     "Technical Delivery": [
+      { name: "AI-Assisted Build (ship full-stack products with AI)", level: 95, category: "AI Builder" },
       { name: "Python", level: 96, category: "Core" },
       { name: "LangChain", level: 92, category: "AI Framework" },
       { name: "Streamlit", level: 90, category: "ML Apps" },
@@ -91,8 +107,8 @@ Impact-minded Metrics   I focus on the numbers that matter (accuracy, latency, a
     {
       title: "Swift Check AI: Enterprise QC Platform",
       description:
-        `Led architecture, product strategy and delivery for an enterprise-grade quality control platform that automates document validation for regulated clients.
-Integrated Azure Document Intelligence OCR with vector-based retrieval and LLM reasoning to create a template-driven compliance checker.`,
+        `Owned this as PM and personally built and shipped it to production using AI as my engineering force-multiplier: an enterprise quality-control platform that automates document validation for regulated clients.
+Integrated Azure Document Intelligence OCR with vector-based retrieval and LLM reasoning into a template-driven compliance checker, going from PRD to deployed pilot solo.`,
       technologies: [
         "Product Strategy",
         "AI/ML",
@@ -196,7 +212,7 @@ Worked with policy texts to generate candidate rules, human-in-the-loop verifica
     {
       title: "Customer Churn Predictor",
       description:
-        `Various data products and utilities that demonstrate end-to-end ML thinking   from collection and cleaning to modelling, evaluation and visualization.`,
+        `Various data products and utilities that demonstrate end-to-end ML thinking, from collection and cleaning to modelling, evaluation and visualization.`,
       technologies: ["Python", "Random Forest", "Decision Trees", "Power BI", "NumPy", "Pandas", "Matplotlib"],
       features: [
         "Built a churn predictor with Random Forest yielding ~94% train accuracy; productionized evaluation and feature importance reporting.",
@@ -207,55 +223,142 @@ Worked with policy texts to generate candidate rules, human-in-the-loop verifica
       codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
   ],
+  // Case studies are content-driven: list cards use this metadata, and the full
+  // write-up lives as Markdown in /public/case-studies/<slug>.md (rendered on a
+  // dedicated, shareable page at /case-studies/<slug>). ChargeOrFill has no export
+  // yet, so its full text stays inline via `body`.
   caseStudies: [
     {
+      slug: "jiocinema-acquisition",
+      title: "JioCinema Premium: Acquisition Strategy",
+      tag: "B2C",
+      role: "Product Strategy · Acquisition",
+      timeline: "Independent Case Study",
+      focus: ["B2C Acquisition", "ICP Definition", "Channel Strategy", "OTT/Streaming"],
+      summary:
+        "How JioCinema Premium should convert free viewers into loyal paying subscribers: market and ICP analysis across two professional segments, then an acquisition-channel prioritisation pointing to referrals, paid trials and product integrations.",
+      markdownPath: "/case-studies/jiocinema-acquisition.md",
+    },
+    {
+      slug: "blinkit-engagement-retention",
+      title: "Blinkit: Engagement & Retention Strategy",
+      tag: "B2C",
+      role: "Growth · Engagement & Retention",
+      timeline: "Independent Case Study",
+      focus: ["Engagement Frameworks", "User Segmentation", "Retention", "Resurrection Campaigns"],
+      summary:
+        "A frequency-first engagement model for the 10-minute grocery platform: user/ICP segmentation, six engagement campaigns to upgrade users between tiers, a retention curve analysis, and resurrection campaigns for churned users.",
+      markdownPath: "/case-studies/blinkit-engagement-retention.md",
+    },
+    {
+      slug: "googlepay-engagement-retention",
+      title: "Google Pay: Engagement & Retention Strategy",
+      tag: "Fintech",
+      role: "Growth · Engagement & Retention",
+      timeline: "Independent Case Study",
+      focus: ["Engagement Frameworks", "User Segmentation", "Retention Analysis", "Fintech/UPI"],
+      summary:
+        "A breadth + frequency engagement framework for Google Pay grounded in a 150-user survey: who counts as an active user, six feature-tied engagement campaigns, and trigger-based resurrection campaigns set against India's UPI retention dynamics.",
+      markdownPath: "/case-studies/googlepay-engagement-retention.md",
+    },
+    {
+      slug: "blinkit-onboarding",
+      title: "Blinkit: Onboarding Flow & Activation Teardown",
+      tag: "B2C",
+      role: "Product Analyst · Onboarding & UX",
+      timeline: "Independent Case Study",
+      focus: ["Onboarding Teardown", "Activation Metrics", "Cognitive Biases", "UX Critique"],
+      summary:
+        "A hands-on teardown of Blinkit's acquisition-to-activation funnel, from app-store discovery through first order, mapping the cognitive biases at each step and the moments where the 'delivery in minutes' promise breaks, with a prioritised fix list and activation metrics.",
+      markdownPath: "/case-studies/blinkit-onboarding.md",
+    },
+    {
+      slug: "vercel-acquisition",
+      title: "Vercel: Acquisition Strategy",
+      tag: "B2B",
+      role: "Growth · Acquisition",
+      timeline: "Independent Case Study",
+      focus: ["B2B Acquisition", "ICP Prioritisation", "TAM-SAM-SOM", "Referral & Content Loops"],
+      summary:
+        "Which segments and channels Vercel should prioritise to grow its developer base: five buyer personas, an ICP prioritisation favouring startups/SMEs, top-down market sizing, and a channel strategy doubling down on referral/partner programs and content loops.",
+      markdownPath: "/case-studies/vercel-acquisition.md",
+    },
+    {
+      slug: "fireflies-acquisition",
+      title: "Fireflies.ai: Acquisition Strategy",
+      tag: "B2B SaaS",
+      role: "Growth · Acquisition",
+      timeline: "Independent Case Study",
+      focus: ["B2B SaaS Acquisition", "Persona Research", "JTBD", "Channel Prioritisation"],
+      summary:
+        "Persona and channel strategy for the AI meeting assistant as it scales against bundled competitors: three interview-driven personas, a sales-persona P0 priority, market sizing, and a recommendation to lead with content loops and a sales-enablement partner program over individual referrals.",
+      markdownPath: "/case-studies/fireflies-acquisition.md",
+    },
+    {
+      slug: "chargeorfill",
       title: "ChargeOrFill – EV Charging Aggregator App",
+      tag: "0→1",
       role: "Product Strategist & Research Lead",
       timeline: "Independent Project",
-      focus: ["Market discovery", "User research", "Product validation"],
-      context:
-        `India's public charging infrastructure is fragmented across networks with inconsistent APIs, pricing and reliability. ChargeOrFill explored a single-pane aggregator to reduce friction for EV drivers and improve utilization for operators.`,
-      problem:
-        `Drivers struggled to find available, compatible chargers and trusted uptime metrics; operators struggled with demand visibility and dynamic pricing integration.`,
-      process: [
-        "Landscape analysis: aggregated public provider data to map coverage, overlap and blackspots.",
-        "Market sizing: TAM/SAM/SOM modelling and sensitivity analysis for adoption assumptions.",
-        "User research: moderated interviews, prototype testing via Figma and surveys to validate user journeys.",
-        "Business modelling: pricing experiments, operator incentive structures and partnership frameworks for B2B2C integration."
-      ],
-      outcome:
-        `Findings showed a strong long-term value proposition but near-term fragmentation and lack of API standards made immediate launch risky. Recommended a partner-first, phased approach focused on data-sharing pilots and operator tools.`,
-      reflection:
-        `The project emphasised disciplined product thinking: validation can be a feature too. We saved upfront costs by recommending partnerships and a phased pilot program rather than a full standalone build.`
+      focus: ["Market Discovery", "User Research", "Product Validation"],
+      summary:
+        "A 0→1 validation study for a single-pane EV-charging aggregator in India: landscape and market sizing, moderated user research, and a go/no-go that recommended a partner-first phased approach over a full standalone build.",
+      markdownPath: null,
+      body:
+        `India's public charging infrastructure is fragmented across networks with inconsistent APIs, pricing and reliability. ChargeOrFill explored a single-pane aggregator to reduce friction for EV drivers and improve utilization for operators.\n\n## Problem\nDrivers struggled to find available, compatible chargers and trusted uptime metrics; operators struggled with demand visibility and dynamic pricing integration.\n\n## Process\n- Landscape analysis: aggregated public provider data to map coverage, overlap and blackspots.\n- Market sizing: TAM/SAM/SOM modelling and sensitivity analysis for adoption assumptions.\n- User research: moderated interviews, prototype testing via Figma and surveys to validate user journeys.\n- Business modelling: pricing experiments, operator incentive structures and partnership frameworks for B2B2C integration.\n\n## Outcome\nFindings showed a strong long-term value proposition but near-term fragmentation and lack of API standards made immediate launch risky. Recommended a partner-first, phased approach focused on data-sharing pilots and operator tools.\n\n## Reflection\nThe project emphasised disciplined product thinking: validation can be a feature too. We saved upfront costs by recommending partnerships and a phased pilot program rather than a full standalone build.`,
     },
   ],
 
   experience: [
     {
-      role: "AI Product Lead",
-      company: "Webotix IT Consultancy",
-      period: "December 2024 – June 2025",
-      location: "Mumbai, Maharashtra (Remote)",
+      role: "AI Product Manager",
+      company: "FactWise",
+      period: "December 2025 – Present",
+      location: "Mumbai, India",
       technologies: [
-        "Azure OpenAI GPT-4o",
-        "Azure Cosmos DB",
-        "Azure Document Intelligence OCR",
-        "Redis",
+        "FastAPI",
+        "React",
+        "Azure Document Intelligence",
+        "PostgreSQL",
         "Docker",
         "Product Strategy",
         "B2B SaaS"
       ],
       points: [
-        "Led architecture and product strategy for SwiftCheck AI   a GenAI QC platform targeting regulated industries (food, finance).",
-        "Scoped, prototyped and delivered a demo-ready MVP within 4 weeks using open-source and cloud services; validated product–market fit with pilot clients.",
-        "Partnered with C-suite to define GTM, pricing, and enterprise SLAs; secured Microsoft AI Founders Hub funding ($5,000) to accelerate pilot expansion."
+        "Ship AI features end-to-end on FactWise's B2B procurement platform: I scope, build (AI-assisted), test and deploy for enterprise clients, not just write specs and hand off.",
+        "Launched an AI Invoice OCR system with confidence scoring and multi-level approval workflows, cutting client invoice processing from hours to under 2 minutes.",
+        "Designed and built a BOM Data Mapper (visual column mapping, fuzzy matching, PDF zone extraction) validated with an enterprise client for a meaningful efficiency gain."
       ],
       additionalPoints: [
-        "Designed a compliance-first pipeline (OCR → chunking → embeddings → RAG → template validator) achieving ~80% validated output accuracy in pilots.",
+        "Rebuilt the RFQ Analytics module (a critical platform dashboard) into a production-stable system aggregating vendor bids, landed costs and real-time analytics.",
+        "Work spans in-app modules (RFQ analytics, quoting, CLM) and standalone full-stack products (BOM Mapping, Invoice OCR, Procurement Strategy), all shipped by directing AI across the stack.",
+        "Mentor junior product managers, review their PRDs and own the AI roadmap."
+      ],
+    },
+    {
+      role: "AI Product Manager (owned product end-to-end, build included)",
+      company: "Webotix IT Consultancy",
+      period: "December 2024 – December 2025",
+      location: "Mumbai, Maharashtra (Remote)",
+      technologies: [
+        "AI-Assisted Build",
+        "Azure OpenAI GPT-4o",
+        "Azure Cosmos DB",
+        "Azure Document Intelligence OCR",
+        "Redis",
+        "Docker",
+        "Product Strategy"
+      ],
+      points: [
+        "Took SwiftCheck AI (a GenAI QC platform for regulated industries like food and finance) from 0→1 as the PM, and personally built and shipped it to production using AI as my engineering force-multiplier.",
+        "Scoped, built and deployed a pilot-ready MVP in ~4 weeks solo: AI-assisted development let me move from PRD to working product without waiting on a separate eng team; validated product–market fit with pilot clients.",
+        "Partnered with C-suite on GTM, pricing and enterprise SLAs; secured Microsoft AI Founders Hub funding ($5,000) to accelerate pilot expansion."
+      ],
+      additionalPoints: [
+        "Designed and built a compliance-first AI pipeline (OCR → chunking → embeddings → RAG → template validator) reaching ~80% validated output accuracy in pilots, and made the model trustworthy through grounding and confidence checks, not just a bigger model.",
         "Built multi-tenant API endpoints with role-based access and audit logs suitable for compliance review.",
-        "Optimised throughput with Redis caching and container orchestration to achieve ~2.3× higher throughput and ~30% lower infra costs.",
-        "Created Power BI reporting for execs covering latency, accuracy, pilot-to-paid conversion, and projected ROI for enterprise customers.",
-        "Authored deployment runbooks, API contracts and a customer onboarding playbook that reduced time-to-first-value for pilot clients."
+        "Owned the full loop most PMs hand off (architecture, build, deployment, and the exec-facing Power BI ROI reporting) by directing AI tools across the stack.",
+        "The real skill here: getting a product from idea to deployed, maintained, and in front of paying pilots by orchestrating AI, not by being a from-scratch engineer."
       ],
     },
     {
@@ -283,7 +386,7 @@ Worked with policy texts to generate candidate rules, human-in-the-loop verifica
       technologies: ["AI Content Systems", "Market Strategy", "Client Management", "Data Analytics"],
       points: [
         "Directed AI-assisted content workflows for 5+ enterprise clients in fintech and crypto, overseeing creative + ML-assisted tooling.",
-        "Scaled creator channels using iterative content testing: example   Ali Solanki channel grew from 50K → 70K subscribers under my strategy.",
+        "Scaled creator channels using iterative content testing; e.g. Ali Solanki's channel grew from 50K → 70K subscribers under my strategy.",
         "Implemented A/B testing cycles and KPI-driven content experiments that improved campaign CTRs and engagement metrics."
       ],
       additionalPoints: [

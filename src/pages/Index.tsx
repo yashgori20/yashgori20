@@ -162,6 +162,24 @@ const Index = () => {
     }
   };
 
+  // Deep-link support: returning from a case-study page (/?view=case-studies)
+  // opens the portfolio content and scrolls to the requested section.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get('view');
+    if (view) {
+      setActiveView('content');
+      // Wait for the content view to mount before scrolling to the section.
+      const t = setTimeout(() => {
+        document.getElementById(view)?.scrollIntoView({ behavior: 'auto' });
+        // Clean the URL so a refresh doesn't keep forcing the jump.
+        window.history.replaceState({}, '', '/');
+      }, 150);
+      return () => clearTimeout(t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleDownloadResume = () => {
     const link = document.createElement('a');
     link.href = '/Yash-Gori-Resume.pdf';
@@ -390,7 +408,7 @@ const Index = () => {
                     </Avatar>
                     <div>
                       <div className="font-medium">Yash Gori</div>
-                      <div className="text-sm text-gray-400">AI Product Lead</div>
+                      <div className="text-sm text-gray-400">AI Product Manager</div>
                     </div>
                   </div>
 
@@ -576,7 +594,7 @@ const Index = () => {
                 {showReachOutOverlay && (
                   <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
                     <div className="space-y-3">
-                      <div className="text-sm text-white font-medium mb-3">Yash Gori -  Product Manager </div>
+                      <div className="text-sm text-white font-medium mb-3">Yash Gori · AI Product Manager</div>
                       <div className="text-xs text-gray-400 mb-3">Get in touch</div>
 
                       {/* Email */}

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 import GetMeAJob from "./pages/GetMeAJob";
 import GetMeAJobLogin from "./pages/GetMeAJobLogin";
 import GetMeAJobDashboard from "./pages/GetMeAJobDashboard";
@@ -26,6 +27,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
           <Route path="/pm" element={<Navigate to="/pm.pdf" replace />} />
           <Route path="/getmeajob" element={<GetMeAJob />} />
           <Route path="/getmeajob/login" element={<GetMeAJobLogin />} />

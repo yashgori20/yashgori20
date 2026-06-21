@@ -210,15 +210,6 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, isCollapsed, i
                     Download Resume
                   </Button>
                 </a>
-                <div className="text-center mt-2">
-                  <a
-                    href="/Yash-Gori-Resume-Technical.pdf"
-                    download="Yash-Gori-Resume-Technical.pdf"
-                    className="text-xs text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
-                  >
-                    Need a more technical version? Download here
-                  </a>
-                </div>
               </div>
               <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50 hover:text-primary hover:border-white transition-all duration-300 group" onClick={() => scrollToSection('contact')}>
                 <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />

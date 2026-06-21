@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Code, ExternalLink, X, Calendar, User, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Code, ExternalLink, User, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project, resumeData } from '@/data/resume';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -91,7 +91,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
 
 
             {/* Project Image */}
-            <div className="relative h-96 md:h-[500px] bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden rounded-t-xl p-4 md:p-8">
+            <div className="relative h-72 md:h-[420px] bg-gradient-to-br from-primary/5 to-secondary/5 overflow-hidden rounded-t-xl p-4 md:p-8">
               <img
                 key={`project-${currentIndex}-${project.title}`}
                 src={getProjectImage(project)}
@@ -99,7 +99,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
                 className="w-full h-full object-contain rounded-lg"
                 loading="lazy"
               />
-              <div className="absolute inset-4 md:inset-8 bg-black/30 rounded-lg"></div>
             </div>
 
             {/* Project Content */}
@@ -109,8 +108,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
                   <User className="h-4 w-4" />
                   <span>Yash Gori</span>
-                  <Calendar className="h-4 w-4 ml-2" />
-                  <span>2024</span>
                 </div>
               </div>
 
@@ -168,19 +165,21 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
                 </div>
               </div>
             </div>
-            {/* Navigation Arrows - Smaller size */}
+            {/* Navigation Arrows */}
             <button
-              className="absolute top-1/2 left-2 md:left-4 -translate-y-1/2 z-10 p-2 hover:scale-110 transition-transform"
+              aria-label="Previous project"
+              className="absolute top-[150px] md:top-[200px] left-2 md:left-4 -translate-y-1/2 z-10 grid place-items-center h-9 w-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-black/60 hover:scale-110 transition-all"
               onClick={goToPrevious}
             >
-              <ChevronLeft className="h-6 w-6 md:h-7 md:w-7 text-white drop-shadow-lg" strokeWidth={2.5} />
+              <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
             </button>
 
             <button
-              className="absolute top-1/2 right-2 md:right-4 -translate-y-1/2 z-10 p-2 hover:scale-110 transition-transform"
+              aria-label="Next project"
+              className="absolute top-[150px] md:top-[200px] right-2 md:right-4 -translate-y-1/2 z-10 grid place-items-center h-9 w-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white hover:bg-black/60 hover:scale-110 transition-all"
               onClick={goToNext}
             >
-              <ChevronRight className="h-6 w-6 md:h-7 md:w-7 text-white drop-shadow-lg" strokeWidth={2.5} />
+              <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
             </button>
           </div>
         </DialogContent>

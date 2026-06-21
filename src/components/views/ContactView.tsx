@@ -24,15 +24,6 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
     document.body.removeChild(link);
   };
 
-  const handleDownloadTechnicalResume = () => {
-    const link = document.createElement('a');
-    link.href = '/Yash-Gori-Resume-Technical.pdf';
-    link.setAttribute('download', 'Yash-Gori-Resume-Technical.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <Section title="Get In Touch" id="contact">
       <div className="grid lg:grid-cols-2 gap-8 mr-8">
@@ -117,15 +108,6 @@ const ContactView = ({ activeView, setActiveView }: ViewProps) => {
                 </div>
               </div>
             </button>
-            
-            <div className="text-center mt-2">
-              <button
-                onClick={handleDownloadTechnicalResume}
-                className="text-xs text-gray-400 hover:text-white transition-colors"
-              >
-                Need a more technical version? Download here
-              </button>
-            </div>
           </div>
 
           <div className="space-y-4 pt-4">

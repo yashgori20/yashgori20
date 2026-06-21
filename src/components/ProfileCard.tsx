@@ -28,16 +28,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
     onClose();
   };
 
-  const handleDownloadTechnicalResume = () => {
-    const link = document.createElement('a');
-    link.href = '/Yash-Gori-Resume-Technical.pdf';
-    link.setAttribute('download', 'Yash-Gori-Resume-Technical.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    onClose();
-  };
-
   return (
     <>
       <div className="fixed inset-0 z-[100]" onClick={onClose} />
@@ -107,14 +97,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ isOpen, onClose, position }) 
             <Download className="mr-2 h-4 w-4" />
             Download Resume
           </Button>
-          <div className="text-center mt-2">
-            <button
-              onClick={handleDownloadTechnicalResume}
-              className="text-xs text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
-            >
-              Need a more technical version? Download here
-            </button>
-          </div>
         </div>
       </div>
     </>

@@ -42,24 +42,24 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
               <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent border-b pb-2">My Edge</h3>
               <div className="space-y-2 mb-6">
                 <div>
-                  <h4 className="font-semibold text-primary text-sm mb-1">Technical Execution:</h4>
-                  <p className="text-sm text-muted-foreground">Building and deploying AI/ML solutions from LLMs to production APIs.</p>
+                  <h4 className="font-semibold text-primary text-sm mb-1">I ship, I don't just spec:</h4>
+                  <p className="text-sm text-muted-foreground">I build and deploy real products with AI as my engineering force-multiplier, taking them from PRD to production myself.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary text-sm mb-1">Product Vision:</h4>
-                  <p className="text-sm text-muted-foreground">Translating complex AI tech into user-centric features that drive business value.</p>
+                  <h4 className="font-semibold text-primary text-sm mb-1">Real AI judgment, not buzzwords:</h4>
+                  <p className="text-sm text-muted-foreground">I know when to ground a model vs. fine-tune it, how to cut hallucination and token cost, and which model fits which job.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary text-sm mb-1">End-to-End Ownership:</h4>
-                  <p className="text-sm text-muted-foreground">Guiding projects from concept to deployment with speed and quality balance.</p>
+                  <h4 className="font-semibold text-primary text-sm mb-1">End-to-end ownership:</h4>
+                  <p className="text-sm text-muted-foreground">Discovery, PRD, architecture, build, launch, and the exec-facing metrics. I own the whole loop, not a slice of it.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary text-sm mb-1">Cross-Functional Collaboration:</h4>
-                  <p className="text-sm text-muted-foreground">Bridging engineering, design, and business teams for shared goals.</p>
+                  <h4 className="font-semibold text-primary text-sm mb-1">Speed under real constraints:</h4>
+                  <p className="text-sm text-muted-foreground">Shipped a pilot-ready GenAI MVP solo in about 4 weeks and secured Microsoft Founders Hub funding off the back of it.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary text-sm mb-1">Impact-First Approach:</h4>
-                  <p className="text-sm text-muted-foreground">Focusing on measurable results in accuracy, latency, adoption, and revenue.</p>
+                  <h4 className="font-semibold text-primary text-sm mb-1">Outcomes over output:</h4>
+                  <p className="text-sm text-muted-foreground">I optimize for the numbers that matter: accuracy, latency, adoption, and revenue, not features shipped.</p>
                 </div>
               </div>
             </div>

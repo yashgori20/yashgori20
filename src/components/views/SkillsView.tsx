@@ -99,9 +99,10 @@ const getSkillIcon = (skillName: string, category: string) => {
     
     // Fallback to category icons
     const categoryIconMap: { [key: string]: JSX.Element } = {
-        'AI/ML Core': <BrainCircuit className="h-4 w-4 text-blue-400" />,
-        'Technical Delivery': <Monitor className="h-4 w-4 text-green-400" />,
-        'Product & Collaboration': <Users className="h-4 w-4 text-purple-400" />
+        'Product': <Users className="h-4 w-4 text-purple-400" />,
+        'AI/ML': <BrainCircuit className="h-4 w-4 text-blue-400" />,
+        'AI-Assisted Build': <Code className="h-4 w-4 text-green-400" />,
+        'Tools & Data': <Monitor className="h-4 w-4 text-green-400" />
     };
     
     return skillIconMap[skillName] || categoryIconMap[category] || <Code className="h-4 w-4 text-gray-400" />;
@@ -123,16 +124,13 @@ const SkillItem = ({ name, category, index }: { name: string; category: string; 
 };
 
 const SkillsView = ({ activeView, setActiveView }: ViewProps) => {
-    // Use the new skills structure directly
-    const skillCategories = {
-        'AI/ML Core': resumeData.skills["AI/ML Core"],
-        'Technical Delivery': resumeData.skills["Technical Delivery"],
-        'Product & Collaboration': resumeData.skills["Product & Collaboration"]
-    };
+    // Derive categories directly from the data so renaming/adding categories
+    // never breaks this view (previously hardcoded keys crashed on rename).
+    const skillCategories = resumeData.skills as Record<string, { name: string; level: number; category: string }[]>;
 
     return (
         <Section title="Skills & Expertise" id="skills">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 {Object.entries(skillCategories).map(([category, skills], categoryIndex) => (
                     <div key={category} className="space-y-4">
                         <h3 className="text-lg font-semibold text-white mb-4">{category}</h3>

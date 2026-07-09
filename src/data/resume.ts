@@ -23,13 +23,13 @@ export const resumeData = {
     "AI Product Manager who ships. I scope, build and deploy AI products end-to-end, not just spec them.",
 
   // Front-loaded outcome metrics for the home screen (the "first 6 seconds" proof).
-  // NOTE: confirm "20+ features" and "4 enterprise clients" are accurate for YOU before deploying;
-  // these mirror the FactWise framing and should reflect your real shipped work.
+  // These reflect real shipped work: FactWise PO/API volume and enterprise clients,
+  // plus the Webotix processing-time and Microsoft Founders Hub outcomes.
   headlineMetrics: [
-    { value: "20+", label: "AI features shipped", sub: "scoped → built → deployed" },
-    { value: "90%", label: "less manual work", sub: "AI OCR & automation" },
+    { value: "20K-40K", label: "POs & contracts", sub: "created via my procurement APIs" },
+    { value: "4+", label: "enterprise clients", sub: "live in production" },
+    { value: "90%", label: "less processing time", sub: "GenAI QC at Webotix" },
     { value: "$5K", label: "Microsoft Founders Hub grant", sub: "secured by pitching" },
-    { value: "4", label: "enterprise clients", sub: "live in production" },
   ],
 
   whatIBring:
@@ -63,164 +63,113 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
   ],
 
   skills: {
-    "Product & Collaboration": [
-      { name: "Product Strategy", level: 95, category: "Product Management" },
-      { name: "Agile/Scrum", level: 92, category: "Methodology" },
-      { name: "Roadmap Planning", level: 90, category: "Planning" },
-      { name: "Cross-functional Team Leadership", level: 90, category: "Leadership" },
-      { name: "Stakeholder Communication", level: 95, category: "Communication" },
-      { name: "Client Relations", level: 90, category: "Business" },
-      { name: "Data-Driven Decision Making", level: 92, category: "Analytics" },
+    "Product": [
+      { name: "Product Strategy", level: 95, category: "Product" },
+      { name: "Roadmap Planning", level: 92, category: "Product" },
+      { name: "Go-to-Market (GTM)", level: 90, category: "Product" },
+      { name: "Product Discovery", level: 92, category: "Product" },
+      { name: "Agile/Scrum", level: 92, category: "Product" },
+      { name: "Prioritization (MoSCoW/RICE)", level: 90, category: "Product" },
+      { name: "KPI & Success Metrics", level: 92, category: "Product" },
+      { name: "A/B Testing", level: 88, category: "Product" },
+      { name: "Agentic/AI Product Design", level: 92, category: "Product" },
     ],
-    "AI/ML Core": [
-      { name: "Retrieval-Augmented Generation (RAG)", level: 96, category: "AI Architecture" },
-      { name: "Prompt Engineering", level: 95, category: "AI Engineering" },
-      { name: "Vector Databases (FAISS, Pinecone)", level: 92, category: "Vector DB" },
-      { name: "LLM Integration (GPT, Mixtral, LLaMA, Gemini)", level: 90, category: "LLM" },
-      { name: "OCR & Document Intelligence", level: 88, category: "AI Processing" },
-      { name: "Natural Language Processing (NLP)", level: 86, category: "ML Framework" },
-      { name: "Model Evaluation & Fine-Tuning", level: 86, category: "AI Optimization" },
+    "AI/ML": [
+      { name: "Agentic AI & MCP (Model Context Protocol)", level: 94, category: "AI/ML" },
+      { name: "RAG with vector databases (FAISS/Pinecone)", level: 96, category: "AI/ML" },
+      { name: "LLM integration (GPT, Claude, Gemini, Mixtral)", level: 92, category: "AI/ML" },
+      { name: "Prompt Engineering", level: 95, category: "AI/ML" },
+      { name: "Context Management", level: 92, category: "AI/ML" },
     ],
-    "Technical Delivery": [
-      { name: "AI-Assisted Build (ship full-stack products with AI)", level: 95, category: "AI Builder" },
-      { name: "Python", level: 96, category: "Core" },
-      { name: "LangChain", level: 92, category: "AI Framework" },
-      { name: "Streamlit", level: 90, category: "ML Apps" },
-      { name: "API Development (REST, FastAPI, Flask)", level: 92, category: "Backend" },
-      { name: "Azure (OpenAI, Cosmos DB, Container Apps)", level: 88, category: "Cloud" },
-      { name: "Docker", level: 88, category: "Containerization" },
-      { name: "GitHub Actions", level: 84, category: "CI/CD" },
+    "AI-Assisted Build": [
+      { name: "Ship production full-stack features end-to-end with AI (Claude Code, Cursor, Codex, Gemini), from PRD to deployed", level: 95, category: "AI-Assisted Build" },
     ],
-    "Tools": [
-      { name: "Jira", level: 92, category: "Project Management" },
-      { name: "Notion", level: 92, category: "Documentation" },
-      { name: "Figma", level: 92, category: "Design Collaboration" },
-      { name: "Power BI", level: 88, category: "Analytics" },
-      { name: "VS Code", level: 88, category: "Development" },
-      { name: "Postman", level: 86, category: "API Testing" },
-      { name: "GitHub", level: 92, category: "Version Control" },
-      { name: "Docker Hub / Container Registry", level: 84, category: "Deployment" }
+    "Tools & Data": [
+      { name: "Jira", level: 92, category: "Tools & Data" },
+      { name: "Figma", level: 92, category: "Tools & Data" },
+      { name: "Notion", level: 92, category: "Tools & Data" },
+      { name: "Power BI", level: 88, category: "Tools & Data" },
+      { name: "Python", level: 96, category: "Tools & Data" },
+      { name: "SQL", level: 90, category: "Tools & Data" },
+      { name: "FastAPI", level: 90, category: "Tools & Data" },
+      { name: "React", level: 88, category: "Tools & Data" },
+      { name: "Azure", level: 88, category: "Tools & Data" },
+      { name: "Docker", level: 88, category: "Tools & Data" },
+      { name: "REST APIs", level: 92, category: "Tools & Data" }
     ]
   },
 
   projects: [
     {
-      title: "Swift Check AI: Enterprise QC Platform",
+      title: "Interactive AI Portfolio + Chatbot",
       description:
-        `Owned this as PM and personally built and shipped it to production using AI as my engineering force-multiplier: an enterprise quality-control platform that automates document validation for regulated clients.
-Integrated Azure Document Intelligence OCR with vector-based retrieval and LLM reasoning into a template-driven compliance checker, going from PRD to deployed pilot solo.`,
+        `A chat-first portfolio whose live assistant answers questions about me. I engineered grounding, model selection and guardrails to cut hallucination and token cost.`,
       technologies: [
-        "Product Strategy",
-        "AI/ML",
-        "Azure OpenAI",
+        "React",
+        "TypeScript",
         "Flask",
-        "Cosmos DB",
-        "Redis",
-        "Docker",
+        "Groq",
+        "Llama 3.3",
+        "RAG",
       ],
       features: [
-        "Reduced document ingestion + validation time by ~90% through parallel OCR pipelines and cached retrievers.",
-        "Designed 25+ parameterized compliance templates with human-review loops; end-to-end validation accuracy ~80% in production pilots.",
-        "Achieved sub-second responses for cached queries and <500ms cold-starts on optimized endpoints.",
-        "Secured Microsoft AI Founders Hub funding ($5k) and converted multiple pilot engagements to paid customers.",
-        "Built multi-tenant isolation, role-based access, and audit trails for enterprise compliance.",
-        "Ship-ready docs: demo scripts, API contract, rollout playbook, and ROI dashboard for buyer conversations."
-      ],
-      codeUrl: "https://github.com/yashgori20/swift-check-ai",
-      liveUrl: "https://swift-check-ai.azurewebsites.net",
-    },
-    {
-      title: "Interactive AI Portfolio (this site)",
-      description:
-        `A chat-first portfolio that behaves like the products I build: interactive, contextual, and discoverable.
-The assistant answers questions about my skills, shows demos, and guides visitors through my case studies and code.`,
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Vite", "TanStack Query", "Shadcn UI"],
-      features: [
-        "Context-retention chatbot that maps a user's query to portfolio sections and code samples.",
-        "Semantic routing for direct access to project demos and code links from conversation context.",
-        "Mobile-first gestures, accessible dark mode, and micro-interactions for fast, pleasant exploration.",
-        "Live deployment with CI and analytics to measure engagement and top queries.",
-        "Design intent: demonstrate conversational UX patterns and act as a meta proof-of-concept."
+        "Built a live assistant that answers visitor questions about my background, skills and projects, grounded in my real resume content.",
+        "Engineered grounding, model selection and guardrails to cut hallucination and token cost.",
+        "Chat-first UX that guides visitors through case studies and code from conversation context."
       ],
       codeUrl: "https://github.com/yashgori20/yashgori20",
       liveUrl: "https://yashgori20.vercel.app/",
     },
     {
-      title: "DocuTalk: AI Document Intelligence Platform",
+      title: "Inhance: LinkedIn & Resume Optimization Platform",
       description:
-        `Cross-platform conversational assistant for document Q&A. Engineered embedding pipelines, vector retrieval and a multi-turn dialogue manager for context-aware answers.`,
-      technologies: [
-        "Python",
-        "FAISS",
-        "LangChain",
-        "Gemini Embeddings",
-        "Flask",
-        "Flutter",
-      ],
-      features: [
-        "Built FAISS-backed semantic search and LLM layer to answer document queries with provenance and citation tracebacks.",
-        "Delivered a Flutter front-end for cross-device usage and a demo API for enterprise integration.",
-        "Reduced manual review hours by ~40% in pilot trials through precise retrieval and highlight extraction.",
-        "Implemented chunking, metadata-aware embeddings, and caching strategies to reduce retrieval latency.",
-        "Open-sourced example dataset and evaluation harness for reviewers to validate retrieval quality."
-      ],
-      codeUrl: "https://github.com/yashgori20/DocuTalk",
-    },
-    {
-      title: "FinLLM-RAG: RBI Compliance Automation",
-      description:
-        `A regulatory intelligence prototype that automates rule extraction and mapping from RBI documents into an auditable RAG pipeline.
-Worked with policy texts to generate candidate rules, human-in-the-loop verification, and exception reporting.`,
-      technologies: [
-        "Python",
-        "Mixtral LLM",
-        "GROQ Cloud",
-        "FAISS",
-        "Custom Model Training"
-      ],
-      features: [
-        "Achieved ~80% prediction accuracy on labeled compliance checks after iterative prompt + retrieval tuning.",
-        "Quantified potential operational savings (~10% annual cost reduction) using a conservative automation-to-review tradeoff model.",
-        "Provided confusion matrices, rule-mapping visualizations, and a human-review loop to ensure auditability.",
-        "Packaged a lightweight API and demo dashboard for stakeholder validation and investor briefings.",
-        "Documentation included: dataset provenance, evaluation scripts, and responsible-use guidelines."
-      ],
-      codeUrl: "https://github.com/yashgori20/FinLLM-RAG-rbi",
-      liveUrl: "https://yashgori20-FinLLM-RAG.hf.space",
-    },
-    {
-      title: "Inhance: AI Profile Optimizer",
-      description:
-        `Multi-agent system that evaluates LinkedIn profiles and resumes, giving targeted, ATS-aware recommendations and generating LaTeX resumes tailored to job descriptions.`,
+        `A multi-agent, ATS-scoring pipeline that produces role-optimized suggestions and a LaTeX resume.`,
       technologies: [
         "Streamlit",
-        "GROQ Cloud",
-        "Mixtral LLM",
-        "Multi-Agent System",
-        "LinkedIn API",
-        "LaTeX"
+        "GROQ",
+        "Mixtral",
+        "Multi-Agent",
       ],
       features: [
-        "Implemented ATS-scoring, role-mapping and concrete rewrites to improve recruiter-facing signals.",
-        "Built exportable LaTeX resume templates and a 'Score My LinkedIn' interactive demo for recruiters.",
-        "Reduced manual profile review time by ~75% for test users through automated suggestions and prioritized edits.",
-        "Designed evaluation metrics and A/B test plan to assess impact on interview conversion rate."
+        "Built a multi-agent pipeline that evaluates LinkedIn profiles and resumes against a target role.",
+        "Implemented ATS scoring and role-optimized suggestions to improve recruiter-facing signals.",
+        "Generates a tailored LaTeX resume from the optimized content."
       ],
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
     },
     {
-      title: "Customer Churn Predictor",
+      title: "DocuTalk: AI Document Intelligence Platform",
       description:
-        `Various data products and utilities that demonstrate end-to-end ML thinking, from collection and cleaning to modelling, evaluation and visualization.`,
-      technologies: ["Python", "Random Forest", "Decision Trees", "Power BI", "NumPy", "Pandas", "Matplotlib"],
-      features: [
-        "Built a churn predictor with Random Forest yielding ~94% train accuracy; productionized evaluation and feature importance reporting.",
-        "Delivered Power BI dashboards that surface actionable business signals and feature-level insights.",
-        "Shared reproducible notebooks, data preprocessing pipelines, and evaluation metrics for transparency.",
-        "Designed experiments and monitoring to guard against model drift and to measure long-term performance."
+        `A cross-platform RAG assistant for conversational Q&A across any document.`,
+      technologies: [
+        "Gemini",
+        "FAISS",
+        "LangChain",
+        "Flutter",
       ],
-      codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
+      features: [
+        "Built a RAG assistant for conversational Q&A across any document.",
+        "Engineered FAISS-backed semantic retrieval and a multi-turn dialogue layer for context-aware answers.",
+        "Delivered a Flutter front-end for cross-platform usage."
+      ],
+      codeUrl: "https://github.com/yashgori20/DocuTalk",
+    },
+    {
+      title: "Product Case Studies",
+      description:
+        `Product teardowns across GPay, JioCinema, Vercel, Blinkit and Fireflies AI, covering acquisition, engagement/retention and onboarding.`,
+      technologies: [
+        "Product Strategy",
+        "Acquisition",
+        "Engagement & Retention",
+        "Onboarding",
+      ],
+      features: [
+        "GPay and JioCinema: engagement and retention strategy teardowns.",
+        "Vercel and Fireflies AI: B2B acquisition and channel strategy.",
+        "Blinkit: onboarding and activation funnel teardown."
+      ],
     },
   ],
   // Case studies are content-driven: list cards use this metadata, and the full
@@ -316,83 +265,67 @@ Worked with policy texts to generate candidate rules, human-in-the-loop verifica
       period: "December 2025 – Present",
       location: "Mumbai, India",
       technologies: [
+        "OpenAPI",
+        "SAP",
+        "MCP",
         "FastAPI",
-        "React",
-        "Azure Document Intelligence",
-        "PostgreSQL",
-        "Docker",
-        "Product Strategy",
-        "B2B SaaS"
-      ],
-      points: [
-        "Ship AI features end-to-end on FactWise's B2B procurement platform: I scope, build (AI-assisted), test and deploy for enterprise clients, not just write specs and hand off.",
-        "Launched an AI Invoice OCR system with confidence scoring and multi-level approval workflows, cutting client invoice processing from hours to under 2 minutes.",
-        "Designed and built a BOM Data Mapper (visual column mapping, fuzzy matching, PDF zone extraction) validated with an enterprise client for a meaningful efficiency gain."
-      ],
-      additionalPoints: [
-        "Rebuilt the RFQ Analytics module (a critical platform dashboard) into a production-stable system aggregating vendor bids, landed costs and real-time analytics.",
-        "Work spans in-app modules (RFQ analytics, quoting, CLM) and standalone full-stack products (BOM Mapping, Invoice OCR, Procurement Strategy), all shipped by directing AI across the stack.",
-        "Mentor junior product managers, review their PRDs and own the AI roadmap."
-      ],
-    },
-    {
-      role: "AI Product Manager (owned product end-to-end, build included)",
-      company: "Webotix IT Consultancy",
-      period: "December 2024 – December 2025",
-      location: "Mumbai, Maharashtra (Remote)",
-      technologies: [
-        "AI-Assisted Build",
-        "Azure OpenAI GPT-4o",
-        "Azure Cosmos DB",
-        "Azure Document Intelligence OCR",
-        "Redis",
-        "Docker",
+        "Python",
+        "Azure",
         "Product Strategy"
       ],
       points: [
-        "Took SwiftCheck AI (a GenAI QC platform for regulated industries like food and finance) from 0→1 as the PM, and personally built and shipped it to production using AI as my engineering force-multiplier.",
-        "Scoped, built and deployed a pilot-ready MVP in ~4 weeks solo: AI-assisted development let me move from PRD to working product without waiting on a separate eng team; validated product–market fit with pilot clients.",
-        "Partnered with C-suite on GTM, pricing and enterprise SLAs; secured Microsoft AI Founders Hub funding ($5,000) to accelerate pilot expansion."
+        "Own the Purchase Order (PO) product area end-to-end for 4+ enterprise EMS (electronics manufacturing) clients: gathered requirements from client stakeholders, authored PRDs and acceptance criteria, and drove cross-functional engineering to deliver PO creation, line-item management, role-based approvals and standard T&C workflows, replacing a hectic manual process (clients previously exported and rebuilt POs on their own software) and saving hours per PO.",
+        "Defined and shipped OpenAPI/Swagger procurement APIs (bulk create, update and read across Item Master, Vendor Master, PO and Contracts, plus an ID-mapping API linking FactWise records to clients' SAP IDs) enabling bidirectional SAP/ERP integration; now used daily, with 20K to 40K POs and contracts created through them across 3 enterprise clients.",
+        "Built a FactWise MCP (Model Context Protocol) server (AI-assisted) that lets clients connect FactWise to Claude or any AI client and ask natural-language questions about their live RFQs, POs and contracts; handles tool calling and context management over the hosted API layer, shipping agentic, conversational access to enterprise procurement data."
       ],
       additionalPoints: [
-        "Designed and built a compliance-first AI pipeline (OCR → chunking → embeddings → RAG → template validator) reaching ~80% validated output accuracy in pilots, and made the model trustworthy through grounding and confidence checks, not just a bigger model.",
-        "Built multi-tenant API endpoints with role-based access and audit logs suitable for compliance review.",
-        "Owned the full loop most PMs hand off (architecture, build, deployment, and the exec-facing Power BI ROI reporting) by directing AI tools across the stack.",
-        "The real skill here: getting a product from idea to deployed, maintained, and in front of paying pilots by orchestrating AI, not by being a from-scratch engineer."
+        "Own the BOM (Bill of Materials) module end-to-end for EMS clients who source against multi-level bills of materials rather than flat line-items; shipped parallel BOM revisions so a single BOM can hold multiple versions in use at once (one event runs on R1 while another runs on R2), configured once and reused; sole PM for all BOM requirements, bugs and enhancements.",
+        "Owned and defined the PO revision workflow, translating a recurring enterprise need into exact requirements and a PRD: revise already-issued POs in place (re-validate, re-approve) instead of cancel-and-recreate, with a clean audit trail; also shipped client-requested enhancements that directly lifted satisfaction."
       ],
     },
     {
-      role: "Product Design Lead",
+      role: "AI Product Manager",
+      company: "Webotix IT Consultancy",
+      period: "December 2024 – December 2025",
+      location: "Remote / Dubai",
+      technologies: [
+        "AI-Assisted Build",
+        "RAG",
+        "FAISS",
+        "Pinecone",
+        "Azure",
+        "Power BI",
+        "Product Strategy"
+      ],
+      points: [
+        "Owned SwiftCheck AI (GenAI QC) 0 to 1 as PM and built it to production with AI as my engineering force-multiplier: discovery to PRD to deployed pilot, solo in ~4 weeks, aligning internal stakeholders (CEO, COO) on scope and roadmap.",
+        "Built end-to-end GenAI features (RAG over vector databases (FAISS/Pinecone), autonomous agents, self-resolving workflows) to 80% accuracy and 90% less processing time, keeping the model trustworthy via grounding, prompt engineering and context management rather than a bigger model.",
+        "Ran user research with Dubai-based pilot clients, validating product assumptions through enterprise demos and iterating workflows on real feedback, lifting adoption 30%."
+      ],
+      additionalPoints: [
+        "Secured $5,000 from Microsoft Founders Hub by pitching product vision, technical feasibility and early business potential; built Power BI dashboards for ROI tracking and data-driven pricing."
+      ],
+    },
+    {
+      role: "Product Management Intern",
       company: "MetaRizz",
       period: "December 2023 – May 2024",
-      location: "Mumbai, Maharashtra",
-      technologies: ["Figma", "Product Management", "UI/UX", "Flutter", "Agile"],
+      location: "Mumbai, India",
+      technologies: ["Figma", "Product Management", "User Research", "Wireframing", "Scrum"],
       points: [
-        "Owned product for GuestInMe (UX revamp) and MediNobel (0→1 hospitality platform), including discovery, PRD creation and release planning.",
-        "Drove a 40% increase in engagement by designing and shipping monetization features and streamlined booking flows.",
-        "Introduced sprint rituals, backlog hygiene and acceptance criteria templates to improve handoff and reduce dev ambiguity."
-      ],
-      additionalPoints: [
-        "Wrote PRDs, feature specs and acceptance criteria; handoff artifacts reduced rework by ~30%.",
-        "Led cross-functional reviews to align product, design and engineering which improved release predictability.",
-        "Added lightweight telemetry and event tracking to inform post-launch iterations and A/B test prioritisation."
+        "Acted as product owner for two initiatives (GuestInMe, MediNobel), owning problem definition, feature prioritization and delivery planning across design and engineering while introducing Scrum-based sprint planning.",
+        "Led a UX revamp for GuestInMe: ran user research to identify user-flow friction, wireframed improved journeys and prioritized high-impact changes with cross-functional teams, growing the active user base to 1K+ users.",
+        "Drove 0 to 1 delivery of MediNobel and resolved delivery/stakeholder risks by proactively unblocking teams, maintaining 95% on-time execution."
       ],
     },
     {
-      role: "Business & Growth Manager",
+      role: "Business & Growth Management Intern",
       company: "Watermelon Gang",
       period: "August 2022 – November 2023",
-      location: "Mumbai, Maharashtra",
-      technologies: ["AI Content Systems", "Market Strategy", "Client Management", "Data Analytics"],
+      location: "Mumbai, India",
+      technologies: ["Market Strategy", "Client Management", "A/B Testing", "Data Analytics"],
       points: [
-        "Directed AI-assisted content workflows for 5+ enterprise clients in fintech and crypto, overseeing creative + ML-assisted tooling.",
-        "Scaled creator channels using iterative content testing; e.g. Ali Solanki's channel grew from 50K → 70K subscribers under my strategy.",
-        "Implemented A/B testing cycles and KPI-driven content experiments that improved campaign CTRs and engagement metrics."
-      ],
-      additionalPoints: [
-        "Built modular content generation pipelines using prompt templates and human-in-the-loop checks to ensure quality and brand tone.",
-        "Introduced sentiment analysis and reporting to provide clients with deeper engagement insights and content optimizations.",
-        "Reduced average campaign production time by ~40% through templating and automation."
+        "Managed strategy and execution for 5+ B2B fintech & crypto clients (incl. CoinDCX, Binance, Kotak 811); scaled a client YouTube channel 50K to 70K subscribers and lifted campaign performance 30 to 60% via KPI-driven, A/B-tested content cycles."
       ],
     },
   ],

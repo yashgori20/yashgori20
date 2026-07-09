@@ -40,15 +40,6 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isMouseOverSuggestions, setIsMouseOverSuggestions] = useState(false);
   const [bounceAnimation, setBounceAnimation] = useState(false);
-  const [currentMode, setCurrentMode] = useState('Recruiter Mode');
-  const [showModeDropdown, setShowModeDropdown] = useState(false);
-
-  const conversationModes = [
-    { id: 'recruiter', name: 'Recruiter Mode', description: 'Professional hiring perspective' },
-    { id: 'collaboration', name: 'Collaboration Mode', description: 'Team-oriented discussions' },
-    { id: 'friendly', name: 'Friendly Mode', description: 'Casual, friendly conversations' },
-    { id: 'technical', name: 'Technical Mode', description: 'Deep technical discussions' },
-  ];
 
   // Combine all smart suggestions from API response
   const getSmartSuggestions = (): string[] => {

@@ -1,6 +1,6 @@
 # Google Pay
 
-# 1. Understanding Google Pay
+## 1. Understanding Google Pay
 
 ### A. What is the Core Value Proposition(CVP) of Google Pay? : The core value proposition of Google Pay lies in offering users a seamless and secure platform for digital payments. It enables users to:
 
@@ -10,13 +10,13 @@
 4. **Integration with Google Services:** Benefit from integration with other Google services, enhancing the overall user experience.
 5. **Rewards and Offers:** Enjoy personalized rewards, cashback, and discounts, incentivizing users to choose Google Pay for their transactions.
 
-📝There was user research done with a cohort of 150 users. The research gives insights into factors that influence the use of E-Wallets.
+There was user research done with a cohort of 150 users. The research gives insights into factors that influence the use of E-Wallets.
 
 ![image.png](/case-studies/googlepay-engagement-retention/image.png)
 
 [Source](http://ir.psgcas.ac.in/1194/1/WOS%20MEK.pdf)
 
-💡It is clearly understood from the above table that the respondents ranked ease of use as First followed by Cashless Payment as Second, Convenience as Third, Time Savings as Fourth, and Security as Fifth for the factors influencing user's usage of E-wallets.
+It is clearly understood from the above table that the respondents ranked ease of use as First followed by Cashless Payment as Second, Convenience as Third, Time Savings as Fourth, and Security as Fifth for the factors influencing user's usage of E-wallets.
 
 ### B. How do the Users experience Google Pay's core value proposition repeatedly? :
 
@@ -28,9 +28,9 @@
 ### C. What is the natural frequency of the core product? and does it have sub-products?:
 
 1. **Core Product:**
-2. **Digital Payments:** The fundamental feature allows users to make secure digital transactions, both online and in-store, using linked bank accounts or cards.🛎️ **Natural Frequency :** Transacting money is an everyday process - multiple times a day/week/month depending on the user.
+2. **Digital Payments:** The fundamental feature allows users to make secure digital transactions, both online and in-store, using linked bank accounts or cards. **Natural Frequency :** Transacting money is an everyday process - multiple times a day/week/month depending on the user.
 3. **Sub-Products/Sub Features:**
-4. **Google Pay for Business:** Enabling businesses to accept digital payments seamlessly.**Google Pay Send (formerly Google Wallet):** Facilitating peer-to-peer money transfers.**Google Pay for Bills:** Enabling the users to pay various Recharge, Utility, and other regular bills. **Google Pay for Online Shopping:** Allowing users to make purchases within apps and websites.**Google Pay for Transit:** Supporting contactless payments for public transportation.**Google Pay for Rewards and Offers:** Providing users with personalized discounts, cashback, and loyalty rewards.🛎️ **Natural Frequency:**
+4. **Google Pay for Business:** Enabling businesses to accept digital payments seamlessly.**Google Pay Send (formerly Google Wallet):** Facilitating peer-to-peer money transfers.**Google Pay for Bills:** Enabling the users to pay various Recharge, Utility, and other regular bills. **Google Pay for Online Shopping:** Allowing users to make purchases within apps and websites.**Google Pay for Transit:** Supporting contactless payments for public transportation.**Google Pay for Rewards and Offers:** Providing users with personalized discounts, cashback, and loyalty rewards. **Natural Frequency:**
 5. **Google Pay for Business:** Multiple times per day
 6. **Google Pay for Send (formerly Google Wallet):** A few times per week
 7. **Google Pay for Bills:** Once/Twice a month
@@ -51,9 +51,9 @@
 - **Primary Emphasis:** Breadth and Frequency are the primary engagement metrics for Google Pay.
 - **Depth Considerations:** While Depth remains important, it is influenced by and interconnected with both Breadth and Frequency.
 
-✅ **A balanced approach focusing on Breadth and Frequency will be the best engagement framework for Google Pay as it will contribute towards** **sustained and comprehensive user engagement on Google Pay.**
+ **A balanced approach focusing on Breadth and Frequency will be the best engagement framework for Google Pay as it will contribute towards** **sustained and comprehensive user engagement on Google Pay.**
 
-# 2. Define:
+## 2. Define:
 
 ## A. Who is an Active user on Google Pay?
 
@@ -61,7 +61,7 @@ An active user is someone who performs a core action repeatedly that aligns with
 
 In the case of Google Pay, the core action that aligns with the CVP is making a digital transaction.
 
-👉🏼 An **active user** on Gpay can be defined as someone who **makes a digital transaction**. ✅
+ An **active user** on Gpay can be defined as someone who **makes a digital transaction**. 
 
 this transaction can be:
 
@@ -102,9 +102,9 @@ Segmenting the Individuals as per their Activity on the Google Pay App.
 | Peer-to-Peer Transactions | Rarely or never | Occasionally for personal transactions | Frequent use for both personal and business-related transactions |
 | In-app Purchases and Payments | Rarely or for specific needs | Regular use for online shopping and utility payments | Extensive use for various in-app purchases and bill payments |
 
-# 3. Engagement
+## 3. Engagement
 
-💡The user research gives insights into why or the motivation behind using an app like Google Pay
+The user research gives insights into why or the motivation behind using an app like Google Pay
 
 ![image.png](/case-studies/googlepay-engagement-retention/image%201.png)
 
@@ -133,17 +133,17 @@ We should appeal to their tech-savvy side by offering exclusive access to cuttin
 
 Incentivize exploration with a chance to win prizes, making it more accessible and appealing. | "Explore & Win! Try any new Google Pay feature this month and stand a chance to win exciting prizes. Unleash the possibilities!" | Chance to win prizes | Push Notifications | Once a month | Increased engagement with new features, positive feedback among less casual users |
 
-# 4 . Retention
+## 4 . Retention
 
 ## A. Let's Understand:
 
 ### i. Bird's eye view:
 
-⚠️ No data was found on this topic, as the user retention data of Google Pay is not public.
+ No data was found on this topic, as the user retention data of Google Pay is not public.
 
 However,
 
-💡According to Alchemer's 2022 Mobile App Customer Engagement Report, the retention rate for fintech apps is:
+According to Alchemer's 2022 Mobile App Customer Engagement Report, the retention rate for fintech apps is:
 
 - 30-day: 73%
 - 90-day: 65%
@@ -155,7 +155,7 @@ However,
 
 ![image.png](/case-studies/googlepay-engagement-retention/image%203.png)
 
-💡As per the same report, the industry average is that most users churn in the first 6-8 months. It is safe to assume that the retention curve flattens at 10 months.
+As per the same report, the industry average is that most users churn in the first 6-8 months. It is safe to assume that the retention curve flattens at 10 months.
 
 ## But!
 
@@ -166,13 +166,13 @@ However,
 
 [Source](https://www.mmaglobal.com/files/webinars/india_adjust_x_mma_fintech_webinar_-_2021.08.pdf#:~:text=Retention%20rate%20for%20fintech%20apps%20is%20exceptionally,well%20above%20the%20overall%20average%20of%205.68%.)
 
-💡 Fintech in India has the highest retention rate as compared to other verticals in India.
+ Fintech in India has the highest retention rate as compared to other verticals in India.
 
 As per the graph, on a scale of 1 to 30 days if 15% of Total Users are acquired on Day 1, by 30 days: 7.14% are still retained. Which makes the retention rate 47.6%. It is quite close to the international data.
 
 The most churn happens between days 1 and 10, flattens between days 11 and 21, and then churns again between 22 and 27.
 
-🧠 Google Pay is the second most used UPI app, it is safe to assume that Google Pay will have similar if not better retention.
+ Google Pay is the second most used UPI app, it is safe to assume that Google Pay will have similar if not better retention.
 
 If we use the data from the graph above and convert it to a yearly format,
 
@@ -192,7 +192,7 @@ The user research also gives insights into - most of the users who used Gpay and
 
 Hence,
 
-| ICPs | 👥 Core and Power users drive retention - they use other features/sub-products outside UPI payments as well. |
+| ICPs | Core and Power users drive retention - they use other features/sub-products outside UPI payments as well. |
 | --- | --- |
 | Channels | - Push notifications with assured cashback offers
 - Personalized marketing emails on cashback deals
@@ -228,11 +228,11 @@ Hence,
 11. **Unresolved Issues:** Users expressing dissatisfaction with the resolution of their issues or concerns by Google Pay support.
 12. **Comparative Feedback:** Users provide feedback indicating that they find better service or features in competing payment apps.
 
-# 5. Ressurection Campaigns
+## 5. Ressurection Campaigns
 
 | Problem Statement Being Addressed/Campaign Goal | User Type | Product/Business Change | Pitch/Content + Offer | Frequency and Timing | Channels | Success Metric |
 | --- | --- | --- | --- | --- | --- | --- |
-| Decreasing Transaction Frequency | Core, Power Users | Revamped Rewards Experience | 🔄 Reimagine Transactions: Dive into our new rewards hub weekly for personalized tips, exclusive offers, and a chance to win exciting rewards. Your transactions deserve a second life!" | Once a week | Push Notifications | Increased transaction frequency 
+| Decreasing Transaction Frequency | Core, Power Users | Revamped Rewards Experience | Reimagine Transactions: Dive into our new rewards hub weekly for personalized tips, exclusive offers, and a chance to win exciting rewards. Your transactions deserve a second life!" | Once a week | Push Notifications | Increased transaction frequency 
 
 and 
 
@@ -247,7 +247,7 @@ Giving the user a feeling of being heard | "Your thoughts matter. Share them wit
 At times, transaction failures can happen due to technical glitches. Speaking to a person directly can help customers have peace of mind - given that it is a matter of money | “We understand the value of your time and money. You can now speak to our customer support team to resolve any issues around your transactions” | Ongoing, triggered by a support ticket | In-app chat, Push Notifications | Reduction in the number of negative reviews for transaction-related issues.
 
 Month on Month increase in customer support calls. |
-| Extended period of Inactivity | All Users | Personalized push notifications with an offer and a clear CTA | "Hello [User], we've missed you! Your account's virtual party is just a tap away. Make your next transaction with us and get a surprise treat, and access to exclusive delights. Because your presence makes the party complete! 🎉✨" | Once every two weeks during inactivity | Email, Push Notifications | Reactivation: User makes a transaction after a long period of inactivity |
+| Extended period of Inactivity | All Users | Personalized push notifications with an offer and a clear CTA | "Hello [User], we've missed you! Your account's virtual party is just a tap away. Make your next transaction with us and get a surprise treat, and access to exclusive delights. Because your presence makes the party complete! " | Once every two weeks during inactivity | Email, Push Notifications | Reactivation: User makes a transaction after a long period of inactivity |
 | Lowering CSAT Score | All Users | CSAT Improvement Campaign | "Complete the survey for an exclusive golden ticket." | Once a month | In-App Survey, Email, and Push Notifications | Improved CSAT score. |
 | Comparative Feedback | Core, Power Users | Launching Beta features based on the feedback | "We hear you, here's the feature that you were looking for. Try it now and get a reward" | On the launch of the Beta feature | In-App, Push Notifications | Users trying beta features and making transactions |
 | Data Privacy Issues | All Users | Educating the user on the steps, it takes to secure the data of users. 

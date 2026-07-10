@@ -245,7 +245,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "chargeorfill",
-      title: "ChargeOrFill – EV Charging Aggregator App",
+      title: "ChargeOrFill: EV Charging Aggregator App",
       tag: "0→1",
       role: "Product Strategist & Research Lead",
       timeline: "Independent Project",

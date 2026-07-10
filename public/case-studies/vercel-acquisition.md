@@ -1,6 +1,6 @@
 # Acquisition Strategy- Vercel [B2B Product]
 
-## ℹ️ About the Product:
+## About the Product:
 
 - Headquarters: SF, California
 - Founder: Guillermo Rauch
@@ -12,9 +12,9 @@
 - Total Employees: 462 [As per LinkedIn]
 - Paying Users: 25,000 Companies [As per their website]
 
-## 🔉 Elevator Pitch
+## Elevator Pitch
 
-### 😦 What is the product?
+### What is the product?
 
 Introducing Vercel, the leading-edge platform designed to revolutionize your web development and deployment journey. With Vercel, you gain access to an all-in-one solution that streamlines the creation, optimization, and scaling of your websites and applications. Our core value proposition centers around simplicity, speed, and efficiency.
 
@@ -26,7 +26,7 @@ Pricing worries? Fear not. Vercel's pricing plans cater to projects of all magni
 
 Elevate your development game with Vercel and relish in a coding environment that's agile, efficient, and conducive to innovation. By leveraging the power of Vercel, you're set to leave legacy deployment practices in the dust and embrace the future of web development."
 
-### 🗣️ What it solves for? [Understanding Pain Points]
+### What it solves for? [Understanding Pain Points]
 
 Say goodbye to grappling with sluggish load times that lead to user drop-offs and diminished conversions with Vercel. We solve the problem of poor web performance and complex deployment processes. Traditional deployment methods often lead to frustration and downtime, but Vercel offers a seamless solution.
 
@@ -70,7 +70,7 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
  - How much does your organization on an average spend on Vercel per month?
  - Would you still use Vercel if you switched companies?
 
-### 🏬 Ideal Company/Business Profile for Vercel
+### Ideal Company/Business Profile for Vercel
 
 - ICP
  - Funding Stage: Series A+
@@ -88,7 +88,7 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
  - Manually setup CI/CD pipelines for the entire deployment process.
  - Lack of preview environments in a sandbox environment to get feedback from stakeholders for rapid prototyping
  
- ### 👥 Let’s mee the ICP’s:
+ ### Let’s mee the ICP’s:
  
  | | ICP 1 | ICP 2 | ICP 3 | ICP 4 | ICP 5 |
  | --- | --- | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
  - Developer experience and learning curve
  - Cost management of cloud services. |
  
- ### ‼️ Applying the ICP Prioritization Framework
+ ### ‼ Applying the ICP Prioritization Framework
  
  | | Agencies | SME | Startups | Enterprise |
  | --- | --- | --- | --- | --- |
@@ -143,7 +143,7 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
  
  Vercel has a pricing plan with per seat being chargeable. Quite unlike the pricing of AWS where you pay for what you use. [In vercel also there are certain thresholds and once that is crossed then the user has to pay for the extra services they have consumed.] This pricing is affordable enough for moderately sized teams and not enterprises. To tackle this, Vercel introduced on Enterprise plan for 3k USD per month where it gives 300 seats to the company thereby effectively charging only 10 USD per seat per month [Original fixed pricing is 20 USD per seat per month].
  
- ### 🌐 TAM, SAM and SOM Calculations
+ ### TAM, SAM and SOM Calculations
  
  **Market Sizing of Vercel**
  
@@ -162,7 +162,7 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
  | SAM | Vercel focuses on moderately sized teams and also companies which have a larger use case of rapid prototyping in order to improve their go to market metric, thereby it is safe to assume a 20% of the total market size of the cloud deployment platforms market. | $109.16 Billion |
  | SOM | Assuming a safe 10% of SAM | $10.91 Billion |
  
- ## 💯 Acquisition Channel Prioritization Framework
+ ## Acquisition Channel Prioritization Framework
  
 
 | Channel Name | Cost | Flexibility | Effort | Speed | Scale | Budget |
@@ -173,17 +173,17 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
 | Product Integrations | Medium | Low | High | Medium | Medium | Medium |
 
 <aside>
-💡 As per a key insight discovered during user calls, most of the users I interviewed have discovered about **Vercel via Word of Mouth Marketing.**
+ As per a key insight discovered during user calls, most of the users I interviewed have discovered about **Vercel via Word of Mouth Marketing.**
 
 </aside>
 
-### 1. 🤯 **Organic Channels**
+### 1. **Organic Channels**
 
 1. Search Intent - Fulfill.
 2. Buy Intent - Create
 
 <aside>
-💡
+
 
 **Selection as a channel: No**
 
@@ -193,13 +193,13 @@ In essence, Vercel solves the pain points of slow load times, deployment complex
 
 Vercel already has a very strong brand presence and a loyal user base that sees the platform as a valuable resource. This approach aligns with the developer community's preference for authentic and valuable content, enhancing Vercel's reputation and attracting users who are more likely to become long-term customers. 
 
-### 2. 📺 **Paid Ads/Sponsorships**
+### 2. **Paid Ads/Sponsorships**
 
 1. ICPs and the respective buying persona [Influencer, Blocker, Decision maker] spend time at content/ Webinars/ Events-Conferences. 
 2. Sponsoring the above will provide high visibility to ICPs and thereby higher rate of conversion. 
 
 <aside>
-💡 **Selection as a channel: No**
+ **Selection as a channel: No**
 
 </aside>
 
@@ -207,14 +207,14 @@ Vercel already has a very strong brand presence and a loyal user base that sees 
 
 Vercel is a B2B product where the percentage of users signing up is generally lower. The ROI on Paid Ads will not be justifiable for the number of users signing up. Another thing to keep in mind is Vercel wants the developers to remain in it’s ecosystem [Next.Js as a framework, Edge Networks for Low Latency Deployments] for developing and deploying products therefore a factor of trust comes into picture hence these decisions cannot be taken in a jiffy. Thus Paids Ads as a channel will not be used for this assignment.
 
-### 3. 🚻 **Referral/ Partner Program**
+### 3. **Referral/ Partner Program**
 
 1. The goal is to increase the value perception by Leveraging **strong word-of-mouth** referrals. 
  1. Brag Worthy 
  2. Strong Word of Mouth
 
 <aside>
-💡 **Selection as a channel: Yes**
+ **Selection as a channel: Yes**
 
 </aside>
 
@@ -222,10 +222,10 @@ Vercel is a B2B product where the percentage of users signing up is generally lo
 
 Referrals often come from users who understand the unique advantages and features of Vercel. These users are more likely to refer others who have similar needs and interests, ensuring that the acquired users are a good fit for the platform. This in turn leads to increase brand amplification and reduced customer acquisition costs.
 
-### 4. 🗨️ **Content Loops**
+### 4. **Content Loops**
 
 <aside>
-💡 **Selection as a channel: Yes**
+ **Selection as a channel: Yes**
 
 </aside>
 
@@ -233,10 +233,10 @@ Referrals often come from users who understand the unique advantages and feature
 
 Focusing on content loops can be highly beneficial for acquiring more users for Vercel due to their effectiveness in driving organic growth, user engagement, and brand visibility.
 
-### 5. 🪛 **Product Integrations**
+### 5. **Product Integrations**
 
 <aside>
-💡 **Selection as a channel: No**
+ **Selection as a channel: No**
 
 </aside>
 
@@ -285,14 +285,14 @@ The current partner program for Vercel focusses only on Agencies where the Agenc
  1. Instant Deployment and Scalability
  2. Serverless Functions Integration
  3. Developer friendly workflow and collaboration
-- 🪙 **Platform Currency**
+- **Platform Currency**
  1. Discount on Subscription- Refer to your colleagues and get x% discount [Vercel’s current pricing plan is on basis of per seat, but we cannot give free seats as a platform currency as in some cases the referee might have a very high ACV and thus the referrer will always get by with their free seats thereby leading to loss in revenue for Vercel]
  2. Get access to live 24x7 customer support.
-- 👤 **Who will you ask for a referral?**
+- **Who will you ask for a referral?**
  1. Users who have been onboarded and have made the first deployment.
  2. Users who used have used it for a month and paid for their subscription amount.
  3. Users who have given a positive review on the CSAT survey.
-- 🚻 **How will users discover the partner programme & what will the referral invite look like & the landing page**
+- **How will users discover the partner programme & what will the referral invite look like & the landing page**
  
  **User who have made the first subscription payment after being onboarded.**
  
@@ -301,7 +301,7 @@ The current partner program for Vercel focusses only on Agencies where the Agenc
  - Shares on email with a unique link
  - The referee subscribes to Vercel using the link shared
  - The referrer gets a discount on his email and also gets live technical support enabled for his organization account.
-- 🧲 **How will referrers track the referrals?**
+- **How will referrers track the referrals?**
  
  There is an entirely different dashboard [vercel.com/partners] where the referrers can go ahead and track the referrals. 
  

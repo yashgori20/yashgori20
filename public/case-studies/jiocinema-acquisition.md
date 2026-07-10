@@ -8,7 +8,7 @@ Jio Cinema is an India OTT Streaming platform owned by Viacom 18. They Provide L
 - **Core Value Proposition**
  - Stream Sports and Movies in the desired language of the users at any time and anywhere.
 
-## **Company Info:**
+## Company Info:
 
 | | |
 | --- | --- |
@@ -22,7 +22,7 @@ Jio Cinema is an India OTT Streaming platform owned by Viacom 18. They Provide L
 | Bragworthy | High |
 | Major Competitor | Hotstar, SonyLiv, Zee5, Amazon Prime and Netflix |
 
-## **Market Size & Growth Trends**
+## Market Size & Growth Trends
 
 JioCinema has a total unique users of 449Mn, With DAUs of 95 Mn. The monthly active user base is 275 Mn. Total JioCinema Premium users are 7Mn. This also includes Jio STB and Jio Fiber bundled users.
 
@@ -30,7 +30,7 @@ JioCinema has a total unique users of 449Mn, With DAUs of 95 Mn. The monthly act
 
 ![Untitled](/case-studies/jiocinema-acquisition/Untitled%201.png)
 
-## **Ideal Customer Profile**
+## Ideal Customer Profile
 
 | | **ICP 1 - Early Professional** | **ICP 2 (Senior Professionals)** |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ JioCinema has a total unique users of 449Mn, With DAUs of 95 Mn. The monthly act
  He is more aspiring and wants to grow in his career. Spends time with Family and Friends. Love to network with like-minded people. During weekends, I would like to consume movies/series with family and friends. He is very specific about the kind of Genre and content he would like to watch. He Was not aware of JioCinema's offering before IPL 2023. With that, he has tried the JioCinema premium and has become an annual subscriber.
  
 
-# **Acquisition Strategy**
+## Acquisition Strategy
 
 | **Channel** | **Cost** | **Flexibility** | **Effort** | **Lead Time** | **Scale** |
 | --- | --- | --- | --- | --- | --- |

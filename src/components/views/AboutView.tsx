@@ -55,7 +55,7 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
                 </div>
                 <div>
                   <h4 className="font-semibold text-primary text-sm mb-1">Speed under real constraints:</h4>
-                  <p className="text-sm text-muted-foreground">Shipped a pilot-ready GenAI MVP solo in about 4 weeks and secured Microsoft Founders Hub funding off the back of it.</p>
+                  <p className="text-sm text-muted-foreground">Built a GenAI product's prototype solo in about 4 weeks and secured Microsoft for Startups funding off the back of it.</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-primary text-sm mb-1">Outcomes over output:</h4>

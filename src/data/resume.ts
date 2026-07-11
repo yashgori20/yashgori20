@@ -15,7 +15,7 @@ export const resumeData = {
   profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
 
   about:
-    "I'm an AI Product Manager who ships. I don't just write the spec, I build and deploy the product, using AI as my engineering force-multiplier to take ideas from PRD to production. I've shipped GenAI products to enterprise clients, secured Microsoft Founders Hub funding, and turned manual workflows into systems that run themselves.",
+    "I'm an AI Product Manager who ships. I don't just write the spec, I build and deploy the product, using AI as my engineering force-multiplier to take ideas from PRD to production. I've shipped GenAI products to enterprise clients, secured Microsoft for Startups funding, and turned manual workflows into systems that run themselves.",
 
   // One-line positioning shown under the greeting; names the AI-builder edge explicitly
   // (hiring managers now screen for AI fluency / ability to ship, not just talk about it).
@@ -23,13 +23,13 @@ export const resumeData = {
     "AI Product Manager who ships. I scope, build and deploy AI products end-to-end, not just spec them.",
 
   // Front-loaded outcome metrics for the home screen (the "first 6 seconds" proof).
-  // These reflect real shipped work: FactWise PO/API volume and enterprise clients,
-  // plus the Webotix processing-time and Microsoft Founders Hub outcomes.
+  // These reflect real shipped work: FactWise OpenAPI volume and enterprise clients,
+  // plus the Webotix QC-document outcome and Microsoft for Startups funding.
   headlineMetrics: [
-    { value: "20K-40K", label: "POs & contracts", sub: "created via my procurement APIs" },
+    { value: "40K+", label: "live POs & contracts", sub: "created via my OpenAPIs" },
     { value: "4+", label: "enterprise clients", sub: "live in production" },
-    { value: "90%", label: "less processing time", sub: "GenAI QC at Webotix" },
-    { value: "$5K", label: "Microsoft Founders Hub grant", sub: "secured by pitching" },
+    { value: "90%", label: "faster QC-doc creation", sub: "GenAI QC at Webotix" },
+    { value: "$5K", label: "Microsoft for Startups grant", sub: "secured by pitching" },
   ],
 
   whatIBring:
@@ -109,7 +109,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "TypeScript",
         "Flask",
         "Groq",
-        "Llama 3.3",
+        "GPT-OSS-120B",
         "RAG",
       ],
       features: [
@@ -274,13 +274,13 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Product Strategy"
       ],
       points: [
-        "Own the Purchase Order (PO) product area end-to-end for 4+ enterprise EMS (electronics manufacturing) clients: gathered requirements from client stakeholders, authored PRDs and acceptance criteria, and drove cross-functional engineering to deliver PO creation, line-item management, role-based approvals and standard T&C workflows, replacing a hectic manual process (clients previously exported and rebuilt POs on their own software) and saving hours per PO.",
-        "Defined and shipped OpenAPI/Swagger procurement APIs (bulk create, update and read across Item Master, Vendor Master, PO and Contracts, plus an ID-mapping API linking FactWise records to clients' SAP IDs) enabling bidirectional SAP/ERP integration; now used daily, with 20K to 40K POs and contracts created through them across 3 enterprise clients.",
-        "Built a FactWise MCP (Model Context Protocol) server (AI-assisted) that lets clients connect FactWise to Claude or any AI client and ask natural-language questions about their live RFQs, POs and contracts; handles tool calling and context management over the hosted API layer, shipping agentic, conversational access to enterprise procurement data."
+        "I own the two modules at the heart of how manufacturers buy on FactWise: Purchase Orders (POs) and Bills of Materials (BOMs), the multi-level parts lists products are built from. Every requirement, bug and enhancement for both lands with me; I sit with client teams, turn what they need into PRDs, and drive engineering to ship it. My favourite PO ship: an in-place revision workflow, so changing an issued PO no longer means cancelling and recreating it.",
+        "When enterprise clients told us they wouldn't adopt without connecting to their SAP, I defined and shipped FactWise's OpenAPIs: bulk create, update and get across items, vendors, POs and contracts, plus an ID-mapping API, with each client getting their own API keys. Clients use them every single day, because creating a thousand records through an API beats any UI. FactWise now sells this as a licensed offering (INR 7-10L per client); 3 enterprise clients have bought it, and 40K+ live POs and contracts have been created through it.",
+        "The OpenAPIs had one problem: strict request formats that clients found hard to get right. So I built an AI agent, served via MCP, that sits on top of them. You tell it what you need in plain language; it picks the right API, asks for whatever's missing, builds the request and executes it. Bulk procurement actions become a conversation. It's now the flagship demo in enterprise sales conversations."
       ],
       additionalPoints: [
-        "Own the BOM (Bill of Materials) module end-to-end for EMS clients who source against multi-level bills of materials rather than flat line-items; shipped parallel BOM revisions so a single BOM can hold multiple versions in use at once (one event runs on R1 while another runs on R2), configured once and reused; sole PM for all BOM requirements, bugs and enhancements.",
-        "Owned and defined the PO revision workflow, translating a recurring enterprise need into exact requirements and a PRD: revise already-issued POs in place (re-validate, re-approve) instead of cancel-and-recreate, with a clean audit trail; also shipped client-requested enhancements that directly lifted satisfaction."
+        "Signature BOM ship: parallel revisions, so a single BOM can run multiple versions across live orders at the same time (one order on R1 while another runs on R2), configured once and reused.",
+        "As a PM I define, spec and drive engineering rather than hand-coding the modules, but I personally built the MCP agent with AI, and I ship small enhancement features myself."
       ],
     },
     {
@@ -298,12 +298,12 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Product Strategy"
       ],
       points: [
-        "Owned SwiftCheck AI (GenAI QC) 0 to 1 as PM and built it to production with AI as my engineering force-multiplier: discovery to PRD to deployed pilot, solo in ~4 weeks, aligning internal stakeholders (CEO, COO) on scope and roadmap.",
-        "Built end-to-end GenAI features (RAG over vector databases (FAISS/Pinecone), autonomous agents, self-resolving workflows) to 80% accuracy and 90% less processing time, keeping the model trustworthy via grounding, prompt engineering and context management rather than a bigger model.",
-        "Ran user research with Dubai-based pilot clients, validating product assumptions through enterprise demos and iterating workflows on real feedback, lifting adoption 30%."
+        "SwiftCheck AI started with a painful picture: food-manufacturing compliance teams hand-building QC templates for every production stage and reviewing thousands of QC documents a week, all on paper. I took it 0 to 1 as PM: an app where AI generates the inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally with a full record.",
+        "I built the prototype myself with AI in about four weeks, pitched it and secured $5,000 from Microsoft for Startups, then led a cross-functional team of 3 (mobile, UI/UX, web) to take it to production.",
+        "Under the hood: a GenAI engine using RAG over FAISS/Pinecone vector databases and AI agents that auto-generates the QC templates, hitting 80% accuracy against client specs and cutting QC-document creation time by 90% compared to building templates by hand."
       ],
       additionalPoints: [
-        "Secured $5,000 from Microsoft Founders Hub by pitching product vision, technical feasibility and early business potential; built Power BI dashboards for ROI tracking and data-driven pricing."
+        "Shaped the product through demos and feedback from multiple enterprise clients, including a design-partner client involved from day one, and aligned the CEO and COO on scope and roadmap throughout."
       ],
     },
     {
@@ -325,7 +325,9 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       location: "Mumbai, India",
       technologies: ["Market Strategy", "Client Management", "A/B Testing", "Data Analytics"],
       points: [
-        "Managed strategy and execution for 5+ B2B fintech & crypto clients (incl. CoinDCX, Binance, Kotak 811); scaled a client YouTube channel 50K to 70K subscribers and lifted campaign performance 30 to 60% via KPI-driven, A/B-tested content cycles."
+        "Drove growth strategy for 5+ enterprise fintech & crypto clients, including CoinDCX, Binance and Kotak 811, running A/B tests that lifted campaign performance 30 to 60%.",
+        "Acquired several of those clients myself through targeted outreach and personalized pitches, then grew the accounts through upsells into long-term partnerships.",
+        "Scaled Ali Solanki's YouTube channel from 50K to 80K subscribers, running a Kanban content pipeline that moved every video from ideation through scripting, recording, editing and publishing with a cross-functional creative team."
       ],
     },
   ],

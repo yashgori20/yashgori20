@@ -22,10 +22,9 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
     setIsModalOpen(true);
   };
 
-  const getProjectImage = (index: number) => {
-    // Projects are listed in descending order (latest first), so map accordingly
-    const projectNumber = index + 1;
-    return `/images/projects/p${projectNumber}.png`;
+  const getProjectImage = (proj: Project, index: number) => {
+    // Each project declares its own image; index fallback kept for safety
+    return proj.image ?? `/images/projects/p${index + 1}.png`;
   };
 
   return (
@@ -62,7 +61,7 @@ const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
                 <div className="lg:col-span-4 hidden lg:block">
                   <div className="relative overflow-hidden rounded-xl shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                     <img
-                      src={getProjectImage(index)}
+                      src={getProjectImage(proj, index)}
                       alt={`${proj.title} preview`}
                       className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                     />

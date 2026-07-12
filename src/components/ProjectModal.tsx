@@ -21,6 +21,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, o
   const totalProjects = resumeData.projects.length;
 
   const getProjectImage = (project: Project) => {
+    if (project.image) return project.image;
     const projectIndex = resumeData.projects.findIndex(p => p.title === project.title);
     const projectNumber = projectIndex >= 0 ? projectIndex + 1 : 1;
     return `/images/projects/p${projectNumber}.png`;

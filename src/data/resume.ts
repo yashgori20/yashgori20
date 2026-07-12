@@ -1,3 +1,13 @@
+export type Project = {
+  title: string;
+  description: string;
+  technologies: string[];
+  features: string[];
+  image?: string;
+  codeUrl?: string;
+  liveUrl?: string;
+};
+
 export const resumeData = {
   name: "Yash Gori",
   contact: {
@@ -82,7 +92,10 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       { name: "Context Management", level: 92, category: "AI/ML" },
     ],
     "AI-Assisted Build": [
-      { name: "Ship production full-stack features end-to-end with AI (Claude Code, Cursor, Codex, Gemini), from PRD to deployed", level: 95, category: "AI-Assisted Build" },
+      { name: "Claude Code", level: 95, category: "AI-Assisted Build" },
+      { name: "Cursor", level: 92, category: "AI-Assisted Build" },
+      { name: "Codex", level: 90, category: "AI-Assisted Build" },
+      { name: "Gemini CLI", level: 88, category: "AI-Assisted Build" },
     ],
     "Tools & Data": [
       { name: "Jira", level: 92, category: "Tools & Data" },
@@ -117,6 +130,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Engineered grounding, model selection and guardrails to cut hallucination and token cost.",
         "Chat-first UX that guides visitors through case studies and code from conversation context."
       ],
+      image: "/images/projects/p1.png",
       codeUrl: "https://github.com/yashgori20/yashgori20",
       liveUrl: "https://yashgori20.vercel.app/",
     },
@@ -135,6 +149,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Implemented ATS scoring and role-optimized suggestions to improve recruiter-facing signals.",
         "Generates a tailored LaTeX resume from the optimized content."
       ],
+      image: "/images/projects/p3.png",
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
     },
@@ -153,23 +168,8 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Engineered FAISS-backed semantic retrieval and a multi-turn dialogue layer for context-aware answers.",
         "Delivered a Flutter front-end for cross-platform usage."
       ],
+      image: "/images/projects/p2.png",
       codeUrl: "https://github.com/yashgori20/DocuTalk",
-    },
-    {
-      title: "Product Case Studies",
-      description:
-        `Product teardowns across GPay, JioCinema, Vercel, Blinkit and Fireflies AI, covering acquisition, engagement/retention and onboarding.`,
-      technologies: [
-        "Product Strategy",
-        "Acquisition",
-        "Engagement & Retention",
-        "Onboarding",
-      ],
-      features: [
-        "GPay and JioCinema: engagement and retention strategy teardowns.",
-        "Vercel and Fireflies AI: B2B acquisition and channel strategy.",
-        "Blinkit: onboarding and activation funnel teardown."
-      ],
     },
   ],
   // Case studies are content-driven: list cards use this metadata, and the full

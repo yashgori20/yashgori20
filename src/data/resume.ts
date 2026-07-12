@@ -114,6 +114,26 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
 
   projects: [
     {
+      title: "SwiftCheck AI: Enterprise QC Platform",
+      description:
+        `GenAI quality-control platform for food manufacturing that digitizes the entire QC workflow: AI generates inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally.`,
+      technologies: [
+        "GenAI",
+        "RAG",
+        "Azure OpenAI",
+        "Azure Document Intelligence OCR",
+        "FAISS/Pinecone",
+        "Flask",
+      ],
+      features: [
+        "Replaced manual, paper-driven QC: compliance teams were hand-building stage-wise templates and reviewing 1000s of QC documents weekly.",
+        "AI-generated inspection templates reach 80% accuracy against client specs and cut QC-document creation time by 90% vs building templates by hand.",
+        "Built the prototype with AI in about 4 weeks, secured $5,000 from Microsoft for Startups, then led a cross-functional team of 3 to take it to production."
+      ],
+      image: "/images/projects/p1.png",
+      codeUrl: "https://github.com/yashgori20/swift-check-ai",
+    },
+    {
       title: "Interactive AI Portfolio + Chatbot",
       description:
         `A chat-first portfolio whose live assistant answers questions about me. I engineered grounding, model selection and guardrails to cut hallucination and token cost.`,
@@ -130,9 +150,47 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Engineered grounding, model selection and guardrails to cut hallucination and token cost.",
         "Chat-first UX that guides visitors through case studies and code from conversation context."
       ],
-      image: "/images/projects/p1.png",
+      image: "/images/projects/p2.png",
       codeUrl: "https://github.com/yashgori20/yashgori20",
       liveUrl: "https://yashgori20.vercel.app/",
+    },
+    {
+      title: "DocuTalk: AI Document Intelligence Platform",
+      description:
+        `A cross-platform RAG assistant for conversational Q&A across any document.`,
+      technologies: [
+        "Gemini",
+        "FAISS",
+        "LangChain",
+        "Flutter",
+      ],
+      features: [
+        "Built a RAG assistant for conversational Q&A across any document, with provenance and citation tracebacks.",
+        "Engineered FAISS-backed semantic retrieval and a multi-turn dialogue layer for context-aware answers.",
+        "Delivered a Flutter front-end for cross-platform usage."
+      ],
+      image: "/images/projects/p3.png",
+      codeUrl: "https://github.com/yashgori20/DocuTalk",
+    },
+    {
+      title: "FinLLM-RAG: RBI Compliance Automation",
+      description:
+        `A regulatory-intelligence prototype that automates rule extraction from RBI documents into an auditable RAG pipeline, with human-in-the-loop verification and exception reporting.`,
+      technologies: [
+        "Python",
+        "Mixtral",
+        "Groq",
+        "FAISS",
+        "RAG",
+      ],
+      features: [
+        "Reached ~80% prediction accuracy on labeled compliance checks through iterative prompt and retrieval tuning.",
+        "Modeled ~10% annual operational cost savings using a conservative automation-to-review tradeoff.",
+        "Kept the pipeline auditable with a human-review loop, rule-mapping visualizations and confusion matrices."
+      ],
+      image: "/images/projects/p4.png",
+      codeUrl: "https://github.com/yashgori20/FinLLM-RAG-rbi",
+      liveUrl: "https://yashgori20-FinLLM-RAG.hf.space",
     },
     {
       title: "Inhance: LinkedIn & Resume Optimization Platform",
@@ -149,27 +207,27 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Implemented ATS scoring and role-optimized suggestions to improve recruiter-facing signals.",
         "Generates a tailored LaTeX resume from the optimized content."
       ],
-      image: "/images/projects/p3.png",
+      image: "/images/projects/p5.png",
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
     },
     {
-      title: "DocuTalk: AI Document Intelligence Platform",
+      title: "Customer Churn Predictor",
       description:
-        `A cross-platform RAG assistant for conversational Q&A across any document.`,
+        `An end-to-end ML project, from data collection and cleaning to modelling, evaluation and visualization.`,
       technologies: [
-        "Gemini",
-        "FAISS",
-        "LangChain",
-        "Flutter",
+        "Python",
+        "Random Forest",
+        "Pandas",
+        "Power BI",
       ],
       features: [
-        "Built a RAG assistant for conversational Q&A across any document.",
-        "Engineered FAISS-backed semantic retrieval and a multi-turn dialogue layer for context-aware answers.",
-        "Delivered a Flutter front-end for cross-platform usage."
+        "Built a churn model with Random Forest (~94% training accuracy) plus feature-importance reporting.",
+        "Delivered Power BI dashboards that surface actionable business signals.",
+        "Shared reproducible notebooks, preprocessing pipelines and evaluation metrics."
       ],
-      image: "/images/projects/p2.png",
-      codeUrl: "https://github.com/yashgori20/DocuTalk",
+      image: "/images/projects/p6.png",
+      codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
     },
   ],
   // Case studies are content-driven: list cards use this metadata, and the full

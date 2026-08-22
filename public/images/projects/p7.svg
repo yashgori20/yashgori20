@@ -1,0 +1,40 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#111111"/>
+  <rect x="56" y="54" width="848" height="432" rx="8" fill="#181818" stroke="#343434" stroke-width="2"/>
+
+  <text x="88" y="104" fill="#F5F5F5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="27" font-weight="700">BOM Data Mapper</text>
+  <text x="88" y="136" fill="#AFAFAF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17">Map, normalize and validate complex product structures</text>
+
+  <rect x="88" y="178" width="216" height="242" rx="8" fill="#222222" stroke="#3A3A3A"/>
+  <rect x="372" y="178" width="216" height="242" rx="8" fill="#222222" stroke="#3A3A3A"/>
+  <rect x="656" y="178" width="216" height="242" rx="8" fill="#222222" stroke="#3A3A3A"/>
+
+  <text x="112" y="218" fill="#FFFFFF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Source files</text>
+  <text x="396" y="218" fill="#FFFFFF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Map + validate</text>
+  <text x="680" y="218" fill="#FFFFFF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Structured output</text>
+
+  <g fill="#CFCFCF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17">
+    <text x="112" y="266">Excel and CSV</text>
+    <text x="112" y="302">PDF and OCR</text>
+    <text x="112" y="338">Different columns</text>
+    <text x="112" y="374">Different hierarchies</text>
+
+    <text x="396" y="266">Visual mapping</text>
+    <text x="396" y="302">Fuzzy suggestions</text>
+    <text x="396" y="338">Transformation rules</text>
+    <text x="396" y="374">Conflict review</text>
+
+    <text x="680" y="266">Parts catalogue</text>
+    <text x="680" y="302">Multi-level BOM</text>
+    <text x="680" y="338">Parent-child links</text>
+    <text x="680" y="374">Reusable templates</text>
+  </g>
+
+  <path d="M320 299H352" stroke="#E5E5E5" stroke-width="3" stroke-linecap="round"/>
+  <path d="M342 288L354 299L342 310" stroke="#E5E5E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M604 299H636" stroke="#E5E5E5" stroke-width="3" stroke-linecap="round"/>
+  <path d="M626 288L638 299L626 310" stroke="#E5E5E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="88" y="444" width="784" height="1" fill="#333333"/>
+  <text x="88" y="470" fill="#9A9A9A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">Visual Mapping  /  Fuzzy Matching  /  PDF-OCR  /  Validation  /  Templates</text>
+</svg>

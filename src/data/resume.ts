@@ -114,6 +114,26 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
 
   projects: [
     {
+      title: "BOM Data Mapper",
+      description:
+        `A visual data-mapping and normalization platform that converts inconsistent supplier BOMs into structured parts data and multi-level assembly trees ready for FactWise.`,
+      technologies: [
+        "Visual Mapping",
+        "Fuzzy Matching",
+        "PDF/OCR",
+        "BOM Normalization",
+        "Data Validation",
+        "Reusable Templates",
+      ],
+      features: [
+        "Designed a visual source-to-destination mapping canvas with fuzzy column suggestions, derived fields, default values and reusable mapping templates.",
+        "Supports Excel, CSV and PDF inputs with selectable OCR zones, table extraction, data previews and configurable transformation rules.",
+        "Preserves parent-child assemblies, document rows, quantities, alternate parts and valid duplicates while producing a standardized parts catalogue and its connected multi-level BOM.",
+        "Client validation indicated approximately 60% efficiency improvement and INR 10-12L annual willingness to pay per deployment."
+      ],
+      image: "/images/projects/p7.svg",
+    },
+    {
       title: "SwiftCheck AI: Enterprise QC Platform",
       description:
         `GenAI quality-control platform for food manufacturing that digitizes the entire QC workflow: AI generates inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally.`,
@@ -333,6 +353,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       ],
       points: [
         "I own the two modules at the heart of how manufacturers buy on FactWise: Purchase Orders (POs) and Bills of Materials (BOMs), the multi-level parts lists products are built from. Every requirement, bug and enhancement for both lands with me; I sit with client teams, turn what they need into PRDs, and drive engineering to ship it. My favourite PO ship: an in-place revision workflow, so changing an issued PO no longer means cancelling and recreating it.",
+        "An enterprise client showed me how much time teams lose manually restructuring inconsistent BOM files before they can use them. I designed a BOM Data Mapper that standardizes those files, preserves the multi-level product structure, and creates import-ready Item Directory and BOM outputs. The client estimated a 60% efficiency improvement and indicated willingness to pay INR 10-12L annually per deployment.",
         "When enterprise clients told us they wouldn't adopt without connecting to their SAP, I defined and shipped FactWise's OpenAPIs: bulk create, update and get across items, vendors, POs and contracts, plus an ID-mapping API, with each client getting their own API keys. Clients use them every single day, because creating a thousand records through an API beats any UI. FactWise now sells this as a licensed offering (INR 7-10L per client); 3 enterprise clients have bought it, and 40K+ live POs and contracts have been created through it.",
         "The OpenAPIs had one problem: strict request formats that clients found hard to get right. So I built an AI agent, served via MCP, that sits on top of them. You tell it what you need in plain language; it picks the right API, asks for whatever's missing, builds the request and executes it. Bulk procurement actions become a conversation. It's now the flagship demo in enterprise sales conversations."
       ],

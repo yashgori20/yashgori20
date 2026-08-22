@@ -114,25 +114,6 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
 
   projects: [
     {
-      title: "BOM Normalization: FactWise Export Workflow",
-      description:
-        `A React/Django Excel mapper that turns messy supplier BOM files into clean FactWise-ready Item Directory and BOM imports, preserving hierarchy, documents and duplicate meaning.`,
-      technologies: [
-        "React",
-        "Django",
-        "Excel Parsing",
-        "BOM Normalization",
-        "Docker",
-        "Redis",
-      ],
-      features: [
-        "Debugged real Thales, AMAT, Cyient and Getinge BOM files with malformed ranges, document rows, missing quantities, duplicate components and multi-level parent-child structures.",
-        "Turned messy spreadsheet behavior into product rules: merge true duplicates only under the same parent, keep required document rows, and surface duplicate conflicts for user review.",
-        "Repaired one corrupted Thales export from 958 physical lines into 345 usable records, and fixed an AMAT-style false used range that made the browser try parsing roughly 48.6M mostly empty cells."
-      ],
-      image: "/images/projects/p7.svg",
-    },
-    {
       title: "SwiftCheck AI: Enterprise QC Platform",
       description:
         `GenAI quality-control platform for food manufacturing that digitizes the entire QC workflow: AI generates inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally.`,
@@ -353,12 +334,10 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       points: [
         "I own the two modules at the heart of how manufacturers buy on FactWise: Purchase Orders (POs) and Bills of Materials (BOMs), the multi-level parts lists products are built from. Every requirement, bug and enhancement for both lands with me; I sit with client teams, turn what they need into PRDs, and drive engineering to ship it. My favourite PO ship: an in-place revision workflow, so changing an issued PO no longer means cancelling and recreating it.",
         "When enterprise clients told us they wouldn't adopt without connecting to their SAP, I defined and shipped FactWise's OpenAPIs: bulk create, update and get across items, vendors, POs and contracts, plus an ID-mapping API, with each client getting their own API keys. Clients use them every single day, because creating a thousand records through an API beats any UI. FactWise now sells this as a licensed offering (INR 7-10L per client); 3 enterprise clients have bought it, and 40K+ live POs and contracts have been created through it.",
-        "I improved the BOM normalization workflow that turns messy supplier Excel files into FactWise-ready Item Directory and BOM imports, preserving hierarchy, document rows and duplicate meaning across real Thales, AMAT, Cyient and Getinge files.",
         "The OpenAPIs had one problem: strict request formats that clients found hard to get right. So I built an AI agent, served via MCP, that sits on top of them. You tell it what you need in plain language; it picks the right API, asks for whatever's missing, builds the request and executes it. Bulk procurement actions become a conversation. It's now the flagship demo in enterprise sales conversations."
       ],
       additionalPoints: [
         "Signature BOM ship: parallel revisions, so a single BOM can run multiple versions across live orders at the same time (one order on R1 while another runs on R2), configured once and reused.",
-        "BOM mapper proof points: repaired a corrupted Thales export from 958 physical lines into 345 usable records, increased distinct Thales item identities from 114 to 315, and fixed an AMAT-style false used range that tried to parse roughly 48.6M mostly empty cells.",
         "As a PM I define, spec and drive engineering rather than hand-coding the modules, but I personally built the MCP agent with AI, and I ship small enhancement features myself."
       ],
     },

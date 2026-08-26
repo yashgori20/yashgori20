@@ -4,7 +4,8 @@ import HomeView from './HomeView';
 import AboutView from './AboutView';
 import ExperienceView from './ExperienceView';
 import ProjectsView from './ProjectsView';
-import CaseStudiesView from './CaseStudiesView';
+// TEMP: Case studies hidden for now — re-enable this import with the section below.
+// import CaseStudiesView from './CaseStudiesView';
 import SkillsView from './SkillsView';
 import ContactView from './ContactView';
 import { View } from '@/types';
@@ -57,10 +58,11 @@ const ContentView = ({ activeView, setActiveView, chatInterfaceProps, currentSec
         <ProjectsView activeView={activeView} setActiveView={setActiveView} />
       </section>
 
-      {/* Case Studies Section */}
+      {/* TEMP: Case Studies Section hidden for now — uncomment to restore.
       <section id="case-studies" className="min-h-screen">
         <CaseStudiesView activeView={activeView} setActiveView={setActiveView} />
       </section>
+      */}
 
       {/* Skills Section */}
       <section id="skills" className="min-h-screen">

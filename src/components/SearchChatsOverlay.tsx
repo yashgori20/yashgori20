@@ -24,13 +24,15 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
     { id: 'about', title: 'About Me', icon: User },
     { id: 'experience', title: 'Work Experience', icon: Briefcase },
     { id: 'projects', title: 'Projects', icon: Code },
-    { id: 'case-studies', title: 'Case Studies', icon: Briefcase },
+    // TEMP: hidden for now
+    // { id: 'case-studies', title: 'Case Studies', icon: Briefcase },
     { id: 'skills', title: 'Skills & Expertise', icon: BrainCircuit },
     { id: 'contact', title: 'Contact Me', icon: Mail },
   ];
 
   const projects = resumeData.projects;
-  const caseStudies = resumeData.caseStudies;
+  // TEMP: hidden for now
+  // const caseStudies = resumeData.caseStudies;
 
   const socials = [
     { 
@@ -173,7 +175,7 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
             </div>
           </div>
 
-          {/* Case Studies */}
+          {/* TEMP: Case Studies results hidden for now — uncomment to restore.
           <div className="mb-8">
             <div className="mb-4">
               <h3 className="text-sm font-medium text-gray-300 uppercase tracking-wide mb-2">Case Studies</h3>
@@ -189,12 +191,13 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
                   <Briefcase className="h-4 w-4 text-gray-400 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium truncate">{caseStudy.title}</div>
-                    <div className="text-xs text-gray-400 truncate">{caseStudy.context.substring(0, 80)}...</div>
+                    <div className="text-xs text-gray-400 truncate">{caseStudy.context.substring(0, 80)}</div>
                   </div>
                 </button>
               ))}
             </div>
           </div>
+          */}
 
           {/* Socials */}
           <div>

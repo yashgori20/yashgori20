@@ -325,9 +325,9 @@ const JobHunt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0c10] text-[#f3f4f8]">
+    <div className="min-h-screen overflow-x-hidden bg-[#0b0c10] text-[#f3f4f8]">
       <div className="sticky top-0 z-20 border-b border-white/10 bg-[#0b0c10]/92 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           <Link to="/" className="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-[#a4a8b5] transition hover:bg-white/5 hover:text-white">
             <ArrowLeft className="h-4 w-4" />
             Portfolio
@@ -339,9 +339,9 @@ const JobHunt = () => {
         </div>
       </div>
 
-      <main className="mx-auto max-w-6xl px-5 pb-20 pt-10">
-        <section className="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-          <div>
+      <main className="mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+        <section className="grid min-w-0 gap-8 border-b border-white/10 pb-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,0.95fr)] lg:items-end">
+          <div className="min-w-0">
             <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-[#ffe94b]/30 bg-[#ffe94b]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#ffe94b]">
               <Sparkles className="h-3.5 w-3.5" />
               Job hunt console
@@ -356,7 +356,7 @@ const JobHunt = () => {
             </p>
           </div>
 
-          <div className="border-l-2 border-[#a78bfa] bg-white/[0.035] p-5">
+          <div className="min-w-0 border-l-2 border-[#a78bfa] bg-white/[0.035] p-5">
             <div className="mb-4 flex items-center gap-3">
               <Flame className="h-5 w-5 text-[#ffe94b]" />
               <div>
@@ -375,18 +375,18 @@ const JobHunt = () => {
         </section>
 
         <SectionTitle icon={Target} title="X searches" aside="Daily - 5 minutes" />
-        <div className="grid gap-3">
+        <div className="grid min-w-0 gap-3">
           {queries.map((query) => (
             <article
               key={query.id}
-              className={`rounded-lg border p-4 ${
+              className={`min-w-0 rounded-lg border p-4 ${
                 query.hot
                   ? 'border-[#a78bfa]/45 bg-[linear-gradient(180deg,#171225,#111217)]'
                   : 'border-white/10 bg-white/[0.035]'
               }`}
             >
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                <div>
+                <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="text-base font-semibold text-white">{query.title}</h2>
                     {query.tag && (
@@ -398,7 +398,7 @@ const JobHunt = () => {
                   <p className="mt-1 text-sm leading-6 text-[#9aa0ad]">{query.why}</p>
                 </div>
               </div>
-              <pre className="mt-3 overflow-x-auto rounded-md border border-white/10 bg-[#17191f] p-3 text-xs leading-5 text-[#c4c8d2]">
+              <pre className="mt-3 max-w-full whitespace-pre-wrap break-words rounded-md border border-white/10 bg-[#17191f] p-3 text-xs leading-5 text-[#c4c8d2]">
                 <code>{query.query}</code>
               </pre>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -406,14 +406,14 @@ const JobHunt = () => {
                   href={xSearchUrl(query.query)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md border border-[#a78bfa] bg-[#a78bfa] px-3 py-2 text-sm font-semibold text-[#141020] transition hover:brightness-110"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#a78bfa] bg-[#a78bfa] px-3 py-2 text-sm font-semibold text-[#141020] transition hover:brightness-110 sm:w-auto"
                 >
                   <ExternalLink className="h-4 w-4" />
                   Open on X
                 </a>
                 <button
                   onClick={() => copyQuery(query.id, query.query)}
-                  className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white transition hover:border-[#a78bfa] hover:text-[#c4b5fd] focus:outline-none focus:ring-2 focus:ring-[#a78bfa]/50"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white transition hover:border-[#a78bfa] hover:text-[#c4b5fd] focus:outline-none focus:ring-2 focus:ring-[#a78bfa]/50 sm:w-auto"
                 >
                   {copiedId === query.id ? <Check className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
                   {copiedId === query.id ? 'Copied' : 'Copy'}
@@ -451,7 +451,7 @@ const SectionTitle = ({
   title: string;
   aside: string;
 }) => (
-  <div className="mb-4 mt-12 flex flex-wrap items-center gap-3">
+  <div className="mb-4 mt-12 flex min-w-0 flex-wrap items-center gap-3">
     <Icon className="h-5 w-5 text-[#ffe94b]" />
     <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-[#aeb2bd]">{title}</h2>
     <span className="text-sm text-[#a78bfa]">{aside}</span>
@@ -459,20 +459,20 @@ const SectionTitle = ({
 );
 
 const LinkGrid = ({ items }: { items: LinkCard[] }) => (
-  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-3">
     {items.map((item) => (
       <a
         key={`${item.title}-${item.url}`}
         href={item.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group rounded-lg border border-white/10 bg-white/[0.035] p-4 transition hover:border-[#a78bfa] hover:bg-white/[0.055] focus:outline-none focus:ring-2 focus:ring-[#a78bfa]/50"
+        className="group min-w-0 rounded-lg border border-white/10 bg-white/[0.035] p-4 transition hover:border-[#a78bfa] hover:bg-white/[0.055] focus:outline-none focus:ring-2 focus:ring-[#a78bfa]/50"
       >
         <div className="flex min-h-8 items-start justify-between gap-3">
-          <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+          <h3 className="min-w-0 break-words text-sm font-semibold text-white">{item.title}</h3>
           <ExternalLink className="h-4 w-4 shrink-0 text-[#7e8491] transition group-hover:text-[#c4b5fd]" />
         </div>
-        <p className="mt-2 text-sm leading-6 text-[#9aa0ad]">{item.description}</p>
+        <p className="mt-2 break-words text-sm leading-6 text-[#9aa0ad]">{item.description}</p>
         {item.source && (
           <span className="mt-3 inline-flex rounded border border-white/10 px-2 py-1 text-[11px] text-[#aeb2bd]">
             {item.source}

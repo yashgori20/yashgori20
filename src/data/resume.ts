@@ -8,6 +8,17 @@ export type Project = {
   liveUrl?: string;
 };
 
+export type Experience = {
+  role: string;
+  company: string;
+  companyUrl?: string;
+  period: string;
+  location: string;
+  technologies?: string[];
+  points: string[];
+  additionalPoints?: string[];
+};
+
 export const resumeData = {
   name: "Yash Gori",
   contact: {
@@ -25,12 +36,12 @@ export const resumeData = {
   profileImage: "https://avatars.githubusercontent.com/u/72080079?v=4",
 
   about:
-    "I'm an AI Product Manager who ships. I don't just write the spec, I build and deploy the product, using AI as my engineering force-multiplier to take ideas from PRD to production. I've shipped GenAI products to enterprise clients, secured Microsoft for Startups funding, and turned manual workflows into systems that run themselves.",
+    "AI Product Manager combining enterprise product ownership with hands-on AI building. At FactWise, I designed a procurement AI agent and a BOM Data Mapper that turns inconsistent client files into structured parts lists. Shipped licensed APIs supporting 40K+ live purchase orders and contracts. At Webotix, I took SwiftCheck AI from discovery to production and secured $5,000 from Microsoft for Startups.",
 
   // One-line positioning shown under the greeting; names the AI-builder edge explicitly
   // (hiring managers now screen for AI fluency / ability to ship, not just talk about it).
   tagline:
-    "AI Product Manager who ships. I scope, build and deploy AI products end-to-end, not just spec them.",
+    "AI Product Manager combining enterprise product ownership with hands-on AI building.",
 
   // Front-loaded outcome metrics for the home screen (the "first 6 seconds" proof).
   // These reflect real shipped work: FactWise OpenAPI volume and enterprise clients,
@@ -38,7 +49,7 @@ export const resumeData = {
   headlineMetrics: [
     { value: "40K+", label: "live POs & contracts", sub: "created via my OpenAPIs" },
     { value: "4+", label: "enterprise clients", sub: "live in production" },
-    { value: "90%", label: "faster QC-doc creation", sub: "GenAI QC at Webotix" },
+    { value: "90%", label: "less QC-doc creation time", sub: "SwiftCheck AI agents at Webotix" },
     { value: "$5K", label: "Microsoft for Startups grant", sub: "secured by pitching" },
   ],
 
@@ -56,6 +67,8 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     "Gujarati (Native)",
     "Marathi (Conversational)"
   ],
+
+  certifications: ["IBM AI Product Manager Professional Certificate"],
 
   education: [
     {
@@ -83,13 +96,21 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       { name: "KPI & Success Metrics", level: 92, category: "Product" },
       { name: "A/B Testing", level: 88, category: "Product" },
       { name: "Agentic/AI Product Design", level: 92, category: "Product" },
+      { name: "Stakeholder Management", level: 92, category: "Product" },
+      { name: "User Stories & Acceptance Criteria", level: 92, category: "Product" },
+      { name: "Backlog Management", level: 92, category: "Product" },
     ],
     "AI/ML": [
-      { name: "Agentic AI & MCP (Model Context Protocol)", level: 94, category: "AI/ML" },
+      { name: "Agentic AI & Orchestration", level: 94, category: "AI/ML" },
+      { name: "MCP (Model Context Protocol)", level: 94, category: "AI/ML" },
+      { name: "Model Evaluation (Precision/Recall, F1 Score)", level: 92, category: "AI/ML" },
       { name: "RAG with vector databases (FAISS/Pinecone)", level: 96, category: "AI/ML" },
       { name: "LLM integration (GPT, Claude, Gemini, Mixtral)", level: 92, category: "AI/ML" },
       { name: "Prompt Engineering", level: 95, category: "AI/ML" },
       { name: "Context Management", level: 92, category: "AI/ML" },
+      { name: "Grounding", level: 92, category: "AI/ML" },
+      { name: "Guardrails & Fallback Design", level: 92, category: "AI/ML" },
+      { name: "Model Selection & Tradeoffs", level: 92, category: "AI/ML" },
     ],
     "AI-Assisted Build": [
       { name: "Claude Code", level: 95, category: "AI-Assisted Build" },
@@ -129,16 +150,16 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Designed a visual source-to-destination mapping canvas with fuzzy column suggestions, derived fields, default values and reusable mapping templates.",
         "Supports Excel, CSV and PDF inputs with selectable OCR zones, table extraction, data previews and configurable transformation rules.",
         "Preserves parent-child assemblies, document rows, quantities, alternate parts and valid duplicates while producing a standardized parts catalogue and its connected multi-level BOM.",
-        "Client validation indicated approximately 60% efficiency improvement and INR 10-12L annual willingness to pay per deployment."
+        "Validated with 2 enterprise clients at annual pricing of INR 10-12L per deployment, with a client-estimated 60% efficiency improvement. These are validation figures, not realized revenue or measured production savings."
       ],
       image: "/images/projects/p7.svg",
     },
     {
       title: "SwiftCheck AI: Enterprise QC Platform",
       description:
-        `GenAI quality-control platform for food manufacturing that digitizes the entire QC workflow: AI generates inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally.`,
+        `AI quality-control platform for food manufacturing that digitizes the entire QC workflow. SwiftCheck's AI agents generate inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally.`,
       technologies: [
-        "GenAI",
+        "AI Agents",
         "RAG",
         "Azure OpenAI",
         "Azure Document Intelligence OCR",
@@ -340,6 +361,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     {
       role: "AI Product Manager",
       company: "FactWise",
+      companyUrl: "https://factwise.io/",
       period: "December 2025 – Present",
       location: "Mumbai, India",
       technologies: [
@@ -352,19 +374,22 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Product Strategy"
       ],
       points: [
-        "I own the two modules at the heart of how manufacturers buy on FactWise: Purchase Orders (POs) and Bills of Materials (BOMs), the multi-level parts lists products are built from. Every requirement, bug and enhancement for both lands with me; I sit with client teams, turn what they need into PRDs, and drive engineering to ship it. My favourite PO ship: an in-place revision workflow, so changing an issued PO no longer means cancelling and recreating it.",
-        "An enterprise client showed me how much time teams lose manually restructuring inconsistent BOM files before they can use them. I designed a BOM Data Mapper that standardizes those files, preserves the multi-level product structure, and creates import-ready Item Directory and BOM outputs. The client estimated a 60% efficiency improvement and indicated willingness to pay INR 10-12L annually per deployment.",
-        "When enterprise clients told us they wouldn't adopt without connecting to their SAP, I defined and shipped FactWise's OpenAPIs: bulk create, update and get across items, vendors, POs and contracts, plus an ID-mapping API, with each client getting their own API keys. Clients use them every single day, because creating a thousand records through an API beats any UI. FactWise now sells this as a licensed offering (INR 7-10L per client); 3 enterprise clients have bought it, and 40K+ live POs and contracts have been created through it.",
-        "The OpenAPIs had one problem: strict request formats that clients found hard to get right. So I built an AI agent, served via MCP, that sits on top of them. You tell it what you need in plain language; it picks the right API, asks for whatever's missing, builds the request and executes it. Bulk procurement actions become a conversation. It's now the flagship demo in enterprise sales conversations."
+        "Designed a conversational enterprise procurement AI solution with 140+ tools to simplify supplier comparisons, cross-currency cost analysis, and bulk procurement actions. Built in request clarification, transparent missing-data handling, and approval safeguards, with answers grounded in company records and behavior validated through AI evals.",
+        "I own purchase orders and manufacturing parts lists (BOMs) for 4+ enterprise clients. I work with client teams on discovery, turn requirements into PRDs and delivery priorities, and drive engineering through features, bugs, and enhancements. Shipped workflows that let teams revise issued orders without cancelling and recreating them and maintain different BOM versions across live orders.",
+        "When clients needed to connect their business systems to FactWise, I designed and shipped licensed APIs for SAP/ERP integration. They support bulk creation, updates, and retrieval of items, suppliers, purchase orders, and contracts, plus ID mapping and per-client API keys. Bought by 3 enterprise clients at INR 7-10L per client, the APIs are used daily and support 40K+ live purchase orders and contracts.",
+        "An enterprise client showed me how much time teams lose restructuring inconsistent BOM files. I designed a BOM Data Mapper that standardizes those files into parts lists and assembly structures while preserving the multi-level product hierarchy. Validated with 2 enterprise clients at annual pricing of INR 10-12L per deployment, with a client-estimated 60% efficiency improvement. Reusable mappings reduce repeated setup for recurring file formats."
       ],
       additionalPoints: [
         "Signature BOM ship: parallel revisions, so a single BOM can run multiple versions across live orders at the same time (one order on R1 while another runs on R2), configured once and reused.",
-        "As a PM I define, spec and drive engineering rather than hand-coding the modules, but I personally built the MCP agent with AI, and I ship small enhancement features myself."
+        "I also built an AI agent served via MCP on top of the OpenAPIs after clients found their strict request formats difficult to use. It selects the right API from a plain-language request, gathers missing details, and executes the request. It is demo-stage, not a claim of production client adoption for the broader 140+ tool agent.",
+        "As a PM I define, spec and drive engineering rather than hand-coding the core modules. I personally build selected AI products and prototypes with AI, and ship small enhancement features myself.",
+        "BOM Mapper pricing and the 60% efficiency estimate are client-validation figures, not realized revenue or measured production savings."
       ],
     },
     {
       role: "AI Product Manager",
       company: "Webotix IT Consultancy",
+      companyUrl: "https://webotix.ae/",
       period: "December 2024 – December 2025",
       location: "Remote / Dubai",
       technologies: [
@@ -379,10 +404,11 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       points: [
         "SwiftCheck AI started with a painful picture: food-manufacturing compliance teams hand-building QC templates for every production stage and reviewing thousands of QC documents a week, all on paper. I took it 0 to 1 as PM: an app where AI generates the inspection templates from product specs, floor staff fill them on mobile, and approvals happen digitally with a full record.",
         "I built the prototype myself with AI in about four weeks, pitched it and secured $5,000 from Microsoft for Startups, then led a cross-functional team of 3 (mobile, UI/UX, web) to take it to production.",
-        "Under the hood: a GenAI engine using RAG over FAISS/Pinecone vector databases and AI agents that auto-generates the QC templates, hitting 80% accuracy against client specs and cutting QC-document creation time by 90% compared to building templates by hand."
+        "Built SwiftCheck's AI agents to generate stage-wise inspection templates from client product specifications, grounded in those requirements using RAG over FAISS/Pinecone vector databases. Achieved 80% template accuracy against client specs and cut QC-document creation time by 90% compared to building templates by hand.",
+        "Led stakeholder management, aligning the CEO and COO on product scope and roadmap while incorporating demos and feedback from multiple enterprise clients to adapt workflows to compliance teams' needs."
       ],
       additionalPoints: [
-        "Shaped the product through demos and feedback from multiple enterprise clients, including a design-partner client involved from day one, and aligned the CEO and COO on scope and roadmap throughout."
+        "A design-partner client was involved from day one. SwiftCheck generates and manages QC documentation, it does not inspect physical products or automatically identify defects."
       ],
     },
     {
@@ -413,6 +439,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
 
   volunteering: {
     organization: "Vacha NGO",
+    organizationUrl: "https://vacha.org.in/",
     role: "English & Computer Instructor",
     period: "July 2024",
     description:

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
+import GrowwGr1 from "./pages/GrowwGr1";
 import GetMeAJob from "./pages/GetMeAJob";
 import GetMeAJobLogin from "./pages/GetMeAJobLogin";
 import GetMeAJobDashboard from "./pages/GetMeAJobDashboard";
@@ -29,6 +30,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+          <Route path="/groww-gr1" element={<GrowwGr1 />} />
+          <Route path="/groww-gr1/index.html" element={<GrowwGr1 />} />
           <Route path="/pm" element={<Navigate to="/pm.pdf" replace />} />
           <Route path="/getmeajob" element={<GetMeAJob />} />
           <Route path="/getmeajob/login" element={<GetMeAJobLogin />} />

@@ -204,7 +204,7 @@ const SidebarContent = ({ activeView, setActiveView, setMessages, isCollapsed, i
 
             <div className="space-y-3">
               <div>
-                <a href="/Yash-Gori-Resume.pdf" download="Yash-Gori-Resume.pdf">
+                <a href="/pm.pdf" download="Yash Gori Resume.pdf">
                   <Button variant="outline" className="w-full bg-secondary/30 border-secondary hover:bg-secondary/50 hover:text-primary hover:border-white transition-all duration-300 group">
                     <Download className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                     Download Resume

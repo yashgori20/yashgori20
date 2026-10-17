@@ -1,5 +1,24 @@
 {
+  "headers": [
+    {
+      "source": "/pm.pdf",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"Yash Gori Resume.pdf\""
+        }
+      ]
+    }
+  ],
   "rewrites": [
+    {
+      "source": "/groww-gr1",
+      "destination": "/groww-gr1/index.html"
+    },
+    {
+      "source": "/groww-gr1/",
+      "destination": "/groww-gr1/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

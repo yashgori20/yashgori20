@@ -171,8 +171,8 @@ const Index = () => {
 
   const handleDownloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/Yash-Gori-Resume.pdf';
-    link.setAttribute('download', 'Yash-Gori-Resume.pdf');
+    link.href = '/pm.pdf';
+    link.setAttribute('download', 'Yash Gori Resume.pdf');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

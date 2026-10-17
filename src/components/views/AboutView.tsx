@@ -55,7 +55,7 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
                 </div>
                 <div>
                   <h4 className="font-semibold text-primary text-sm mb-1">Speed under real constraints:</h4>
-                  <p className="text-sm text-muted-foreground">Built a GenAI product's prototype solo in about 4 weeks and secured Microsoft for Startups funding off the back of it.</p>
+                  <p className="text-sm text-muted-foreground">Built the SwiftCheck AI prototype solo with AI in about 4 weeks, secured $5,000 from Microsoft for Startups, then led a team of 3 to production.</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-primary text-sm mb-1">Outcomes over output:</h4>
@@ -86,6 +86,10 @@ const AboutView = ({ activeView, setActiveView }: ViewProps) => (
             </div>
 
             <div>
+              <h3 className="text-lg font-semibold mb-4">Certifications</h3>
+              {resumeData.certifications.map(certification => (
+                <p key={certification} className="mb-6 text-sm text-muted-foreground">{certification}</p>
+              ))}
               <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Education</h3>
               <div className="space-y-4">
                 {resumeData.education.map((edu, index) => (

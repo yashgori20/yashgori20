@@ -11,9 +11,19 @@ This file mirrors the current public portfolio and chatbot profile. It is intent
 - **Best fit:** AI Product Manager or APM roles in AI-first teams where hands-on building is valuable
 - **Education:** B.Tech in Information Technology, K.J. Somaiya College of Engineering, 2021-2025, CGPA 8.12/10
 
+### Summary
+
+AI Product Manager combining enterprise product ownership with hands-on AI building. At FactWise, I designed a procurement AI agent and a BOM Data Mapper that turns inconsistent client files into structured parts lists. Shipped licensed APIs supporting 40K+ live purchase orders and contracts. At Webotix, I took SwiftCheck AI from discovery to production and secured $5,000 from Microsoft for Startups.
+
 ## Current Work - FactWise
 
 FactWise is a B2B procurement and sourcing platform used by enterprise manufacturing clients.
+
+### Enterprise Procurement AI Solution
+
+Designed a conversational enterprise procurement AI solution with 140+ tools to simplify supplier comparisons, cross-currency cost analysis, and bulk procurement actions. Built in request clarification, transparent missing-data handling, and approval safeguards, with answers grounded in company records and behavior validated through AI evals.
+
+Do not claim production client adoption, a measured time-savings figure, or an F1 score for this agent. Model Evaluation (Precision/Recall, F1 Score) is a skills entry, not a result claim.
 
 ### Purchase Orders and Bills of Materials
 
@@ -35,7 +45,7 @@ Business value:
 - Fewer import errors
 - Reusable mappings for recurring client formats
 
-Client validation indicated approximately 60% efficiency improvement and willingness to pay INR 10-12 lakh annually per deployment. These are validation signals, not realized revenue or measured production impact.
+Validated with 2 enterprise clients at annual pricing of INR 10-12 lakh per deployment, with a client-estimated 60% efficiency improvement. These are validation figures, not realized revenue, ARR, or measured production impact.
 
 Technical product capabilities:
 
@@ -59,11 +69,13 @@ Yash defined and shipped bulk create, bulk update, and bulk get APIs across Item
 - Used almost daily
 - More than 40K live POs and contracts created through the APIs
 
-### AI Procurement Agent
+### Related OpenAPI-backed MCP Agent
 
 Clients found the OpenAPIs' strict request formats difficult to use directly. Yash built an AI agent, served via Model Context Protocol (MCP), that accepts a plain-language request, selects the right API, asks for missing information, builds the request, and executes it.
 
 The agent is demo-stage and used as a product demonstration. No client adoption should be claimed.
+
+This is related to but distinct from the broader 140+ tool procurement solution. Do not assume all of the broader solution is served through MCP.
 
 ## Previous Work - Webotix IT Consultancy
 
@@ -74,9 +86,11 @@ Yash took SwiftCheck AI from an early product idea to production. The product di
 - Built the first prototype with AI in about four weeks
 - Secured $5,000 from Microsoft for Startups after pitching the product
 - Led a cross-functional team of 3 to take the product to production
+- Built SwiftCheck's AI agents, grounded in client specifications using RAG over FAISS/Pinecone vector databases
 - AI-generated QC templates reached 80% accuracy against client product specifications
 - Reduced QC-document creation time by 90% compared with building templates manually
 - Refined the product through demos and feedback from multiple enterprise clients
+- Led stakeholder management, aligning the CEO and COO on product scope and roadmap
 
 SwiftCheck generates and manages quality-control documentation. It does not inspect physical products or automatically identify defects.
 
@@ -101,13 +115,17 @@ SwiftCheck generates and manages quality-control documentation. It does not insp
 
 ## Selected Projects
 
+### Product Case Studies
+
+Teardowns of Google Pay, JioCinema, Vercel, Blinkit, and Fireflies.ai covering acquisition, engagement and retention, and onboarding strategy.
+
 ### BOM Data Mapper
 
 A visual mapping and normalization platform that converts inconsistent BOM files into structured parts data and connected multi-level assembly trees.
 
 ### SwiftCheck AI
 
-A GenAI quality-control workflow platform that generates inspection templates from product specifications, supports mobile data capture, and manages digital approvals and records.
+An AI quality-control workflow platform whose agents generate inspection templates from product specifications, support mobile data capture, and manage digital approvals and records.
 
 ### Interactive AI Portfolio and Chatbot
 
@@ -131,8 +149,10 @@ An end-to-end machine-learning project covering data preparation, modeling, eval
 
 ## Core Skills
 
-- Product discovery, customer research, PRDs, prioritization, stakeholder alignment, and experimentation
-- AI product design, agentic AI, MCP, RAG, grounding, model evaluation, and human-in-the-loop workflows
+Certification: IBM AI Product Manager Professional Certificate.
+
+- Product Strategy, Customer Discovery & Interviews, PRDs, User Stories & Acceptance Criteria, Backlog Management & Prioritization, Success Metrics, Stakeholder Management
+- Agentic AI & Orchestration, Model Evaluation (Precision/Recall, F1 Score), Prompt Design, MCP, RAG & Vector Databases (FAISS/Pinecone), Grounding, Guardrails & Fallback Design, Model Selection & Tradeoffs
 - AI-assisted product building with Claude Code, Cursor, Codex, and Gemini
 - Working knowledge of Python, APIs, SQL, React, Azure, Docker, Power BI, Figma, Jira, and Notion
 
@@ -141,6 +161,14 @@ An end-to-end machine-learning project covering data preparation, modeling, eval
 - Present Yash as an AI Product Manager who ships, not as an AI Engineer.
 - Use product ownership verbs for FactWise modules: owned, defined, designed, drove, and shipped.
 - Use built for products and prototypes Yash personally built with AI.
-- Treat the BOM Data Mapper's 60% efficiency estimate and INR 10-12 lakh annual willingness-to-pay figure as client validation, not realized impact or revenue.
-- Treat the MCP agent as demo-stage; do not claim that clients use it in production.
+- Treat the BOM Data Mapper's 2-client validation, 60% client-estimated efficiency improvement, and INR 10-12 lakh annual pricing as validation, not realized impact or revenue.
+- Treat the MCP agent as demo-stage. Do not claim that clients use it in production or attribute its deployment status to the broader 140+ tool agent.
 - Do not publish customer names in connection with BOM source files or mapper testing.
+
+## Public Links
+
+- Resume: https://yashgori20.vercel.app/pm.pdf
+- Groww GR-1 annotated suggestions: https://yashgori20.vercel.app/groww-gr1
+- FactWise: https://factwise.io/
+- Webotix: https://webotix.ae/
+- Vacha NGO: https://vacha.org.in/

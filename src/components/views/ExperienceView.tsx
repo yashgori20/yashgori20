@@ -36,7 +36,11 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                     <div>
                       <h3 className="text-xl font-bold">{exp.role}</h3>
-                      <p className="text-primary font-medium">{exp.company}</p>
+                      <p className="text-primary font-medium">
+                        {exp.companyUrl ? (
+                          <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{exp.company}</a>
+                        ) : exp.company}
+                      </p>
                       <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
                         <MapPin className="h-4 w-4" /> {exp.location}
                       </p>
@@ -117,7 +121,7 @@ const ExperienceView = ({ activeView, setActiveView }: ViewProps) => {
             <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold text-white">{resumeData.volunteering.role}</h3>
-                <p className="text-gray-300 font-medium">{resumeData.volunteering.organization}</p>
+                <a href={resumeData.volunteering.organizationUrl} target="_blank" rel="noopener noreferrer" className="text-gray-300 font-medium hover:underline">{resumeData.volunteering.organization}</a>
               </div>
               <div className="text-sm font-medium mt-2 md:mt-0 whitespace-nowrap text-gray-400">
                 {resumeData.volunteering.period}

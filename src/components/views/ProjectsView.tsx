@@ -1,121 +1,107 @@
-
 import React, { useState } from 'react';
 import { resumeData, Project } from '@/data/resume';
-import Section from '@/components/layout/Section';
-import { Button } from '@/components/ui/button';
-import { Code, ExternalLink, ArrowUpRight, Github } from 'lucide-react';
-import { View } from '@/types';
+import Turn from '@/components/convo/Turn';
 import ProjectModal from '@/components/ProjectModal';
-import HuggingFaceLogo from '@/components/HuggingFaceLogo';
+import { ArrowUpRight } from 'lucide-react';
+import { View } from '@/types';
 
 type ViewProps = {
   activeView: View;
   setActiveView: (view: View) => void;
 };
 
-const ProjectsView = ({ activeView, setActiveView }: ViewProps) => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleProjectClick = (project: Project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const getProjectImage = (proj: Project, index: number) => {
-    // Each project declares its own image; index fallback kept for safety
-    return proj.image ?? `/images/projects/p${index + 1}.png`;
-  };
+// "Show me the work." → two featured cards, then a compact list
+const ProjectsView = (_props: ViewProps) => {
+  const [selected, setSelected] = useState<Project | null>(null);
+  const featured = resumeData.projects.filter((p) => p.featured).sort((a, b) => (a.featured ?? 0) - (b.featured ?? 0));
+  const more = resumeData.projects.filter((p) => !p.featured && !p.archived);
 
   return (
-    <Section title="Featured Projects" id="projects">
-      <div className="space-y-6">
-        {resumeData.projects.map((proj: Project, index) => (
-          <div key={proj.title}>
-            <div
-              className={`py-6 group cursor-pointer animate-slideInUp animate-delay-${index * 100}`}
-              onClick={() => handleProjectClick(proj)}
-            >
-              {/* 65/35 Split Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-center mr-8">
-                {/* 65% - Project Content */}
-                <div className="lg:col-span-6 flex flex-col">
-                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gray-200 transition-colors">{proj.title}</h3>
-                  <p className="text-muted-foreground mb-4 leading-relaxed flex-1">{proj.description}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {proj.technologies.map(tech => (
-                      <span key={tech} className="px-3 py-1 text-gray-300 text-xs font-medium">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="pt-4 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">Click to view details</span>
-                    <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
-                  </div>
-                </div>
-
-                {/* 35% - Project Image with Dark Glass Overlay */}
-                <div className="lg:col-span-4 hidden lg:block">
-                  <div className="relative overflow-hidden rounded-xl shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <img
-                      src={getProjectImage(proj, index)}
-                      alt={`${proj.title} preview`}
-                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {/* Dark Glass Overlay */}
-                    <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] transition-all duration-300 group-hover:bg-black/40">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    </div>
-                    {/* Optional overlay content */}
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <div className="flex items-center justify-between text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="font-medium">Preview</span>
-                        <ExternalLink className="h-3 w-3" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <Turn
+      id="projects"
+      question="What have you built?"
+      tool={`opened projects · ${featured.length} featured, ${more.length} more`}
+      headline="SwiftCheck AI and the BOM Data Mapper are the big ones."
+    >
+      <div className="mt-4 grid gap-5">
+        {featured.map((p, i) => (
+          <button
+            key={p.title}
+            onClick={() => setSelected(p)}
+            className="rise group block overflow-hidden rounded-[20px] border border-g-line bg-g-surface text-left transition-[border-color,transform] duration-500 hover:-translate-y-[3px] hover:border-g-faint"
+            style={{ '--d': i } as React.CSSProperties}
+          >
+            <div className="aspect-[2/1] overflow-hidden border-b border-g-line bg-[#0d0d0d]">
+              <img
+                src={p.image}
+                alt={`${p.title} preview`}
+                loading="lazy"
+                className={`tint-on-hover h-full w-full object-top transition-transform duration-1000 group-hover:scale-[1.03] ${p.image?.endsWith('.svg') ? 'object-contain' : 'object-cover'}`}
+              />
             </div>
-            {/* Subtle separator line */}
-            {index < resumeData.projects.length - 1 && (
-              <div className="border-b border-gray-200/20 my-6"></div>
-            )}
-          </div>
+            <div className="grid gap-x-6 gap-y-1.5 p-5 sm:grid-cols-[1fr_auto] sm:items-end md:px-[26px] md:pb-6 md:pt-[22px]">
+              <span className="text-[13px] text-g-muted sm:col-span-2">{p.company}</span>
+              <h3 className="text-[24px] font-semibold leading-tight tracking-[-0.03em] text-g-text">
+                {p.title.split(':')[0]}
+              </h3>
+              {p.result && (
+                <div className="mt-3 max-w-[22ch] text-[13.5px] leading-snug text-g-muted sm:row-span-2 sm:mt-0 sm:text-right">
+                  <span className="mb-1 block text-[28px] font-semibold leading-none tracking-[-0.04em] text-g-text">
+                    {p.result.value}
+                  </span>
+                  {p.result.label}
+                </div>
+              )}
+              <p className="max-w-[52ch] text-pretty text-[15.5px] leading-[1.6] text-g-text2 sm:col-start-1">{p.short}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <p className="rise mb-4 mt-10 text-[14px] text-g-muted" style={{ '--d': 2 } as React.CSSProperties}>
+        A few more I built on the side
+      </p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {more.map((p, i) => (
+          <button
+            key={p.title}
+            onClick={() => setSelected(p)}
+            className={`rise group flex flex-col overflow-hidden rounded-2xl border border-g-line bg-g-surface text-left transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-g-faint ${
+              i === 0 && more.length % 2 === 1 ? 'sm:col-span-2' : ''
+            }`}
+            style={{ '--d': 3 + i } as React.CSSProperties}
+          >
+            <div className={`overflow-hidden border-b border-g-line bg-[#0d0d0d] ${i === 0 && more.length % 2 === 1 ? 'aspect-[16/10] sm:aspect-[21/9]' : 'aspect-[16/10]'}`}>
+              <img
+                src={p.image}
+                alt={`${p.title.split(':')[0]} preview`}
+                loading="lazy"
+                className="tint-on-hover h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+            </div>
+            <div className="flex flex-1 flex-col gap-1.5 p-5">
+              <span className="flex items-center justify-between gap-2 text-[17px] font-semibold tracking-[-0.015em] text-g-text">
+                {p.title.split(':')[0]}
+                <ArrowUpRight className="h-4 w-4 flex-none text-g-faint transition-[color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-g-text" />
+              </span>
+              <span className="text-[14.5px] leading-snug text-g-muted">{p.short}</span>
+              <span className="mt-auto flex flex-wrap gap-x-2.5 gap-y-1 pt-3 font-mono text-[11.5px] text-g-faint">
+                {p.technologies.slice(0, 3).map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
+              </span>
+            </div>
+          </button>
         ))}
       </div>
 
       <ProjectModal
-        project={selectedProject}
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedProject(null);
-        }}
-        onNavigate={(project) => {
-          setSelectedProject(project);
-        }}
+        project={selected}
+        isOpen={!!selected}
+        onClose={() => setSelected(null)}
+        onNavigate={(project) => setSelected(project)}
       />
-      <div className="text-center mt-12">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
-            <Button size="lg" className="group bg-[#404040] hover:bg-[#505050] text-white border-none">
-              View All Projects on GitHub
-              <Github className="ml-2 h-5 w-5 transition-transform group-hover:animate-bounce" />
-            </Button>
-          </a>
-          <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer">
-            <Button size="lg" variant="outline" className="group border-gray-600 text-white hover:bg-[#404040] hover:border-gray-500 bg-transparent">
-              View All Projects on Hugging Face
-              <HuggingFaceLogo className="ml-2 h-5 w-5 transition-transform group-hover:animate-bounce" />
-            </Button>
-          </a>
-        </div>
-      </div>
-    </Section>
+    </Turn>
   );
 };
 

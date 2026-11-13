@@ -1,19 +1,17 @@
-
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { CornerDownLeft } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Mascot from '@/components/convo/Mascot';
 
 type ChatInputBarProps = {
-  input: string,
-  setInput: (value: string) => void,
-  handleSend: () => void,
-  isPending: boolean,
-  className?: string,
-  inputClassName?: string,
-  showSuggestions?: boolean,
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  input: string;
+  setInput: (value: string) => void;
+  handleSend: () => void;
+  isPending: boolean;
+  className?: string;
+  inputClassName?: string;
+  showSuggestions?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const ChatInputBar = ({
@@ -24,10 +22,16 @@ const ChatInputBar = ({
   className,
   inputClassName,
   showSuggestions = false,
-  onKeyDown
+  onKeyDown,
 }: ChatInputBarProps) => (
-  <div className={cn("relative", className)}>
-    <Input
+  <div
+    className={cn(
+      'flex items-center gap-3 rounded-[22px] border border-g-line bg-g-raised py-[7px] pl-4 pr-[7px] shadow-[0_18px_40px_-24px_rgba(0,0,0,0.8)] transition-colors focus-within:border-g-faint',
+      className
+    )}
+  >
+    <Mascot mood={isPending ? 'wait' : 'idle'} size={18} framed={false} />
+    <input
       value={input}
       onChange={(e) => setInput(e.target.value)}
       onKeyDown={(e) => {
@@ -36,22 +40,26 @@ const ChatInputBar = ({
         }
         onKeyDown?.(e);
       }}
-      placeholder={showSuggestions ? "" : "Ask me anything about Yash"}
-      className={cn("h-11 text-base rounded-3xl bg-[#2a2a2a] border-0 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-lg shadow-black/50 pl-4 pr-16", inputClassName)}
+      placeholder={showSuggestions ? '' : "Ask me anything about my work…"}
+      aria-label="Ask about Yash"
+      className={cn(
+        'min-w-0 flex-1 bg-transparent text-[15.5px] text-g-text outline-none placeholder:text-g-muted',
+        inputClassName
+      )}
       autoComplete="off"
       autoCapitalize="off"
       autoCorrect="off"
       spellCheck="false"
     />
-    <Button
-      size="icon"
-      variant="ghost"
-      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-gray-600 hover:bg-gray-500"
+    <button
+      type="button"
+      aria-label="Send"
       onClick={handleSend}
       disabled={isPending}
+      className="grid h-9 w-9 flex-none place-items-center rounded-full bg-g-text text-g-bg transition-opacity hover:opacity-90 disabled:opacity-40"
     >
-      <CornerDownLeft className="h-5 w-5 font-bold" />
-    </Button>
+      <ArrowUp className="h-[18px] w-[18px]" strokeWidth={2.25} />
+    </button>
   </div>
 );
 

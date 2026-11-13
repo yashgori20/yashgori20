@@ -133,12 +133,11 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-[#2a2a2a] border border-gray-700/30 rounded-lg p-6 h-full">
-      <h3 className="font-sans text-xl font-semibold text-center mb-6 text-white">Get In Touch</h3>
+    <div className="bg-g-surface border border-g-line rounded-[20px] p-6 md:p-7 h-full">
       <div className="space-y-6">
       {/* Division 1: Quick Message */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white">Quick Message</h3>
+        <h3 className="text-[16px] font-semibold text-g-text">Quick Message</h3>
 
         <div className="space-y-2">
           <Textarea
@@ -149,7 +148,7 @@ const ContactForm = () => {
               if (errors.quickMessage) setErrors(prev => ({ ...prev, quickMessage: undefined }));
             }}
             rows={2}
-            className={`bg-transparent border-gray-600 ${errors.quickMessage ? 'border-destructive' : ''}`}
+            className={`bg-transparent border-g-line ${errors.quickMessage ? 'border-destructive' : ''}`}
           />
           {errors.quickMessage && <p className="text-sm text-destructive">{errors.quickMessage}</p>}
         </div>
@@ -159,13 +158,13 @@ const ContactForm = () => {
             onClick={handleQuickWhatsApp}
             className="group py-2"
           >
-            <div className="flex items-center gap-3 p-2 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:bg-white/5 transition-all duration-200">
+            <div className="flex items-center gap-3 p-2 rounded-lg border border-g-line hover:border-g-faint hover:bg-white/5 transition-all duration-200">
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                <MessageCircle className="h-4 w-4 text-white" />
+                <MessageCircle className="h-4 w-4 text-g-text" />
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">WhatsApp</p>
-                <p className="text-xs text-gray-400">Send via WhatsApp</p>
+                <p className="text-sm font-medium text-g-text group-hover:text-g-text2 transition-colors">WhatsApp</p>
+                <p className="text-xs text-g-muted">Send via WhatsApp</p>
               </div>
             </div>
           </button>
@@ -174,13 +173,13 @@ const ContactForm = () => {
             onClick={handleQuickEmail}
             className="group py-2"
           >
-            <div className="flex items-center gap-3 p-2 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:bg-white/5 transition-all duration-200">
+            <div className="flex items-center gap-3 p-2 rounded-lg border border-g-line hover:border-g-faint hover:bg-white/5 transition-all duration-200">
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                <Mail className="h-4 w-4 text-white" />
+                <Mail className="h-4 w-4 text-g-text" />
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Email</p>
-                <p className="text-xs text-gray-400">Send via email client</p>
+                <p className="text-sm font-medium text-g-text group-hover:text-g-text2 transition-colors">Email</p>
+                <p className="text-xs text-g-muted">Send via email client</p>
               </div>
             </div>
           </button>
@@ -189,7 +188,7 @@ const ContactForm = () => {
 
       {/* Division 2: Full Contact Form */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white">Reach Out</h3>
+        <h3 className="text-[16px] font-semibold text-g-text">Reach Out</h3>
 
         <form onSubmit={handleFullFormSubmit} className="space-y-3">
           <div className="space-y-2">
@@ -201,7 +200,7 @@ const ContactForm = () => {
                 setName(e.target.value);
                 if (errors.name) setErrors(prev => ({ ...prev, name: undefined }));
               }}
-              className={`h-10 bg-transparent border-gray-600 ${errors.name ? 'border-destructive' : ''}`}
+              className={`h-10 bg-transparent border-g-line ${errors.name ? 'border-destructive' : ''}`}
             />
             {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
           </div>
@@ -216,7 +215,7 @@ const ContactForm = () => {
                   setEmail(e.target.value);
                   if (errors.email) setErrors(prev => ({ ...prev, email: undefined }));
                 }}
-                className={`h-10 bg-transparent border-gray-600 ${errors.email ? 'border-destructive' : ''}`}
+                className={`h-10 bg-transparent border-g-line ${errors.email ? 'border-destructive' : ''}`}
               />
               {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
             </div>
@@ -230,7 +229,7 @@ const ContactForm = () => {
                   setPhone(e.target.value);
                   if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
                 }}
-                className={`h-10 bg-transparent border-gray-600 ${errors.phone ? 'border-destructive' : ''}`}
+                className={`h-10 bg-transparent border-g-line ${errors.phone ? 'border-destructive' : ''}`}
               />
               {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
             </div>
@@ -247,7 +246,7 @@ const ContactForm = () => {
                 if (errors.message) setErrors(prev => ({ ...prev, message: undefined }));
               }}
               rows={3}
-              className={`bg-transparent border-gray-600 ${errors.message ? 'border-destructive' : ''}`}
+              className={`bg-transparent border-g-line ${errors.message ? 'border-destructive' : ''}`}
             />
             {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>
@@ -257,19 +256,19 @@ const ContactForm = () => {
             disabled={isSubmitting}
             className="w-full group py-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <div className="flex items-center gap-3 p-2 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:bg-white/5 transition-all duration-200">
+            <div className="flex items-center gap-3 p-2 rounded-lg border border-g-line hover:border-g-faint hover:bg-white/5 transition-all duration-200">
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
                 {isSubmitting ? (
-                  <Loader2 className="h-4 w-4 text-white animate-spin" />
+                  <Loader2 className="h-4 w-4 text-g-text animate-spin" />
                 ) : (
-                  <Send className="h-4 w-4 text-white" />
+                  <Send className="h-4 w-4 text-g-text" />
                 )}
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">
+                <p className="text-sm font-medium text-g-text group-hover:text-g-text2 transition-colors">
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-g-muted">
                   {isSubmitting ? 'Please wait' : 'Submit your message'}
                 </p>
               </div>

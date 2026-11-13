@@ -4,33 +4,34 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Graphite */
+    --background: 240 4% 4.5%;
+    --foreground: 240 2% 93%;
 
-    --card: 240 4.8% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 240 5% 7.6%;
+    --card-foreground: 240 2% 93%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 240 5% 7.6%;
+    --popover-foreground: 240 2% 93%;
 
-    --primary: 220 14.3% 95.9%;
-    --primary-foreground: 220.9 39.3% 11%;
+    --primary: 240 2% 93%;
+    --primary-foreground: 240 4% 4.5%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 5% 10.8%;
+    --secondary-foreground: 240 2% 93%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 5% 10.8%;
+    --muted-foreground: 240 3% 57%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 240 5% 10.8%;
+    --accent-foreground: 240 2% 93%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 4% 35%;
-    --ring: 220 14.3% 95.9%;
+    --border: 240 5% 14.5%;
+    --input: 240 5% 14.5%;
+    --ring: 240 2% 93%;
 
     --radius: 0.5rem;
 
@@ -50,6 +51,193 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: #EDEDEE;
+    color: #0B0B0C;
+  }
+}
+
+/* ---------- Conversation layout: scroll choreography ---------- */
+@layer components {
+  .turn-q,
+  .turn-tool,
+  .turn-w,
+  .rise {
+    transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+  }
+  .convo-turn .turn-q {
+    opacity: 0;
+    transform: translateY(10px);
+    transition-property: opacity, transform;
+    transition-duration: .5s, .6s;
+  }
+  .convo-turn .turn-tool {
+    opacity: 0;
+    transition: opacity .3s .2s;
+  }
+  .convo-turn .turn-w {
+    opacity: 0;
+    filter: blur(5px);
+    transition-property: opacity, filter;
+    transition-duration: .5s;
+    transition-delay: calc(.35s + var(--i, 0) * 16ms);
+  }
+  .convo-turn .rise {
+    opacity: 0;
+    transform: translateY(18px);
+    transition-property: opacity, transform;
+    transition-duration: .8s, .9s;
+    transition-delay: calc(.55s + var(--d, 0) * 90ms);
+  }
+  .convo-turn[data-seen="true"] .turn-q,
+  .convo-turn[data-seen="true"] .turn-tool,
+  .convo-turn[data-seen="true"] .turn-w,
+  .convo-turn[data-seen="true"] .rise {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .hero-in > * {
+    animation: heroIn 1s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .hero-in > :nth-child(2) { animation-delay: .08s; }
+  .hero-in > :nth-child(3) { animation-delay: .18s; }
+  .hero-in > :nth-child(4) { animation-delay: .28s; }
+  .hero-in > :nth-child(5) { animation-delay: .38s; }
+  .hero-in > :nth-child(6) { animation-delay: .48s; }
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  }
+  .scroll-cue {
+    position: relative;
+    width: 1px;
+    height: 36px;
+    overflow: hidden;
+    background: linear-gradient(#4A4A50, transparent);
+  }
+  .scroll-cue::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -12px;
+    width: 1px;
+    height: 12px;
+    background: #EDEDEE;
+    animation: cueDrop 2s cubic-bezier(.22, 1, .36, 1) infinite;
+  }
+  @keyframes cueDrop { to { transform: translateY(48px); } }
+
+  /* ---------- Mascot (triquetra) moods ---------- */
+  .mascot-mark {
+    transform-origin: 50% 54%;
+  }
+  .mascot-idle {
+    animation: mascotBreathe 4.5s ease-in-out infinite;
+  }
+  .mascot-greet {
+    animation: mascotGreet 1.3s cubic-bezier(.22, 1, .36, 1) both, mascotBreathe 4.5s 1.3s ease-in-out infinite;
+  }
+  .mascot-think {
+    animation: mascotThink 1.1s .15s cubic-bezier(.65, 0, .35, 1) both, mascotBreathe 4.5s 1.3s ease-in-out infinite;
+  }
+  .mascot-wait {
+    animation: mascotSpin 1.6s linear infinite;
+  }
+  .mascot:hover .mascot-mark {
+    animation: mascotThink .8s cubic-bezier(.65, 0, .35, 1);
+  }
+  @keyframes mascotBreathe {
+    0%, 100% { opacity: .78; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
+  }
+  @keyframes mascotGreet {
+    from { opacity: 0; transform: rotate(-240deg) scale(.4); }
+  }
+  @keyframes mascotThink {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes mascotSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ---------- Tri, the mascot ---------- */
+  .tri-body {
+    animation: triHop .7s cubic-bezier(.34, 1.56, .64, 1), triFloat 5s 0.7s ease-in-out infinite;
+  }
+  .tri:hover .tri-body {
+    animation: triWiggle .5s ease-in-out;
+  }
+  .tri-eye {
+    animation: triBlink 5.5s infinite;
+    transform-origin: center;
+  }
+  .tri-eye + .tri-eye {
+    animation-delay: .04s;
+  }
+  .tri-bubble {
+    transform-origin: bottom right;
+    animation: triPop .35s cubic-bezier(.34, 1.56, .64, 1) both;
+  }
+  @keyframes triHop {
+    0% { transform: translateY(0) rotate(0); }
+    35% { transform: translateY(-10px) rotate(-14deg) scale(1.06); }
+    70% { transform: translateY(0) rotate(6deg) scale(.97, 1.03); }
+    100% { transform: none; }
+  }
+  @keyframes triFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  @keyframes triWiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+  }
+  @keyframes triBlink {
+    0%, 93%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(.1); }
+  }
+  @keyframes triPop {
+    from { opacity: 0; transform: translateY(6px) scale(.85); }
+  }
+
+  /* images stay monochrome until you engage with them */
+  .tint-on-hover {
+    filter: grayscale(1) brightness(.85);
+    transition: filter .6s ease, transform .7s cubic-bezier(.22, 1, .36, 1);
+  }
+  .group:hover .tint-on-hover,
+  .group:focus-visible .tint-on-hover {
+    filter: none;
+  }
+
+  /* soft light that follows the cursor */
+  .spotlight {
+    background: radial-gradient(520px circle at var(--mx, -999px) var(--my, -999px), rgba(255, 255, 255, .045), transparent 60%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tri-body, .tri:hover .tri-body, .tri-eye, .tri-bubble { animation: none !important; }
+    .mascot-mark,
+    .mascot:hover .mascot-mark {
+      animation: none !important;
+      opacity: 1 !important;
+    }
+    .convo-turn .turn-q,
+    .convo-turn .turn-tool,
+    .convo-turn .turn-w,
+    .convo-turn .rise,
+    .hero-in > * {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      transition: none !important;
+      animation: none !important;
+    }
+    .scroll-cue::after { animation: none; }
   }
 }
 

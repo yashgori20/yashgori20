@@ -46,15 +46,15 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
     // If no messages, always show default suggestions (home state)
     if (messages.length === 0) {
       return [
-        "What are Yash's key skills?",
-        "Tell me about his DocuTalk project",
-        "Summarize his experience",
-        "How can I contact Yash?",
-        "What are his latest projects?",
-        "Tell me about his education",
+        "What are your key skills?",
+        "Tell me about your DocuTalk project",
+        "Summarize your experience",
+        "How can I contact you?",
+        "What are your latest projects?",
+        "Tell me about your education",
         "What programming languages does he know?",
-        "Describe his AI/ML experience",
-        "What's his strongest project?",
+        "Describe your AI/ML experience",
+        "What's your strongest project?",
         "How did he build Swift Check AI?"
       ];
     }
@@ -71,10 +71,10 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
 
     // If no smart suggestions, fallback to default
     return allSuggestions.length > 0 ? allSuggestions : [
-      "Tell me more about his experience",
+      "Tell me more about your experience",
       "What projects is he most proud of?",
       "How can I work with Yash?",
-      "What are his technical strengths?"
+      "What are your technical strengths?"
     ];
   };
 
@@ -198,7 +198,7 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
         >
 
           <div className="mb-16 flex-shrink-0">
-            <h1 className="text-3xl md:text-5xl font-bold mb-8">The Portal to Yash's Brain</h1>
+            <h1 className="text-3xl md:text-5xl font-bold mb-8">Ask me anything</h1>
           </div>
 
           <div className="w-full flex-shrink-0">

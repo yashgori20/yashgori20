@@ -23,6 +23,21 @@ export default {
 				sans: ['Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
 			},
 			colors: {
+				// Graphite palette: near-black, no accent; hierarchy through greys
+				g: {
+					bg: '#0B0B0C',
+					side: '#0E0E10',
+					surface: '#131315',
+					raised: '#1A1A1D',
+					bubble: '#1C1C1F',
+					line: '#232327',
+					'line-2': '#2A2A2F',
+					text: '#EDEDEE',
+					text2: '#C9C9CD',
+					muted: '#8E8E95',
+					hello: '#6F6F76',
+					faint: '#4A4A50',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

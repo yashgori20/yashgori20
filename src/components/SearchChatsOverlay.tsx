@@ -21,12 +21,12 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
 
   const sections = [
     { id: 'home', title: 'Home', icon: Home },
-    { id: 'about', title: 'About Me', icon: User },
-    { id: 'experience', title: 'Work Experience', icon: Briefcase },
+    { id: 'experience', title: 'Work', icon: Briefcase },
     { id: 'projects', title: 'Projects', icon: Code },
-    { id: 'case-studies', title: 'Case Studies', icon: Briefcase },
-    { id: 'skills', title: 'Skills & Expertise', icon: BrainCircuit },
-    { id: 'contact', title: 'Contact Me', icon: Mail },
+    { id: 'case-studies', title: 'Writing', icon: Briefcase },
+    { id: 'skills', title: 'Stack', icon: BrainCircuit },
+    { id: 'about', title: 'About', icon: User },
+    { id: 'contact', title: 'Contact', icon: Mail },
   ];
 
   const projects = resumeData.projects;
@@ -103,7 +103,7 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
       onClick={onClose}
     >
       <div 
-        className="bg-[#2a2a2a] rounded-lg shadow-lg w-full max-w-2xl mx-4 max-h-[80vh] overflow-hidden"
+        className="bg-g-raised rounded-lg shadow-lg w-full max-w-2xl mx-4 max-h-[80vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -140,7 +140,7 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
                   <button
                     key={section.id}
                     onClick={() => handleSectionClick(section.id)}
-                    className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-[#303030] transition-colors text-white"
+                    className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-g-raised transition-colors text-white"
                   >
                     <Icon className="h-4 w-4 text-gray-400" />
                     <span className="text-sm">{section.title}</span>
@@ -161,7 +161,7 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
                 <button
                   key={index}
                   onClick={() => handleProjectClick(project)}
-                  className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-[#303030] transition-colors text-white"
+                  className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-g-raised transition-colors text-white"
                 >
                   <Code className="h-4 w-4 text-gray-400 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
@@ -184,7 +184,7 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
                 <button
                   key={index}
                   onClick={() => handleSectionClick('case-studies')}
-                  className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-[#303030] transition-colors text-white"
+                  className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-g-raised transition-colors text-white"
                 >
                   <Briefcase className="h-4 w-4 text-gray-400 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
@@ -209,7 +209,7 @@ const SearchChatsOverlay = ({ isOpen, onClose, onSectionClick, onProjectClick }:
                   <button
                     key={index}
                     onClick={() => handleSocialClick(social)}
-                    className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-[#303030] transition-colors text-white"
+                    className="w-full flex items-center gap-3 p-3 text-left rounded-lg hover:bg-g-raised transition-colors text-white"
                   >
                     <Icon className="h-4 w-4 text-gray-400" />
                     <div className="flex-1">

@@ -35,12 +35,15 @@ import {
   Home,
   Phone,
   Download,
-  Link
+  Link,
+  BookOpen,
+  GraduationCap
 } from 'lucide-react';
 import XLogo from '@/components/XLogo';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
 import SearchChatsOverlay from '@/components/SearchChatsOverlay';
 import ProjectModal from '@/components/ProjectModal';
+import Buddy from '@/components/convo/Buddy';
 
 const Index = () => {
   const viewContainerRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -53,6 +56,19 @@ const Index = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const activeSection = useActiveSection();
+  const spotlightRef = useRef<HTMLDivElement>(null);
+
+  // soft light that follows the cursor (desktop pointers only)
+  useEffect(() => {
+    const el = spotlightRef.current;
+    if (!el || !window.matchMedia('(pointer: fine)').matches) return;
+    const onMove = (e: MouseEvent) => {
+      el.style.setProperty('--mx', `${e.clientX}px`);
+      el.style.setProperty('--my', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
 
   const {
     activeView,
@@ -115,17 +131,19 @@ const Index = () => {
   // Portfolio sections as "chats" - matching Demo1 structure
   const portfolioChats = [
     { id: 'home', title: 'Home', icon: Home, description: 'Welcome to my portfolio' },
-    { id: 'about', title: 'About Me', icon: User, description: 'Learn about my background' },
-    { id: 'experience', title: 'Work Experience', icon: Briefcase, description: 'My professional journey' },
-    { id: 'projects', title: 'Projects', icon: Code, description: 'Things I\'ve built' },
-    { id: 'case-studies', title: 'Case Studies', icon: Briefcase, description: 'Product research & strategy' },
-    { id: 'skills', title: 'Skills & Expertise', icon: BrainCircuit, description: 'My technical abilities' },
-    { id: 'contact', title: 'Contact Me', icon: Mail, description: 'Get in touch' },
+    { id: 'experience', title: 'Work', icon: Briefcase, description: 'FactWise' },
+    { id: 'projects', title: 'Projects', icon: Code, description: "Things I've built" },
+    { id: 'case-studies', title: 'Writing', icon: BookOpen, description: 'Product case studies' },
+    { id: 'skills', title: 'Stack', icon: BrainCircuit, description: 'Skills' },
+    { id: 'about', title: 'About', icon: GraduationCap, description: 'Education and volunteering' },
+    { id: 'contact', title: 'Contact', icon: Mail, description: 'Resume and contact' },
   ];
 
   const setActiveView = (view: View) => {
     const targetViewIndex = views.indexOf(view);
-    if (targetViewIndex !== -1) {
+    // Only reset scroll when switching screens; the content view is now the scroll
+    // container, so resetting it on every call would cancel section jumps.
+    if (targetViewIndex !== -1 && view !== activeView) {
       const viewContainer = viewContainerRefs.current[targetViewIndex];
       if (viewContainer) {
         viewContainer.scrollTo({ top: 0, behavior: 'auto' });
@@ -138,18 +156,18 @@ const Index = () => {
     }
   };
 
-  const handleChatClick = (chatId: string) => {
-    // Scroll to the specific section (each section is separate)
-    const element = document.getElementById(chatId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  // Switch to the portfolio view first, then scroll once it's visible.
+  const goToSection = (sectionId: string) => {
     setActiveView('content');
-
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    });
     if (isMobile) {
       closeMobileSidebar();
     }
   };
+
+  const handleChatClick = (chatId: string) => goToSection(chatId);
 
   // Deep-link support: returning from a case-study page (/?view=case-studies)
   // opens the portfolio content and scrolls to the requested section.
@@ -178,16 +196,7 @@ const Index = () => {
     document.body.removeChild(link);
   };
 
-  const handleSearchSectionClick = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setActiveView('content');
-    if (isMobile) {
-      closeMobileSidebar();
-    }
-  };
+  const handleSearchSectionClick = (sectionId: string) => goToSection(sectionId);
 
   const handleSearchProjectClick = (project: any) => {
     setSelectedProject(project);
@@ -220,7 +229,7 @@ const Index = () => {
   };
 
   return (
-    <div className="h-screen bg-[#212121] text-white flex">
+    <div className="h-screen bg-g-bg text-g-text flex">
       <ProfileCard
         isOpen={profileCardOpen}
         onClose={() => setProfileCardOpen(false)}
@@ -230,7 +239,7 @@ const Index = () => {
       {/* Demo1-style Sidebar */}
       <div className={cn(
         "flex flex-col transition-all duration-300 overflow-hidden",
-        isSidebarCollapsed ? "bg-[#212121] border-r border-gray-700/30" : "bg-[#181818]",
+        "bg-g-side border-r border-g-line",
         isMobile ? (isMobileSidebarOpen ? "fixed inset-y-0 left-0 w-64 z-40" : "hidden") : (isSidebarCollapsed ? "w-14" : "w-64")
       )}>
         {/* Header with Logo */}
@@ -238,14 +247,9 @@ const Index = () => {
           {!isSidebarCollapsed && (
             <button
               onClick={() => {
-                const element = document.getElementById('home');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-                setActiveView('content');
-                if (isMobile) closeMobileSidebar();
+                goToSection('home');
               }}
-              className="w-6 h-6 flex items-center justify-center hover:bg-[#303030] rounded transition-colors group"
+              className="w-6 h-6 flex items-center justify-center hover:bg-g-raised rounded transition-colors group"
             >
               <img src="/images/triquetra-logo.png" alt="Logo" className="w-4 h-4 group-hover:animate-spin transition-transform duration-500 origin-center" style={{ animationDuration: '0.5s' }} />
             </button>
@@ -254,14 +258,9 @@ const Index = () => {
           {isSidebarCollapsed ? (
             <button
               onClick={() => {
-                const element = document.getElementById('home');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-                setActiveView('content');
-                if (isMobile) closeMobileSidebar();
+                goToSection('home');
               }}
-              className="w-6 h-6 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-all duration-300 mx-auto group"
+              className="w-6 h-6 rounded-sm flex items-center justify-center hover:bg-g-raised transition-all duration-300 mx-auto group"
             >
               <img
                 src="/images/triquetra-logo.png"
@@ -273,9 +272,9 @@ const Index = () => {
           ) : (
             <button
               onClick={toggleSidebarCollapse}
-              className="w-6 h-6 rounded-sm flex items-center justify-center hover:bg-[#303030] transition-colors"
+              className="w-6 h-6 rounded-sm flex items-center justify-center hover:bg-g-raised transition-colors"
             >
-              <ChevronLeft className="h-3 w-3 text-gray-400" />
+              <ChevronLeft className="h-3 w-3 text-g-muted" />
             </button>
           )}
         </div>
@@ -287,7 +286,7 @@ const Index = () => {
               className={cn(
                 "w-full text-left rounded-lg transition-colors",
                 isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5",
-                activeView === 'newchat' ? "bg-[#303030]" : "hover:bg-[#303030]"
+                activeView === 'newchat' ? "bg-g-raised" : "hover:bg-g-raised"
               )}
               onClick={() => {
                 setMessages([]);
@@ -296,23 +295,23 @@ const Index = () => {
               }}
             >
               <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
-                <Plus className="h-4 w-4 text-gray-400" />
+                <Plus className="h-4 w-4 text-g-muted" />
                 {!isSidebarCollapsed && (
-                  <div className="text-sm text-white truncate whitespace-nowrap">New chat</div>
+                  <div className="text-sm text-g-text truncate whitespace-nowrap">New chat</div>
                 )}
               </div>
             </button>
             <button
               className={cn(
-                "w-full text-left rounded-lg hover:bg-[#303030] transition-colors",
+                "w-full text-left rounded-lg hover:bg-g-raised transition-colors",
                 isSidebarCollapsed ? "p-2.5 flex justify-center" : "px-3 py-2.5"
               )}
               onClick={() => setShowSearchOverlay(true)}
             >
               <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
-                <Search className="h-4 w-4 text-gray-400" />
+                <Search className="h-4 w-4 text-g-muted" />
                 {!isSidebarCollapsed && (
-                  <div className="text-sm text-white truncate whitespace-nowrap">Search</div>
+                  <div className="text-sm text-g-text truncate whitespace-nowrap">Search</div>
                 )}
               </div>
             </button>
@@ -321,18 +320,19 @@ const Index = () => {
 
         {/* Separator when collapsed */}
         {isSidebarCollapsed && (
-          <div className="mx-2 border-b border-gray-700/30 mb-4"></div>
+          <div className="mx-2 border-b border-g-line mb-4"></div>
         )}
 
         {/* Chats Section */}
         <div className={cn(isSidebarCollapsed ? "px-2" : "px-3", "pb-4")}>
           {!isSidebarCollapsed && (
-            <div className="text-xs text-gray-400 mb-2 uppercase tracking-wide px-3">Chats</div>
+            <div className="text-[12.5px] text-g-muted mb-2 px-3">Chats</div>
           )}
           <div className={cn(isSidebarCollapsed ? "space-y-2" : "space-y-0.5")}>
             {portfolioChats.map((chat) => {
               const Icon = chat.icon;
-              const isActive = activeView === 'content' && activeSection === chat.id;
+              const section = activeSection === 'journey' ? 'experience' : activeSection; // earlier roles live under Experience
+              const isActive = activeView === 'content' && section === chat.id;
               return (
                 <button
                   key={chat.id}
@@ -342,13 +342,13 @@ const Index = () => {
                     isSidebarCollapsed
                       ? "p-2.5 flex justify-center"
                       : "px-3 py-2.5",
-                    isActive ? "bg-[#303030]" : "hover:bg-[#303030]"
+                    isActive ? "bg-g-raised" : "hover:bg-g-raised"
                   )}
                 >
                   <div className={cn("flex items-center", !isSidebarCollapsed && "gap-3")}>
-                    <Icon className="h-4 w-4 text-gray-400" />
+                    <Icon className={cn("h-4 w-4", isActive ? "text-g-text" : "text-g-faint")} />
                     {!isSidebarCollapsed && (
-                      <div className="text-sm text-white truncate whitespace-nowrap">{chat.title}</div>
+                      <div className={cn("text-sm truncate whitespace-nowrap", isActive ? "text-g-text font-medium" : "text-g-muted")}>{chat.title}</div>
                     )}
                   </div>
                 </button>
@@ -366,7 +366,7 @@ const Index = () => {
             <button
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               className={cn(
-                "w-full flex items-center rounded-lg hover:bg-[#303030] transition-colors",
+                "w-full flex items-center rounded-lg hover:bg-g-raised transition-colors",
                 isSidebarCollapsed ? "p-2.5 justify-center" : "gap-3 px-3 py-2"
               )}
             >
@@ -375,8 +375,8 @@ const Index = () => {
               </div>
               {!isSidebarCollapsed && (
                 <div className="flex-1 text-left">
-                  <div className="text-sm text-white">Yash Gori</div>
-                  <div className="text-xs text-gray-400">AI Product Manager</div>
+                  <div className="text-sm text-g-text">Yash Gori</div>
+                  <div className="text-xs text-g-muted">AI Product Manager</div>
                 </div>
               )}
             </button>
@@ -384,12 +384,12 @@ const Index = () => {
             {/* Profile Dropdown */}
             {showProfileDropdown && (
               <div className={cn(
-                "absolute bg-[#2a2a2a] rounded-lg shadow-lg z-50",
+                "absolute bg-g-surface border border-g-line rounded-xl shadow-2xl shadow-black/60 z-50",
                 isSidebarCollapsed
                   ? "bottom-0 left-full ml-2 w-64"
                   : "bottom-full left-0 right-0 mb-2"
               )}>
-                <div className="p-4 border-b border-gray-600">
+                <div className="p-4 border-b border-g-line">
                   <div className="flex items-center gap-3 mb-3">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={resumeData.profileImage} alt="Yash Gori" />
@@ -397,7 +397,7 @@ const Index = () => {
                     </Avatar>
                     <div>
                       <div className="font-medium">Yash Gori</div>
-                      <div className="text-sm text-gray-400">AI Product Manager</div>
+                      <div className="text-sm text-g-muted">AI Product Manager</div>
                     </div>
                   </div>
 
@@ -434,7 +434,7 @@ const Index = () => {
                 <div className="p-2">
                   <button
                     onClick={handleDownloadResume}
-                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-g-raised text-left"
                   >
                     <Download className="h-4 w-4" />
                     <span className="text-sm">Download Resume</span>
@@ -446,7 +446,7 @@ const Index = () => {
                       setShowProfileDropdown(false);
                       if (isMobile) closeMobileSidebar();
                     }}
-                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-g-raised text-left"
                   >
                     <Plus className="h-4 w-4" />
                     <span className="text-sm">New Chat</span>
@@ -460,7 +460,7 @@ const Index = () => {
                       setShowProfileDropdown(false);
                       if (isMobile) closeMobileSidebar();
                     }}
-                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-g-raised text-left"
                   >
                     <Mail className="h-4 w-4" />
                     <span className="text-sm">Contact Me</span>
@@ -471,7 +471,7 @@ const Index = () => {
                       // You could add a toast notification here
                       setShowProfileDropdown(false);
                     }}
-                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-[#303030] text-left"
+                    className="w-full flex items-center gap-3 p-2 rounded hover:bg-g-raised text-left"
                   >
                     <Link className="h-4 w-4" />
                     <span className="text-sm">Copy Portfolio Link</span>
@@ -530,50 +530,50 @@ const Index = () => {
                 }}
               >
                 <button
-                  className="text-left p-3 rounded-2xl hover:bg-[#303030] transition-colors flex items-center gap-3 text-white"
+                  className="text-left p-3 rounded-2xl hover:bg-g-raised transition-colors flex items-center gap-3 text-g-text"
                 >
-                  <Mail className="h-4 w-4 text-gray-400" />
+                  <Mail className="h-4 w-4 text-g-muted" />
                   <div className="text-sm truncate">Reach out</div>
                 </button>
 
                 {/* Contact Overlay */}
                 {showReachOutOverlay && (
-                  <div className="absolute top-full right-0 mt-2 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
+                  <div className="absolute top-full right-0 mt-2 bg-g-surface border border-g-line rounded-xl shadow-2xl shadow-black/60 p-4 min-w-[280px] z-50">
                     <div className="space-y-3">
-                      <div className="text-sm text-white font-medium mb-3">Yash Gori · AI Product Manager</div>
-                      <div className="text-xs text-gray-400 mb-3">Get in touch</div>
+                      <div className="text-sm text-g-text font-medium mb-3">Yash Gori · AI Product Manager</div>
+                      <div className="text-xs text-g-muted mb-3">Get in touch</div>
 
                       {/* Email */}
                       <div className="flex items-center gap-3 text-sm">
-                        <Mail className="h-4 w-4 text-gray-400" />
-                        <span className="text-white">{resumeData.contact.email}</span>
+                        <Mail className="h-4 w-4 text-g-muted" />
+                        <span className="text-g-text">{resumeData.contact.email}</span>
                       </div>
 
                       {/* Phone */}
                       <div className="flex items-center gap-3 text-sm">
-                        <Phone className="h-4 w-4 text-gray-400" />
-                        <span className="text-white">{resumeData.contact.phone}</span>
+                        <Phone className="h-4 w-4 text-g-muted" />
+                        <span className="text-g-text">{resumeData.contact.phone}</span>
                       </div>
 
                       {/* Social Links */}
                       <div className="flex gap-2 pt-2">
                         <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-g-raised">
                             <Linkedin className="h-4 w-4" />
                           </Button>
                         </a>
                         <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-g-raised">
                             <Github className="h-4 w-4" />
                           </Button>
                         </a>
                         <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-g-raised">
                             <XLogo className="h-4 w-4" />
                           </Button>
                         </a>
                         <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-700">
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-g-raised">
                             <Instagram className="h-4 w-4" />
                           </Button>
                         </a>
@@ -588,7 +588,7 @@ const Index = () => {
                           }, 300);
                           setShowReachOutOverlay(false);
                         }}
-                        className="w-full mt-3 p-2 bg-[#404040] hover:bg-[#505050] text-white rounded-lg text-sm transition-colors"
+                        className="w-full mt-3 p-2 bg-g-text hover:bg-white text-g-bg font-medium rounded-lg text-sm transition-colors"
                       >
                         Contact Me
                       </button>
@@ -631,8 +631,8 @@ const Index = () => {
       {/* Persistent Floating Chat Input Bar - Show on portfolio screens only */}
       {activeView !== 'newchat' && (
         <div className={cn(
-          "fixed bottom-4 z-40 transition-all duration-300",
-          finalIsCollapsed ? "right-4 left-16" : "right-4 left-72"
+          "fixed bottom-0 z-40 pb-4 pt-10 px-5 md:px-12 transition-all duration-300 bg-gradient-to-t from-g-bg from-60% to-transparent pointer-events-none",
+          isMobile ? "left-0 right-0" : finalIsCollapsed ? "right-0 left-14" : "right-0 left-64"
         )}>
           <ChatInputBar
             input={input}
@@ -642,10 +642,23 @@ const Index = () => {
               setActiveView('newchat');
             }}
             isPending={askApi.isPending}
-            className="shadow-lg"
+            className="pointer-events-auto mx-auto max-w-[780px]"
           />
         </div>
       )}
+
+      {/* Cursor spotlight */}
+      <div ref={spotlightRef} aria-hidden className="spotlight pointer-events-none fixed inset-0 z-[1]" />
+
+      {/* Tri, the mascot */}
+      <Buddy
+        section={activeSection}
+        hidden={activeView === 'newchat'}
+        onOpenChat={() => {
+          setMessages([]);
+          setActiveView('newchat');
+        }}
+      />
 
       {/* Search Chats Overlay */}
       <SearchChatsOverlay

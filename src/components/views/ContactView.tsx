@@ -1,140 +1,74 @@
-
 import React from 'react';
 import { resumeData } from '@/data/resume';
-import Section from '@/components/layout/Section';
+import Turn from '@/components/convo/Turn';
 import ContactForm from '@/components/ContactForm';
-import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Download, MessageCircle } from 'lucide-react';
-import HuggingFaceLogo from '@/components/HuggingFaceLogo';
-import XLogo from '@/components/XLogo';
+import { ArrowDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { View } from '@/types';
-import { Button } from '@/components/ui/button';
 
 type ViewProps = {
   activeView: View;
   setActiveView: (view: View) => void;
 };
 
-const ContactView = ({ activeView, setActiveView }: ViewProps) => {
-  const handleDownloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/pm.pdf';
-    link.setAttribute('download', 'Yash Gori Resume.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+const downloadResume = () => {
+  const link = document.createElement('a');
+  link.href = '/pm.pdf';
+  link.setAttribute('download', 'Yash Gori Resume.pdf');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+const btn =
+  'flex items-center justify-between rounded-xl px-[18px] py-3.5 text-[15.5px] transition-colors';
+
+// "Can I get your resume?" → resume, email, LinkedIn, then the message form
+const ContactView = (_props: ViewProps) => {
+  const { contact } = resumeData;
+  const whatsapp = `https://wa.me/91${contact.phone.replace(/\D/g, '')}?text=${encodeURIComponent(
+    'Hi Yash! I saw your portfolio and would like to connect.'
+  )}`;
 
   return (
-    <Section title="Get In Touch" id="contact">
-      <div className="grid lg:grid-cols-2 gap-8 mr-8">
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-xl font-semibold mb-3">Let's Connect</h3>
-            <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
-              I'm always interested in hearing about new opportunities and interesting projects.
-              Feel free to reach out if you'd like to discuss potential collaborations or just say hello!
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <a href={`mailto:${resumeData.contact.email}`} className="block group py-2">
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                  <Mail className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Email</p>
-                  <p className="text-xs text-gray-400">{resumeData.contact.email}</p>
-                </div>
-              </div>
-              <div className="border-b border-gray-200/20 my-2"></div>
-            </a>
-
-            <a href={`tel:${resumeData.contact.phone}`} className="block group py-2">
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                  <Phone className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Phone</p>
-                  <p className="text-xs text-gray-400">{resumeData.contact.phone}</p>
-                </div>
-              </div>
-              <div className="border-b border-gray-200/20 my-2"></div>
-            </a>
-
-            <a
-              href={`https://wa.me/91${resumeData.contact.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Hi Yash! 👋 I saw your portfolio and would like to connect.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block group py-2"
-            >
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                  <MessageCircle className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">WhatsApp</p>
-                  <p className="text-xs text-gray-400">Quick message</p>
-                </div>
-              </div>
-              <div className="border-b border-gray-200/20 my-2"></div>
-            </a>
-
-            <div className="group py-2">
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                  <MapPin className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Location</p>
-                  <p className="text-xs text-gray-400">{resumeData.contact.location}</p>
-                </div>
-              </div>
-              <div className="border-b border-gray-200/20 my-2"></div>
-            </div>
-
-            <button
-              onClick={handleDownloadResume}
-              className="w-full block group py-2"
-            >
-              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                  <Download className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1 text-left">
-                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Download Resume</p>
-                  <p className="text-xs text-gray-400">Get my latest CV</p>
-                </div>
-              </div>
-            </button>
-          </div>
-
-          <div className="space-y-4 pt-4">
-            <h3 className="text-lg font-semibold">Follow Me</h3>
-            <div className="flex items-center gap-4">
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <Linkedin className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <Github className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <HuggingFaceLogo className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <XLogo className="h-6 w-6" />
-              </a>
-            </div>
+    <Turn id="contact" question="Can I get your resume?" tool="attached Yash-Gori-Resume.pdf" headline="Sure, here it is.">
+      <div className="rise mt-4 grid items-end gap-7 rounded-[20px] border border-g-line bg-g-surface p-6 md:grid-cols-[1.2fr_1fr] md:p-8">
+        <div>
+          <p className="text-[clamp(26px,3vw,36px)] font-semibold leading-[1.1] tracking-[-0.035em] text-g-text">
+            Yash Gori
+          </p>
+          <p className="mt-2 text-[15.5px] leading-relaxed text-g-muted">
+            AI Product Manager · Based in {contact.location.split(',')[0]}.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[14px] text-g-muted">
+            <a href={contact.links.github} target="_blank" rel="noopener noreferrer" className="hover:text-g-text">GitHub</a>
+            <a href={contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="hover:text-g-text">Hugging Face</a>
+            <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-g-text">WhatsApp</a>
+            <a href={contact.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-g-text">X</a>
           </div>
         </div>
+        <div className="flex flex-col gap-2">
+          <button onClick={downloadResume} className={`${btn} bg-g-text font-semibold text-g-bg hover:bg-white`}>
+            Download resume <ArrowDown className="h-4 w-4" />
+          </button>
+          <a href={`mailto:${contact.email}`} className={`${btn} border border-g-line text-g-text hover:bg-g-raised`}>
+            Email Yash <ArrowRight className="h-4 w-4" />
+          </a>
+          <a
+            href={contact.links.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${btn} border border-g-line text-g-text hover:bg-g-raised`}
+          >
+            LinkedIn <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
 
+      <div className="rise mt-10" style={{ '--d': 1 } as React.CSSProperties}>
+        <p className="mb-4 text-[14px] text-g-muted">You can also message me here</p>
         <ContactForm />
       </div>
-    </Section>
+    </Turn>
   );
 };
 

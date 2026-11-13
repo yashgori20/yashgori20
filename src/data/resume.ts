@@ -6,6 +6,13 @@ export type Project = {
   image?: string;
   codeUrl?: string;
   liveUrl?: string;
+  // Conversation layout: featured projects get a large card with one headline result
+  featured?: number; // display order among featured projects
+  company?: string;
+  short?: string;
+  result?: { value: string; label: string };
+  // Kept for the chatbot/search, hidden from the projects list
+  archived?: boolean;
 };
 
 export type Experience = {
@@ -17,6 +24,8 @@ export type Experience = {
   technologies?: string[];
   points: string[];
   additionalPoints?: string[];
+  // One-paragraph version used in the "How did you get here?" timeline
+  summary?: string;
 };
 
 export const resumeData = {
@@ -47,10 +56,21 @@ export const resumeData = {
   // These reflect real shipped work: FactWise OpenAPI volume and enterprise clients,
   // plus the Webotix QC-document outcome and Microsoft for Startups funding.
   headlineMetrics: [
-    { value: "40K+", label: "live POs & contracts", sub: "created via my OpenAPIs" },
-    { value: "4+", label: "enterprise clients", sub: "live in production" },
-    { value: "90%", label: "less QC-doc creation time", sub: "SwiftCheck AI agents at Webotix" },
-    { value: "$5K", label: "Microsoft for Startups grant", sub: "secured by pitching" },
+    { value: "140+", label: "tools in the AI agent I designed" },
+    { value: "40K+", label: "POs and contracts live on APIs I shipped" },
+    { value: "90%", label: "less time to make QC documents with SwiftCheck AI" },
+  ],
+
+  // Hero line under "Hi, I'm Yash Gori."
+  heroLede:
+    "I build AI products. Right now that's agents and APIs at FactWise. Before that, SwiftCheck AI, which I prototyped myself and took to production.",
+
+  // Skills as short grouped lines (the long `skills` map below is kept for search)
+  skillGroups: [
+    { label: "AI", items: ["Agents", "MCP", "RAG", "Evals", "Prompt and context design", "Guardrails", "Model selection"] },
+    { label: "Building", items: ["Claude Code", "Cursor", "Python", "FastAPI", "SQL", "React", "Azure"] },
+    { label: "Product", items: ["Discovery", "PRDs", "Roadmaps", "Prioritisation", "Metrics", "GTM"] },
+    { label: "Tools", items: ["Jira", "Figma", "Notion", "Power BI"] },
   ],
 
   whatIBring:
@@ -153,6 +173,10 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
         "Validated with 2 enterprise clients at annual pricing of INR 10-12L per deployment, with a client-estimated 60% efficiency improvement. These are validation figures, not realized revenue or measured production savings."
       ],
       image: "/images/projects/p7.svg",
+      featured: 2,
+      company: "FactWise",
+      short: "Upload a BOM as Excel, CSV or a scanned PDF. It suggests column matches, reads scans with OCR and keeps the parent-child structure intact. Mappings can be saved and reused.",
+      result: { value: "₹10⁠–⁠12L", label: "a year, validated with 2 clients" },
     },
     {
       title: "SwiftCheck AI: Enterprise QC Platform",
@@ -173,6 +197,10 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       ],
       image: "/images/projects/p1.png",
       codeUrl: "https://github.com/yashgori20/swift-check-ai",
+      featured: 1,
+      company: "Webotix",
+      short: "Give it a product spec and it drafts the inspection template with RAG. Floor staff fill it in on their phones and managers approve it in the app.",
+      result: { value: "90%", label: "less time to make QC documents" },
     },
     {
       title: "Interactive AI Portfolio + Chatbot",
@@ -194,6 +222,8 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       image: "/images/projects/p2.png",
       codeUrl: "https://github.com/yashgori20/yashgori20",
       liveUrl: "https://yashgori20.vercel.app/",
+      short: "The assistant on this site, RAG over my resume on Groq",
+      archived: true,
     },
     {
       title: "DocuTalk: AI Document Intelligence Platform",
@@ -212,6 +242,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       ],
       image: "/images/projects/p3.png",
       codeUrl: "https://github.com/yashgori20/DocuTalk",
+      short: "Ask questions about a document, answers cite the source",
     },
     {
       title: "FinLLM-RAG: RBI Compliance Automation",
@@ -232,6 +263,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       image: "/images/projects/p4.png",
       codeUrl: "https://github.com/yashgori20/FinLLM-RAG-rbi",
       liveUrl: "https://yashgori20-FinLLM-RAG.hf.space",
+      short: "Pulls compliance rules out of RBI documents",
     },
     {
       title: "Inhance: LinkedIn & Resume Optimization Platform",
@@ -251,6 +283,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       image: "/images/projects/p5.png",
       codeUrl: "https://github.com/yashgori20/Inhance",
       liveUrl: "https://yashgori20-Inhance.hf.space",
+      short: "Scores a resume against a target role and rewrites it",
     },
     {
       title: "Customer Churn Predictor",
@@ -269,6 +302,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
       ],
       image: "/images/projects/p6.png",
       codeUrl: "https://github.com/yashgori20/Customer-Churn-Perdiction",
+      short: "End-to-end churn model with Power BI",
     },
   ],
   // Case studies are content-driven: list cards use this metadata, and the full
@@ -278,6 +312,9 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
   caseStudies: [
     {
       slug: "jiocinema-acquisition",
+      cover: "/case-studies/jiocinema-acquisition/bms.jpg",
+      oneLiner: "Turning free viewers into paying subscribers",
+      kind: "Acquisition",
       title: "JioCinema Premium: Acquisition Strategy",
       tag: "B2C",
       role: "Product Strategy · Acquisition",
@@ -289,6 +326,9 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "blinkit-engagement-retention",
+      cover: "/case-studies/blinkit-onboarding/Screenshot_20230902_090106_Blinkit.jpg",
+      oneLiner: "Frequency-first engagement and resurrection campaigns",
+      kind: "Retention",
       title: "Blinkit: Engagement & Retention Strategy",
       tag: "B2C",
       role: "Growth · Engagement & Retention",
@@ -300,6 +340,9 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "googlepay-engagement-retention",
+      cover: "/case-studies/googlepay-engagement-retention/image 2.png",
+      oneLiner: "Engagement framework from a 150-user survey",
+      kind: "Retention",
       title: "Google Pay: Engagement & Retention Strategy",
       tag: "Fintech",
       role: "Growth · Engagement & Retention",
@@ -311,6 +354,10 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "blinkit-onboarding",
+      cover: "/case-studies/blinkit-onboarding/20230902_092624.jpg",
+      shortTitle: "Blinkit onboarding",
+      oneLiner: "Where the 10-minute promise breaks",
+      kind: "Onboarding",
       title: "Blinkit: Onboarding Flow & Activation Teardown",
       tag: "B2C",
       role: "Product Analyst · Onboarding & UX",
@@ -322,6 +369,9 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "vercel-acquisition",
+      cover: "/case-studies/vercel-acquisition/Untitled.png",
+      oneLiner: "Which developers to win, and through which loops",
+      kind: "B2B growth",
       title: "Vercel: Acquisition Strategy",
       tag: "B2B",
       role: "Growth · Acquisition",
@@ -333,6 +383,9 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "fireflies-acquisition",
+      cover: "/case-studies/fireflies-acquisition/image.png",
+      oneLiner: "Personas and channels against bundled rivals",
+      kind: "B2B SaaS",
       title: "Fireflies.ai: Acquisition Strategy",
       tag: "B2B SaaS",
       role: "Growth · Acquisition",
@@ -344,6 +397,8 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     },
     {
       slug: "chargeorfill",
+      oneLiner: "0→1 validation for an EV-charging aggregator",
+      kind: "0→1",
       title: "ChargeOrFill: EV Charging Aggregator App",
       tag: "0→1",
       role: "Product Strategist & Research Lead",
@@ -389,6 +444,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     {
       role: "AI Product Manager",
       company: "Webotix IT Consultancy",
+      summary: "I built the first version of SwiftCheck AI on my own in about four weeks. It uses RAG over FAISS and Azure OpenAI to write food-QC inspection templates from a product spec. I pitched it to Microsoft for Startups, got $5,000, then led a team of three to take it to production. The generated templates matched client specs about 80% of the time and cut the time to make QC documents by 90%.",
       companyUrl: "https://webotix.ae/",
       period: "December 2024 – December 2025",
       location: "Remote / Dubai",
@@ -414,6 +470,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     {
       role: "Product Management Intern",
       company: "MetaRizz",
+      summary: "My first PM job. I ran two products, GuestInMe and MediNobel. After user interviews I reworked GuestInMe's main flows, and it grew past 1K active users.",
       period: "December 2023 – May 2024",
       location: "Mumbai, India",
       technologies: ["Figma", "Product Management", "User Research", "Wireframing", "Scrum"],
@@ -426,6 +483,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     {
       role: "Business & Growth Management Intern",
       company: "Watermelon Gang",
+      summary: "Growth work for fintech and crypto clients like CoinDCX, Binance and Kotak 811. I also helped grow a YouTube channel from 50K to 80K subscribers.",
       period: "August 2022 – November 2023",
       location: "Mumbai, India",
       technologies: ["Market Strategy", "Client Management", "A/B Testing", "Data Analytics"],
@@ -442,6 +500,7 @@ Impact-minded Metrics: I focus on the numbers that matter (accuracy, latency, ad
     organizationUrl: "https://vacha.org.in/",
     role: "English & Computer Instructor",
     period: "July 2024",
+    summary: "Taught English and basic computer skills to 30+ students, and ran a career-guidance session for them.",
     description:
       `Designed and taught AI-augmented digital literacy programs for 30+ underprivileged students:
 - Created interactive lesson plans combining fundamental English, basic digital skills and simple computational thinking activities.

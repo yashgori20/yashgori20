@@ -57,7 +57,7 @@ const ChatMessage = ({ message, richContent }: ChatMessageProps) => {
     <div className={cn("mb-8", isUser ? "text-right" : "text-left")}>
       <div className={cn("max-w-full", isUser ? "ml-auto" : "mr-auto")}>
         {isUser ? (
-          <div className="inline-block bg-[#303030] px-4 py-3 rounded-2xl text-white text-base leading-relaxed whitespace-pre-wrap">
+          <div className="inline-block bg-g-raised px-4 py-3 rounded-2xl text-white text-base leading-relaxed whitespace-pre-wrap">
             {message.content}
           </div>
         ) : (

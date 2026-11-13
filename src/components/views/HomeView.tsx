@@ -1,115 +1,123 @@
 import React from 'react';
 import { resumeData } from '@/data/resume';
-import Section from '@/components/layout/Section';
-import { MapPin, Globe, GraduationCap, MessageCircle, Download, Linkedin, Github, Instagram } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { View } from '@/types';
-import XLogo from '@/components/XLogo';
+import { Download, Linkedin, Github, Mail } from 'lucide-react';
 import HuggingFaceLogo from '@/components/HuggingFaceLogo';
+import XLogo from '@/components/XLogo';
 
 type ViewProps = {
   activeView: View;
   setActiveView: (view: View) => void;
 };
 
-const HomeView = ({ activeView, setActiveView }: ViewProps) => {
-  const handleDownloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/pm.pdf';
-    link.setAttribute('download', 'Yash Gori Resume.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+const suggestions = [
+  { label: 'What are you working on?', target: 'experience' },
+  { label: 'What have you built?', target: 'projects' },
+  { label: 'Can I get your resume?', target: 'contact' },
+];
 
-  return (
-    <section id="home" className="p-6 pt-0 md:p-8 md:pt-0 pb-16 min-h-screen relative">
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="flex flex-col justify-center items-center min-h-[60vh] space-y-6">
-          {/* Dynamic Greeting */}
-          <div className="text-center space-y-4">
-            <h1 className="text-3xl md:text-5xl font-bold text-white">
-              {(() => {
-                const hour = new Date().getHours();
-                if (hour < 12) return "Good Morning!";
-                if (hour < 17) return "Good Afternoon!";
-                return "Good Evening!";
-              })()}
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300">
-              {resumeData.tagline}
-            </p>
-            <p className="text-sm md:text-base text-gray-500 mt-2 max-w-3xl mx-auto">
-              {resumeData.about}
-            </p>
+const downloadResume = () => {
+  const link = document.createElement('a');
+  link.href = '/pm.pdf';
+  link.setAttribute('download', 'Yash Gori Resume.pdf');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+const { contact } = resumeData;
+const pill =
+  'inline-flex items-center gap-2 rounded-full border border-g-line px-4 py-2 text-[14px] text-g-text2 transition-colors hover:border-g-faint hover:bg-g-raised hover:text-g-text';
+const iconBtn =
+  'grid h-9 w-9 place-items-center rounded-full border border-g-line text-g-muted transition-colors hover:border-g-faint hover:bg-g-raised hover:text-g-text';
+
+const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+// The assistant's opening message
+const HomeView = (_props: ViewProps) => (
+  <section id="home" className="flex min-h-[calc(100vh-56px)] flex-col justify-center pb-28 pt-6 md:pt-8">
+    <div className="hero-in">
+      <div className="mb-6 flex items-center gap-3 text-[14px] text-g-muted">
+        <img
+          src={resumeData.profileImage}
+          alt="Yash Gori"
+          className="h-11 w-11 rounded-full border border-g-line-2 object-cover"
+        />
+        <span>
+          <span className="block font-medium text-g-text2">AI Product Manager · FactWise</span>
+          {contact.location}
+        </span>
+      </div>
+
+      <h1 className="text-[clamp(50px,7.2vw,100px)] leading-[0.98] tracking-[-0.05em]">
+        <span className="font-light text-g-hello">Hi, I'm </span>
+        <span className="whitespace-nowrap font-bold text-g-text">Yash Gori.</span>
+      </h1>
+
+      <p className="mt-6 max-w-[40ch] text-pretty text-[clamp(18px,1.7vw,21px)] leading-[1.6] text-g-text2">
+        {resumeData.heroLede}
+      </p>
+
+      <div className="mt-7 flex flex-wrap items-center gap-2">
+        <button
+          onClick={downloadResume}
+          className="inline-flex items-center gap-2 rounded-full bg-g-text px-4 py-2 text-[14px] font-semibold text-g-bg transition-colors hover:bg-white"
+        >
+          <Download className="h-4 w-4" /> Resume
+        </button>
+        <a href={contact.links.linkedin} target="_blank" rel="noopener noreferrer" className={pill}>
+          <Linkedin className="h-4 w-4" /> LinkedIn
+        </a>
+        <a href={contact.links.github} target="_blank" rel="noopener noreferrer" className={pill}>
+          <Github className="h-4 w-4" /> GitHub
+        </a>
+        <a href={`mailto:${contact.email}`} className={pill}>
+          <Mail className="h-4 w-4" /> Email
+        </a>
+        <a href={contact.links.huggingface} target="_blank" rel="noopener noreferrer" aria-label="Hugging Face" className={iconBtn}>
+          <HuggingFaceLogo className="h-4 w-4" />
+        </a>
+        <a href={contact.links.twitter} target="_blank" rel="noopener noreferrer" aria-label="X" className={iconBtn}>
+          <XLogo className="h-3.5 w-3.5" />
+        </a>
+      </div>
+
+      <dl className="mt-9 grid max-w-[720px] grid-cols-2 border-t border-g-line pt-6 sm:grid-cols-3">
+        {resumeData.headlineMetrics.map((m, i) => (
+          <div
+            key={m.label}
+            className={
+              i === 0
+                ? 'pr-5'
+                : i === 1
+                  ? 'border-l border-g-line pl-5 pr-5'
+                  : 'col-span-2 mt-5 sm:col-span-1 sm:mt-0 sm:border-l sm:border-g-line sm:pl-5'
+            }
+          >
+            <dt className="sr-only">{m.label}</dt>
+            <dd className="text-[34px] font-semibold leading-none tracking-[-0.04em] text-g-text tabular-nums">{m.value}</dd>
+            <dd className="mt-2 text-balance text-[13.5px] leading-snug text-g-muted">{m.label}</dd>
           </div>
+        ))}
+      </dl>
 
-          {/* Front-loaded outcome metrics: the "first 6 seconds" proof */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-3xl">
-            {resumeData.headlineMetrics.map((m) => (
-              <div
-                key={m.label}
-                className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-4 text-center transition-colors hover:border-white/25"
-              >
-                <div className="text-2xl md:text-3xl font-bold text-white">{m.value}</div>
-                <div className="mt-1 text-xs md:text-sm font-medium text-gray-300 leading-tight">{m.label}</div>
-                <div className="mt-0.5 text-[11px] text-gray-500 leading-tight">{m.sub}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Profile Picture */}
-          <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden border-4 border-border shadow-2xl">
-            <img
-              src={resumeData.profileImage}
-              alt="Yash Gori"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Social Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white text-center">Connect With Me</h3>
-            <div className="flex items-center justify-center gap-4">
-              <a href={resumeData.contact.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <Linkedin className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <Github className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.huggingface} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <HuggingFaceLogo className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a href={resumeData.contact.links.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors block">
-                <XLogo className="h-6 w-6" />
-              </a>
-            </div>
-          </div>
-
-          {/* Download Resume Button */}
-          <div>
+      <div className="mt-9">
+        <p className="mb-3 text-[13.5px] text-g-muted">Or ask me</p>
+        <div className="flex flex-wrap gap-2">
+          {suggestions.map((s) => (
             <button
-              onClick={handleDownloadResume}
-              className="group py-2"
+              key={s.label}
+              onClick={() => scrollTo(s.target)}
+              className="rounded-xl border border-g-line px-[15px] py-2.5 text-[14.5px] text-g-text2 transition-colors hover:border-g-faint hover:bg-g-raised hover:text-g-text"
             >
-              <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-all duration-200">
-                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 bg-white/10 rounded-lg group-hover:bg-white/15 transition-all duration-200">
-                  <Download className="h-4 w-4 text-white" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white group-hover:text-gray-300 transition-colors">Download Resume</p>
-                  <p className="text-xs text-gray-400">Get my latest CV</p>
-                </div>
-              </div>
+              {s.label}
             </button>
-          </div>
+          ))}
         </div>
       </div>
-    </section>
-  );
-};
+
+    </div>
+  </section>
+);
 
 export default HomeView;

@@ -40,7 +40,7 @@ const ChatInputBar = ({
         }
         onKeyDown?.(e);
       }}
-      placeholder={showSuggestions ? '' : "Ask me anything about my work…"}
+      placeholder={showSuggestions ? '' : "Ask Tri about my work…"}
       aria-label="Ask about Yash"
       className={cn(
         'min-w-0 flex-1 bg-transparent text-[15.5px] text-g-text outline-none placeholder:text-g-muted',

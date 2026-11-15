@@ -9,6 +9,7 @@ import SuggestionCard from './SuggestionCard';
 import ChatMessage from './ChatMessage';
 import LoadingMessage from './LoadingMessage';
 import PillNavigation from './PillNavigation';
+import TriFace from '@/components/convo/TriFace';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronsDown, User, Github, Linkedin, ChevronDown } from 'lucide-react';
 import HuggingFaceLogo from './HuggingFaceLogo';
@@ -198,7 +199,9 @@ const ChatInterface = ({ messages, input, setInput, handleSend, handleSuggestion
         >
 
           <div className="mb-16 flex-shrink-0">
-            <h1 className="text-3xl md:text-5xl font-bold mb-8">Ask me anything</h1>
+            <div className="mb-5 flex justify-center"><TriFace size={84} /></div>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-[-0.03em] mb-3">Hi, I'm Tri.</h1>
+            <p className="mb-6 text-[16px] text-g-muted">Yash's sidekick. Ask me anything about his work.</p>
           </div>
 
           <div className="w-full flex-shrink-0">
